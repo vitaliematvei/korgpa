@@ -70,9 +70,12 @@ export default function ProductPage() {
   useEffect(() => {
     if (!slug) return;
 
+    console.log('ProductPage: Received slug:', slug);
+
     async function fetchProduct() {
       try {
         const data = await client.fetch(PRODUCT_QUERY, { slug });
+        console.log('ProductPage: Fetched product:', data);
         setProduct(data);
       } catch (error) {
         console.error('Error fetching product:', error);
