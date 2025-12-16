@@ -123,7 +123,7 @@ const Navbar = () => {
             {/* Contact Info - WhatsApp & Viber */}
             <div className="hidden md:flex items-center space-x-4">
               <a
-                href="https://wa.me/37312345678"
+                href="https://wa.me/37379162223"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2 text-green-400 hover:text-green-300 transition duration-150"
@@ -133,7 +133,7 @@ const Navbar = () => {
                 <span className="text-sm font-medium">WhatsApp</span>
               </a>
               <a
-                href="viber://chat?number=%2B37312345678"
+                href="viber://chat?number=%2B37379162223"
                 className="flex items-center space-x-2 text-purple-400 hover:text-purple-300 transition duration-150"
                 aria-label="Contact via Viber"
               >
@@ -197,7 +197,7 @@ const Navbar = () => {
             {/* Mobile Contact Info */}
             <div className="pt-4 pb-2 space-y-3 border-t border-gray-600 mt-4">
               <a
-                href="https://wa.me/37312345678"
+                href="https://wa.me/37379162223"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-3 text-green-400 hover:text-green-300 transition duration-150 px-3 py-2 rounded-md hover:bg-gray-700"
@@ -206,7 +206,7 @@ const Navbar = () => {
                 <span>WhatsApp</span>
               </a>
               <a
-                href="viber://chat?number=%2B37312345678"
+                href="viber://chat?number=%2B37379162223"
                 className="flex items-center space-x-3 text-purple-400 hover:text-purple-300 transition duration-150 px-3 py-2 rounded-md hover:bg-gray-700"
               >
                 <FaViber className="w-5 h-5" />
