@@ -12,7 +12,9 @@ import {
 } from '@stripe/react-stripe-js';
 
 // Initialize Stripe
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
 
 interface FormData {
   firstName: string;
@@ -68,9 +70,7 @@ function CheckoutForm({ clientSecret }: { clientSecret: string }) {
       >
         {isProcessing ? 'Procesare...' : `Plătește €${total.toFixed(2)}`}
       </button>
-      {message && (
-        <div className="text-red-500 text-center">{message}</div>
-      )}
+      {message && <div className="text-red-500 text-center">{message}</div>}
     </form>
   );
 }
@@ -93,8 +93,8 @@ function CheckoutPageContent() {
 
   // Calculate totals
   const subtotal = total;
-  const shipping = 10;
-  const tax = total * 0.19;
+  const shipping = 0;
+  const tax = 0;
   const orderTotal = subtotal + shipping + tax;
 
   useEffect(() => {
@@ -306,9 +306,7 @@ function CheckoutPageContent() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1">
-                  Țară *
-                </label>
+                <label className="block text-sm font-medium mb-1">Țară *</label>
                 <select
                   name="country"
                   required
@@ -371,11 +369,13 @@ function CheckoutPageContent() {
             </div>
             <div className="flex justify-between">
               <span>Livrare:</span>
-              <span>€{shipping.toFixed(2)}</span>
+              <span className="text-red-600">
+                €{shipping.toFixed(2).toUpperCase()}
+              </span>
             </div>
             <div className="flex justify-between">
-              <span>Taxe (19%):</span>
-              <span>€{tax.toFixed(2)}</span>
+              <span>Taxe (0%):</span>
+              <span className="text-red-600">€{tax.toFixed(2)}</span>
             </div>
           </div>
 

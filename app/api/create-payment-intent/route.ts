@@ -11,10 +11,7 @@ export async function POST(request: NextRequest) {
 
     // Validate required fields
     if (!amount || amount <= 0) {
-      return NextResponse.json(
-        { error: 'Invalid amount' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Invalid amount' }, { status: 400 });
     }
 
     // Create a PaymentIntent with the order amount and currency
