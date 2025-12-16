@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import Hero from './components/Hero';
@@ -65,18 +64,12 @@ export default async function Home() {
                 € {product.price.toFixed(2)}
               </p>
               {/* Link catre pagina de detalii (pe care o vom crea in pasul urmator) */}
-              {product.slug ? (
-                <Link
-                  href={`/product/${product.slug}`}
-                  className="mt-3 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
-                >
-                  Vezi Detalii
-                </Link>
-              ) : (
-                <span className="mt-3 inline-block bg-gray-400 text-gray-600 py-2 px-4 rounded cursor-not-allowed">
-                  Slug lipsă
-                </span>
-              )}
+              <a
+                href={`/product/${product.slug}`}
+                className="mt-3 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
+              >
+                Vezi Detalii
+              </a>
             </div>
           ))}
         </div>

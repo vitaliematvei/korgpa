@@ -67,18 +67,12 @@ export default function ProductPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { addItem } = useCart();
 
-  console.log('ProductPage: Component mounted, params:', params);
-  console.log('ProductPage: Extracted slug:', slug);
-
   useEffect(() => {
     if (!slug) return;
-
-    console.log('ProductPage: Received slug:', slug);
 
     async function fetchProduct() {
       try {
         const data = await client.fetch(PRODUCT_QUERY, { slug });
-        console.log('ProductPage: Fetched product:', data);
         setProduct(data);
       } catch (error) {
         console.error('Error fetching product:', error);

@@ -62,15 +62,10 @@ export default async function PaSeriesPage() {
               {product.price} EUR
             </p>
             <Link
-              href={product.slug ? `/product/${product.slug}` : '#'}
-              className={`block w-full text-center py-2 rounded-md transition duration-300 ${
-                product.slug 
-                  ? 'bg-blue-600 text-white hover:bg-blue-700' 
-                  : 'bg-gray-400 text-gray-600 cursor-not-allowed'
-              }`}
-              onClick={(e) => !product.slug && e.preventDefault()}
+              href={`/product/${product.slug}`}
+              className="block w-full bg-blue-600 text-white text-center py-2 rounded-md hover:bg-blue-700 transition duration-300"
             >
-              {product.slug ? 'Vezi Detalii' : 'Slug lipsă'}
+              Vezi Detalii
             </Link>
           </div>
         ))}
