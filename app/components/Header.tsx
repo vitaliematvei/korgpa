@@ -8,6 +8,7 @@ import {
   HiOutlineMenu,
   HiOutlineX,
 } from 'react-icons/hi';
+import { FaWhatsapp, FaViber } from 'react-icons/fa';
 import { useCart } from '@/app/context/CartContext';
 
 // Shopping Cart Icon
@@ -119,6 +120,28 @@ const Navbar = () => {
               ))}
             </div>
 
+            {/* Contact Info - WhatsApp & Viber */}
+            <div className="hidden md:flex items-center space-x-4">
+              <a
+                href="https://wa.me/37312345678"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 text-green-400 hover:text-green-300 transition duration-150"
+                aria-label="Contact via WhatsApp"
+              >
+                <FaWhatsapp className="w-5 h-5" />
+                <span className="text-sm font-medium">WhatsApp</span>
+              </a>
+              <a
+                href="viber://chat?number=%2B37312345678"
+                className="flex items-center space-x-2 text-purple-400 hover:text-purple-300 transition duration-150"
+                aria-label="Contact via Viber"
+              >
+                <FaViber className="w-5 h-5" />
+                <span className="text-sm font-medium">Viber</span>
+              </a>
+            </div>
+
             {/* Cart Icon (Now a link for better UX) */}
             <Link
               href="/cart"
@@ -170,6 +193,26 @@ const Navbar = () => {
                 onClick={handleLinkClick}
               />
             ))}
+
+            {/* Mobile Contact Info */}
+            <div className="pt-4 pb-2 space-y-3 border-t border-gray-600 mt-4">
+              <a
+                href="https://wa.me/37312345678"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-3 text-green-400 hover:text-green-300 transition duration-150 px-3 py-2 rounded-md hover:bg-gray-700"
+              >
+                <FaWhatsapp className="w-5 h-5" />
+                <span>WhatsApp</span>
+              </a>
+              <a
+                href="viber://chat?number=%2B37312345678"
+                className="flex items-center space-x-3 text-purple-400 hover:text-purple-300 transition duration-150 px-3 py-2 rounded-md hover:bg-gray-700"
+              >
+                <FaViber className="w-5 h-5" />
+                <span>Viber</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
