@@ -54,5 +54,10 @@ export default defineType({
       type: 'url',
       description: 'Link către videoclipul YouTube al produsului',
     },
+    {
+      name: 'price_id',
+      title: 'Stripe Price ID',
+      type: 'string',
+    },
   ],
 });

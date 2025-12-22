@@ -48,6 +48,9 @@ function CheckoutForm({ clientSecret }: { clientSecret: string }) {
       elements,
       confirmParams: {
         return_url: `${window.location.origin}/checkout/success`,
+        receipt_email: (
+          document.getElementsByName('email')[0] as HTMLInputElement
+        )?.value,
       },
     });
 

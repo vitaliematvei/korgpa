@@ -51,12 +51,12 @@ export default function Hero() {
               <HiArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
 
-            <Link
+            {/* <Link
               href="/blog"
               className="px-7 py-3 border-2 border-blue-400/50 text-blue-300 font-bold rounded-lg hover:bg-blue-400/10 hover:border-blue-400 transition-all duration-300 backdrop-blur-sm"
             >
               Citește Blog-ul
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

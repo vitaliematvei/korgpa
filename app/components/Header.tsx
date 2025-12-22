@@ -36,7 +36,7 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { name: 'Home', href: '/' },
   { name: 'Set-uri KORG PA', href: '/pa-series' },
-  { name: 'Blog', href: '/blog' },
+  // { name: 'Blog', href: '/blog' },
   { name: 'Contact', href: '/contact' },
   { name: 'About', href: '/about' },
 ];
