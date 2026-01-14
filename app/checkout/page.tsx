@@ -94,16 +94,16 @@ function CheckoutPageContent() {
   const [clientSecret, setClientSecret] = useState('');
   const [loading, setLoading] = useState(true);
     const [formData, setFormData] = useState<FormData>({
-      const [message, setMessage] = useState<string | null>(null);
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    zip: '',
-    country: 'România',
-  });
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      address: '',
+      city: '',
+      zip: '',
+      country: 'România',
+    });
+    const [message, setMessage] = useState<string | null>(null);
 
   // Calculate totals
   const subtotal = total;
