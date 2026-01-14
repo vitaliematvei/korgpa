@@ -130,21 +130,23 @@ function CheckoutPageContent() {
             address: formData.address,
             city: formData.city,
             zip: formData.zip,
-          if (data.error) {
-            setClientSecret('');
-            setMessage(`Stripe error: ${data.error}`);
-            console.error('Error creating payment intent:', data.error);
-            return;
+          },
+        }),
       });
 
-      const data = await response.json();
+      const data: { error?: string; clientSecret?: string } = await response.json();
 
       if (data.error) {
+        setClientSecret('');
+        setMessage(`Stripe error: ${data.error}`);
         console.error('Error creating payment intent:', data.error);
         return;
       }
 
-      setClientSecret(data.clientSecret);
+      if (data.clientSecret) {
+        setClientSecret(data.clientSecret);
+        setMessage(null);
+      }
     } catch (error) {
       console.error('Error:', error);
     } finally {
@@ -182,26 +184,27 @@ function CheckoutPageContent() {
 
   const options = {
     clientSecret,
-          {message && (
-            <div className="bg-red-50 border-l-4 border-red-500 p-6 mb-8 text-left">
-              <h3 className="font-bold text-red-900 mb-2 flex items-center gap-2">
-                <span className="text-2xl">❌</span>
-                Eroare Stripe
-              </h3>
-              <p className="text-red-800 text-sm mb-3">
-                {message}
-              </p>
-              <p className="text-red-700 text-xs">
-                Verifică cheile Stripe, contul live și logurile Vercel pentru detalii.
-              </p>
-            </div>
-          )}
     appearance,
   };
 
   return (
     <div className="container mx-auto p-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Checkout</h1>
+
+      {message && (
+        <div className="bg-red-50 border-l-4 border-red-500 p-6 mb-8 text-left">
+          <h3 className="font-bold text-red-900 mb-2 flex items-center gap-2">
+            <span className="text-2xl">❌</span>
+            Eroare Stripe
+          </h3>
+          <p className="text-red-800 text-sm mb-3">
+            {message}
+          </p>
+          <p className="text-red-700 text-xs">
+            Verifică cheile Stripe, contul live și logurile Vercel pentru detalii.
+          </p>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Customer Information & Payment */}
