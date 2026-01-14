@@ -93,7 +93,8 @@ function CheckoutPageContent() {
   const { items, total, clearCart } = useCart(); // eslint-disable-line @typescript-eslint/no-unused-vars
   const [clientSecret, setClientSecret] = useState('');
   const [loading, setLoading] = useState(true);
-  const [formData, setFormData] = useState<FormData>({
+    const [formData, setFormData] = useState<FormData>({
+      const [message, setMessage] = useState<string | null>(null);
     firstName: '',
     lastName: '',
     email: '',
@@ -129,9 +130,11 @@ function CheckoutPageContent() {
             address: formData.address,
             city: formData.city,
             zip: formData.zip,
-            country: formData.country,
-          },
-        }),
+          if (data.error) {
+            setClientSecret('');
+            setMessage(`Stripe error: ${data.error}`);
+            console.error('Error creating payment intent:', data.error);
+            return;
       });
 
       const data = await response.json();
@@ -179,6 +182,20 @@ function CheckoutPageContent() {
 
   const options = {
     clientSecret,
+          {message && (
+            <div className="bg-red-50 border-l-4 border-red-500 p-6 mb-8 text-left">
+              <h3 className="font-bold text-red-900 mb-2 flex items-center gap-2">
+                <span className="text-2xl">❌</span>
+                Eroare Stripe
+              </h3>
+              <p className="text-red-800 text-sm mb-3">
+                {message}
+              </p>
+              <p className="text-red-700 text-xs">
+                Verifică cheile Stripe, contul live și logurile Vercel pentru detalii.
+              </p>
+            </div>
+          )}
     appearance,
   };
 
