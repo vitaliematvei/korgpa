@@ -93,17 +93,17 @@ function CheckoutPageContent() {
   const { items, total, clearCart } = useCart(); // eslint-disable-line @typescript-eslint/no-unused-vars
   const [clientSecret, setClientSecret] = useState('');
   const [loading, setLoading] = useState(true);
-    const [formData, setFormData] = useState<FormData>({
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      address: '',
-      city: '',
-      zip: '',
-      country: 'România',
-    });
-    const [message, setMessage] = useState<string | null>(null);
+  const [formData, setFormData] = useState<FormData>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    zip: '',
+    country: 'România',
+  });
+  const [message, setMessage] = useState<string | null>(null);
 
   // Calculate totals
   const subtotal = total;
@@ -134,7 +134,8 @@ function CheckoutPageContent() {
         }),
       });
 
-      const data: { error?: string; clientSecret?: string } = await response.json();
+      const data: { error?: string; clientSecret?: string } =
+        await response.json();
 
       if (data.error) {
         setClientSecret('');
@@ -197,11 +198,10 @@ function CheckoutPageContent() {
             <span className="text-2xl">❌</span>
             Eroare Stripe
           </h3>
-          <p className="text-red-800 text-sm mb-3">
-            {message}
-          </p>
+          <p className="text-red-800 text-sm mb-3">{message}</p>
           <p className="text-red-700 text-xs">
-            Verifică cheile Stripe, contul live și logurile Vercel pentru detalii.
+            Verifică cheile Stripe, contul live și logurile Vercel pentru
+            detalii.
           </p>
         </div>
       )}

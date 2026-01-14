@@ -9,6 +9,9 @@ function CheckoutSuccessContent() {
   const [emailSent, setEmailSent] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [downloadLinks, setDownloadLinks] = useState<
+    { productName: string; url: string }[]
+  >([]);
 
   useEffect(() => {
     const sendEmail = async () => {
@@ -47,14 +50,15 @@ function CheckoutSuccessContent() {
           }),
         });
 
+        const data = await response.json();
         if (response.ok) {
           setEmailSent(true);
+          setDownloadLinks(data.downloadLinks || []);
           // Curăță localStorage după succes
           localStorage.removeItem('korgpa_cart');
           localStorage.removeItem('korgpa_checkout_email');
         } else {
-          const error = await response.json();
-          setEmailError(error.error || 'Failed to send email');
+          setEmailError(data.error || 'Failed to send email');
         }
       } catch (error) {
         console.error('Error sending email:', error);
@@ -108,6 +112,28 @@ function CheckoutSuccessContent() {
                 ✅ Verifică și folderul <strong>Spam/Junk</strong>
               </li>
             </ul>
+            {downloadLinks.length > 0 && (
+              <div className="mt-6">
+                <h4 className="font-bold mb-2">Descarcă direct de aici:</h4>
+                <ul className="space-y-2">
+                  {downloadLinks.map((link) => (
+                    <li key={link.url}>
+                      <a
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
+                      >
+                        📥 {link.productName}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-gray-500 mt-2">
+                  Link-urile rămân active 30 de zile.
+                </p>
+              </div>
+            )}
           </div>
         )}
 
