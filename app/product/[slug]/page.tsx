@@ -65,6 +65,7 @@ export default function ProductPage() {
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showAddedMessage, setShowAddedMessage] = useState(false);
   const { addItem } = useCart();
 
   useEffect(() => {
@@ -106,12 +107,14 @@ export default function ProductPage() {
     addItem({
       id: product._id,
       name: product.name,
+      slug: product.slug,
       price: product.price,
       quantity: quantity,
       image: product.image ? urlFor(product.image).url() : undefined,
     });
 
-    alert(`✓ Adăugat ${quantity} x "${product.name}" în cărucior!`);
+    setShowAddedMessage(true);
+    setTimeout(() => setShowAddedMessage(false), 3000);
     setQuantity(1);
   };
 
@@ -220,9 +223,16 @@ export default function ProductPage() {
             🛒 Adaugă în Coș
           </button>
 
+          {/* Success Message */}
+          {showAddedMessage && (
+            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4 animate-pulse">
+              ✓ Produs adăugat în coș cu succes!
+            </div>
+          )}
+
           {/* Additional Info */}
           <div className="bg-gray-50 py-4 rounded mt-6 text-sm">
-            <strong>Garanție: </strong> de caliate<br></br>
+            <strong>Garanție: </strong> de calitate<br></br>
             <strong>Livrare:</strong> max. 3 zile
             <p>
               <strong>Disponibilitate:</strong>{' '}

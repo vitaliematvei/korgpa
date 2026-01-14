@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 import Stripe from 'stripe';
+import { sendDownloadEmail } from '@/lib/email';
+import { generateDownloadLink } from '@/app/api/download/downloadLink';
+import { client } from '@/sanity/lib/client';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-12-15.clover',
@@ -14,44 +17,107 @@ export async function POST(request: NextRequest) {
     const headersList = await headers();
     const sig = headersList.get('stripe-signature');
 
+    if (!sig) {
+      return NextResponse.json(
+        { error: 'Missing stripe-signature' },
+        { status: 400 }
+      );
+    }
+
     let event: Stripe.Event;
 
     try {
-      event = stripe.webhooks.constructEvent(body, sig!, endpointSecret);
-    } catch (err: any) {
-      console.error(`Webhook signature verification failed.`, err.message);
-      return NextResponse.json({ error: 'Webhook error' }, { status: 400 });
+      event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
+    } catch (err: unknown) {
+      console.error(
+        `❌ Webhook signature verification failed.`,
+        err instanceof Error ? err.message : err
+      );
+      return NextResponse.json(
+        { error: 'Webhook signature error' },
+        { status: 400 }
+      );
     }
 
     // Handle the event
     switch (event.type) {
       case 'payment_intent.succeeded':
         const paymentIntent = event.data.object as Stripe.PaymentIntent;
-        console.log('PaymentIntent was successful!', paymentIntent.id);
+        const customerEmail = paymentIntent.metadata?.email;
+        const items = paymentIntent.metadata?.items
+          ? JSON.parse(paymentIntent.metadata.items)
+          : [];
 
-        // Here you can:
-        // - Update order status in database
-        // - Send confirmation email
-        // - Update inventory
-        // - etc.
+        if (customerEmail && items.length > 0) {
+          try {
+            // Generează link-uri de download pentru fiecare produs
+            const baseUrl =
+              process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+            const downloadLinks = [];
 
+            for (const item of items) {
+              // Obține detalii produs din Sanity pentru a verifica dacă are fișier
+              const product = await client.fetch(
+                `*[_type == "product" && _id == $productId][0] {
+                  _id,
+                  name,
+                  "hasDownload": defined(downloadFile) || defined(downloadUrl)
+                }`,
+                { productId: item.id }
+              );
+
+              if (product && product.hasDownload) {
+                const downloadUrl = generateDownloadLink(
+                  baseUrl,
+                  paymentIntent.id,
+                  item.id
+                );
+
+                downloadLinks.push({
+                  productName: item.name,
+                  url: downloadUrl,
+                });
+              }
+            }
+
+            // Trimite email cu link-uri de download
+            await sendDownloadEmail(customerEmail, {
+              orderId: paymentIntent.id,
+              items: items.map(
+                (item: { name: string; price: number; quantity: number }) => ({
+                  name: item.name,
+                  price: item.price,
+                  quantity: item.quantity,
+                })
+              ),
+              total: paymentIntent.amount / 100, // Convert from cents
+              downloadLinks,
+            });
+
+            console.log(
+              `✅ Email trimis cu succes către ${customerEmail} cu ${downloadLinks.length} link-uri download`
+            );
+          } catch (emailError) {
+            console.error(`📧 Eroare la trimiterea emailului:`, emailError);
+          }
+        } else {
+          console.warn('⚠️ Email client sau items lipsă în metadate');
+        }
         break;
+
       case 'payment_intent.payment_failed':
         const failedPayment = event.data.object as Stripe.PaymentIntent;
-        console.log('PaymentIntent failed!', failedPayment.id);
-
-        // Handle failed payment
-        // - Send failure notification
-        // - Update order status
-
+        console.error('Payment failed:', failedPayment.id);
         break;
+
       default:
-        console.log(`Unhandled event type ${event.type}`);
+        // Unhandled event type - no action needed
+        break;
     }
 
     return NextResponse.json({ received: true });
-  } catch (error: any) {
-    console.error('Webhook error:', error);
+  } catch (error: unknown) {
+    console.error('💥 Webhook handler global error:', error);
     return NextResponse.json(
       { error: 'Webhook handler failed' },
       { status: 500 }

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import Hero from './components/Hero';
@@ -64,12 +65,12 @@ export default async function Home() {
                 € {product.price.toFixed(2)}
               </p>
               {/* Link catre pagina de detalii (pe care o vom crea in pasul urmator) */}
-              <a
+              <Link
                 href={`/product/${product.slug}`}
                 className="mt-3 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
               >
                 Vezi Detalii
-              </a>
+              </Link>
             </div>
           ))}
         </div>

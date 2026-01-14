@@ -7,7 +7,13 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(request: NextRequest) {
   try {
-    const { amount, currency = 'eur', items } = await request.json();
+    const {
+      amount,
+      currency = 'eur',
+      items,
+      email,
+      shippingInfo,
+    } = await request.json();
 
     // Validate required fields
     if (!amount || amount <= 0) {
@@ -23,6 +29,8 @@ export async function POST(request: NextRequest) {
       },
       metadata: {
         items: JSON.stringify(items || []),
+        email: email || '',
+        shippingInfo: JSON.stringify(shippingInfo || {}),
       },
     });
 
@@ -30,10 +38,12 @@ export async function POST(request: NextRequest) {
       clientSecret: paymentIntent.client_secret,
       paymentIntentId: paymentIntent.id,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error creating payment intent:', error);
     return NextResponse.json(
-      { error: error.message || 'Internal server error' },
+      {
+        error: error instanceof Error ? error.message : 'Internal server error',
+      },
       { status: 500 }
     );
   }

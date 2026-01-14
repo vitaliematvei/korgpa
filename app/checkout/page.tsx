@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/app/context/CartContext';
 import { loadStripe } from '@stripe/stripe-js';
@@ -28,10 +28,18 @@ interface FormData {
 }
 
 // Stripe Checkout Form Component
-function CheckoutForm({ clientSecret }: { clientSecret: string }) {
+function CheckoutForm({
+  clientSecret,
+  email,
+  items,
+}: {
+  clientSecret: string;
+  email: string;
+  items: Array<{ id: string; name: string; price: number; quantity: number }>;
+}) {
   const stripe = useStripe();
   const elements = useElements();
-  const { items, total, clearCart } = useCart();
+  const { total, clearCart } = useCart();
   const [isProcessing, setIsProcessing] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -44,13 +52,15 @@ function CheckoutForm({ clientSecret }: { clientSecret: string }) {
 
     setIsProcessing(true);
 
+    // Salvează datele în localStorage pentru success page
+    localStorage.setItem('korgpa_checkout_email', email);
+    localStorage.setItem('korgpa_cart', JSON.stringify(items));
+
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         return_url: `${window.location.origin}/checkout/success`,
-        receipt_email: (
-          document.getElementsByName('email')[0] as HTMLInputElement
-        )?.value,
+        receipt_email: email,
       },
     });
 
@@ -80,7 +90,7 @@ function CheckoutForm({ clientSecret }: { clientSecret: string }) {
 
 // Main Checkout Page Component
 function CheckoutPageContent() {
-  const { items, total, clearCart } = useCart();
+  const { items, total, clearCart } = useCart(); // eslint-disable-line @typescript-eslint/no-unused-vars
   const [clientSecret, setClientSecret] = useState('');
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState<FormData>({
@@ -100,14 +110,7 @@ function CheckoutPageContent() {
   const tax = 0;
   const orderTotal = subtotal + shipping + tax;
 
-  useEffect(() => {
-    if (items.length === 0) return;
-
-    // Create PaymentIntent as soon as the page loads
-    createPaymentIntent();
-  }, [items]);
-
-  const createPaymentIntent = async () => {
+  const createPaymentIntent = useCallback(async () => {
     try {
       const response = await fetch('/api/create-payment-intent', {
         method: 'POST',
@@ -118,6 +121,16 @@ function CheckoutPageContent() {
           amount: orderTotal,
           currency: 'eur',
           items: items,
+          email: formData.email || 'customer@temp.com',
+          shippingInfo: {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            phone: formData.phone,
+            address: formData.address,
+            city: formData.city,
+            zip: formData.zip,
+            country: formData.country,
+          },
         }),
       });
 
@@ -134,7 +147,14 @@ function CheckoutPageContent() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [orderTotal, items, formData.email]);
+
+  useEffect(() => {
+    if (items.length === 0) return;
+
+    // Create PaymentIntent as soon as the page loads
+    createPaymentIntent();
+  }, [items, createPaymentIntent]);
 
   if (items.length === 0) {
     return (
@@ -340,7 +360,11 @@ function CheckoutPageContent() {
               </div>
             ) : clientSecret ? (
               <Elements options={options} stripe={stripePromise}>
-                <CheckoutForm clientSecret={clientSecret} />
+                <CheckoutForm
+                  clientSecret={clientSecret}
+                  email={formData.email}
+                  items={items}
+                />
               </Elements>
             ) : (
               <div className="text-center py-8 text-red-500">
@@ -372,9 +396,7 @@ function CheckoutPageContent() {
             </div>
             <div className="flex justify-between">
               <span>Livrare:</span>
-              <span className="text-red-600">
-                €{shipping.toFixed(2).toUpperCase()}
-              </span>
+              <span className="text-red-600">€{shipping.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
               <span>Taxe (0%):</span>

@@ -55,6 +55,20 @@ export default defineType({
       description: 'Link către videoclipul YouTube al produsului',
     },
     {
+      name: 'downloadFile',
+      title: 'Download File',
+      type: 'file',
+      description:
+        'Fișierul digital care va fi descărcat de cumpărător (ZIP, RAR, etc)',
+    },
+    {
+      name: 'downloadUrl',
+      title: 'Download URL (Alternative)',
+      type: 'url',
+      description:
+        'Sau un link extern către fișier (Google Drive, Dropbox, etc)',
+    },
+    {
       name: 'price_id',
       title: 'Stripe Price ID',
       type: 'string',

@@ -54,14 +54,13 @@ export default function ContactPage() {
 
         await emailjs.send(serviceId, templateId, templateParams, publicKey);
 
-        alert('✓ Mesajul tău a fost trimis! Te vom contacta în curând.');
         setFormData({ name: '', email: '', subject: '', message: '' });
         setSubmitted(true);
-        setTimeout(() => setSubmitted(false), 3000);
-      } catch (err: any) {
+        setTimeout(() => setSubmitted(false), 5000);
+      } catch (err: unknown) {
         console.error('EmailJS error details:', err);
         setError(
-          `Eroare la trimiterea mesajului: ${err?.text || 'Configurație EmailJS lipsă sau invalidă'}`
+          `Eroare la trimiterea mesajului: ${(err as any)?.text || (err instanceof Error ? err.message : 'Configurație EmailJS lipsă sau invalidă')}` // eslint-disable-line @typescript-eslint/no-explicit-any
         );
       } finally {
         setLoading(false);
@@ -83,7 +82,7 @@ export default function ContactPage() {
                 <strong>Email:</strong>
                 <br />
                 <a
-                  href="muz4muz@gmail.com"
+                  href="mailto:muz4muz@gmail.com"
                   className="text-blue-600 hover:underline"
                 >
                   muz4muz@gmail.com

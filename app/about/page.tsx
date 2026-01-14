@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function AboutPage() {
   return (
     <div className="container mx-auto p-4 py-8">
@@ -23,9 +25,9 @@ export default function AboutPage() {
         </ul>
         <p className="text-gray-600 text-sm mt-8">
           Alte întrebări?{' '}
-          <a href="/contact" className="text-blue-600 hover:underline">
+          <Link href="/contact" className="text-blue-600 hover:underline">
             Contactează-ne
-          </a>
+          </Link>
         </p>
       </div>
     </div>
