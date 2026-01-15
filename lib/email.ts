@@ -127,7 +127,7 @@ export async function sendDownloadEmail(
             </p>
             <ul style="color: #555;">
               <li>📧 Email: <a href="mailto:muz4muz@gmail.com" style="color: #0066cc;">muz4muz@gmail.com</a></li>
-              <li>📱 WhatsApp: <a href="https://wa.me/37379162223" style="color: #0066cc;">+373 791 62 223</a></li>
+              <li>📱 WhatsApp: <a href="https://wa.me/37379162223" style="color: #0066cc;">+37379162223</a></li>
             </ul>
 
           </div>
