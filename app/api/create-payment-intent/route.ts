@@ -34,6 +34,12 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    // Log pentru debugging
+    console.log('PaymentIntent creat:', {
+      id: paymentIntent.id,
+      metadata: paymentIntent.metadata,
+    });
+
     return NextResponse.json({
       clientSecret: paymentIntent.client_secret,
       paymentIntentId: paymentIntent.id,
