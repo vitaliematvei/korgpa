@@ -63,7 +63,7 @@ export async function sendDownloadEmail(
 
   try {
     const data = await resend.emails.send({
-      from: 'KORG PA Sets PRO <comenzi@korgpasets.com>',
+      from: `KORG PA Sets PRO <${process.env.RESEND_FROM_EMAIL}>`,
       to: [email],
       subject: `✅ Confirmare comandă #${orderDetails.orderId.slice(-8)}`,
       html: `
