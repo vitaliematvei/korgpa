@@ -256,6 +256,9 @@ export default function ProductPage() {
       </div>
 
       {/* Descriere */}
+      {/* vom pune ecranul interactiv aici */}
+
+      <div> VREAU SA PUN CEVA Aici</div>
       {product.details && product.details.length > 0 && (
         <div className="text-gray-700 leading-relaxed max-w-9xl mx-auto">
           <PortableText value={product.details} />
