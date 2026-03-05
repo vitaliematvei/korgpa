@@ -750,7 +750,7 @@ export default function KorgStyleManager({
       className={`bg-[#121212] p-2 md:p-4 flex items-center justify-center font-sans text-slate-200 ${wrapperClassName ?? ''}`}
     >
       <div
-        className={`w-full max-w-[90vw] h-auto md:w-173 md:h-140 bg-[#2a2a2a] shadow-[0_20px_50px_rgba(0,0,0,0.8)] border-t-4 border-[#444] overflow-auto flex flex-col scale-[0.5] sm:scale-[0.6] md:scale-[0.75] lg:scale-[0.85] xl:scale-100 origin-center ${panelClassName ?? ''}`}
+        className={`max-w-[90vw] h-auto md:w-173 md:h-140 bg-[#2a2a2a] shadow-[0_20px_50px_rgba(0,0,0,0.8)] border-t-4 border-[#444] overflow-auto flex flex-col scale-[0.5] sm:scale-[0.6] md:scale-[0.75] lg:scale-[0.85] xl:scale-100 origin-center ${panelClassName ?? ''}`}
       >
         <TopBar
           activeTab={activeTab}
