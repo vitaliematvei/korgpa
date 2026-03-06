@@ -261,8 +261,9 @@ export default function ProductPage() {
       {/* vom pune ecranul interactiv aici */}
       <div className="bg-linear-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 p-6 mb-6 rounded-lg shadow-sm">
         <p className="text-xl md:text-2xl font-semibold text-gray-800 text-center">
-          📊 Analizează conținutul SET-ului în detaliu -{' '}
-          <span className="text-indigo-600 font-semibold">
+          📊 Analizează conținutul SET-ului în detaliu
+          <br></br>
+          <span className="text-green-600 font-semibold">
             Selectează categoria și descoperă conținutul complet: stiluri,
             performanțe, PAD-uri și sound-uri
           </span>
@@ -281,7 +282,6 @@ export default function ProductPage() {
         wrapperClassName="py-4"
         panelClassName="max-w-[1200px]"
       />
-      )
       {product.details && product.details.length > 0 && (
         <div className="text-gray-700 leading-relaxed max-w-9xl mx-auto">
           <PortableText value={product.details} />
