@@ -791,7 +791,6 @@ export const KORG_SOUND_DATA: Record<string, KorgSoundBank> = {
       { name: '---' },
       { name: '---' },
       { name: '---' },
-      // ------120
       { name: 'Etno Drums' },
       { name: 'Etno fill 1' },
       { name: 'manea 4' },
