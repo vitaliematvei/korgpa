@@ -1,0 +1,24 @@
+import type { ReactNode } from 'react';
+import { getAllTutorials } from '@/lib/tutorials';
+import TutorialSidebar from './TutorialSidebar';
+
+export default async function TutorialeLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const tutorials = await getAllTutorials();
+
+  return (
+    <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-4 bg-[#f8fafc] px-4 py-6 lg:grid-cols-[280px_1fr] lg:px-6">
+      <aside className="h-fit rounded-xl border border-slate-200 bg-white p-4 shadow-sm lg:sticky lg:top-4">
+        <h2 className="mb-3 text-base font-semibold uppercase tracking-wide text-orange-600">
+          Tutoriale PA4X
+        </h2>
+        <TutorialSidebar tutorials={tutorials} />
+      </aside>
+
+      <section>{children}</section>
+    </div>
+  );
+}
