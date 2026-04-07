@@ -74,4 +74,18 @@ export default defineType({
       type: 'string',
     },
   ],
+  preview: {
+    select: {
+      title: 'name',
+      media: 'image',
+      subtitle: 'slug.current',
+    },
+    prepare({ title, subtitle, media }) {
+      return {
+        title: title || 'Untitled product',
+        subtitle: subtitle ? `/${subtitle}` : 'No slug',
+        media,
+      };
+    },
+  },
 });

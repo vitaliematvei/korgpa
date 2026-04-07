@@ -5,14 +5,30 @@ import { sendDownloadEmail } from '@/lib/email';
 import { generateDownloadLink } from '@/app/api/download/downloadLink';
 import { client } from '@/sanity/lib/client';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-12-15.clover',
-});
+function getStripeClient() {
+  const secretKey = process.env.STRIPE_SECRET_KEY;
 
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+  if (!secretKey) {
+    throw new Error('Missing STRIPE_SECRET_KEY');
+  }
+
+  return new Stripe(secretKey, {
+    apiVersion: '2025-12-15.clover',
+  });
+}
 
 export async function POST(request: NextRequest) {
   try {
+    const stripe = getStripeClient();
+    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+    if (!endpointSecret) {
+      return NextResponse.json(
+        { error: 'Missing STRIPE_WEBHOOK_SECRET' },
+        { status: 500 },
+      );
+    }
+
     const body = await request.text();
     const headersList = await headers();
     const sig = headersList.get('stripe-signature');
@@ -20,7 +36,7 @@ export async function POST(request: NextRequest) {
     if (!sig) {
       return NextResponse.json(
         { error: 'Missing stripe-signature' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -31,11 +47,11 @@ export async function POST(request: NextRequest) {
     } catch (err: unknown) {
       console.error(
         `❌ Webhook signature verification failed.`,
-        err instanceof Error ? err.message : err
+        err instanceof Error ? err.message : err,
       );
       return NextResponse.json(
         { error: 'Webhook signature error' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -63,14 +79,14 @@ export async function POST(request: NextRequest) {
                   name,
                   "hasDownload": defined(downloadFile) || defined(downloadUrl)
                 }`,
-                { productId: item.id }
+                { productId: item.id },
               );
 
               if (product && product.hasDownload) {
                 const downloadUrl = generateDownloadLink(
                   baseUrl,
                   paymentIntent.id,
-                  item.id
+                  item.id,
                 );
 
                 downloadLinks.push({
@@ -88,14 +104,14 @@ export async function POST(request: NextRequest) {
                   name: item.name,
                   price: item.price,
                   quantity: item.quantity,
-                })
+                }),
               ),
               total: paymentIntent.amount / 100, // Convert from cents
               downloadLinks,
             });
 
             console.log(
-              `✅ Email trimis cu succes către ${customerEmail} cu ${downloadLinks.length} link-uri download`
+              `✅ Email trimis cu succes către ${customerEmail} cu ${downloadLinks.length} link-uri download`,
             );
           } catch (emailError) {
             console.error(`📧 Eroare la trimiterea emailului:`, emailError);
@@ -120,7 +136,7 @@ export async function POST(request: NextRequest) {
     console.error('💥 Webhook handler global error:', error);
     return NextResponse.json(
       { error: 'Webhook handler failed' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

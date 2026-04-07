@@ -4,6 +4,8 @@ import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import Hero from './components/Hero';
 
+export const revalidate = 0;
+
 const PRODUCTS_QUERY = `
   *[_type == "product"] {
     _id,
