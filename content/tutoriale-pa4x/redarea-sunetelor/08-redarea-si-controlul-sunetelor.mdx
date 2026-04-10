@@ -1,0 +1,165 @@
+---
+title: 'Redarea si controlul sunetelor'
+description: 'Cum folosesti claviatura, pedalele, slider-ele si switch-urile pentru a controla sunetele pe KORG Pa4X.'
+order: 8
+category: 'Redarea sunetelor'
+level: 'Incepator'
+estimatedTime: '4 min'
+---
+
+## Cantatul la claviatura
+
+Claviatura instrumentului functioneaza similar cu o claviatura de pian.
+Pur si simplu canta.
+
+La unele Sounds, daca apesi o tasta in timp ce este deja tinuta apasata,
+sunetul se poate modifica (de exemplu, poti auzi mai mult vibrato) = AFTERTOUCH.
+
+## Folosirea pedalelor
+
+Pedalele pot avea functii diferite, in functie de cum sunt programate.
+
+Pedala <span className="font-bold">Damper</span> are rol de sustinere:
+pastreaza notele active pana cand eliberezi pedala.
+
+Pedala asignabila (sau footswitch-ul) poate avea alte functii, in functie de
+setarea facuta in pagina <span className="font-bold">Global > Controllers > Foot</span>.
+
+## Folosirea slider-elor asignabile
+
+In functie de Keyboard Set-ul ales, slider-ele pot controla diferite functii,
+precum:
+
+- nivelurile de volum ale diferitelor Sounds;
+- drawbar-ele de orga;
+- alte functii asignabile.
+
+Modul lor de lucru este indicat de indicatorul butonului <span className="font-bold">SLIDER MODE</span>.
+
+## Folosirea switch-urilor asignabile
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/redare-sunete/asignable-swith.jpg"
+    alt="Butoane assignable switch pe KORG Pa4X"
+    className="mx-auto"
+  />
+</figure>
+
+In functie de Keyboard Set-ul selectat si de functiile DNC asignate,
+aceste controlere pot face lucruri diferite.
+
+Switch-urile pot:
+
+- rezerva o functie care va fi declansata in timpul interpretarii;
+- activa sau dezactiva o functie prin apasare (mod toggle/comutare).
+
+<h2 className="text-center text-blue-700">
+  Semnificatia indicatorului de status
+</h2>
+
+<div className="my-6 overflow-x-auto rounded-lg border-2 border-slate-500">
+  <table className="w-full border-collapse text-sm text-slate-900">
+    <thead className="bg-slate-300 text-left">
+      <tr>
+        <th className="border-2 border-slate-500 px-4 py-2 font-bold text-center">
+          Starea indicatorului
+        </th>
+        <th className="border-2 border-slate-500 px-4 py-2 font-bold text-center">
+          Ce inseamna
+        </th>
+        <th className="border-2 border-slate-500 px-4 py-2 font-bold text-center">
+          Ce faci in practica
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr className="odd:bg-white even:bg-slate-100">
+        <td className="border-2 border-slate-500 px-4 py-2 align-top font-semibold">
+          Oprit
+        </td>
+        <td className="border-2 border-slate-500 px-4 py-2">
+          Nu este asignata nicio functie DNC.
+        </td>
+        <td className="border-2 border-slate-500 px-4 py-2">
+          Butonul nu are efect momentan. Daca vrei sa il folosesti, asignaza o
+          functie DNC in setarile curente.
+        </td>
+      </tr>
+      <tr className="odd:bg-white even:bg-slate-100">
+        <td className="border-2 border-slate-500 px-4 py-2 align-top font-semibold">
+          Rosu continuu
+        </td>
+        <td className="border-2 border-slate-500 px-4 py-2">
+          O functie DNC de tip booking (programare) este asignata si pregatita
+          pentru declansare.
+        </td>
+        <td className="border-2 border-slate-500 px-4 py-2">
+          Functia este pregatita. Declanseaz-o in momentul muzical potrivit, in
+          timp ce canti.
+        </td>
+      </tr>
+      <tr className="odd:bg-white even:bg-slate-100">
+        <td className="border-2 border-slate-500 px-4 py-2 align-top font-semibold">
+          Rosu intermitent
+        </td>
+        <td className="border-2 border-slate-500 px-4 py-2">
+          Functia DNC de tip booking (programare) asteapta sa fie executata,
+          apoi indicatorul revine la rosu continuu.
+        </td>
+        <td className="border-2 border-slate-500 px-4 py-2">
+          Nu este nevoie sa reapesi butonul. Continua interpretarea si asteapta
+          executarea automata a functiei.
+        </td>
+      </tr>
+      <tr className="odd:bg-white even:bg-slate-100">
+        <td className="border-2 border-slate-500 px-4 py-2 align-top font-semibold">
+          Verde continuu
+        </td>
+        <td className="border-2 border-slate-500 px-4 py-2">
+          Functia DNC de tip toggle (comutare) este disponibila.
+        </td>
+        <td className="border-2 border-slate-500 px-4 py-2">
+          Apasa butonul o data pentru activare. Este util pentru efecte pe care
+          vrei sa le tii active o perioada.
+        </td>
+      </tr>
+      <tr className="odd:bg-white even:bg-slate-100">
+        <td className="border-2 border-slate-500 px-4 py-2 align-top font-semibold">
+          Verde intermitent
+        </td>
+        <td className="border-2 border-slate-500 px-4 py-2">
+          Functia toggle (comutare) este activa. Apasa din nou pentru
+          dezactivare.
+        </td>
+        <td className="border-2 border-slate-500 px-4 py-2">
+          Efectul este deja activ in sunetul curent. Apasa din nou doar cand
+          vrei sa revii la starea initiala.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## Folosirea joystick-ului
+
+Cand misti joystick-ul spre stanga sau spre dreapta, de obicei se modifica
+inaltimea sunetului (pitch).
+
+Cand il impingi in fata, de regula se activeaza modulatia, dar acest lucru
+depinde de Sound-ul selectat.
+
+La orgile electro-mecanice, impingerea joystick-ului in fata schimba viteza
+difuzorului rotativ.
+
+Ce se intampla cand tragi joystick-ul inapoi depinde, de asemenea, de
+Sound-ul selectat. Cel mai bine este sa experimentezi direct pe fiecare Sound.
+
+## Folosirea ribbon controller-ului
+
+Glisarea la stanga-dreapta pe ribbon controller modifica, de obicei,
+stralucirea (brilliance) sunetului si/sau inaltimea (pitch).
+
+Comportamentul exact depinde de Sound-ul selectat.
+
+{/* Am RAMAS Tempo and Metronome pg.49 */}

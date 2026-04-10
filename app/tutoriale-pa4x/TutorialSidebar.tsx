@@ -315,7 +315,7 @@ export default function TutorialSidebar({ tutorials }: TutorialSidebarProps) {
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3 lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
       <label htmlFor="tutorial-sidebar-search" className="sr-only">
         Cauta in tutoriale
       </label>
@@ -328,13 +328,15 @@ export default function TutorialSidebar({ tutorials }: TutorialSidebarProps) {
         className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
       />
 
-      {filteredTree.length > 0 ? (
-        renderNodes(filteredTree)
-      ) : (
-        <p className="rounded-md border border-dashed border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-600">
-          Nu exista rezultate pentru cautarea curenta.
-        </p>
-      )}
+      <div className="lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1">
+        {filteredTree.length > 0 ? (
+          renderNodes(filteredTree)
+        ) : (
+          <p className="rounded-md border border-dashed border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-600">
+            Nu exista rezultate pentru cautarea curenta.
+          </p>
+        )}
+      </div>
     </div>
   );
 }
