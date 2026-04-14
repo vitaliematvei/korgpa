@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -8,6 +8,7 @@ import {
   HiOutlineShoppingCart,
   HiOutlineMenu,
   HiOutlineX,
+  HiOutlineChevronDown,
 } from 'react-icons/hi';
 import { FaWhatsapp, FaViber } from 'react-icons/fa';
 import { useCart } from '@/app/context/CartContext';
@@ -34,10 +35,29 @@ interface NavItem {
   href: string;
 }
 
-const NAV_ITEMS: NavItem[] = [
+interface NavDropdownItem {
+  name: string;
+  children: NavItem[];
+}
+
+type NavEntry = NavItem | NavDropdownItem;
+
+function isDropdown(item: NavEntry): item is NavDropdownItem {
+  return 'children' in item;
+}
+
+const TUTORIALS_DROPDOWN: NavDropdownItem = {
+  name: 'Tutoriale',
+  children: [
+    { name: 'Tutoriale PA4X', href: '/tutoriale-pa4x' },
+    { name: 'Muzica pentru Naivi', href: '/muzica-pentru-naivi' },
+  ],
+};
+
+const NAV_ITEMS: NavEntry[] = [
   { name: 'Home', href: '/' },
   { name: 'Set-uri KORG PA', href: '/pa-series' },
-  { name: 'Tutoriale PA4X', href: '/tutoriale-pa4x' },
+  TUTORIALS_DROPDOWN,
   // { name: 'Blog', href: '/blog' },
   { name: 'Contact', href: '/contact' },
   { name: 'About', href: '/about' },
@@ -58,7 +78,7 @@ const NavLink = ({
   isReadingTutorial = false,
   onClick,
 }: NavLinkProps) => {
-  const isFeaturedTutorial = item.href === '/tutoriale-pa4x';
+  const isFeaturedTutorial = false;
   const isTrafficSetItem = item.href === '/pa-series';
   const trafficEffectClass = isReadingTutorial
     ? 'traffic-light-item-quiet'
@@ -76,13 +96,9 @@ const NavLink = ({
     ? isActive
       ? `${trafficEffectClass} traffic-light-item-desktop block px-4 py-2 text-sm font-semibold text-white border border-white/30`
       : `${trafficEffectClass} traffic-light-item-desktop block px-4 py-2 text-sm font-semibold text-white border border-white/20`
-    : isFeaturedTutorial
-      ? isActive
-        ? 'block px-4 py-2 text-sm font-semibold text-amber-100 bg-amber-400/20 border border-amber-300/45 shadow-[0_0_0_1px_rgba(252,211,77,0.35),0_10px_20px_rgba(251,191,36,0.16)]'
-        : 'block px-4 py-2 text-sm font-semibold text-amber-200 bg-amber-400/12 border border-amber-300/35 hover:bg-amber-300/18 hover:text-amber-100'
-      : isActive
-        ? 'block px-4 py-2 text-sm font-semibold text-white bg-white/10 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]'
-        : 'block px-4 py-2 text-sm font-medium text-slate-200 hover:bg-white/6 hover:text-white';
+    : isActive
+      ? 'block px-4 py-2 text-sm font-semibold text-white bg-white/10 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]'
+      : 'block px-4 py-2 text-sm font-medium text-slate-200 hover:bg-white/6 hover:text-white';
 
   return (
     <Link
@@ -96,11 +112,127 @@ const NavLink = ({
   );
 };
 
+interface NavDropdownProps {
+  item: NavDropdownItem;
+  isMobile?: boolean;
+  isReadingTutorial?: boolean;
+  pathname: string;
+  onClick?: () => void;
+}
+
+const NavDropdown = ({
+  item,
+  isMobile = false,
+  isReadingTutorial = false,
+  pathname,
+  onClick,
+}: NavDropdownProps) => {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const isAnyChildActive = item.children.some((child) =>
+    pathname.startsWith(child.href),
+  );
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  if (isMobile) {
+    return (
+      <div>
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          className={`flex w-full items-center justify-between rounded-full px-4 py-3 text-left text-base font-semibold transition-all duration-200 ${
+            isAnyChildActive
+              ? 'text-amber-200 bg-amber-400/12 border border-amber-300/35'
+              : 'text-amber-200 bg-amber-400/12 border border-amber-300/35 hover:bg-amber-300/18 hover:text-amber-100'
+          }`}
+          aria-expanded={open}
+        >
+          {item.name}
+          <HiOutlineChevronDown
+            className={`h-4 w-4 transition-transform ${open ? 'rotate-180' : ''}`}
+          />
+        </button>
+        {open && (
+          <div className="mt-1 ml-4 space-y-1 border-l border-amber-300/20 pl-3">
+            {item.children.map((child) => (
+              <Link
+                key={child.href}
+                href={child.href}
+                onClick={() => {
+                  setOpen(false);
+                  onClick?.();
+                }}
+                className={`block rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ${
+                  pathname.startsWith(child.href)
+                    ? 'text-amber-100 bg-amber-400/20 border border-amber-300/45'
+                    : 'text-slate-100 hover:bg-white/8 hover:text-white'
+                }`}
+              >
+                {child.name}
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className={`flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 whitespace-nowrap ${
+          isAnyChildActive
+            ? 'text-amber-100 bg-amber-400/20 border border-amber-300/45 shadow-[0_0_0_1px_rgba(252,211,77,0.35),0_10px_20px_rgba(251,191,36,0.16)]'
+            : 'text-amber-200 bg-amber-400/12 border border-amber-300/35 hover:bg-amber-300/18 hover:text-amber-100'
+        }`}
+        aria-expanded={open}
+        aria-haspopup="true"
+      >
+        {item.name}
+        <HiOutlineChevronDown
+          className={`h-3.5 w-3.5 transition-transform ${open ? 'rotate-180' : ''}`}
+        />
+      </button>
+      {open && (
+        <div className="absolute left-0 top-full z-50 mt-1.5 min-w-50 rounded-xl border border-white/10 bg-slate-900/95 p-1.5 shadow-lg backdrop-blur">
+          {item.children.map((child) => (
+            <Link
+              key={child.href}
+              href={child.href}
+              onClick={() => setOpen(false)}
+              className={`block rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${
+                pathname.startsWith(child.href)
+                  ? 'text-amber-100 bg-amber-400/20'
+                  : 'text-slate-200 hover:bg-white/8 hover:text-white'
+              }`}
+            >
+              {child.name}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 // Main Component
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  const isReadingTutorial = pathname?.startsWith('/tutoriale-pa4x') ?? false;
+  const isReadingTutorial =
+    (pathname?.startsWith('/tutoriale-pa4x') ?? false) ||
+    (pathname?.startsWith('/muzica-pentru-naivi') ?? false);
   const { items } = useCart();
   const cartItemCount = items.reduce((total, item) => total + item.quantity, 0);
 
@@ -148,15 +280,24 @@ const Navbar = () => {
             {/* Desktop Navigation (Centered) */}
             <div className="hidden justify-center lg:flex">
               <div className="flex items-center gap-2 xl:gap-3 rounded-full border border-white/8 bg-white/3 p-1.5">
-                {NAV_ITEMS.map((item) => (
-                  <NavLink
-                    key={item.name}
-                    item={item}
-                    isActive={pathname === item.href}
-                    isReadingTutorial={isReadingTutorial}
-                    onClick={undefined}
-                  />
-                ))}
+                {NAV_ITEMS.map((item) =>
+                  isDropdown(item) ? (
+                    <NavDropdown
+                      key={item.name}
+                      item={item}
+                      isReadingTutorial={isReadingTutorial}
+                      pathname={pathname ?? ''}
+                    />
+                  ) : (
+                    <NavLink
+                      key={item.name}
+                      item={item}
+                      isActive={pathname === item.href}
+                      isReadingTutorial={isReadingTutorial}
+                      onClick={undefined}
+                    />
+                  ),
+                )}
               </div>
             </div>
 
@@ -230,16 +371,27 @@ const Navbar = () => {
             id="mobile-menu"
           >
             <div className="mt-2 space-y-2 border-t border-white/10 px-2 pb-4 pt-3 sm:px-3">
-              {NAV_ITEMS.map((item) => (
-                <NavLink
-                  key={item.name}
-                  item={item}
-                  isActive={pathname === item.href}
-                  isMobile={true}
-                  isReadingTutorial={isReadingTutorial}
-                  onClick={handleLinkClick}
-                />
-              ))}
+              {NAV_ITEMS.map((item) =>
+                isDropdown(item) ? (
+                  <NavDropdown
+                    key={item.name}
+                    item={item}
+                    isMobile={true}
+                    isReadingTutorial={isReadingTutorial}
+                    pathname={pathname ?? ''}
+                    onClick={handleLinkClick}
+                  />
+                ) : (
+                  <NavLink
+                    key={item.name}
+                    item={item}
+                    isActive={pathname === item.href}
+                    isMobile={true}
+                    isReadingTutorial={isReadingTutorial}
+                    onClick={handleLinkClick}
+                  />
+                ),
+              )}
 
               {/* Mobile Contact Info */}
               <div className="mt-4 space-y-3 border-t border-white/10 pb-2 pt-4">

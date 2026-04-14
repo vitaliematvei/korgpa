@@ -15,12 +15,15 @@ import {
 // Props type kept at top-level for type checking only
 type TutorialSidebarProps = {
   tutorials: TutorialListItem[];
+  basePath?: string;
+  storageKey?: string;
 };
 
-const SIDEBAR_STORAGE_KEY = 'pa4xTutorialSidebarExpanded';
-
-function getActiveSlug(pathname: string) {
-  return pathname.replace(/^\/tutoriale-pa4x\/?/, '').replace(/\/+$/, '');
+function getActiveSlug(pathname: string, basePath: string) {
+  const escaped = basePath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return pathname
+    .replace(new RegExp(`^\\/${escaped}\\/?`), '')
+    .replace(/\/+$/, '');
 }
 
 function normalizeText(value: string) {
@@ -159,7 +162,11 @@ function getLinkClasses(depth: number, isActive: boolean, isAncestor: boolean) {
   return 'block flex-1 rounded px-2 py-1.5 text-xs text-slate-500 transition-colors hover:bg-orange-50 hover:text-orange-700';
 }
 
-export default function TutorialSidebar({ tutorials }: TutorialSidebarProps) {
+export default function TutorialSidebar({
+  tutorials,
+  basePath = 'tutoriale-pa4x',
+  storageKey = 'pa4xTutorialSidebarExpanded',
+}: TutorialSidebarProps) {
   const pathname = usePathname();
   const tree = useMemo(() => buildTutorialTree(tutorials), [tutorials]);
   const [query, setQuery] = useState('');
@@ -169,7 +176,10 @@ export default function TutorialSidebar({ tutorials }: TutorialSidebarProps) {
     [tree, normalizedQuery],
   );
   const hasActiveQuery = normalizedQuery.length > 0;
-  const activeSlug = useMemo(() => getActiveSlug(pathname), [pathname]);
+  const activeSlug = useMemo(
+    () => getActiveSlug(pathname, basePath),
+    [pathname, basePath],
+  );
   const activePath = useMemo(
     () => findNodePath(tree, activeSlug).map((node) => node.slug),
     [activeSlug, tree],
@@ -201,7 +211,7 @@ export default function TutorialSidebar({ tutorials }: TutorialSidebarProps) {
 
   useEffect(() => {
     const loadedState: Record<string, boolean> = {};
-    const saved = localStorage.getItem(SIDEBAR_STORAGE_KEY);
+    const saved = localStorage.getItem(storageKey);
 
     let parsed: Record<string, unknown> = {};
     if (saved) {
@@ -222,15 +232,15 @@ export default function TutorialSidebar({ tutorials }: TutorialSidebarProps) {
     }
 
     setExpanded(loadedState);
-  }, [activePath, containerSlugs]);
+  }, [activePath, containerSlugs, storageKey]);
 
   useEffect(() => {
     // Only persist valid container slugs to keep storage clean
     const clean = Object.fromEntries(
       Object.entries(expanded).filter(([slug]) => containerSlugs.has(slug)),
     );
-    localStorage.setItem(SIDEBAR_STORAGE_KEY, JSON.stringify(clean));
-  }, [expanded, containerSlugs]);
+    localStorage.setItem(storageKey, JSON.stringify(clean));
+  }, [expanded, containerSlugs, storageKey]);
 
   const toggleGroup = (slug: string, currentIsExpanded: boolean) => {
     setExpanded((prev) => ({
@@ -251,7 +261,7 @@ export default function TutorialSidebar({ tutorials }: TutorialSidebarProps) {
           const hasChildren = node.children.length > 0;
           const isExpanded = hasActiveQuery || Boolean(expanded[node.slug]);
           const controlsId = hasChildren ? `subitems-${node.slug}` : undefined;
-          const href = `/tutoriale-pa4x/${getFirstLeafSlug(node)}`;
+          const href = `/${basePath}/${getFirstLeafSlug(node)}`;
           const isActive = node.slug === activeSlug;
           const isAncestor = !isActive && activePath.includes(node.slug);
 

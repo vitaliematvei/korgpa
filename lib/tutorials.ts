@@ -17,7 +17,11 @@ export type TutorialListItem = TutorialMeta & {
   slugParts: string[];
 };
 
-const TUTORIALS_DIR = path.join(process.cwd(), 'content', 'tutoriale-pa4x');
+const TUTORIALS_BASE_DIR = path.join(process.cwd(), 'content');
+
+function getTutorialsDir(seriesFolder: string) {
+  return path.join(TUTORIALS_BASE_DIR, seriesFolder);
+}
 
 function slugifySegment(value: string) {
   return value
@@ -57,8 +61,8 @@ async function walkMdxFiles(dir: string): Promise<string[]> {
   return files.flat();
 }
 
-function normalizeSlug(filePath: string) {
-  const relative = path.relative(TUTORIALS_DIR, filePath);
+function normalizeSlug(filePath: string, tutorialsDir: string) {
+  const relative = path.relative(tutorialsDir, filePath);
   const withoutExt = relative.replace(/\.mdx$/, '');
   const pathParts = withoutExt.split(path.sep).filter(Boolean);
   const rawParts =
@@ -72,15 +76,18 @@ function normalizeSlug(filePath: string) {
   return { slug, slugParts };
 }
 
-async function resolveTutorialFilePath(slugParts: string[]) {
+async function resolveTutorialFilePath(
+  slugParts: string[],
+  tutorialsDir: string,
+) {
   const candidatePaths = [
-    path.join(TUTORIALS_DIR, ...slugParts) + '.mdx',
-    path.join(TUTORIALS_DIR, ...slugParts, 'index.mdx'),
+    path.join(tutorialsDir, ...slugParts) + '.mdx',
+    path.join(tutorialsDir, ...slugParts, 'index.mdx'),
   ];
 
   if (slugParts[slugParts.length - 1] === 'index') {
     candidatePaths.push(
-      path.join(TUTORIALS_DIR, ...slugParts.slice(0, -1), 'index.mdx'),
+      path.join(tutorialsDir, ...slugParts.slice(0, -1), 'index.mdx'),
     );
   }
 
@@ -102,10 +109,10 @@ async function resolveTutorialFilePath(slugParts: string[]) {
     )
     .map(normalizeSegment)
     .join('/');
-  const mdxFiles = await walkMdxFiles(TUTORIALS_DIR);
+  const mdxFiles = await walkMdxFiles(tutorialsDir);
 
   for (const candidatePath of mdxFiles) {
-    const candidate = normalizeSlug(candidatePath);
+    const candidate = normalizeSlug(candidatePath, tutorialsDir);
     const candidateKey = candidate.slugParts.map(normalizeSegment).join('/');
 
     if (candidateKey === requestedKey) {
@@ -116,13 +123,16 @@ async function resolveTutorialFilePath(slugParts: string[]) {
   throw new Error('Tutorial file not found');
 }
 
-export async function getAllTutorials(): Promise<TutorialListItem[]> {
-  const mdxFiles = await walkMdxFiles(TUTORIALS_DIR);
+export async function getAllTutorials(
+  seriesFolder = 'tutoriale-pa4x',
+): Promise<TutorialListItem[]> {
+  const tutorialsDir = getTutorialsDir(seriesFolder);
+  const mdxFiles = await walkMdxFiles(tutorialsDir);
   const items = await Promise.all(
     mdxFiles.map(async (filePath) => {
       const source = await fs.readFile(filePath, 'utf8');
       const { data } = matter(source);
-      const { slug, slugParts } = normalizeSlug(filePath);
+      const { slug, slugParts } = normalizeSlug(filePath, tutorialsDir);
 
       // Derive parent from slug hierarchy
       let parent: string | undefined;
@@ -156,10 +166,14 @@ export async function getAllTutorials(): Promise<TutorialListItem[]> {
   });
 }
 
-export async function getTutorialBySlug(slugParts: string[]) {
+export async function getTutorialBySlug(
+  slugParts: string[],
+  seriesFolder = 'tutoriale-pa4x',
+) {
+  const tutorialsDir = getTutorialsDir(seriesFolder);
   const cleanParts = slugParts.filter(Boolean);
-  const filePath = await resolveTutorialFilePath(cleanParts);
-  const canonical = normalizeSlug(filePath);
+  const filePath = await resolveTutorialFilePath(cleanParts, tutorialsDir);
+  const canonical = normalizeSlug(filePath, tutorialsDir);
   const source = await fs.readFile(filePath, 'utf8');
 
   const { content, data } = matter(source);
