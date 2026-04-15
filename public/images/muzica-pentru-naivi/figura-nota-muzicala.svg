@@ -1,0 +1,11 @@
+<svg width="180" height="180" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+  <!-- Capul notei -->
+  <ellipse cx="60" cy="120" rx="22" ry="15" fill="#222" />
+  <text x="60" y="145" font-size="14" text-anchor="middle" fill="#333">Cap</text>
+  <!-- Tijă notei -->
+  <rect x="80" y="60" width="5" height="60" fill="#222" />
+  <text x="100" y="90" font-size="14" fill="#333">Tijă notei</text>
+  <!-- Steag notei -->
+  <path d="M85 60 Q120 70 90 90" stroke="#222" stroke-width="3" fill="none" />
+  <text x="120" y="70" font-size="14" fill="#333">Steag notei</text>
+</svg>
