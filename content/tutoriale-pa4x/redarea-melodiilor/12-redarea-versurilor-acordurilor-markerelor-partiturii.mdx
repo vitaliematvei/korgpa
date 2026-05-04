@@ -1,0 +1,475 @@
+---
+title: 'Redarea versurilor, acordurilor, markerelor și partiturii'
+description: 'Cum să afișezi și să folosești versurile, acordurile, marker-ele și partitura pe Korg PA4X.'
+order: 12
+category: Redarea Melodiilor
+---
+
+# Alegera unuia dintre Playere
+
+- Atunci când te afli în pagina de Versuri, Partitură sau Markere, poți atinge butonul Player 1 sau Player 2 din bara de titlu pentru a selecta playerul dorit.
+
+- Alternativ, poți muta cursorul X-FADER complet spre stânga pentru a asculta și vedea doar versurile, acordurile, partitura sau marker-ele Playerului 1. Mută-l complet spre dreapta pentru a asculta și vedea doar versurile, acordurile, partitura sau marker-ele Playerului 2.
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/redarea-melodiilor/doua-playere.jpg"
+    alt="Alegerea playerului"
+    className="mx-auto"
+  />
+  <figcaption className="mt-2 text-sm text-slate-700">
+    Alegerea playerului pentru redarea versurilor, acordurilor, markerelor sau
+    partiturii.
+  </figcaption>
+</figure>
+
+<div className="border-2 border-blue-300 bg-blue-50 rounded-md p-4 my-6">
+  <h2 className="text-lg font-semibold mb-2">
+    Unde se găsesc versurile și acordurile?
+  </h2>
+  <ul className="list-disc pl-5 space-y-1">
+    <li>
+      În fișierele <b>MIDI</b>. Versurile și acordurile pot fi incluse în
+      fișierele MIDI ca evenimente MIDI.
+    </li>
+    <li>
+      În fișierele <b>MP3</b>. Versurile pot fi incluse în fișierele MP3 sub
+      formă de tag-uri ID3/Lyrics3 sau ID3/Frames.
+    </li>
+    <li>
+      În fișiere <b>TXT</b> asociate cu melodii MIDI sau MP3. Versurile și
+      acordurile pot fi stocate într-un fișier TXT cu același nume ca melodia
+      MIDI sau MP3, aflat în același folder. Poți încărca un fișier text chiar
+      și în timpul redării unei melodii sau a unui stil.
+    </li>
+    <li>
+      În fișiere <b>CDG</b> asociate cu melodii MP3. Versurile și acordurile pot
+      fi incluse într-un fișier CDG cu același nume ca melodia MP3, aflat în
+      același folder.
+    </li>
+    <li>
+      În fișiere <b>TXT</b> legate de o intrare SongBook. Un fișier TXT poate fi
+      asociat unei intrări din SongBook.
+    </li>
+  </ul>
+</div>
+
+## Citirea versurilor și acordurilor dintr-o melodie
+
+Pentru a vedea versurile și acordurile:
+
+- Apasă butonul <b>LYRICS</b> de pe panoul de control. Se va deschide pagina de Versuri, unde vei vedea versurile asociate playerului selectat.
+  <figure className="my-6 text-center">
+    <img
+      src="/images/redarea-melodiilor/pagina-lyrics.jpg"
+      alt="Pagina Lyrics Korg PA4X"
+      className="mx-auto"
+    />
+    <figcaption className="mt-2 text-sm text-slate-700">
+      Exemplu de afișare a paginii de versuri (Lyrics) pe Korg PA4X.
+    </figcaption>
+  </figure>
+
+### Derularea automată a versurilor
+
+• În timpul redării unei melodii, versurile incluse într-un fișier MIDI sau MP3 vor derula automat pe ecran, sincronizate cu muzica. Versurile corespunzătoare poziției curente vor fi evidențiate.
+
+### Ieșirea din pagina de versuri
+
+• Când ai terminat de vizualizat versurile, apasă butonul <b>LYRICS</b> sau <b>EXIT</b>.
+
+### Schimbarea dimensiunii textului
+
+• Poți alege între două dimensiuni de text. Folosește butonul <b>aA</b> din pagina de versuri pentru a schimba mărimea fontului.
+
+### Afișarea acordurilor
+
+• Poți afișa sau ascunde simbolurile acordurilor care pot fi incluse ca evenimente Lyrics în fișierele MIDI.
+• Asigură-te că butonul <b>Chord</b> este apăsat în pagina de versuri pentru a vedea acordurile. Acestea (dacă există) vor apărea deasupra versurilor, sincronizate cu muzica.
+• Dacă butonul <b>Chord</b> nu este apăsat, acordurile nu vor fi afișate.
+
+### Transpunerea acordurilor
+
+• Când folosești butoanele <b>TRANSPOSE</b>, simbolurile acordurilor pot fi și ele transpuse, în funcție de setările Master Transpose.
+• Pentru ca acordurile să fie transpuse, mergi la <b>Global &gt; Tuning &gt; Transpose Control</b> și asigură-te că ai selectat una dintre următoarele opțiuni:
+– <b>Style and Keyboard Tracks</b> setat pe Off, iar <b>Player</b> pe On. Astfel, acordurile vor fi transpuse împreună cu melodia.
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/redarea-melodiilor/transpunere-acorduri-lirycs.jpg"
+    alt="Transpunere acorduri în Lyrics Korg PA4X"
+    className="mx-auto"
+  />
+  <figcaption className="mt-2 text-sm text-slate-700">
+    Exemplu de transpunere automată a acordurilor afișate în pagina Lyrics.
+  </figcaption>
+</figure>
+
+• Dacă <b>Style and Keyboard Tracks</b> este setat pe Immediate sau Next Measure, iar <b>Player</b> pe Off, doar acordurile vor fi transpuse, nu și melodia.
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/redarea-melodiilor/MIDI-nu-se-tranpune.jpg"
+    alt="Exemplu MIDI fără transpunere acorduri"
+    className="mx-auto"
+  />
+  <figcaption className="mt-2 text-sm text-slate-700">
+    Exemplu: acordurile nu sunt transpuse la fișierele MIDI. Se transpune doar
+    acordurile scrie in Lyrics
+  </figcaption>
+</figure>
+
+## Citirea versurilor și acordurilor încărcate dintr-un fișier text
+
+Dacă versurile au fost încărcate sau asociate ca fișier text (TXT), acestea nu vor derula automat în timpul redării melodiei. Poți derula manual textul astfel:
+
+### Derularea textului pe ecran
+
+• Derulează textul folosind butoanele VALUE sau bara de derulare verticală.
+
+### Derularea textului cu un footswitch sau EC5
+
+1. Mergi la <b>Global &gt; Controllers &gt; Foot</b> sau <b>Global &gt; Controllers &gt; EC5</b> și asociază funcția <b>Text Page Next</b> la footswitch sau EC5.
+2. Revino în pagina de versuri și derulează textul folosind pedala programată.
+
+### Derularea textului cu un switch
+
+1. Mergi la <b>Style Play</b> sau <b>Song Play &gt; Pads/Switches &gt; Switch</b> și asociază funcția <b>Text Page Next</b> unuia dintre switch-urile programabile.
+2. Salvează modificările în Keyboard Set.
+3. Revino în pagina de versuri și derulează textul folosind switch-ul programat.
+   switch.
+
+<div className="border-l-4 border-yellow-400 bg-yellow-50 p-4 my-4 text-yellow-900 font-medium">
+  <span className="font-bold">Notă:</span> dacă programezi un switch
+  programabil, comanda de derulare a paginii va fi legată de un anumit Keyboard
+  Set sau de o anumită intrare SongBook, dedicată unei melodii care folosește un
+  fișier text extern. În schimb, dacă programezi footswitch-ul sau EC5, această
+  funcție va fi globală și nu se va schimba atunci când alegi alt Keyboard Set
+  sau altă intrare SongBook.
+</div>
+
+### Încărcarea unui fișier text cu același nume ca melodia
+
+Versurile și acordurile pot fi conținute într-un fișier TXT cu același nume ca melodia MIDI sau MP3. De exemplu, dacă există un fișier „MySong.txt” în același folder cu „MySong.mid”, acesta va fi folosit automat.
+
+### Asocierea fișierelor text la intrări SongBook
+
+Versurile și acordurile pot fi conținute într-un fișier TXT asociat unei intrări SongBook. Se aplică aceleași reguli de formatare ca mai sus.
+
+### Încărcarea rapidă („on-the-fly”) a versurilor și acordurilor dintr-un fișier text extern
+
+Dacă nu există versuri sau acorduri conținute sau asociate stilului sau melodiei, poți încărca un fișier text (TXT) după ce ai ales un Style sau Song.
+
+#### Încărcarea rapidă a unui fișier TXT
+
+O pagină de versuri goală cu un mesaj va apărea când apeși butonul LYRICS în oricare dintre următoarele situații:
+
+- Ești în modul Style Play.
+- Melodia nu conține versuri și acorduri.
+- Nu există niciun fișier extern asociat stilului sau melodiei.
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/redarea-melodiilor/incarcare-text.jpg"
+    alt="Încărcare fișier text pentru versuri Korg PA4X"
+    className="mx-auto"
+  />
+  <figcaption className="mt-2 text-sm text-slate-700">
+    Exemplu de încărcare a unui fișier text cu versuri pentru o melodie.
+  </figcaption>
+</figure>
+În acest caz, procedează astfel: Ține apăsat butonul SHIFT și atinge centrul
+ecranului.
+
+## Citirea versurilor și acordurilor încărcate dintr-un fișier CDG
+
+Fișierele CDG sunt fișiere grafice care se sincronizează cu melodia MP3 asociată.
+
+### Cum citești versurile și acordurile dintr-un fișier CDG
+
+• Asigură-te că butonul <b>CDG</b> este apăsat în pagina de versuri.
+
+### Încărcarea unui fișier CDG cu același nume ca melodia
+
+Versurile și acordurile pot fi conținute într-un fișier grafic CDG cu același nume ca melodia MP3 (format MP3+G). De exemplu, dacă există un fișier „MySong.cdg” în același folder cu „MySong.mp3”, la încărcarea melodiei MP3 va fi încărcat automat și fișierul CDG cu versuri.
+
+## Navigarea prin melodie folosind markerele
+
+### Utilizarea markerelor
+
+Evenimentele de tip Marker care pot fi incluse într-un fișier MID (adică o melodie MIDI) pot fi citite de Pa4X. Acestea sunt afișate imediat în pagina Markers.
+
+### Deschiderea paginii Markers
+
+• În modul Song Play, apasă butonul <b>MARKER</b>.
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/redarea-melodiilor/pagina-markere.jpg"
+    alt="Pagina Markers Korg PA4X"
+    className="mx-auto"
+  />
+  <figcaption className="mt-2 text-sm text-slate-700">
+    Exemplu de afișare a paginii Markers pentru navigarea rapidă prin melodie.
+  </figcaption>
+</figure>
+
+### Săritul la un marker
+
+1. Dacă dorești, pornește Playerul apăsând butonul <b>PLAY/STOP</b> ( ).
+   Poți sări la un marker chiar dacă Playerul nu rulează.
+2. Când vrei să sari la un marker, atinge-l în lista de markere. La începutul următorului tact, melodia va sări la poziția salvată.
+
+### Derularea automată a listei de markere
+
+Selectează parametrul <b>Auto Scroll</b> pentru ca lista de markere să se deruleze automat și markerul curent să fie mereu vizibil pe ecran.
+
+### Repetarea unei secțiuni (Loop)
+
+Poți folosi marker-ele pentru a repeta un pasaj pe care vrei să-l exersezi:
+
+1. Pornește Playerul.
+2. Când ajungi la începutul pasajului dorit (de obicei creezi markerul cu una-două măsuri înainte de punctul de start real), adaugă un marker.
+3. Când ajungi la finalul pasajului, apasă butonul <b>Add</b> pentru a crea al doilea marker.
+4. Selectează primul marker, apoi bifează opțiunea <b>Loop</b> pentru a repeta între primul și al doilea marker.
+5. Dacă nu mai ai nevoie de ele, șterge marker-ele. Oricum, acestea vor fi eliminate automat când alegi altă melodie sau oprești instrumentul.
+
+### Crearea și editarea markerelor
+
+Poți adăuga propriile puncte de marker într-o melodie MIDI, apoi le poți salva direct în fișierul MID.
+
+#### Deschiderea paginii Markers
+
+• În modul Song Play, apasă butonul <b>MARKER</b> pentru a deschide pagina de markere.
+
+### Crearea și editarea markerelor
+
+Poți adăuga propriile puncte de marker într-o melodie MIDI, apoi le poți salva direct în fișierul MID.
+
+#### Deschiderea paginii Markers
+
+• În modul Song Play, apasă butonul <b>MARKER</b> pentru a deschide pagina de markere.
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/redarea-melodiilor/adaugare-markere.jpg"
+    alt="Adăugare markere în Korg PA4X"
+    className="mx-auto"
+  />
+  <figcaption className="mt-2 text-sm text-slate-700">
+    Exemplu de adăugare și editare a markerelor într-o melodie MIDI pe Korg
+    PA4X.
+  </figcaption>
+</figure>
+
+### Adăugarea markerelor
+
+1. Pornește Playerul apăsând butonul <b>PLAY/STOP</b> ( ).
+   Markerele pot fi adăugate chiar și când Playerul nu rulează, dar este mai ușor să le adaugi în timp ce melodia rulează.
+2. Când ajungi la poziția pe care vrei să o salvezi ca marker, apasă butonul <b>Add</b>.
+   ▪▪ Dacă apeși Add în primele bătăi ale măsurii, va fi salvat începutul măsurii curente ca marker.
+   ▪▪ Dacă apeși Add în ultima bătaie a măsurii, va fi salvat începutul măsurii următoare ca marker.
+3. Repetă pașii pentru orice marker suplimentar.
+4. Oprește Playerul apăsând butonul <b>PLAY/STOP</b> ( ).
+
+### Ștergerea markerelor
+
+1. Selectează markerul pe care vrei să-l ștergi din lista de markere.
+2. Apasă butonul <b>Delete</b> pentru a șterge markerul selectat.
+3. Salvează marker-ele (vezi instrucțiunile de mai jos).
+
+### Editarea numelui și poziției unui marker
+
+1. Selectează markerul pe care vrei să-l editezi din lista de markere.
+2. Apasă butonul <b>Edit</b> pentru a începe editarea markerului. Va apărea fereastra de editare a markerului.
+
+### Editarea numelui și poziției unui marker
+
+1. Selectează markerul pe care vrei să-l editezi din lista de markere.
+2. Apasă butonul <b>Edit</b> pentru a începe editarea markerului. Va apărea fereastra de editare a markerului.
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/redarea-melodiilor/edit-marker.jpg"
+    alt="Editare marker în Korg PA4X"
+    className="mx-auto"
+  />
+  <figcaption className="mt-2 text-sm text-slate-700">
+    Exemplu de fereastră pentru editarea numelui și poziției unui marker într-o
+    melodie MIDI pe Korg PA4X.
+  </figcaption>
+</figure>
+În fereastra de editare a markerului, poți modifica poziția și numele markerului
+selectat. 4. Salvează marker-ele (vezi instrucțiunile de mai jos).
+
+### Salvarea markerelor
+
+▪▪ Apasă butonul <b>Save Mk</b> pentru a salva toate marker-ele în fișierul MID.
+▪▪ Dacă nu te afli în pagina Markers, alege comanda <b>Save Song Marker</b> din meniul paginii.
+
+## Afișarea și crearea partiturii muzicale
+
+### Crearea și citirea partiturii
+
+1. Alege o melodie MIDI pe care vrei să o redai cu Playerul selectat.
+2. Apasă butonul <b>SCORE</b> pentru a deschide pagina de partitură. Va fi generată partitura pentru track-ul selectat.
+   În funcție de conținutul track-ului, pe portativ vor fi afișate fie notele, fie acordurile.
+
+## Afișarea și crearea partiturii muzicale
+
+### Crearea și citirea partiturii
+
+1. Alege o melodie MIDI pe care vrei să o redai cu Playerul selectat.
+2. Apasă butonul <b>SCORE</b> pentru a deschide pagina de partitură. Va fi generată partitura pentru track-ul selectat.
+   În funcție de conținutul track-ului, pe portativ vor fi afișate fie notele, fie acordurile.
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/redarea-melodiilor/create-music-score.jpg"
+    alt="Creare partitură muzicală Korg PA4X"
+    className="mx-auto"
+  />
+  <figcaption className="mt-2 text-sm text-slate-700">
+    Exemplu de generare și afișare a partiturii muzicale pentru un track MIDI pe
+    Korg PA4X.
+  </figcaption>
+</figure>
+
+### Alegerea unui alt track pentru partitură
+
+• Poți selecta un alt track care să fie afișat ca partitură folosind meniul <b>Trk</b>.
+De obicei, melodia principală se află pe track-ul #4.
+
+### Alegerea cheii pentru partitură
+
+• Poți selecta o altă cheie muzicală folosind meniul <b>Clef</b>.
+De obicei, cheia corectă este atribuită automat de generatorul de partitură.
+
+<div className="overflow-x-auto my-6">
+  <table className="min-w-full border border-slate-300 text-sm">
+    <thead className="bg-slate-100">
+      <tr>
+        <th className="border px-3 py-2 text-left">Cheie</th>
+        <th className="border px-3 py-2 text-left">Semnificație</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td className="border px-3 py-2">Treble</td>
+        <td className="border px-3 py-2">Cheia Sol standard.</td>
+      </tr>
+      <tr>
+        <td className="border px-3 py-2">Treble+8</td>
+        <td className="border px-3 py-2">
+          Cheia Sol cu transpunere o octavă mai sus.
+        </td>
+      </tr>
+      <tr>
+        <td className="border px-3 py-2">Treble-8</td>
+        <td className="border px-3 py-2">
+          Cheia Sol cu transpunere o octavă mai jos.
+        </td>
+      </tr>
+      <tr>
+        <td className="border px-3 py-2">Bass</td>
+        <td className="border px-3 py-2">Cheia Fa standard.</td>
+      </tr>
+      <tr>
+        <td className="border px-3 py-2">Bass-8</td>
+        <td className="border px-3 py-2">
+          Cheia Fa cu transpunere o octavă mai jos.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### Ieșirea din pagina de partitură
+
+• Când ai terminat de vizualizat partitura, apasă butonul <b>SCORE</b> sau <b>EXIT</b>.
+
+<div className="border-l-4 border-blue-400 bg-blue-50/70 p-4 my-6 rounded-md">
+  <h3 className="text-base font-semibold mb-2">
+    Afișarea inteligentă a partiturii
+  </h3>
+  <p>
+    Generarea partiturii este suficient de inteligentă pentru a „curăța” automat
+    un track, aplicând cuantizare, sincopare, generare de tonalitate și cheie.
+    Chiar și track-urile necuantizate vor fi afișate într-un mod foarte lizibil.
+  </p>
+  <p className="mt-2">
+    Dacă există un eveniment <b>Key Signature</b> la începutul melodiei (poziția
+    „001.01.000” din Master track), semnătura corectă a tonalității va fi
+    afișată automat.
+  </p>
+</div>
+
+disappear.
+each note.
+or Italian (Do, Re, Mi…) system, depending on the selected language.
+
+## Urmărirea melodiei în partitură
+
+Poți vedea oricând unde te afli în partitură urmărind acești indicatori:
+▪▪ O linie verticală roșie, care arată portativul curent în redare.
+▪▪ Un triunghi roșu, care indică poziția curentă în melodie.
+
+### Afișarea versurilor, acordurilor și denumirilor notelor
+
+- <b>Versuri:</b> Apasă butonul <b>Lyrics</b> pentru a afișa sau ascunde
+  versurile (dacă există).
+- <b>Acorduri:</b> Apasă butonul <b>Chord</b> pentru a afișa sau ascunde
+  simbolurile acordurilor (dacă există).
+- <b>Denumiri note:</b> Apasă butonul <b>Note</b> pentru a afișa sau ascunde
+  denumirea notelor lângă fiecare notă.
+
+### Alegerea limbii pentru acorduri și denumiri note
+
+Acordurile și denumirile notelor pot fi afișate fie în sistemul englez (A, B, C…), fie în sistemul italian (Do, Re, Mi…), în funcție de limba selectată.
+▪▪ Mergi la <b>Global &gt; General Controls &gt; Interface</b> și folosește parametrul <b>Language</b> pentru a schimba limba.
+
+### Dezactivarea (Mute) track-ului selectat
+
+Dacă vrei să cânți sau să interpretezi live track-ul selectat, îl poți dezactiva (mute) pentru a evita suprapunerea cu sunetele interne.
+▪▪ Apasă butonul <b>Play/Mute ( / )</b> pentru a asculta sau dezactiva track-ul selectat.
+
+### Salvarea stării Play/Mute
+
+Pentru ca starea Play/Mute a track-urilor să fie păstrată permanent pentru toate melodiile MIDI ulterioare, salveaz-o în memorie.
+▪▪ Mergi la <b>Global &gt; Mode Preferences &gt; Song & Sequencer</b> și apasă butonul <b>Save Track & FX</b>.
+
+## Partitura muzicală și transpunerea
+
+Când folosești butoanele <b>TRANSPOSE</b>, partitura și simbolurile acordurilor din pagina Score pot fi transpuse în mai multe moduri. Pentru a decide dacă și cum vor fi transpuse, mergi la <b>Global &gt; Tuning &gt; Transpose Control</b> și asigură-te că ai selectat una dintre următoarele opțiuni:
+
+- <b>Style and Keyboard Tracks</b> setat pe Off, iar <b>Player</b> pe On.
+  Astfel, partitura va fi transpusă împreună cu melodia.
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/redarea-melodiilor/transpunere-melodie-partitura.jpg"
+    alt="Transpunere melodie și partitură Korg PA4X"
+    className="mx-auto"
+  />
+  <figcaption className="mt-2 text-sm text-slate-700">
+    Exemplu de transpunere simultană a melodiei și a partiturii pe Korg PA4X.
+  </figcaption>
+</figure>
+
+- <b>Style and Keyboard Tracks</b> setat pe Immediate sau Next Measure, iar
+  <b>Player</b> pe Off. În acest caz, doar partitura va fi transpusă, nu și
+  melodia.
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/redarea-melodiilor/transpunere-doar-note.jpg"
+    alt="Transpunere doar partitură Korg PA4X"
+    className="mx-auto"
+  />
+  <figcaption className="mt-2 text-sm text-slate-700">
+    Exemplu de transpunere doar a partiturii (melodia rămâne neschimbată) pe
+    Korg PA4X.
+  </figcaption>
+</figure>
+
+{/* am ramas Searching for files and other items p.104 */}
