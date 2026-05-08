@@ -1,0 +1,398 @@
+---
+title: Alegerea melodiilor din SongBook
+order: 1
+description: Cum alegem melodiile din SongBook
+category: Songbook
+---
+
+# Alegerea melodiilor din SongBook
+
+## Ce este SongBook?
+
+Conceptul de bază al funcției **SongBook** este acela de a porni întotdeauna de la o piesă muzicală. Prin selectarea unei **Intrări (Entry)** din SongBook, alegi practic un șablon (template) pentru melodia respectivă. Tot ce ai nevoie — stil, piesă, sunete, efecte de voce, versuri, tonalitate sau tempo — este disponibil prin apăsarea unui singur buton.
+
+Cu alte cuvinte, SongBook este baza de date muzicală internă a claviaturii, care îți permite să organizezi stilurile și melodiile pentru a fi găsite rapid. Fiecare intrare din această bază de date (o „piesă”) poate include informații precum:
+
+- **Artistul și titlul**
+- **Genul muzical** și **numărul de identificare**
+- **Tonalitatea**, **tempoul** și **măsura** (time signature)
+
+## Cum funcționează?
+
+## Organizare și personalizare
+
+Pe lângă faptul că te ajută să îți organizezi spectacolele, SongBook îți permite să aloci fiecărei intrări:
+
+- Până la **4 Pad-uri**
+- Până la **4 Keyboard Set-uri** (seturi de sunete pentru claviatură)
+- Un fișier **TXT extern** (pentru versuri), util în cazul în care fișierele MIDI/MP3 nu conțin versuri sau dacă preferi să cânți live acompaniat de stiluri.
+
+## Flexibilitate totală
+
+Poți să adaugi propriile intrări în SongBook sau să le editezi pe cele existente (KORG livrează standard câteva sute de intrări gata de utilizare). Mai mult, SongBook îți permite să creezi diverse **Set List-uri** — colecții de piese personalizate pentru diferite tipuri de evenimente — pe care le poți accesa rapid folosind butoanele dedicate de pe panoul de control.
+
+## SongBook intern și Direct SongBook
+
+Pe lângă SongBook-ul intern, aflat în memoria Pa4X, poți alege intrări și Set List-uri și dintr-un SongBook extern (Direct SongBook), care extinde baza de date internă în timp real, fără a fi nevoie de importuri suplimentare.
+
+## Alegerea intrărilor din SongBook (Book list)
+
+Instrumentul vine cu o bază de date extinsă, gata încărcată. Poți răsfoi această bază de date și selecta orice intrare din SongBook.
+
+### Cum alegi o intrare din SongBook
+
+1. În timp ce te afli în modul **Style Play** sau **Song Play**, apasă butonul **SONGBOOK** pentru a deschide pagina Book.
+
+<div style={{ textAlign: 'center' }}>
+  <img
+    src="/images/songbook/selectare-item-songbook.jpg"
+    alt="Selectarea unei intrări din SongBook"
+    style={{
+      maxWidth: '600px',
+      width: '100%',
+      height: 'auto',
+      margin: '0 auto',
+    }}
+  />
+  <br />
+  <em>
+    Exemplu de ecran pentru selectarea unei intrări din SongBook pe Korg Pa4X.
+  </em>
+</div>
+
+2. Răsfoiește lista de intrări.
+
+3. Când intrarea dorită apare pe ecran, atinge-o pentru a o asocia Arranger-ului sau Player-ului.
+
+<div style={{ textAlign: 'center' }}>
+  <img
+    src="/images/songbook/checkbox-filter.jpg"
+    alt="Checkbox Filter SongBook"
+    style={{
+      maxWidth: '200px',
+      width: '100%',
+      height: 'auto',
+      margin: '0 auto',
+    }}
+  />
+  <br />
+  <em>Exemplu de bifă Filter activă în SongBook pe Korg Pa4X.</em>
+</div>
+<div style={{ textAlign: 'center' }}>
+  <img
+    src="/images/songbook/selectare-nume-songbook.jpg"
+    alt="Selectare nume SongBook"
+    style={{
+      maxWidth: '600px',
+      width: '100%',
+      height: 'auto',
+      margin: '0 auto',
+    }}
+  />
+  <br />
+  <em>
+    Exemplu de ecran cu numele intrării evidențiat în SongBook pe Korg Pa4X.
+  </em>
+</div>
+
+Stilul sau melodia asociată vor fi rechemate automat. Melodia va fi atribuită Player-ului 1, cu excepția cazului în care acesta redă deja o altă melodie — atunci va fi atribuită Player-ului 2.
+
+Vor fi rechemate și Pad-urile și Keyboard Set-urile asociate. Implicit, va fi selectat Keyboard Set #1.
+
+Orice fișier TXT asociat intrării va fi afișat în pagina de versuri (Lyrics). De asemenea, va fi reamintit și un Voice Preset, dacă este setat.
+
+4. Folosește butonul **START/STOP** sau **PLAY/STOP ( )** pentru a porni sau opri redarea stilului sau melodiei selectate.
+
+## Identificarea tipului de intrare
+
+Pictogramele din coloana **Type** te ajută să identifici rapid tipul fiecărei intrări din SongBook.
+
+<div className="overflow-hidden border border-slate-300 rounded-xl shadow-sm my-8 bg-slate-100">
+  <table className="min-w-full divide-y divide-slate-200">
+    <thead className="bg-slate-50">
+      <tr>
+        <th scope="col" className="px-6 py-4 text-left text-sm font-semibold text-slate-900 uppercase tracking-wider w-1/3">
+          Tip Intrare
+        </th>
+        <th scope="col" className="px-6 py-4 text-left text-sm font-semibold text-slate-900 uppercase tracking-wider">
+          Semnificație
+        </th>
+      </tr>
+    </thead>
+    <tbody className="bg-white divide-y divide-slate-200">
+      {/* Rând pentru Style */}
+      <tr className="hover:bg-slate-50 transition-colors">
+        <td className="px-6 py-5 whitespace-nowrap">
+          <div className="inline-flex items-center gap-2">
+            <img 
+              src="/images/songbook/icon-style.png" 
+              alt="Style Icon" 
+              className="w-10 h-auto object-contain"
+            />
+            <span className="text-sm font-medium text-slate-700">
+              Bazată pe <strong>Style</strong>
+            </span>
+          </div>
+        </td>
+        <td className="px-6 py-5 text-sm text-slate-600 leading-relaxed italic">
+          La selectare, va alege un stil și va comuta automat în modul <span className="font-semibold text-slate-800">Style Play</span>.
+        </td>
+      </tr>
+
+      {/* Rând pentru MIDI */}
+      <tr className="hover:bg-slate-50 transition-colors">
+        <td className="px-6 py-5 whitespace-nowrap">
+          <div className="inline-flex items-center gap-2">
+            <img
+              src="/images/songbook/icon-midi.png"
+              alt="MIDI Icon"
+              className="w-10 h-auto object-contain"
+            />
+            <span className="text-sm font-medium text-slate-700">
+              Bazată pe <strong>MIDI Song</strong>
+            </span>
+          </div>
+        </td>
+        <td className="px-6 py-5 text-sm text-slate-600 leading-relaxed italic">
+          La selectare, va alege o melodie MIDI și va comuta automat în modul <span className="font-semibold text-slate-800">Song Play</span>.
+        </td>
+      </tr>
+
+      {/* Rând pentru MP3 */}
+      <tr className="hover:bg-slate-50 transition-colors">
+        <td className="px-6 py-5 whitespace-nowrap">
+          <div className="inline-flex items-center gap-2">
+            <img
+              src="/images/songbook/icon-mp3.png"
+              alt="MP3 Icon"
+              className="w-10 h-auto object-contain"
+            />
+            <span className="text-sm font-medium text-slate-700">
+              Bazată pe <strong>MP3 Song</strong>
+            </span>
+          </div>
+        </td>
+        <td className="px-6 py-5 text-sm text-slate-600 leading-relaxed italic">
+          La selectare, va alege o melodie MP3 și va comuta automat în modul <span className="font-semibold text-slate-800">Song Play</span>.
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+
+Intrările de tip Direct sunt marcate cu litera „D” suprapusă peste celelalte pictograme de tip.
+
+<div className="overflow-hidden border border-slate-300 rounded-xl shadow-sm my-8 bg-slate-100">
+  <table className="min-w-full divide-y divide-slate-200">
+    <thead className="bg-slate-50">
+      <tr>
+        <th
+          scope="col"
+          className="px-6 py-4 text-left text-sm font-semibold text-slate-900 uppercase tracking-wider w-1/3"
+        >
+          Tip Intrare
+        </th>
+        <th
+          scope="col"
+          className="px-6 py-4 text-left text-sm font-semibold text-slate-900 uppercase tracking-wider"
+        >
+          Semnificație
+        </th>
+      </tr>
+    </thead>
+    <tbody className="bg-white divide-y divide-slate-200">
+      <tr className="hover:bg-slate-50 transition-colors">
+        <td className="px-6 py-5 whitespace-nowrap">
+          <div className="inline-flex items-center gap-2">
+            <img
+              src="/images/songbook/icon-direct.png"
+              alt="Direct Entry Icon"
+              className="w-10 h-auto object-contain"
+            />
+            <span className="text-sm font-medium text-slate-700">
+              <strong>Direct Entry</strong>
+            </span>
+          </div>
+        </td>
+        <td className="px-6 py-5 text-sm text-slate-600 leading-relaxed italic">
+          Intrare marcată cu litera „D” suprapusă peste pictograma tipului de
+          fișier (Style, MIDI sau MP3).
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## Sortarea după etichetă/coloană
+
+Deasupra listei vei găsi mai multe etichete, fiecare corespunzând unei coloane de date (Tip, Nume, Gen, Tonalitate, BPM, Măsură etc.). Poți selecta una dintre etichete pentru a sorta lista după acel tip de informație.
+
+### Schimbarea ordinii listei
+
+- Reordonează elementele după un criteriu diferit (Tip, Nume, Gen, Tonalitate, BPM, Măsură etc.) atingând eticheta corespunzătoare de deasupra listei.
+- Dacă atingi din nou aceeași etichetă, ordinea elementelor va alterna între crescător și descrescător.
+
+### Alegerea coloanelor afișate în pagină
+
+Din cauza spațiului limitat, nu toate etichetele pot fi afișate deasupra listelor. Poți decide ce coloane să fie vizibile în listele SongBook.
+
+> **Notă:** Câmpurile Artist și Tonalitate ale tuturor intrărilor furnizate sunt lăsate intenționat necompletate.
+
+### Alegerea combinațiilor de etichete afișate
+
+1. Selectează comanda **Preferences** din meniul paginii pentru a deschide dialogul de preferințe.
+
+<div style={{ textAlign: 'center' }}>
+  <img
+    src="/images/songbook/preferences-dialog.jpg"
+    alt="Dialog Preferences SongBook"
+    style={{
+      maxWidth: '600px',
+      width: '100%',
+      height: 'auto',
+      margin: '0 auto',
+    }}
+  />
+  <br />
+  <em>Exemplu de fereastră de preferințe pentru SongBook pe Korg Pa4X.</em>
+</div>
+
+2. Folosește meniul **Columns** pentru a alege setul de coloane care să fie afișate.
+3. După ce ai terminat, apasă butonul **OK** pentru a închide dialogul.
+
+## Filtrarea intrărilor
+
+Când cauți un anumit artist, gen sau alte categorii, poți „filtra” lista pentru a vedea doar tipul de intrări dorit. Poți găsi rapid elemente și folosind butonul **SEARCH** de pe panoul de control, însă funcția Search caută doar după nume, în timp ce funcția Filter permite o căutare mai detaliată, pe mai mulți parametri simultan.
+
+### Deschiderea dialogului de filtrare
+
+- În pagina SongBook > Book, atinge butonul **Filter...** pentru a deschide dialogul de filtrare.
+
+<div style={{ textAlign: 'center' }}>
+  <img
+    src="/images/songbook/filter-dialog.jpg"
+    alt="Dialog Filtrare SongBook"
+    style={{
+      maxWidth: '350px',
+      width: '100%',
+      height: 'auto',
+      margin: '0 auto',
+    }}
+  />
+  <br />
+  <em>Exemplu de fereastră de filtrare pentru SongBook pe Korg Pa4X.</em>
+</div>
+
+### Editarea criteriilor de filtrare și activarea filtrelor
+
+1. Atinge pictograma **Text Edit (T)** de lângă câmpul pe care vrei să-l editezi pentru a deschide tastatura virtuală și a introduce textul dorit pentru căutare.
+
+De exemplu, dacă vrei să găsești toate melodiile care conțin cuvântul „dragoste” în titlu (indiferent de poziție), selectează criteriul **Name** și introdu cuvântul „dragoste”. Majusculele nu contează la căutare.
+
+<div style={{ textAlign: 'center' }}>
+  <img
+    src="/images/songbook/edit-filter.jpg"
+    alt="Editare criteriu filtrare SongBook"
+    style={{
+      maxWidth: '350px',
+      width: '100%',
+      height: 'auto',
+      margin: '0 auto',
+    }}
+  />
+  <br />
+  <em>
+    Exemplu de editare a unui criteriu de filtrare în SongBook pe Korg Pa4X.
+  </em>
+</div>
+
+2. Repetă pasul de mai sus pentru toate câmpurile pe care vrei să le incluzi în filtrare.
+3. Dacă dorești, selectează și un **Meter** (măsură) și/sau o plajă de valori pentru **Tempo** care să fie incluse în criteriile de filtrare.
+
+#### Ștergerea criteriilor de filtrare
+
+- Apasă butonul **Clear** pentru a șterge textul introdus sau pentru a reseta parametrul la valoarea implicită.
+- Apasă butonul **Clear All** pentru a reseta toate criteriile de filtrare.
+
+#### Confirmarea filtrării
+
+- După ce ai terminat de editat parametrii de filtrare, apasă butonul **OK** pentru a închide dialogul de filtrare și a reveni la pagina Book.
+- Bifa **Filtered** va fi selectată automat, iar filtrul va fi activat. În listă vor fi afișate doar intrările care corespund criteriilor introduse.
+
+<div style={{ textAlign: 'center' }}>
+  <img
+    src="/images/songbook/checkbox-filter.jpg"
+    alt="Checkbox Filter SongBook"
+    style={{
+      maxWidth: '200px',
+      width: '100%',
+      height: 'auto',
+      margin: '0 auto',
+    }}
+  />
+  <br />
+  <em>Exemplu de bifă Filter activă în SongBook pe Korg Pa4X.</em>
+</div>
+
+#### Eliminarea filtrului și afișarea tuturor intrărilor
+
+- Pentru a elimina filtrarea și a vedea din nou toate intrările, debifează caseta **Filtered**.
+
+## Informații despre intrările SongBook
+
+Poți vizualiza informații statistice despre intrarea SongBook selectată, precum:
+
+- numele intrării
+- stilul sau melodia asociată
+- numărul total de intrări din baza de date SongBook
+- numărul de intrări filtrate afișate în pagina Book
+- numărul de Set List-uri disponibile
+- numărul de intrări din lista selectată
+
+1. În SongBook, selectează o intrare.
+2. Accesează pagina **SongBook > Info**.
+
+**Dacă ai selectat o intrare bazată pe Style:**
+
+<div style={{ textAlign: 'center' }}>
+  <img
+    src="/images/songbook/styled-based-info.jpg"
+    alt="Informații Style-based SongBook"
+    style={{
+      maxWidth: '600px',
+      width: '100%',
+      height: 'auto',
+      margin: '0 auto',
+    }}
+  />
+  <br />
+  <em>
+    Exemplu de ecran cu informații pentru o intrare bazată pe Style în SongBook
+    pe Korg Pa4X.
+  </em>
+</div>
+
+**Dacă ai selectat o intrare bazată pe Song (MIDI sau MP3):**
+
+<div style={{ textAlign: 'center' }}>
+  <img
+    src="/images/songbook/song-based-info.jpg"
+    alt="Informații Song-based SongBook"
+    style={{
+      maxWidth: '600px',
+      width: '100%',
+      height: 'auto',
+      margin: '0 auto',
+    }}
+  />
+  <br />
+  <em>
+    Exemplu de ecran cu informații pentru o intrare bazată pe Song (MIDI sau
+    MP3) în SongBook pe Korg Pa4X.
+  </em>
+</div>
+
+> **Notă:** Dacă zona Selected Entry (Name) este goală (---), înseamnă că intrarea selectată a fost modificată sau nu a fost selectată nicio intrare.
+
+{/* Am RAMAS  Choosing the SongBook Entries by Song Number p.118 */}
