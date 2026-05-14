@@ -1,0 +1,128 @@
+---
+title: Selectarea intrărilor din SongBook prin MIDI
+order: 3
+description: Selectarea intrărilor din SongBook prin MIDI
+category: Songbook
+---
+
+# Selectarea intrărilor din SongBook prin MIDI
+
+Intrările din SongBook pot fi selectate de la distanță prin intermediul semnalului **MIDI**. De asemenea, la alegerea unei intrări SongBook, pot fi trimise mesaje MIDI către alte echipamente sau aplicații.
+
+Această funcționalitate este utilă pentru sincronizarea Korg Pa4X cu un editor extern sau cu o aplicație de partituri digitale (de exemplu, o aplicație dedicată pe tabletă).
+
+## Alegerea presetului MIDI pentru tabletă
+
+Presetul **Tablet MIDI** setează canalul MIDI #16, astfel încât acesta să fie folosit pentru trimiterea mesajelor MIDI la selectarea intrărilor SongBook sau pentru a primi mesaje MIDI de la un dispozitiv extern (de exemplu, o tabletă).
+
+**Pași pentru activare:**
+
+1. Accesează meniul **Global > MIDI > General Controls** de pe Korg Pa4X.
+2. Selectează presetul **Tablet MIDI** din listă.
+
+## Editarea unui preset MIDI existent
+
+Poți programa sau edita propriul preset MIDI pentru selectarea intrărilor SongBook. Este necesar un canal MIDI special, folosit ca **canal de control**, pentru a trimite sau primi mesaje MIDI dedicate selectării intrărilor SongBook.
+
+### Configurarea canalului de control
+
+1. Accesează meniul **Global > MIDI > General Controls** și alege un preset MIDI ca punct de pornire.
+2. Mergi la **Global > MIDI > Midi In Channel** și asociază opțiunea **Control** unuia dintre cele 16 canale MIDI disponibile (de obicei unul cu număr mai mare, de exemplu #16).
+3. Mergi la **Global > MIDI > Midi Out Channel** și asociază opțiunea **Control** unuia dintre cele 16 canale MIDI (același ca la MIDI IN este recomandat).
+4. După ce ai terminat configurarea, salvează aceste setări într-un preset MIDI nou sau existent, folosind comanda **Write Midi Preset** din meniul paginii.
+
+## Selectarea intrărilor SongBook prin MIDI (mesaje tehnice)
+
+> **Ce este NRPN?**
+>
+> NRPN (Non-Registered Parameter Number) este un tip special de comandă MIDI care permite controlul unor funcții avansate ale instrumentelor muzicale digitale, dincolo de comenzile standard MIDI. Practic, NRPN oferă acces la parametri suplimentari, specifici fiecărui instrument, pentru o personalizare și control mai detaliat.
+
+După ce ai configurat presetul și canalul de control, poți selecta de la distanță intrări SongBook folosind mesaje MIDI speciale.
+
+1. Treci instrumentul în modul **Style Play** sau **Song Play**.
+2. Pe canalul de control, Pa4X trebuie să primească, ca inițializare, următoarele mesaje NRPN (Control Change):
+
+- **CC#99 (MSB) cu valoarea 2** – "Control Change 99" (MSB = Most Significant Byte) este folosit pentru a specifica tipul de comandă NRPN. Valoarea 2 indică faptul că urmează o comandă specială pentru SongBook.
+- **CC#98 (LSB) cu valoarea 64** – "Control Change 98" (LSB = Least Significant Byte) completează identificarea comenzii NRPN, iar valoarea 64 definește funcția exactă (selectare SongBook Entry).
+
+> **Explicație:** MSB (Most Significant Byte) și LSB (Least Significant Byte) sunt termeni folosiți în MIDI pentru a transmite valori pe doi octeți, permițând o adresare mai precisă a parametrilor. CC#99 și CC#98 împreună definesc ce parametru NRPN va fi modificat.
+
+Aceste două mesaje trebuie trimise rapid, ca o secvență de inițializare. Această secvență se trimite o singură dată, cu excepția cazului în care se trimit alte comenzi NRPN pe același canal înainte de selectarea unei alte intrări SongBook. 3. După inițializare, trimite secvența de selecție, formată din două mesaje Control Change:
+
+- **CC#06 (Data Entry MSB)** – acest mesaj stabilește valoarea pentru miile și sutele numărului de intrare SongBook. "Data Entry MSB" permite transmiterea valorii principale (zeci și sute) pentru selecție.
+- **CC#38 (Data Entry LSB)** – acest mesaj stabilește valoarea pentru zecile și unitățile numărului de intrare SongBook. "Data Entry LSB" completează valoarea, permițând selectarea exactă a intrării dorite.
+
+> **Explicație:** CC#06 și CC#38 sunt folosite împreună pentru a transmite un număr pe două octeți, astfel încât să poți selecta orice intrare SongBook între 0 și 99 (intervalul acceptat pentru aceste valori este 0~99, nu 0~127 ca la alte comenzi MIDI).
+
+### Exemple de mesaje MIDI pentru selectarea unei intrări SongBook
+
+Mai jos sunt prezentate câteva situații tipice.
+
+- Pentru a selecta intrarea SongBook cu numărul **77**, trimite următoarea secvență de mesaje:
+
+<div style={{ textAlign: 'center' }}>
+  <img
+    src="/images/songbook/songgbook-entry-77.jpg"
+    alt="Exemplu selectare SongBook Entry 77"
+    style={{
+      maxWidth: '600px',
+      width: '100%',
+      height: 'auto',
+      margin: '0 auto',
+    }}
+  />
+  <br />
+  <em>
+    Exemplu de ecran pentru selectarea intrării SongBook cu numărul 77 pe Korg
+    Pa4X.
+  </em>
+</div>
+
+- Pentru a selecta intrarea SongBook cu numărul **100**, trimite următoarea secvență de mesaje:
+
+<div style={{ textAlign: 'center' }}>
+  <img
+    src="/images/songbook/songgbook-entry-100.jpg"
+    alt="Exemplu selectare SongBook Entry 100"
+    style={{
+      maxWidth: '600px',
+      width: '100%',
+      height: 'auto',
+      margin: '0 auto',
+    }}
+  />
+  <br />
+  <em>
+    Exemplu de ecran pentru selectarea intrării SongBook cu numărul 100 pe Korg
+    Pa4X.
+  </em>
+</div>
+
+- Pentru a selecta intrarea SongBook cu numărul **2563**, trimite următoarea secvență de mesaje:
+  <div style={{ textAlign: 'center' }}>
+    <img
+      src="/images/songbook/songgbook-entry-2563.jpg"
+      alt="Exemplu selectare SongBook Entry 100"
+      style={{
+        maxWidth: '600px',
+        width: '100%',
+        height: 'auto',
+        margin: '0 auto',
+      }}
+    />
+    <br />
+    <em>
+      Exemplu de ecran pentru selectarea intrării SongBook cu numărul 2563 pe
+      Korg Pa4X.
+    </em>
+  </div>
+
+## Trimiterea mesajelor MIDI la selectarea unei intrări SongBook
+
+Atunci când canalul special de control este asociat unuia dintre canalele MIDI OUT, la selectarea unei intrări SongBook vor fi trimise automat mesaje MIDI pe acest canal. Mesajele transmise sunt următoarele:
+
+- O secvență de inițializare, formată din mesajele NRPN Control Change #99 (MSB, valoare 2) și #98 (LSB, valoare 64), trimise rapid unul după altul.
+- O secvență de selecție, formată din două mesaje Control Change:
+  - **CC#06 (Data Entry MSB)** pentru miile și sutele numărului de intrare
+  - **CC#38 (Data Entry LSB)** pentru zecile și unitățile numărului de intrare
+    Intervalul acceptat pentru aceste valori este 0~99 (nu 0~127 ca la alte comenzi MIDI).
