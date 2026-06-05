@@ -12,6 +12,15 @@ export default defineType({
       validation: (Rule) => Rule.required(), // Numele este obligatoriu
     },
     {
+      name: 'showSetAnalyzer',
+      title: 'Show Set Analyzer',
+      type: 'boolean',
+      initialValue: true,
+      description:
+        'Indică dacă Set Analyzer trebuie afișat pentru acest produs',
+      validation: (Rule) => Rule.required(),
+    },
+    {
       name: 'slug',
       title: 'Slug',
       type: 'slug',

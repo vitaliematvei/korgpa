@@ -46,6 +46,7 @@ interface Product {
     style: string;
   }[];
   youtube?: string;
+  showSetAnalyzer?: boolean;
 }
 
 const PRODUCT_QUERY = `
@@ -57,7 +58,8 @@ const PRODUCT_QUERY = `
     gallery,
     image,
     details,
-    youtube
+    youtube,
+    showSetAnalyzer
   }
 `;
 
@@ -134,6 +136,8 @@ export default function ProductPage() {
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
+
+  const showSetAnalyzer = product.showSetAnalyzer !== false; // Implicit true dacă nu e specificat
 
   return (
     <div className="container mx-auto p-4 py-8">
@@ -259,29 +263,33 @@ export default function ProductPage() {
       </div>
       {/* Descriere */}
       {/* vom pune ecranul interactiv aici */}
-      <div className="bg-linear-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 p-6 mb-6 rounded-lg shadow-sm">
-        <p className="text-xl md:text-2xl font-semibold text-gray-800 text-center">
-          📊 Analizează conținutul SET-ului în detaliu
-          <br></br>
-          <span className="text-green-600 font-semibold">
-            Selectează categoria și descoperă conținutul complet: stiluri,
-            performanțe, PAD-uri și sound-uri
-          </span>
-          <br></br>
-          <span className="text-sm text-gray-600 block mt-2">
-            (pot fi unele mici diferențe pe diferite clape)
-          </span>
-        </p>
-      </div>
-      <KorgStyleManager
-        deviceModel="Korg PA"
-        setData={KORG_SET_DATA}
-        performanceData={KORG_PERFORMANCE_DATA}
-        initialBankId="FAVORITE01"
-        initialTab="STYLE"
-        wrapperClassName="py-4"
-        panelClassName="max-w-[1200px]"
-      />
+      {showSetAnalyzer && (
+        <>
+          <div className="bg-linear-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 p-6 mb-6 rounded-lg shadow-sm">
+            <p className="text-xl md:text-2xl font-semibold text-gray-800 text-center">
+              📊 Analizează conținutul SET-ului în detaliu
+              <br></br>
+              <span className="text-green-600 font-semibold">
+                Selectează categoria și descoperă conținutul complet: stiluri,
+                performanțe, PAD-uri și sound-uri
+              </span>
+              <br></br>
+              <span className="text-sm text-gray-600 block mt-2">
+                (pot fi unele mici diferențe pe diferite clape)
+              </span>
+            </p>
+          </div>
+          <KorgStyleManager
+            deviceModel="Korg PA"
+            setData={KORG_SET_DATA}
+            performanceData={KORG_PERFORMANCE_DATA}
+            initialBankId="FAVORITE01"
+            initialTab="STYLE"
+            wrapperClassName="py-4"
+            panelClassName="max-w-[1200px]"
+          />
+        </>
+      )}
       {product.details && product.details.length > 0 && (
         <div className="text-gray-700 leading-relaxed max-w-9xl mx-auto">
           <PortableText value={product.details} />
