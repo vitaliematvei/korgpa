@@ -51,6 +51,7 @@ const TUTORIALS_DROPDOWN: NavDropdownItem = {
   children: [
     { name: 'Tutoriale PA4X', href: '/tutoriale-pa4x' },
     { name: 'Muzica pentru Naivi', href: '/muzica-pentru-naivi' },
+    { name: 'Mixare Muzica', href: '/mixare-muzica' },
   ],
 };
 
@@ -232,7 +233,8 @@ const Navbar = () => {
   const pathname = usePathname();
   const isReadingTutorial =
     (pathname?.startsWith('/tutoriale-pa4x') ?? false) ||
-    (pathname?.startsWith('/muzica-pentru-naivi') ?? false);
+    (pathname?.startsWith('/muzica-pentru-naivi') ?? false) ||
+    (pathname?.startsWith('/mixare-muzica') ?? false);
   const { items } = useCart();
   const cartItemCount = items.reduce((total, item) => total + item.quantity, 0);
 
