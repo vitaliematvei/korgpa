@@ -1,0 +1,67 @@
+﻿---
+title: 'Rerpoducerea sunetului'
+description: 'Rerpoducerea sunetului'
+order: 1
+category: 'Monitoring'
+level: 'Incepator'
+---
+
+# Ghidul Monitoarelor de Studio
+
+Difuzoarele de studio sunt numite monitoare. Acest capitol deschide Partea a II-a cu un motiv bine întemeiat: un mediu de monitorizare de calitate este o condiție absolut obligatorie pentru mixaj și ar trebui să ocupe un loc prioritar în planificarea bugetului, indiferent dacă mixezi acasă sau într-un studio profesional.
+
+Merită să dezvăluim încă de pe acum principala concluzie a acestui capitol: monitoarele reprezintă doar o variabilă. Calitatea generală a mediului de monitorizare este dictată de monitoare, poziția lor, poziția ascultătorului și proprietățile acustice ale camerei. Să ai monitoare excepționale, dar poziționate prost într-o cameră cu probleme acustice, este ca și cum ai avea un Ferrari care nu poate trece de treapta a doua de viteză.
+
+Cum am ajuns aici?
+
+## Reproducerea sunetului
+
+Pentru a reproduce sunetul, difuzoarele deplasează aerul ca răspuns la o tensiune electrică de intrare care corespunde unei forme de undă. Există o diferență fundamentală între modul în care sunt reproduse frecvențele joase și cele înalte:
+
+    - Frecvențele joase (bașii): Necesită un con mare și rigid, capabil să deplaseze o masă mare de aer.
+
+    - Frecvențele înalte (înaltele): Solicită o membrană (diafragmă) ușoară și mică, ce se poate mișca rapid.
+
+Cele două cerințe sunt, în mod evident, contradictorii. În plus, frecvențele joase necesită o cursă a membranei (excursie) mult mai mare în comparație cu cele înalte. Dacă un singur difuzor ar produce atât frecvențele joase, cât și cele înalte, deplasarea conului provocată de bași ar genera defazaje nedorite pentru frecvențele înalte. Din acest motiv, reproducerea întregului spectru audibil de către un singur difuzor oferă o calitate sub standardele profesionale.
+
+Prin urmare, incintele acustice folosesc două sau mai multe difuzoare, fiind numite sisteme pe două căi, trei căi și așa mai departe.
+
+## Rolul crossover-ului
+
+Trebuie să ne asigurăm că fiecare difuzor primește doar frecvențele pe care este specializat să le reproducă. Un dispozitiv numit crossover (filtru de frecvență) este utilizat pentru a separa semnalul de intrare în diferite benzi de frecvență (Figura 8.1). Un monitor tipic pe două căi are punctul de crossover în jurul valorii de 2 kHz, trimitând fiecare bandă către difuzorul corespunzător.
+
+    - Notă: Este imposibil de construit un crossover care să taie spectrul de frecvențe perfect vertical (tip „brick-wall”), așa că va exista întotdeauna o zonă de suprapunere în care aceleași frecvențe sunt trimise către ambele difuzoare.
+
+Introducerea unui crossover în calea de semnal generează diverse probleme care colorează sunetul. Producătorii le abordează în moduri diferite, însă niciun sistem nu este perfect.
+
+O altă problemă a sistemelor pe mai multe căi este că spectrul complet de frecvențe este emis din puncte diferite în spațiu. Acest lucru poate cauza interacțiuni de fază nedorite atunci când sunetele emise de difuzoare diferite se însumează acustic. Pentru a rezolva această problemă, unii producători (cum ar fi Tannoy) folosesc un design coaxial, în care difuzorul de înalte (tweeter-ul) este montat chiar în centrul difuzorului de joase (woofer), acolo unde se află de obicei calota de protecție împotriva prafului.
+
+Monitoarele de studio pe două căi sunt capabile să reproducă spectrul de frecvențe audibile la o calitate acceptabilă. Un design cu mai mult de două difuzoare va oferi o calitate mai bună doar dacă problemele introduse de difuzoarele și crossover-ele suplimentare sunt rezolvate corect. Firește, un design care remediază aceste probleme vine cu un preț mai mare. Prin urmare, un monitor de studio pe două căi are toate șansele să fie o achiziție mai bună decât o incintă acustică hi-fi (de uz casnic) pe trei căi, la același preț.
+Răspunsul în frecvență
+
+Toate monitoarele de studio obișnuite pot produce frecvențe de până la 20 kHz. Limita inferioară a răspunsului în frecvență este determinată în mare măsură de dimensiunea woofer-ului, diametrele de 6 și 8 inchi (țoli) fiind cele mai comune. (Dimensiunea face adesea parte din numele modelului, deși rareori indică diametrul exact). Acestea stabilesc limita inferioară a frecvenței în jurul valorii de 55 Hz, respectiv 45 Hz. Monitorul va continua să producă frecvențe și sub aceste limite menționate, deși acestea vor scădea treptat în intensitate (atenuare/roll-off).
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/8-1.jpg"
+    alt="Figura 8.1"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 8.1:</strong>Filtru de separare (Crossover) într-o incintă
+  acustică pe două căi. Pe măsură ce semnalul intră în difuzor, o rețea de
+  filtre îl împarte în două benzi de frecvență diferite. Frecvențele joase sunt
+  trimise către woofer (difuzorul de bași), iar cele înalte către tweeter
+  (difuzorul de înalte).
+</p>
+
+💡 Note de adaptare:
+
+    - Crossover network: În română, termenul tehnic cel mai utilizat este filtru de separare (sau simplu, filtru audio / crossover).
+
+    - Two-way loudspeaker: S-a tradus prin incintă acustică pe două căi (sau boxă pe două căi), fiindcă „loudspeaker” se referă adesea la întregul sistem, nu doar la un singur difuzor.
+
+    - Woofer / Tweeter: Acești termeni sunt împrumutați și folosiți ca atare de pasionații de audio din România, dar adăugarea explicațiilor (difuzorul de bași / de înalte) oferă mai multă claritate.
