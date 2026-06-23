@@ -1,0 +1,68 @@
+---
+title: 'Modurile camerei'
+description: 'Modurile camerei'
+order: 10
+category: 'Monitoring'
+level: 'Incepator'
+---
+
+Modurile camerei sunt discutate în detaliu în multe cărți. O explorare completă a acestui subiect este lungă, tehnică și necesită anumite cunoștințe de bază. Mai jos găsiți o explicație scurtă și simplificată.
+
+Frecvențele joase se propagă sferic. Pentru simplificare, imaginați-vă că frecvențele joase emise de monitoarele noastre călătoresc în mod egal în toate direcțiile. De asemenea, ori de câte ori frecvențele joase intră în contact cu o suprafață, imaginați-vă că în punctul de contact se creează o nouă sursă de sunet, ca și cum acolo ar fi fost plasat un nou difuzor.
+
+Cel mai simplu mod de a descrie undele staționare implică utilizarea a doi pereți paraleli. Sunetul emis de un difuzor va lovi peretele stâng, va ricoșa înapoi către peretele drept și apoi va continua să ricoșeze înainte și înapoi între cei doi. Putem privi sunetul ca fiind „prins” între pereți. Deoarece de fiecare dată când sunetul lovește o suprafață o parte din energia sa este absorbită, după un timp sunetul dispare. Totuși, semnalul continuu emis de monitoare poate amplifica constant undele deja blocate.
+
+Dacă frecvența undelor blocate este legată matematic de distanța dintre pereți, o interacțiune previzibilă între toate undele prinse va face ca acea frecvență să fie fie atenuată, fie accentuată în diferite puncte de pe parcursul traseului. De exemplu, la jumătatea distanței dintre cei doi pereți, acea frecvență ar putea fi abia audibilă, iar lângă perete ar putea fi extrem de accentuată. Undele cu aceste caracteristici se numesc unde staționare, iar o frecvență problematică este definită ca un mod rezonant al camerei. Legile acusticii spun că dacă o anumită frecvență este prinsă într-o cameră, toate armonicele sale sunt, de asemenea, prinse. De exemplu, dacă 50 Hz este cel mai jos mod rezonant, atunci 100, 150, 200, 250 Hz și așa mai departe, vor fi de asemenea blocate.
+
+Dacă aceste blocaje s-ar forma doar între două suprafețe paralele, fiecare cameră ar avea doar un set relativ mic de trei frecvențe problematice (câte una pentru fiecare dimensiune) și armonicele lor. Cu toate acestea, reflexiile se pot forma și între patru sau șase suprafețe, ceea ce are ca rezultat un set complex de moduri ale camerei. Dacă două dimensiuni ale camerei sunt identice, atunci problema se dublează, deoarece aceeași frecvență este blocată pe două dimensiuni. Camerele cubice sunt cele mai problematice, deoarece toate cele trei dimensiuni sunt identice. Camerele cu dimensiuni care împart multipli comuni (de exemplu, 3×6×9 m) sunt de asemenea foarte problematice. În ciuda credinței populare, pereții neparaleli nu rezolvă problema undelor staționare — ei doar fac ca distribuția modurilor camerei să fie mai complexă.
+
+Cele mai joase frecvențe de rezonanță sunt și cele mai pronunțate. În camerele mici, aceste frecvențe joase se află direct în spectrul nostru audibil. Formula pentru a calcula aceste frecvențe fundamentale este destul de simplă:
+
+<span className="font-bold">f=172​/d</span> (unde d reprezintă dimensiunea în
+metri).
+
+Constanta 172 provine direct din viteza sunetului în aer și din modul în care se formează undele staționare între doi pereți.
+
+Mai exact, numărul 172 este jumătatea vitezei sunetului, aproximată pentru o temperatură normală a camerei (în jur de 20∘C).
+
+Iată logica matematică simplă din spate:
+
+    - Viteza sunetului în aer la temperatura camerei este de aproximativ 344 m/s.
+
+    - Pentru a apărea o undă staționară fundamentală (primul mod al camerei) între doi pereți, jumătate din lungimea de undă (λ/2) trebuie să încapă exact între acei pereți.
+
+    - Formula fizică standard pentru frecvență este: f=v/λ​
+
+    - Deoarece pentru frecvența fundamentală lungimea de undă este dublul distanței dintre pereți (λ=2d), formula devine:
+    f=v/2d​
+
+    Înlocuind viteza sunetului (v=344 m/s), obținem:
+    f=344/2d​=172​/d
+
+Astfel, de exemplu, o dimensiune de aproximativ 3 m va provoca un mod fundamental al camerei la 57 Hz. Cu cât camera este mai mare, cu atât frecvența de rezonanță fundamentală este mai joasă. De exemplu, o dimensiune de 8 m va provoca un mod al camerei la 21.5 Hz, ceea ce este mai puțin critic decât 57 Hz pentru aplicațiile de mixaj.
+
+De asemenea, pe măsură ce urcăm pe scara frecvențelor, densitatea crescută a modurilor camerei le face mai puțin pronunțate, iar în jurul valorii de 500 Hz le putem ignora. În camerele mai mari, problemele încep mai jos pe scara frecvențelor și se termină de asemenea mai jos — modurile camerei pot să nu mai reprezinte o problemă peste 300 Hz. Prin urmare, camerele mari sunt preferate pentru aplicațiile de ascultare critică, cum ar fi mixajul sau masteringul.
+
+Este crucial de înțeles că modurile camerei provoacă întotdeauna probleme la aceleași frecvențe, dar problemele nu sunt uniforme în toată încăperea. Practic, fiecare punct din cameră are propriul său răspuns în frecvență. Calculatoarele de moduri de cameră (room mode calculators) sunt disponibile gratuit pe internet — acestea vor genera un grafic care arată frecvențele problematice în funcție de dimensiunile camerei. Totuși, ele nu ne spun exact unde în cameră ar trebui să ne așteptăm ca aceste probleme să fie sesizabile sau, cu alte cuvinte, care va fi răspunsul în frecvență în fiecare punct din încăpere.
+
+Din fericire, putem efectua destul de ușor un test practic care ne arată exact acest lucru. Acesta implică redarea unei unde sinusoidale (sine wave) și compararea diferitelor frecvențe între 20 și 600 Hz. Evident, de obicei ascultăm în poziția de mixaj (sweet spot), dar mișcarea prin cameră va demonstra cât de drastic poate fi atenuată sau accentuată o frecvență în diferite puncte din spațiu. Rezultatele acestui experiment pot fi destul de surprinzătoare pentru cei care îl încearcă prima dată — ați putea descoperi că o anumită frecvență (să zicem, 72 Hz) este inaudibilă când stați jos, dar se aude clar când vă ridicați în picioare; de asemenea, puteți observa că o frecvență (să zicem, 178 Hz) este considerabil mai puternică decât o frecvență apropiată (cum ar fi 172 Hz).
+
+Un alt aspect al modurilor camerei care merită discutat este faptul că acestea afectează capacitatea difuzoarelor de a reproduce frecvențele problematice. Dacă un monitor este poziționat într-un punct în care undele staționare provoacă o accentuare a unei anumite frecvențe, difuzorul va putea produce mai mult din acea frecvență. Cazul opus se aplică doar difuzoarelor monopol (monopole speakers) — dacă difuzorul este plasat într-un punct în care o anumită frecvență este atenuată, driverul (difuzorul propriu-zis) va avea dificultăți în a reproduce acea frecvență.
+
+## Pentru a testa practic acest fenomen
+
+Vă puteți genera sau căuta singuri câteva tonuri de test cu o durată de aproximativ 30 de secunde (le puteți crea foarte ușor în DAW-ul preferat cu un plugin de tip Signal Generator sau le puteți căuta direct pe internet).
+
+În timp ce ascultați fiecare frecvență în parte, plimbați-vă prin cameră pentru a observa cum, în diferite puncte, acea frecvență specifică este accentuată sau atenuată. Majoritatea celor care fac acest experiment într-o cameră obișnuită, de casă, vor identifica cel puțin o frecvență care suferă variații vizibile de volum de la un colț la altul al încăperii — acesta fiind efectul direct al modurilor camerei.
+
+Puteți experimenta cu următoarele tonuri:
+
+    - Frecvențe sinusoidale fixe (Sine waves): 60 Hz, 65 Hz, 70 Hz, 75 Hz, 80 Hz și 90 Hz.
+
+    - Zgomot roz (Pink Noise).
+
+Zgomotul roz oferă o energie egală pe fiecare octavă, motiv pentru care este folosit la scară largă în măsurătorile acustice. În timp ce ascultați acest zgomot stând în poziția principală de monitorizare (sweet spot-ul de mixaj), vă încurajez să vă mișcați capul înainte și înapoi, apoi dintr-o parte în alta.
+
+Modurile camerei vor provoca variații în zona frecvențelor joase (pe bas), în timp ce reflexiile timpurii (early reflections) și directivitatea tweeterelor vor cauza variații în zona frecvențelor înalte. Una dintre caracteristicile unei camere bine tratate și calibrate acustic este tocmai aceasta: simpla mișcare a capului în timp ce ascultați muzică (sau zgomot roz, în cazul de față) abia dacă modifică echilibrul frecvențelor percepute.
+
+{/* Am ramas Treating room modes .102 */}
