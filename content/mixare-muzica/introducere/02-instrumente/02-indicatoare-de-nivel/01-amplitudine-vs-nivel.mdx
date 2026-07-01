@@ -1,0 +1,69 @@
+﻿---
+title: 'Amplitudine vs. Nivel'
+description: 'Amplitudine vs. Nivel'
+order: 1
+category: 'nivel'
+level: 'Incepator'
+---
+
+# Indicatoarele de nivel (Meters)
+
+O zicală populară în lumea mixajului spune așa: „Ascultă, nu privi”.
+Fiind o artă sonoră, mixajul se rezumă în totalitate la audiție.
+Cu toate acestea, indicatoarele de nivel ne sunt mereu în raza vizuală în orice mediu de lucru, și asta dintr-un motiv bine întemeiat.
+Există diverse etape și situații în care aceste indicatoare se dovedesc extrem de utile.
+Dintre numeroasele tipuri folosite în ingineria audio, în procesul de mixaj se remarcă în mod deosebit două: indicatorul de vârf (peak meter) și indicatorul VU (VU meter).
+De asemenea, vom aborda pe scurt și indicatoarele de fază (phase meters).
+Ar fi dificil să discutăm despre monitorizarea nivelului de semnal fără a oferi puțin context tehnic.
+Astfel, scurta secțiune de mai jos îți va fi de mare folos și în capitolele următoare.
+
+# Amplitudine vs. Nivel (Amplitude vs. Level)
+
+În termeni acustici generali, amplitudinea descrie gradul în care presiunea aerului deviază de la presiunea atmosferică normală.
+Un microfon convertește aceste variații de presiune în tensiune electrică (Volți).
+Ulterior, un convertor A/D (analog-digital) transformă aceste tensiuni în numere discrete.
+Deoarece variațiile de presiune ale aerului au loc atât deasupra, cât și dedesubtul presiunii atmosferice normale (referința zero), amplitudinea sunetului este bipolară — are atât valori pozitive, cât și negative.
+Tensiunile electrice și numerele folosite pentru a descrie semnalele audio sunt, de asemenea, bipolare.
+Orice sistem audio are o capacitate egală pe axa pozitivă și pe cea negativă.
+De exemplu: Echipamentele audio profesionale folosesc un interval de la **-1.23 V** la **+1.23 V**.
+Un program de producție audio (sequencer/DAW) folosește un interval rațional de la **-1** la **+1**.
+Unul dintre principalele noastre interese este să ne asigurăm că semnalul nu depășește limitele sistemului.
+De exemplu, nu vrem ca eșantioanele (samples) din DAW-ul nostru să treacă de **+1** sau să coboare sub **-1**.
+Totuși, nu ne interesează în mod deosebit dacă semnalul depășește limita pozitivă sau pe cea negativă, ci ne interesează doar valoarea sa absolută.
+În această carte, termenul de nivel (level) definește valoarea absolută a semnalelor.
+Amplitudinile de **+0.5** și **-0.5** reprezintă ambele un nivel de **0.5**.
+
+**Figura 9.1** ilustrează aceste diferențe.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/9-1.jpg"
+    alt="Figura 9.1"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 9.1:</strong> Amplitudinea și nivelul. Graficul de sus arată
+  amplitudinea formei de undă, care are atât valori (magnitudini) pozitive, cât
+  și negative. Reprezentarea nivelului este, pur și simplu, valoarea absolută a
+  magnitudinii semnalului.
+</p>
+
+💡 Notă explicativă pentru context:
+
+În procesarea audio, o formă de undă (amplitudinea) alternează deasupra și dedesubtul axei zero (faza pozitivă și negativă). Când vorbim despre nivel, ne interesează doar intensitatea semnalului (energia lui), motiv pentru care se folosește valoarea absolută (adică toate valorile negative sunt convertite în valori pozitive, eliminând orientarea fazei).
+
+Utilizarea numerelor și a tensiunilor electrice pentru a exprima nivelurile de semnal ar fi extrem de incomodă.
+Să ai o consolă profesională care îți indică un nivel de semnal de **0.307073... V** sau un DAW care îți arată o valoare de eșantion de **0.25** ar fi destul de copleșitor — mai ales dacă ne gândim că ambele exprimă exact același nivel, doar că în unități de măsură diferite.
+Sistemul în decibeli (dB) oferă o soluție elegantă: exprimă nivelurile prin valori mult mai prietenoase, care înseamnă același lucru pe toate sistemele. Cele două numere lungi de mai sus înseamnă, pur și simplu, **-12 dB**.
+Limita sau nivelul standard de funcționare al unui sistem este notat cu **0 dBr** (dB de referință).
+
+Pe echipamentele audio profesionale, **0 dBr** reprezintă un nivel de **1.23 V**.
+În interiorul unui DAW, acesta reprezintă un nivel de eșantion de **1**.
+Deoarece **0** dBr este limita maximă a sistemului digital, nivelurile sunt în general negative.
+Însă, pe echipamentele analogice, semnalele pot trece de **0 dBr** — pot apărea distorsiuni sau clipping, dar semnalul poate ajunge acolo — motiv pentru care în analog avem și niveluri pozitive.
+Zona care depășește $0$ dBr se numește headroom (rezervă de dinamică).
+Chiar și în interiorul unui DAW semnalele pot trece uneori de **0 dBr**, însă, din câteva motive întemeiate, suntem lăsați să credem că nu se poate. Pentru moment, ar trebui să considerăm **0 dBr** ca fiind limita absolută a unui sistem digital.
+Pentru confortul lecturii, sufixul „r” din dBr va fi omis în continuare.

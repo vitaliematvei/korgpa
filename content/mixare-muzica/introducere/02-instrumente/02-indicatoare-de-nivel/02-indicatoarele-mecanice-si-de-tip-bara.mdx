@@ -1,0 +1,80 @@
+---
+title: 'Indicatoarele mecanice și indicatoarele de tip bară'
+description: 'Indicatoarele mecanice și indicatoarele de tip bară'
+order: 2
+category: 'nivel'
+level: 'Incepator'
+---
+
+## Indicatoarele mecanice și indicatoarele de tip bară (Mechanical and bar meters)
+
+Indicatoarele mecanice folosesc un magnet și o bobină care pun în mișcare un ac indicator.
+Acestea ocupă destul de mult spațiu fizic și, de regulă, acoperă o scală de doar aproximativ **24 dB**.
+Pe de altă parte, indicatoarele de tip bară (bar meters) folosesc fie o coloană de LED-uri, fie un ecran cu plasmă, fie o interfață grafică pe ecranul computerului.
+
+Pe lângă afișarea standard a nivelului, indicatoarele de tip bară pot oferi câteva funcții și indicatori suplimentari (Figura 9.2):
+
+- **Menținerea vârfului (Peak hold):**
+  O linie temporară sau fixă pe indicator care marchează cel mai înalt nivel atins de semnal.
+
+  De obicei, durata de menținere (hold) poate fi setată pe „infinit” (forever), „câteva secunde” (a few seconds) sau poate fi dezactivată (off).
+
+  Această funcție ne arată exact cu cât sub **0 dB** se află cel mai înalt vârf al semnalului, lucru extrem de util în timpul înregistrării sau al procesului de bouncing (export), unde folosim această informație pentru a ridica nivelurile cât mai sus posibil fără a distorsiona.
+
+  Pentru că vârfurile de semnal (peak-urile) apar și dispar într-o fracțiune de secundă, ochiul uman nu le poate urmări mereu cu precizie.
+
+  **Cum funcționează:**
+  Este o funcție inteligentă a indicatorului care „prinde” cel mai înalt punct atins de Peak Level și îl lasă blocat acolo pentru o perioadă de timp (sau permanent, până îl resetezi).
+
+  Pe indicatorul din Cubase:
+  - **Grafic:** O liniuță subțire și statică, care rămâne „plutind” deasupra barei principale care se mișcă.
+  - **Numeric:** O căsuță cu cifre (de exemplu **-3.4 dB**), afișată jos sau sus pe canal, care indică matematic valoarea maximă atinsă.
+
+  **La ce folosește:**
+  Îți permite să îți iei ochii de la ecran în timp ce asculți o piesă cap-coadă. La final, te uiți la indicator, iar Peak Hold îți arată punctul maxim atins (de exemplu **-1.2 dB**).
+
+- **Nivelul de vârf (Peak level):**
+  Un afișaj numeric care indică valoarea exactă a celui mai înalt vârf.
+
+  Peak Level este valoarea maximă (vârful) pe care amplitudinea unui semnal o atinge într-un moment extrem de scurt.
+
+  **Cum funcționează:**
+  Gândește-te la o tobă mare (kick). În momentul exact în care bățul lovește pielea tobei, se creează o explozie de energie care durează doar câteva milisecunde. Acela este „vârful”.
+
+  Pe indicatorul din Cubase, acesta este bara colorată care sare rapid în sus și în jos, urmărind dinamica în timp real a sunetului.
+
+  **La ce folosește:**
+  Îți spune instantaneu cât de aproape este semnalul de limita superioară **0 dBFS**, adică de distorsiune (clipping).
+
+- **Indicatorul de clip/saturație (Clip indicator):**
+  Un martor luminos care se aprinde atunci când semnalul depășește nivelul de clipping (plafonare/distorsiune).
+
+  Într-un sistem digital, acesta este setat de regulă la **0 dBFS**. Pe echipamentele analogice, nivelul de clipping poate fi setat deasupra valorii de **0 dB**, în punctul în care semnalul începe efectiv să distorsioneze.
+
+Pentru toate cele trei funcții menționate mai sus, există opțiuni de resetare, cum ar fi Clear hold (resetarea liniei de vârf) și Clear clips (stingerea indicatorului de clip).
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/9-2.jpg"
+    alt="Figura 9.2"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 9.2:</strong> Funcția de monitorizare a canalelor în Cubase
+  (Cubase track meter facility) Pe lângă indicatorul standard de nivel (level
+  meter), există și un indicator grafic și numeric pentru menținerea valorii de
+  vârf (peak hold indicator), precum și un indicator de saturare/distorsiune
+  (clip indicator).
+</p>
+
+🎛️ Explicația termenilor (pentru utilizarea în DAW):
+
+- Track meter facility: Funcția/secțiunea de monitorizare a nivelului de pe canale.
+- Peak hold indicator: Indicatorul care „îngheață” (păstrează afișată) cea mai mare valoare de vârf atinsă de semnal, atât vizual (grafic), cât și sub formă de cifre (numeric).
+  Este extrem de util pentru a ști exact până unde a urcat semnalul, chiar și după ce pasajul puternic a trecut.
+- Clip indicator: Indicatorul de clipping (becul roșu care se aprinde când semnalul depășește **0 dBFS** în digital, semnalând distorsiune digitală sau clipping).
+
+{/* am ramas Peak meters . 115 */}
