@@ -1,0 +1,84 @@
+---
+title: 'Average meters - Vometrele (Indicatoarele de nivel mediu)'
+description: 'Average meters - Vometrele (Indicatoarele de nivel mediu)'
+order: 4
+category: 'nivel'
+level: 'Incepator'
+---
+
+„Average meters” se traduce cel mai bine prin „vometre” (de la VU meter) sau „indicatoare de nivel mediu”, deoarece măsoară valoarea medie (RMS), nu cea de vârf.
+
+Urechile noastre percep volumul (loudness) în raport cu nivelul mediu al sunetelor, nu cu nivelul lor de vârf (peak) (Figura 9.3 demonstrează diferența dintre cele două).
+Un dezavantaj al indicatoarelor de vârf (peak meters) este că ne oferă foarte puține informații despre volumul perceput al semnalelor.
+Pentru a avea vreo legătură cu volumul real perceput, un indicator trebuie să încorporeze un mecanism de mediere.
+
+Există diverse moduri de a realiza acest lucru:
+
+    - În domeniul analogic: Un indicator mecanic poate folosi un circuit RC (rezistor-condensator) pentru a încetini mișcarea de urcare și coborâre a acului indicator.
+
+    - În domeniul digital: Se poate folosi funcția matematică RMS (Root Mean Square – valoarea medie pătratică).
+
+Indiferent de metodă, mișcarea indicatorului ar trebui să reflecte cu aproximație volumul pe care îl percepem.
+Un exemplu unde acest lucru este util este compresia vocilor — scopul nostru este ca tocmai volumul perceput al vocilor să fie uniform.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/9-3.jpg"
+    alt="Figura 9.3"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 9.3:</strong>Valori de vârf (Peak) vs. valori medii (Average)
+Un indicator de vârf (peak meter) urmărește nivelul semnalului instantaneu; prin urmare, valoarea afișată este identică cu nivelul real al semnalului în acel moment. În schimb pockets, un indicator de valoare medie are nevoie de un timp de răspuns pentru a urca și a coborî, însă rezultatul afișat reflectă mult mai fidel modul în care noi percepem intensitatea volumului (loudness). Am putea spune că un indicator de valoare medie pare ceva mai „leneș” în comparație cu unul de vârf.
+
+</p>
+
+## VU-metrul mecanic
+
+Dintre toate indicatoarele de nivel mediu folosite în mixaj, VU-metrul (Volume Unit) mecanic este cel mai popular.
+Figura 9.4 arată versiunea software (plugin) a acestuia.
+Scara sa gradată se întinde de la –20 la +3 dB și merită observată distribuția diferitelor niveluri:
+
+    - Partea dreaptă a scalei acoperă o plajă de aproape 6 dB.
+
+    - Partea stângă acoperă restul de 17 dB.
+
+Mulți ingineri de sunet sunt familiarizați cu acest tip de indicator, iar unii au suficientă experiență încât să stabilească nivelurile brute ale diferitelor instrumente doar privindu-l.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/9-4.jpg"
+    alt="Figura 9.4"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 9.4:</strong>PSP VintageMeter. Acest plugin gratuit oferă caracteristici de măsurare a mediei semnalului (averaging metering), similare cu cele ale VU-metrelor mecanice clasice.
+
+</p>
+
+## VU-metrele de tip „Bar Graph”
+
+Valorile VU pot fi afișate și sub formă de indicatoare cu bare (bar meters).
+Acest lucru presupune, pur și simplu, afișarea valorii RMS pe o scală standard de vârf (de la –70 la 0 dB).
+
+Totuși, deoarece oamenii sunt atât de obișnuiți cu intervalul de la –20 la +3 dB al VU-metrelor mecanice, scala unui VU-metru cu bare ar putea fi configurată să acopere doar acești 23 dB (Figura 9.5).
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/9-5.jpg"
+    alt="Figura 9.5"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 9.5:</strong>Pluginul Sonalksis FreeG. Acest plugin gratuit oferă, printre alte funcții, capabilități extinse de monitorizare a semnalului (metering). Caracteristica principală a indicatorului de nivel (meter) se bazează pe una dintre cele patru setări de balistică (vizibile în panoul din dreapta); acestea includ tipuri de indicatoare care nu sunt discutate aici, cum ar fi cel de tip BBC (folosit în radiodifuziune). Bara îngustă din interiorul indicatorului principal afișează nivelurile RMS. De asemenea, există indicatori numerici și grafici (săgeți) pentru reținerea valorilor de vârf (peak hold), valabili atât pentru nivelul de vârf (peak), cât și pentru RMS.
+
+</p>
