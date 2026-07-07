@@ -1,0 +1,211 @@
+---
+title: 'Conectarea procesoarelor și a efectelor'
+description: 'Conectarea procesoarelor și a efectelor'
+order: 4
+category: 'nivel'
+level: 'Incepator'
+---
+
+Metoda standard pentru conectarea procesoarelor este utilizarea unui punct de inserție (insert), în timp ce efectele sunt conectate în mod normal folosind o trimitere auxiliară (aux send).
+Ambele modalități sunt descrise în detaliu în acest capitol.
+Dacă procesoarele și efectele nu sunt conectate așa cum a fost prevăzut, pot apărea diverse probleme.
+
+Cu toate acestea, există întotdeauna excepții; de exemplu, compresoarele pot fi conectate în paralel ca parte a tehnicii de compresie paralelă (parallel compression).
+În anumite situații, are sens ca și efectele de reverb să fie conectate prin inserts.
+Aceste excepții sunt analizate în detaliu în capitolele următoare.
+
+## Fluxul de semnal de bază (Basic signal flow)
+
+În această secțiune, vom folosi o consolă imaginară cu șase canale pentru a demonstra modul în care semnalele audio circulă în interiorul unui pult tipic, precum și conceptele cheie privind rutarea semnalului.
+Vom construi consola pas cu pas, adăugând funcții noi de fiecare dată.
+În această secțiune vor fi prezentate trei tipuri de ilustrații: o diagramă a fluxului de semnal (signal flow diagram), dispunerea fizică a consolei (interfața) și panoul său din spate (oglindit pe orizontală pentru mai multă claritate).
+
+Diagramele de flux introduse aici sunt desene schematice care ne ajută să înțelegem cum circulă semnalele, cum pot fi acestea rutate și în ce puncte de pe calea de semnal acționează controalele cheie.
+Prin convenție, semnalul circulă de la stânga la dreapta, cu excepția cazurilor în care săgețile indică altfel.
+O diagramă a fluxului de semnal este o parte esențială a manualului oricărei console.
+
+Din păcate, nu există o notație standard universală pentru aceste diagrame, așa că diferiți producători folosesc simboluri diferite.
+Elementul comun al tuturor acestor schițe este că secțiunile identice sunt reprezentate o singură dată.
+Prin urmare, diagrama de flux a unei console cu 24 de canale identice va ilustra un singur canal, iar acesta este adesea încadrat într-un chenar pentru a indica acest lucru.
+Majoritatea funcțiilor din secțiunea master sunt unice, iar eventualele repetiții sunt specificate (de exemplu, dacă grupurile 3–4 funcționează exact ca grupurile 1–2, pe diagramă va scrie „grupurile 3–4 identice” în dreptul grupurilor 1–2).
+Diagramele de flux din acest capitol sunt simplificate.
+De exemplu, acestea nu includ componentele care realizează conversia între semnalul balansat și cel nebalansat.
+
+# Pasul 1: Fadere, potențiometre de panoramare și comutatorul de tăiere (Cut switch)
+
+Primul pas implică consola de bază prezentată în Figura 10.4. Fiecare canal este alimentat de la o pistă respectivă de pe recorderul multitrack.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/10-4-a.jpg"
+    alt="Figura 10.4-a"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.4.a:</strong>
+
+</p>
+
+După cum se poate observa în Figura 10.4b, fiecare canal are un fader, un potențiometru de panoramare (pan-pot) și un comutator de tăiere a semnalului (cut switch / mute).
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/10-4-b.jpg"
+    alt="Figura 10.4-b"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.4.b:</strong>
+
+</p>
+
+Diagrama fluxului de semnal din Figura 10.4a ne arată că semnalul audio circulă de la mufa de intrare de linie (line input), trece prin comutatorul cut, apoi prin fader și, în final, prin potențiometrul de panoramare.
+Fiecare pan-pot preia un semnal mono și scoate un semnal stereo.
+Semnalul stereo este apoi trimis către magistrala de mix (mix bus) unde este sumat (amplificatorul de sumare este omis din ilustrație), iar un singur fader master modifică nivelul general al semnalului de pe bus-ul stereo.
+În cele din urmă, semnalul de pe mix bus ajunge la o pereche de ieșiri mono situate pe panoul din spate al consolei (Figura 10.4c).
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/10-4-c.jpg"
+    alt="Figura 10.4-c"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.4.c:</strong>
+
+</p>
+
+## Pasul 2: Gain-ul de linie, inversarea de fază și indicatoarele de clip
+
+Multe console au pe fiecare bandă de canal (channel strip) un potențiometru de gain pentru linia de intrare (line-gain pot), un comutator pentru inversarea de fază (phase-invert switch) și un indicator de saturare/vârf (clip indicator).
+În cazul consolelor mai mari, atât controlul de gain, cât și cel de inversare a fazei se află într-o secțiune dedicată intrărilor (input section), care găzduiește și controalele destinate înregistrării, cum ar fi selectorul pentru intrarea de microfon, alimentarea phantom (+48V) și comutatorul de atenuare (pad switch).
+Figura 10.5 ilustrează adăugarea acestor controale pe consola noastră.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/10-5.jpg"
+    alt="Figura 10.5"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.5</strong>La pasul 2, pe fiecare bandă de canal (channel strip) au fost adăugate un control pentru gain-ul de linie (line-gain), un comutator pentru inversarea de fază și un indicator de clip. Panoul din spate al consolei rămâne neschimbat față de pasul anterior și nu mai este ilustrat.
+
+</p>
+
+De exemplu, dacă nivelul de înregistrare al vocalistului este foarte scăzut, chiar și acel câștig suplimentar de maximum 10 dB oferit standard de fadere s-ar putea să nu fie suficient pentru a aduce vocea destul de tare în mix.
+În astfel de cazuri, vom fi nevoiți să coborâm restul mixului, ceea ce implică ajustarea tuturor celorlalte fadere.
+În cazuri rare, semnalul de intrare poate fi prea puternic (too hot) și poate suprasolicita circuitele interne ale canalului.
+În aceste situații, potențiometrul de gain pentru linia de intrare (line-gain pot) este folosit tocmai pentru a atenua nivelul semnalului de intrare.
+
+Destul de ciudat, acest semnal de intrare foarte puternic este de multe ori chiar dorit în anumite situații.
+Un truc vechi al inginerilor de mixaj este să forțeze semnalul de intrare pentru a suprasatura intenționat circuitele interne ale canalului; motivul este că suprasolicitarea componentelor analogice interne produce o distorsiune care adaugă armonici extrem de plăcute auzului.
+Inutil să mai spunem că acest lucru trebuie făcut cu măsură și doar pe instrumentele potrivite.
+Practic, gain-ul de linie de pe consolele analogice adaugă opțiuni de distorsiune (saturație) pe fiecare canal în parte.
+
+Un lucru important de reținut este că procesoarele de dinamică, precum și trimiterile către efecte (effect sends), se află după etapa de gain (line-gain stage).
+Prin urmare, orice modificare a gain-ului de linie va necesita ajustări corespunzătoare, de exemplu, la pragul compresorului (threshold) sau la nivelul trimiterii auxiliare (aux send).
+Din acest motiv, este înțelept să setați acest control în primele etape ale mixajului, înainte ca el să afecteze alte procesoare sau efecte de pe calea de semnal.
+
+Pe lângă utilizarea controalelor de gain pentru a adăuga distorsiune, un inginer de sunet bun se va asigura, de asemenea, că toate pistele de pe recorderul multitrack sunt coerente în fază.
+În cazurile în care o pistă a fost înregistrată din greșeală cu faza inversată, controlul pentru inversarea de fază (phase-invert) o va readuce în fază.
+
+Indicatoarele de clip de pe o consolă analogică se aprind atunci când nivelul semnalului depășește un anumit prag stabilit de producător.
+Semnalul poate fi monitorizat în diverse puncte de pe calea sa.
+Fluxul de semnal din Figura 10.5a ne arată că, pe consola noastră, există un singur astfel de punct, situat înainte de faderul canalului.
+Un indicator de clip aprins pe o consolă analogică nu sugerează neapărat o degradare a sunetului, mai ales dacă ne amintim de tehnica semnalelor suprasaturate.
+Dacă luăm ca exemplu consolele SSL (Solid State Logic), nu este considerat deloc un pericol ca jumătate dintre canale să fie în clip atunci când se lucrează la un mix modern și puternic.
+Urechea ar trebui să fie singurul judecător atunci când decidem dacă un semnal care intră în clip trebuie sau nu corectat.
+
+## Pasul 3: Procesoarele integrate (Onboard processors)
+
+Majoritatea consolelor oferă o serie de procesoare integrate pe fiecare canal, pornind de la controale de ton de bază pe mixerele compacte, până la o secțiune de filtre, un egalizator complet pe patru benzi și o secțiune de dinamică pe consolele de format mare.
+Calitatea și numărul acestor procesoare integrate definesc în mare măsură valoarea consolei, având totodată un rol major în amprenta sonoră a acesteia.
+
+Figura 10.6b ilustrează adăugarea unui filtru trece-sus (high-pass filter / HPF), a unui egalizator (EQ) și a unui compresor de bază pe fiecare canal al consolei noastre.
+După cum se poate observa în schema fluxului de semnal din Figura 10.6a, aceste procesoare sunt poziționate pe calea de semnal între etapele de fază (phase) și tăiere (cut / mute), exact așa cum apar pe o consolă tipică.
+
+Unele console oferă posibilitatea de a schimba dinamic ordinea acestor procesoare. De exemplu, prin apăsarea unui buton, secțiunea de dinamică poate fi mutată înainte de egalizator.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/10-6.jpg"
+    alt="Figura 10.6"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.6 </strong>După cum se poate observa pe interfața consolei (b), adăugirile de la pasul 3 includ un filtru trece-sus (high-pass filter), un egalizator complet parametric cu o singură bandă și un compresor de bază dotat cu controale pentru prag (threshold), timp de eliberare (release) și atac rapid (fast attack).
+
+</p>
+
+## Pasul 4: Punctele de inserție (Insert points)
+
+Procesoarele integrate pe o consolă de format mare sunt recunoscute pentru calitatea lor ridicată, însă în anumite situații preferăm să folosim o unitate externă (outboard).
+Uneori, motivul este pur și simplu faptul că un anumit procesor nu este disponibil pe consolă (de exemplu, ducker-ele nu sunt foarte comune, nici măcar pe consolele mari), iar alteori sunetul unui echipament extern este preferat în detrimentul procesorului integrat.
+
+După cum sugerează și numele, punctele de inserție ne permit să introducem un dispozitiv extern pe calea de semnal.
+Ele fac acest lucru prin întreruperea căii de semnal, direcționarea semnalului existent către un dispozitiv extern și rutarea semnalului returnat (procesat extern) astfel încât să înlocuiască semnalul original.
+În practică, majoritatea consolelor trimit permanent o copie a semnalului către mufa insert send, iar butonul de insert determină doar dacă semnalul returnat este folosit sau nu pentru a înlocui semnalul existent (Figura 10.7).
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/10-7.jpg"
+    alt="Figura 10.7"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.7 </strong>Un punct de inserție (insert point) tipic.
+
+(a) Când comutatorul de insert nu este activat, o copie a semnalului este trimisă în continuare către mufa insert send, însă semnalul original își urmează neatins calea în fluxul de semnal.
+
+(b) Când comutatorul de insert este activat, semnalul original este întrerupt, iar semnalul provenit de la mufa insert return îi ia locul.
+
+</p>
+
+Atunci când ieșirile de insert send nu sunt folosite pentru a conecta un echipament extern, ele pot servi ca punct de unde se poate prelua o copie a semnalului.
+De exemplu, când se adaugă sub-bass la o tobă mare (kick), este nevoie de o copie a semnalului de kick pentru a declanșa deschiderea și închiderea unui gater.
+
+Este important de reținut că fiecare unitate externă poate fi conectată la un singur canal specific — atunci când folosiți punctul de inserție al unui canal, este imposibil să trimiteți un alt canal către aceeași unitate externă.
+Totuși, este posibil să rutați ieșirea unui echipament extern în intrarea altui echipament extern și să returnați ieșirea acestuia din urmă în consolă.
+În acest fel, putem înlănțui (daisy chain) mai multe procesoare externe, de exemplu în cazurile în care dorim ca o voce să fie procesată atât de un egalizator extern, cât și de un compresor.
+
+Figura 10.8a prezintă adăugarea unui punct de inserție în fluxul de semnal al consolei noastre.
+Rețineți că punctul de inserție este poziționat după procesoarele integrate și înainte de etapa de tăiere (cut / mute).
+Unele console permit schimbarea dinamică a poziției punctului de inserție, de cele mai multe ori înainte sau după procesoarele integrate.
+Singura adăugire de pe interfața propriu-zisă a consolei (Figura 10.8b) este butonul de activare a inserției (insert-enable).
+Pe panoul din spate al consolei (Figura 10.8c), au fost adăugate mufele de insert send și insert return pentru fiecare canal. Folosirea a două mufe balansate separate este o abordare mai comună pe consolele mari, însă unele console mai mici utilizează o singură mufă TRS (jack mare) care combină atât trimiterea (send - pe vârful mufei / tip), cât și returnarea (return - pe inelul mufei / ring). Un cablu în formă de Y (Y-lead cable) este folosit în acest tip de conexiune nebalansată pentru a face legătura cu unitatea externă.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/10-8.jpg"
+    alt="Figura 10.8"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.8 </strong>La pasul 4, au fost adăugate puncte de inserție
+  (insert points) pe fiecare canal al consolei. Singura adăugire de pe interfață
+  (b) este comutatorul de insert, în timp ce pe panoul din spate fiecare canal a
+  primit mufe suplimentare pentru trimitere (send) și returnare (return).
+</p>
+
+{/* am ramas The importance of signal flow diagrams .128 */}

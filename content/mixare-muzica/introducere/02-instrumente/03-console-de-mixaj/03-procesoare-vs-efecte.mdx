@@ -1,0 +1,117 @@
+---
+title: 'Procesoare versus Efecte (Processors vs. Effects)'
+description: 'Procesoare versus Efecte (Processors vs. Effects)'
+order: 3
+category: 'nivel'
+level: 'Incepator'
+---
+
+Dispozitivele folosite pentru procesarea semnalelor audio se împart în două categorii: procesoare și efecte. Este esențial să înțelegem diferențele dintre cele două.
+
+## Procesoare (Processors)
+
+Un procesor este un dispozitiv, un circuit electronic sau un cod software folosit pentru a modifica un semnal de intrare și a-l înlocui complet cu semnalul procesat de la ieșire.
+Procesoarele sunt utilizate atunci când semnalul original nu mai este necesar după aplicarea tratamentului.
+Din acest motiv, procesoarele sunt conectate în serie pe calea de semnal (Figura 10.1).
+Dacă luăm ca exemplu un egalizator, nu ar avea sens să păstrăm și semnalul original neprocesat după ce acesta a fost deja egalizat.
+
+# Printre exemplele de procesoare se numără:
+
+    - Egalizatoare (equalizers / EQ);
+
+    - Procesoare de dinamică (dynamic range processors);
+
+    - Compresoare (compressors);
+
+    - Limitatoare (limiters);
+
+    - Gater-e (gates);
+
+    - Expandere (expanders);
+
+    - Ducker-e (duckers);
+
+    - Efecte de distors (distortions);
+
+    - Corectoare de ton/pitch (pitch correctors);
+
+    - Fadere (faders);
+
+    - Potențiometre de panoramare (pan-pots).
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/10-1.jpg"
+    alt="Figura 10.1"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.1:</strong>Procesoarele sunt conectate in serie in calea semnalului si inlocuieste semnalul original
+
+</p>
+
+## Efecte (Effects)
+
+Efectele adaugă elemente noi sunetului original.
+Ele preiau un semnal de intrare și generează un semnal nou, modificat, pe baza acelui input inițial.
+Ulterior, există diverse modalități de a mixa semnalul generat de efect cu cel original.
+În mod tradițional, efectele sunt conectate în paralel cu calea de semnal (Figura 10.2).
+Majoritatea efectelor se bazează pe timp (time-based), însă și dispozitivele care modifică înălțimea sunetului (pitch-related) pot intra în această categorie.
+
+# Printre exemplele de efecte se numără:
+
+    - Efecte bazate pe timp (Time-based effects):
+
+        - Reverb (reverb);
+
+        - Delay / Ecou (delay);
+
+        - Chorus (chorus);
+
+        - Flanger (flanger).
+
+    - Efecte de înălțime a sunetului (Pitch-related effects):
+
+        - Pitch shifter și armonizator (harmonizer).
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/10-2.jpg"
+    alt="Figura 10.2"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.2:</strong> In operatiile standard, o copie a semnalului original este trimis spre unitatea de efect. Semnalul origianl si efectul sunt mixate si deseori sumate pe acelasi buss
+
+</p>
+
+În cadrul unei unități de efecte, distingem două tipuri de semnale.
+Semnalul dry (curat/sec) este pur și simplu semnalul de intrare original, neafectat.
+Semnalul wet (procesat) este semnalul nou pe care îl generează unitatea de efecte.
+Dacă luăm ca exemplu un delay, vocea trimisă către unitatea de delay reprezintă semnalul dry, în timp ce repetările (ecourile) generate de unitate constituie semnalul wet.
+Deși logica ne spune că unitățile de efecte ar trebui să scoată doar semnalul wet (iar acest lucru este obligatoriu atunci când efectele sunt conectate în paralel), multe echipamente și pluginuri ne permit să mixăm intern semnalele dry și wet, oferindu-le la ieșire pe amândouă.
+Raportul dintre semnalul dry și cel wet este determinat fie de un singur potențiometru exprimat în procente (potențiometrul de Mix sau Dry/Wet), fie de două controale de nivel separate — unul pentru dry și celălalt pentru wet (Figura 10.3).
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/10-3.jpg"
+    alt="Figura 10.3"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.3:</strong>Două moduri de a mixa semnalele dry și wet în interiorul unei unități de efecte:
+
+(a) Un singur control rotativ (potențiometru), având semnalul complet dry la o extremitate, semnalul complet wet la cealaltă extremitate și un mix egal între dry și wet în poziția centrală.
+
+(b) Două controale independente; fiecare determină nivelul volumului pentru semnalul său respectiv.
+
+</p>
