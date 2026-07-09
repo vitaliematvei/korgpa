@@ -1,0 +1,183 @@
+---
+title: 'Importanța diagramelor de flux de semnal (Signal Flow)'
+description: 'Importanța diagramelor de flux de semnal (Signal Flow)'
+order: 5
+category: 'nivel'
+level: 'Incepator'
+---
+
+Consola pe care am proiectat-o până acum este una foarte tipică — atât ordinea etapelor în fluxul de semnal, cât și dispunerea controalelor pe suprafața de lucru sunt extrem de similare cu cele ale unei console obișnuite.
+Un lucru care iese imediat în evidență este faptul că potențiometrele și butoanele de pe suprafața consolei sunt organizate pentru a fi cât mai accesibile și ergonomice pentru utilizator, și nu în ordinea procesării efective.
+
+Figura 10.9 ilustrează traseul real al semnalului în comparație cu configurația canalului de la pasul 4.
+Doar privind o consolă, nu putem determina dacă procesoarele de dinamică sunt plasate înainte sau după egalizator, dacă punctul de insert este înainte sau după procesoare sau alte detalii legate de fluxul de semnal — informații care pot fi vitale în timpul procesului de mixaj.
+În multe cazuri, manualul de utilizare nu va oferi răspunsuri la aceste întrebări, lăsând diagrama de flux de semnal ca singură noastră sursă de referință.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-9.jpg"
+    alt="Figura 10.9"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.9:</strong>Această ilustrație, deși poate părea puțin copleșitoare, demonstrează modul în care semnalul audio circulă de fapt prin controalele canalului.
+
+</p>
+
+## Pasul 5: Trimiterile auxiliare (Auxiliary sends)
+
+O trimitere auxiliară (aux send sau simplu send) preia o copie a semnalului de pe traseul canalului și o direcționează către o magistrală auxiliară internă (auxiliary bus).
+Această magistrală auxiliară este apoi rutată către o mufă de ieșire, care poate alimenta o unitate externă de efecte.
+Fiecare fâșie de canal (channel strip) de pe consolă are un set de controale aferente trimiterilor auxiliare.
+Pentru a distinge aceste controale de cele auxiliare identice din secțiunea master, le numim controale auxiliare locale; acestea pot fi compuse din:
+
+    - Controlul de nivel (Level) — există întotdeauna un potențiometru pentru a determina nivelul copiei trimise către magistrala auxiliară.
+
+    - Comutatorul Pre-/Post-fader — un comutator care determină dacă semnalul este prelevat înainte sau după faderul canalului. Evident, dacă semnalul este prelevat post-fader, mișcarea faderului de canal va modifica și nivelul semnalului trimis.
+    Atunci când conectăm efecte de tipul reverb-ului, ne dorim adesea ca nivelul efectului să corespundă cu cel al instrumentului.
+    Alimentarea post-fader permite acest lucru.
+    Când semnalul este prelevat pre-fader, nivelul său este independent de faderul canalului și va fi trimis chiar dacă faderul este coborât complet.
+    Acest lucru este util în timpul înregistrărilor, unde trimiterile determină nivelul fiecărui instrument în mixajul de monitorizare al artiștilor (cue mix) — nu ne dorim ca modificările din mixul de monitorizare din regie să afecteze mixul din căștile artiștilor.
+    Dacă nu există un comutator, alimentarea poate fi fixă, fie pre-, fie post-fader.
+
+    - Controlul de panoramare (Pan) — magistralele auxiliare pot fi fie mono, fie stereo. Când se folosește un auxiliar stereo, va exista un potențiometru de pan (pan-pot) pentru a determina cum este panoramizat semnalul mono al canalului pe magistrala auxiliară.
+
+    - Comutatorul Pornit/Oprit (On/off) — activează sau dezactivează trimiterea către magistrala auxiliară. Uneori este etichetat simplu „mute”.
+
+Este important de înțeles că putem trimite fiecare canal către aceeași magistrală auxiliară, reglând în același timp nivelul fiecărui canal în mod individual cu ajutorul controlului local de nivel aux (Figura 10.10).
+
+De exemplu, putem trimite vocea, chitara acustică și tamburina către o singură magistrală auxiliară, care este rutată către o unitate de reverb.
+Cu ajutorul controalelor locale de nivel aux, stabilim echilibrul de volum dintre cele trei instrumente, ceea ce va duce în final la cantități diferite de reverb pentru fiecare instrument în parte.
+Spre deosebire de trimiterile de tip insert (insert sends), trimiterile auxiliare ne permit să împărțim (share) efectele între mai multe canale diferite.
+
+De asemenea, în Figura 10.10, merită remarcate controalele folosite pentru a seta nivelul general al magistralei auxiliare sau pentru a o opri complet.
+Aceste controale master aux se află în secțiunea master.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-10.jpg"
+    alt="Figura 10.10"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.10:</strong>În această ilustrație, semnalele de la trei canale sunt trimise către aceeași magistrală auxiliară (aux bus), fiecare având propriile setări pentru nivelul de trimitere (send level). 
+  Observați că pentru canalele 1 și 2 este selectată o alimentare post-fader, în timp ce pentru canalul 5 există o alimentare pre-fader.
+
+</p>
+
+Controalele master aux sunt adesea identice cu cele locale, cu o singură excepție: nu există niciodată un control pre-/post-fader.
+Aceste setări se fac la nivel de canal individual, nu global pentru întreaga magistrală auxiliară.
+
+Majoritatea consolelor au mai mult de o magistrală auxiliară și, prin urmare, mai mult de un set de controale aux locale și master.
+Pe unele console, numărul de auxiliare determină câte unități de efecte pot fi folosite în mixaj.
+De exemplu, la o consolă cu doar două auxiliare, aux 1 ar putea fi rutat către o unitate de reverb, iar aux 2 către o unitate de delay.
+La fel ca în cazul inserturilor, putem înlănțui unitățile (daisy-chain); de exemplu, pentru ca aux 1 să fie trimis într-un delay, care este urmat apoi de un reverb.
+
+Trimiterile aux diferite nu sunt întotdeauna identice, iar fiecare poate implica un set ușor diferit de controale.
+În cazul consolei noastre, au fost adăugate două trimiteri aux (Figura 10.11).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-11.jpg"
+    alt="Figura 10.11"
+    className="h-auto w-full max-w-2xl"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.11:</strong>La pasul 5 au fost adăugate trimiterile
+  auxiliare. Consola are două magistrale auxiliare (aux buses), una stereo și
+  cealaltă mono. La nivel de canal, controalele locale pentru trimiterea aux 1
+  sunt: nivelul, selecția pre-/post-fader, panoramarea (pan) și oprirea (cut).
+  Aux 2 dispune doar de controale locale pentru nivel și oprire (cut).
+  Controalele master aux pentru ambele auxiliare sunt cele de nivel și oprire
+  (cut).
+</p>
+
+Aux 1 este stereo, are un comutator pre-/post, control de pan și un comutator de oprire (cut switch).
+Aux 2 este mono și dispune doar de controale de nivel și oprire (cut).
+După cum se poate vedea în Figura 10.11a, aux 1 are o alimentare fixă post-fader.
+
+În configurația consolei din Figura 10.11b, controalele respective pentru fiecare aux local au fost adăugate pe fiecare canal. De asemenea, secțiunea master oferă acum atât controale de nivel, cât și de oprire (cut) pentru fiecare master aux. Figura 10.11c arată adăugarea mufelor de ieșire pentru fiecare auxiliar.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-11b.jpg"
+    alt="Figura 10.11b"
+    className="h-auto w-full max-w-2xl"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.11b:</strong>
+</p>
+
+## Pasul 6: Întoarcerile de efect (FX returns)
+
+Până acum, am văzut cum putem trimite un semnal audio către o unitate de efecte.
+Să analizăm acum cum poate fi adus semnalul procesat înapoi în consolă.
+Întoarcerile de efect — numite FX returns (sau uneori aux returns) — sunt intrări stereo dedicate, poziționate în spatele consolei, care pot fi rutate către magistrala de mixaj (mix bus).
+Cu excepția celor mai rudimentare console, majoritatea oferă câteva controale master pentru a gestiona semnalul de efect întors.
+Controalele de nivel (level) și oprire (mute) sunt foarte comune, în timp ce consolele de format mare pot include și câteva controale de ton (egalizare) de bază.
+
+Figura 10.12 arată adăugarea a două întoarceri FX stereo pe consola noastră. În configurația din Figura 10.12b, o secțiune dedicată oferă controale de nivel și mute pentru fiecare întoarcere, iar pe panoul din spate (Figura 10.12c) au fost adăugate două perechi de mufă suplimentare.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-12a.jpg"
+    alt="Figura 10.12a"
+    className="h-auto w-full max-w-2xl"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.12a:</strong>Pasul 6 implică adăugarea a două întoarceri de
+  efect (FX returns). Pe panoul din spate există două perechi de mufe; fiecare
+  întoarcere FX dispune de controale pentru nivel și oprire (cut), care vor
+  afecta semnalul de efect întors înainte ca acesta să fie însumat în magistrala
+  de mixaj (mix bus).
+</p>
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-12b.jpg"
+    alt="Figura 10.12b"
+    className="h-auto w-full max-w-2xl"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.12b:</strong>
+</p>
+
+Întoarcerile FX oferă o modalitate foarte rapidă și simplă de a integra efectul
+în mixaj, însă, chiar și pe consolele de format mare, funcționalitatea lor este
+destul de limitată. De exemplu, rareori ne permit să panoramăm semnalul întors,
+lucru care ar putea fi necesar pentru a îngusta lățimea stereo a unei reveniri
+de reverb. Ca alternativă, inginerii de sunet preferă adesea să întoarcă
+efectele în două canale mono separate, care oferă o varietate mult mai mare de
+procesare (potențiometre de panoramare individuale, egalizatoare, compresoare
+etc.). O astfel de configurație este ilustrată în Figura 10.13.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-13.jpg"
+    alt="Figura 10.13"
+    className="h-auto w-full max-w-2xl"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.13:</strong>Atunci când există canale libere pe consolă,
+  inginerii de sunet preferă adesea să aducă semnalul de efect înapoi pe canale,
+  în loc să folosească întoarcerile dedicate (FX returns). Canalele oferă mult
+  mai multe opțiuni de procesare în comparație cu întoarcerile FX.
+</p>
+
+Atunci când este posibil, este de preferat ca efectele să fie întoarse direct pe canalele consolei.
+
+{/* am ramas Groups .133 */}
