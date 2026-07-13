@@ -1,0 +1,41 @@
+﻿---
+title: 'INTRO-JUCE'
+description: 'INTRO-JUCE'
+order: 1
+category: 'INTRO-JUCE'
+level: 'Incepator'
+---
+
+Este un tutorial pas cu pas conceput pentru începători absoluți care vor să învețe să programeze plug-in-uri audio (VST-uri), chiar dacă nu au mai scris niciodată cod. Nu este necesară o diplomă în informatică, inginerie audio și nu sunt necesare cunoștințe avansate de matematică (doar aritmetică de bază).
+
+Scopul este de a face programarea audio accesibilă oricui prin explicații detaliate, ilustrații și capturi de ecran. Deși învățarea programării (în special în C++) este un proces dificil și uneori frustrant care necesită răbdare, cunoștințele acumulate pun bazele dezvoltării oricărui tip de software audio.
+
+## 🛠️ Tehnologiile folosite
+
+Pentru crearea plug-in-urilor se folosește standardul de aur din industrie:
+
+    Limbajul C++ – un limbaj complex, dar esențial și cel mai potrivit pentru programarea audio de nivel profesional.
+
+    Framework-ul JUCE – o structură de cod gata făcută care le permite dezvoltatorilor să scrie codul o singură dată și să îl exporte pe diverse sisteme de operare (Windows, Mac, iOS) și formate de plug-in-uri (VST3, AU, AAX), scutindu-i de rescrierea aceluiași program de mai multe ori.
+
+Cerințe hardware/software: Este necesar un computer real (PC sau Mac) lansat în ultimii 10 ani (tabletele nu sunt suportate) și un mediu de dezvoltare (IDE) gratuit: Xcode pentru Mac sau Visual Studio pentru Windows.
+
+## 🎛️ Ce vei construi: Un Plug-in de Delay
+
+Proiectul practic al cărții este un plug-in de Delay (ecou), un instrument indispensabil în producția muzicală modernă. Acesta va rula în orice DAW major (Logic Pro, Ableton Live, FL Studio, REAPER etc.) și va include următoarele funcții:
+
+    Timp de delay între 5 milisecunde și 5 secunde, cu opțiune de sincronizare la tempo-ul piesei.
+
+    Secțiune de feedback (repetiție) cu filtre low-cut și high-cut încorporate.
+
+    Efect de ping-pong (bătaia ecoului stânga-dreapta) pe pistele stereo.
+
+    Control pentru mixul dintre semnalul curat și cel procesat (Dry/Wet) și control de volum (Output Gain).
+
+    Indicator de nivel (Level Meter) în timp real și buton de bypass.
+
+## 📂 Resursele și Codul Sursă
+
+Toate liniile de cod sunt explicate în carte pe parcursul a aproape 500 de pagini. Autorul recomandă scrierea manuală a codului pentru o învățare mai eficientă, însă întregul proiect (împărțit pe capitole), alături de imagini, fișiere audio și erori cunoscute (errata), poate fi descărcat sub formă de arhivă ZIP de pe pagina de GitHub dedicată cărții, servind ca punct de referință în caz de erori sau probleme de compilare.
+
+https://github.com/TheAudioProgrammer/BeginnerBookAudioProgramming

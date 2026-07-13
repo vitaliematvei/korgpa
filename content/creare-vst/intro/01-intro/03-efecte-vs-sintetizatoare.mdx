@@ -1,0 +1,41 @@
+---
+title: 'Efecte versus sintetizatoare'
+description: 'Efecte versus sintetizatoare'
+order: 3
+category: 'JUCE'
+level: 'Incepator'
+---
+
+## Efecte versus sintetizatoare
+
+Există mai multe tipuri de plug-in-uri, însă cele mai des întâlnite sunt:
+
+    - Plug-in-ul de efect (FX)
+
+    - Plug-in-ul de instrument sau sintetizator (synth)
+
+    - Efectele MIDI
+
+Diferența principală este că un plug-in de efect procesează un sunet deja existent, în timp ce un sintetizator creează sunete complet noi pe baza notelor MIDI. Desigur, se pot crea și plug-in-uri care le fac pe amândouă.
+
+Efectele MIDI transformă notele — de exemplu, pentru a transpune o melodie mai sus sau mai jos, ori pentru a crea arpegii. Dacă nu știi ce este MIDI, imaginează-ți-l ca pe o partiție muzicală în format electronic. Nu vom folosi tehnologia MIDI în această carte.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/01.jpg"
+    alt="Figura 01"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 01:</strong> Diferite tipuri de plugin-uri
+</p>
+
+Din punctul de vedere al plug-in-ului, programul DAW este aplicația-gazdă (host) care îi oferă acces la intrările și ieșirile audio ale computerului.
+Un plug-in de efect primește semnalul audio de pe pistă, îl modifică într-un anumit fel și trimite rezultatul înapoi către DAW.
+În cazul unui plug-in de tip sintetizator (synth), DAW-ul îi furnizează evenimente MIDI, care îi transmit sintetizatorului ce note trebuie să cânte.
+
+Există și alte tipuri de plug-in-uri, însă acestea nu sunt suportate de toate programele DAW.
+Ne vom concentra exclusiv pe construirea unui plug-in de efect.

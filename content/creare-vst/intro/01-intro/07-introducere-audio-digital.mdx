@@ -1,0 +1,93 @@
+---
+title: 'Introducere în audio digital'
+description: 'Introducere în audio digital'
+order: 7
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Sarcina principală a unui plug-in este de a procesa semnalul audio. La fiecare câteva milisecunde, programul gazdă (DAW-ul) trimite comanda processBlock către plug-in, cerându-i să își aplice „magia” pe un nou bloc de eșantioane audio (audio samples). Să vedem ce înseamnă mai exact audio digital, ce sunt eșantioanele și de ce le procesăm sub formă de blocuri, unul câte unul.
+
+Pentru a genera un sunet, moleculele de aer trebuie să fie puse în mișcare înainte și înapoi cu o forță suficient de mare pentru ca urechile noastre să poată capta vibrațiile. Aceste vibrații ale aerului trebuie să se propage destul de rapid pentru ca creierul uman să le înregistreze ca sunet, mai exact între 20 și 20.000 de ori pe secundă (Hz).
+
+Pentru ca aceste vibrații să devină muzică, moleculele de aer ar trebui, de asemenea, să se miște într-un mod plăcut auzului — sau neplăcut, dacă vă place genul grindcore.
+
+Ca programator, nu trebuie să îți faci griji cu privire la punerea fizică în mișcare a aerului. Boxele computerului se ocupă de acest lucru. Tu trebuie doar să îi descrii computerului, cu exactitate, cum vrei să se miște membranele difuzoarelor. Această descriere constă într-un flux continuu de 44.100 (sau mai multe) numere pe secundă.
+
+Placa de sunet a computerului, mai exact cipul DAC (Digital-to-Analog Converter / Convertor digital-analogic), transformă acest flux de numere în semnale electrice care mișcă rapid bobina electromagnetică a difuzorului înainte și înapoi. Aceasta, la rândul ei, face ca membrana difuzorului să împingă și să tragă aerul. Mișcarea aerului rezultată este ceea ce noi numim sunet.
+
+Programarea DSP (Digital Signal Processing / Procesarea digitală a semnalului) se rezumă strict la gestionarea acestor liste de numere. În JUCE, aceste numere sunt valori cuprinse între –1.0 și +1.0. În informatică, ele sunt numite floating-point numbers (numere în virgulă mobilă), deoarece conțin zecimale.
+
+De exemplu, dacă îi ceri computerului să transmită prin DAC următoarea secvență de numere, vei auzi un sunet cu o frecvență de 261,63 Hz, adică nota Do central (Middle C) de la pian.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/05.jpg"
+    alt="Figura 05"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 05: </strong> Audio digital este doar o lista de numere
+</p>
+Desigur, o listă de numere nu este foarte ușor de înțeles, așa că, de obicei, o
+vom reprezenta sub forma unui grafic, precum cel prezentat mai jos.
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/06.jpg"
+    alt="Figura 06"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 06: </strong> O nota de pian printata ca o forma de unda
+</p>
+Aceasta este imaginea unei forme de undă audio (audio waveform), reprezentând
+aproximativ 1,4 secunde din sunetul eșantionat al unui pian care cântă nota Do
+central.
+
+Amplitudinea este reprezentată pe axa verticală și descrie poziția membranei difuzorului la un anumit moment în timp. O amplitudine mai mare înseamnă că conul difuzorului este împins mai mult în exterior. Timpul este reprezentat pe axa orizontală, de la stânga la dreapta, și este măsurat în număr de eșantioane (samples).
+
+Observi cum acest semnal oscilează în sus și în jos, dar este centrat în jurul valorii de amplitudine 0.0? Aceasta este poziția de repaus a conului difuzorului. O amplitudine mai mare decât zero înseamnă că conul difuzorului este împins în exterior, iar o amplitudine mai mică decât zero (o amplitudine negativă) înseamnă că acesta este tras în interior. Sunetul este generat de mișcarea conului dintr-o poziție în alta. În stare de repaus, conul difuzorului stă fix în centru, poziție reprezentată de valoarea zero a amplitudinii.
+
+Dacă mărim (facem zoom in) această formă de undă, putem vedea punctele din care este alcătuită:
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/07.jpg"
+    alt="Figura 07"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 07: </strong> Un segment scurt de fisier audio
+</p>
+
+Orice punct individual de pe acest grafic se numește eșantion (sample). Pentru această formă de undă specifică, este nevoie de 44.100 de astfel de eșantioane pentru a reda o singură secundă de sunet. Cele aproximativ 800 de eșantioane din această ilustrație descriu doar o fracțiune infimă de timp, adică echivalentul a aproape 18 milisecunde de material audio. Observă cum aceste eșantioane descriu o mișcare de urcare și coborâre — nu pot exista unde sonore dacă conul difuzorului nu se mișcă înainte și înapoi.
+
+Prin urmare, în interiorul computerului, sunetul este descris de un flux de 44.100 (sau mai multe) numere pe secundă, numite eșantioane. DAW-ul va trece această listă de numere prin toate plug-in-urile de pe pistă, iar plug-in-urile vor modifica pe rând aceste numere într-un mod — sperăm noi! — interesant.
+
+În cele din urmă, convertorul digital-analogic (DAC) al computerului preia aceste date eșantionate și le transformă într-o tensiune electrică continuă pe care o folosește pentru a acționa boxele. Eșantioanele specifică modul în care membrana difuzorului trebuie să se miște înainte și înapoi pentru a face aerul să vibreze — transformând totul în ceva ce urechile și creierul nostru interpretează ca sunet.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/08.jpg"
+    alt="Figura 08"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 08: </strong> De la digital la analog
+</p>
+Pentru sunetul stereo, plug-in-ul trebuie să livreze de două ori câte 44.100 de
+eșantioane pe secundă: un flux pentru difuzorul stâng și un flux pentru
+difuzorul drept. În definitiv, audio digital nu înseamnă nimic mai mult decât un
+flux de numere care creează tipare interesante de mișcare a aerului!

@@ -52,6 +52,7 @@ const TUTORIALS_DROPDOWN: NavDropdownItem = {
     { name: 'Tutoriale PA4X', href: '/tutoriale-pa4x' },
     { name: 'Muzica pentru Naivi', href: '/muzica-pentru-naivi' },
     { name: 'Mixare Muzica', href: '/mixare-muzica' },
+    { name: 'Creare VST', href: '/creare-vst' },
   ],
 };
 

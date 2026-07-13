@@ -1,0 +1,46 @@
+---
+title: 'Rata de eșantionare (Sampling rate)'
+description: 'Rata de eșantionare (Sampling rate)'
+order: 8
+category: 'JUCE'
+level: 'Incepator'
+---
+
+De ce este nevoie de exact 44.100 de eșantioane pentru a surprinde o singură secundă de semnal audio?
+Pare un număr destul de ciudat, nu-i așa?
+Să presupunem că vrem să înregistrăm un sunet cu ajutorul unui microfon.
+Mișcarea moleculelor de aer din unda sonoră va face ca membrana microfonului să vibreze în interiorul unui câmp magnetic, generând o tensiune electrică ce se modifică în mod continuu.
+Această tensiune este transformată de către convertorul ADC (Analog-to-Digital Converter / Convertor analog-digital) al computerului într-o serie de numere: eșantioanele.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/09.jpg"
+    alt="Figura 09"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 09: </strong> De la analogic la digital
+</p>
+
+Convertorul ADC face acest lucru măsurând valoarea tensiunii electrice la fiecare câteva microsecunde și salvând acea valoare sub forma unui număr întreg (integer) pe 16 sau 24 de biți. În informatică, un integer este un număr întreg, spre deosebire de un număr în virgulă mobilă (floating-point), care poate avea zecimale.
+
+Numărul de biți determină cât de mare poate fi acel număr întreg. Un număr întreg pe 24 de biți poate stoca valori mai mari decât unul pe 16 biți, dar ocupă și mai mult spațiu în memoria computerului.
+
+ADC-ul preia așadar un semnal analogic, continuu (format dintr-o tensiune electrică ce se modifică fluid), și îl transformă într-un semnal digital, discret (format dintr-un flux de valori numerice întregi). Ulterior, programul gazdă (DAW-ul) mapează aceste numere întregi în numere în virgulă mobilă cuprinse între –1 și +1, deoarece sunt mult mai ușor de procesat.
+
+În procesarea digitală a semnalului există o teoremă extrem de importantă (teorema Nyquist-Shannon) care spune că rata de eșantionare — adică viteza cu care ADC-ul măsoară acea tensiune electrică — trebuie să fie de cel puțin două ori mai mare decât cea mai înaltă frecvență din semnalul înregistrat. Dacă rata de eșantionare nu este suficient de mare, semnalul digital rezultat nu va mai reprezenta fidel semnalul analogic original.
+
+Auzul uman ajunge până la aproximativ 20.000 Hz (sau 20 kHz, unde „kilo” înseamnă o mie), deși mulți oameni nu pot auzi frecvențe atât de ridicate. Eu, de exemplu, sunt pe la jumătatea vârstei de 40 de ani și, la fel ca majoritatea celor de vârsta mea, nu mai aud nimic peste 15 kHz. Totuși, dacă luăm 20 kHz ca limită superioară a frecvențelor pe care vrem să le înregistrăm, rata de eșantionare ar trebui să fie de cel puțin 40 kHz (adică 40.000 de eșantioane pe secundă).
+
+În practică, se folosește o rată de eșantionare de 44.100 de eșantioane pe secundă (44,1 kHz). Acest număr bizar este rezultatul unor decizii tehnice luate în trecut pentru tehnologiile video și audio timpurii, cum ar fi Compact Discul (CD-ul), unde calculele matematice au dus pur și simplu la valoarea de 44,1 kHz. Deoarece această rată este suficient de mare pentru a capta cele mai înalte frecvențe pe care le pot percepe urechile (tineere) ale oamenilor, industria a adoptat-o ca standard.
+
+În zilele noastre, este foarte des întâlnită și rata de eșantionare de 48 kHz (48.000 de eșantioane pe secundă). Diferența față de 44,1 kHz este minoră și, în cea mai mare parte, nu contează. Unii producători folosesc chiar 96 kHz sau mai mult, deși o rată mai mare nu înseamnă neapărat un sunet mai bun. Valoarea de 44,1 kHz este deja arhisuficientă pentru a capta toate sunetele pe care le pot auzi oamenii, iar cu cât rata de eșantionare este mai mare, cu atât este nevoie de mai multe numere pentru a descrie același sunet. De la un punct încolo, creșterea ratei de eșantionare devine doar o risipă inutilă de numere.
+
+Acestea fiind spuse, există motive bine întemeiate pentru a folosi o rată de eșantionare mai mare în interiorul unui plug-in, tehnică numită oversampling (supraeșantionare). Aceasta ajută la combaterea inamicului numărul unu al oricărui programator audio: aliasurile (aliasing). Un alias este o frecvență care este prea înaltă pentru a fi reprezentată corect la rata de eșantionare aleasă și care este „oglindită” înapoi sub forma unei frecvențe mai joase. De regulă, aceste aliasuri apar sub forma unui bâzâit inarmonic distonant care îți strică mixajul lucrat cu atâta grijă, motiv pentru care trebuie evitate cu orice preț.
+
+Notă: În cariera ta de programator audio, s-ar putea să dai peste fișiere audio cu rate de eșantionare mult mai mici, cum ar fi 16 kHz sau chiar 8 kHz. Aceste rate scăzute nu sunt folosite de obicei în producția muzicală, dar pot fi în regulă pentru sunete inregtistrate care nu au multe frecvente intale, cum ar fi vorbirea
+
+{/* am ramas A closer look at samples .31 */}

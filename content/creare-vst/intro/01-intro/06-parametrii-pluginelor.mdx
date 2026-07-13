@@ -1,0 +1,99 @@
+---
+title: 'Parametrii plug-in-ului'
+description: 'Parametrii plug-in-ului'
+order: 6
+category: 'JUCE'
+level: 'Incepator'
+---
+
+O altă modalitate prin care programul gazdă (DAW) și plug-in-ul comunică este prin intermediul parametrilor.
+Fiecare plug-in are potențiometre (butoane rotative / knobs) și alte controale care îi permit utilizatorului să modifice sunetul procesat.
+Plug-in-ul nostru de delay va avea butoane pentru timpul de întârziere (delay time), cantitatea de repetiție (feedback), lățimea stereo (stereo width), volumul de ieșire (output level) și așa mai departe.
+
+Pentru fiecare dintre aceste butoane vei defini câte un parametru, care expune aceste controale către aplicația gazdă.
+Oferind DAW-ului acces la setările plug-in-ului, utilizatorul va putea face lucruri precum înregistrarea de automatizări — de exemplu, pentru a crește treptat și automat cantitatea de semnal procesat (wet) în mixaj.
+
+# Parametrii folosiți de plug-in-ul nostru de delay sunt:
+
+    - timpul de delay măsurat în milisecunde
+
+    - timpul de delay ca valoare de notă, de la o treizeci-și-doime (1/32) până la o notă întreagă
+
+    - sincronizarea cu tempo-ul (tempo sync) — dacă este activată sau nu
+
+    - cantitatea de feedback, un procentaj cuprins între –100% și 100%
+
+    - lățimea stereo, un procentaj cuprins între –100% și 100%
+
+    - frecvența de tăiere (cutoff) pentru filtrul low-cut, de la 20 Hz la 20 kHz
+
+    - frecvența de tăiere pentru filtrul high-cut, tot de la 20 Hz la 20 kHz
+
+    - proporția mixului dry/wet, un procentaj de la 0% la 100%
+
+    - amplificarea de ieșire (output gain), de la –12 la +12 dB (decibeli)
+
+    - starea de bypass — dacă plug-in-ul este dezactivat temporar sau activ
+
+Când utilizatorul învârte un buton sau apasă pe o opțiune din editorul grafic al plug-in-ului, JUCE va trimite o notificare către DAW prin intermediul parametrului corespunzător.
+
+Invers, atunci când DAW-ul rulează o curbă de automatizare din proiect, JUCE se asigură că plug-in-ul este notificat cu privire la modificări, astfel încât acesta să își poată actualiza interfața grafică și să adapteze modul în care procesează semnalul audio.
+
+Majoritatea programelor DAW îți permit să vezi acești parametri sub formă de listă.
+De exemplu, în REAPER, dacă apeși butonul „UI” din colțul din dreapta-sus al ferestrei de efecte (FX), afișajul va trece de la interfața grafică a plug-in-ului la o listă simplă cu toți parametrii săi.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/03.jpg"
+    alt="Figura 03"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 03: </strong>Interfața generică din REAPER pentru afișarea
+  parametrilor
+</p>
+
+Parametrii plug-in-ului apar, de asemenea, în meniul de automatizări al DAW-ului tău. De exemplu, în Logic Pro:
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/04.jpg"
+    alt="Figura 04"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 04: </strong>Parametrii în meniul de automatizări din Logic Pro
+  parametrilor
+</p>
+
+Nu tot ceea ce face un plug-in trebuie să fie asociat cu un parametru.
+De exemplu, dacă interfața grafică a plug-in-ului poate fi redimensionată, nu vei crea câte un parametru pentru lățimea și înălțimea ferestrei.
+Parametrii sunt folosiți exclusiv pentru setările care au legătură directă cu procesarea semnalului audio.
+
+Parametrul de bypass este unul special.
+Majoritatea programelor DAW îi permit utilizatorului să dezactiveze temporar un efect, fără a-l șterge de pe pistă, prin apăsarea unui buton de bypass.
+Acest buton este conectat la parametrul de bypass al plug-in-ului, astfel încât acesta din urmă să știe că, din acel moment, trebuie să lase semnalul audio să treacă intact, fără nicio modificare.
+
+Când utilizatorul își salvează proiectul muzical în DAW, setările plug-in-ului trebuie să fie stocate și ele odată cu acel proiect.
+Altfel, data viitoare când utilizatorul își va deschide proiectul, toate butoanele plug-in-ului ar reveni la pozițiile lor implicite (default).
+
+Salvarea și încărcarea setărilor nu sunt gestionate automat de către programul gazdă; este nevoie de ajutorul plug-in-ului.
+Acest proces se numește restaurarea stării (state restoration) și implică două comenzi pe care plug-in-ul trebuie să le implementeze în cod:
+
+    - getStateInformation: Gazda (DAW-ul) îi cere plug-in-ului să salveze valorile tuturor parametrilor săi și orice altceva mai dorește să țină minte.
+
+    - setStateInformation: Gazda îi transmite plug-in-ului că ar trebui să își restaureze setările pe baza datelor salvate anterior în proiect.
+
+În cazul plug-in-urilor dezvoltate cu JUCE, este o practică obișnuită ca valorile parametrilor să fie salvate într-un document XML.
+În cele din urmă, plug-in-ul este liber să aleagă cum dorește să salveze aceste date, atât timp cât este capabil să le încarce din nou atunci când programul gazdă îi cere acest lucru.
+
+Un plug-in poate include, de asemenea, presetări din fabrică (factory presets).
+Acestea sunt accesate de obicei printr-un meniu derulant din fereastra care încadrează editorul plug-in-ului, deși nu toate programele DAW oferă un astfel de meniu.
+În terminologia JUCE, presetările din fabrică sunt numite programe (programs).
+Fiecare program reprezintă, practic, o colecție de setări gata configurate ale parametrilor.

@@ -1,0 +1,31 @@
+---
+title: 'Formate de plug-in-uri'
+description: 'Formate de plug-in-uri'
+order: 4
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Pentru ca plug-in-urile să poată exista, este nevoie de un acord comun cu privire la modul în care programul gazdă (DAW-ul) și plug-in-ul comunică între ele. Astfel, DAW-ul îi poate transmite plug-in-ului când există un semnal audio nou de procesat. La rândul său, plug-in-ul trebuie să notifice gazda cu privire la orice schimbare — de exemplu, când utilizatorul interacționează cu interfața grafică.
+
+Aici apare însă problema: există mai multe protocoale de comunicare de acest tip și toate sunt incompatibile între ele.
+
+    - VST2 este standardul original care a creat un întreg ecosistem înfloritor de plug-in-uri. În prezent, acesta este învechit (deprecated) și majoritatea dezvoltatorilor nu mai pot crea (legal) plug-in-uri noi în acest format.
+
+    - VST3 este înlocuitorul formatului VST2. La fel ca predecesorul său, este multiplatformă (cross-platform) și poate fi folosit pe Mac, Windows și Linux.
+
+    - Audio Units (AU) reprezintă standardul de plug-in-uri dezvoltat de Apple. La fel ca în cazul VST, există mai multe versiuni. Versiunea AUv3 a devenit foarte populară pe dispozitivele iOS (iPhone/iPad), însă pe computerele Mac, dezvoltatorii folosesc încă în mare parte versiunea mai veche, AUv2.
+
+    - AAX este formatul de plug-in dedicat programului Pro Tools de la compania Avid. Acest tip de plug-in funcționează exclusiv în Pro Tools. Cu toate acestea, deoarece acest DAW rămâne standardul industriei în studiourile audio profesionale, formatul AAX merită cu siguranță să fie suportat.
+
+    - LV2 este un standard de plug-in foarte popular pe sistemele Linux, fiind succesorul vechiului format LADSPA.
+
+    - Există și alte formate, dar sunt mai puțin întâlnite. De exemplu, un grup de dezvoltatori din comunitatea audio lucrează la un nou format open-source numit CLAP, care pare extrem de promițător, însă nu era complet suportat de framework-ul JUCE în momentul scrierii acestei cărți.
+
+Ca dezvoltator de plug-in-uri audio, îți dorești ca produsele tale să fie folosite de cât mai mulți oameni. Asta înseamnă că va trebui să oferi suport pentru mai multe formate. VST3 este cel mai universal format, deoarece funcționează pe toate platformele, însă nu toate programele DAW îl acceptă. Un exemplu perfect este Logic Pro, care rulează exclusiv plug-in-uri în format Audio Units (AU).
+
+Majoritatea plug-in-urilor comerciale sunt livrate în versiuni VST3, AU și AAX, atât pentru Windows, cât și pentru Mac. Suportul pentru Linux nu este oferit de toată lumea, deși lucrurile încep să se îmbunătățească treptat. Unele plug-in-uri sunt disponibile inclusiv pe iOS sau Android.
+
+Deoarece tu vei folosi JUCE, tot ce trebuie să faci este să scrii codul plug-in-ului tău folosind API-ul (interfața de programare) oferit de JUCE. Ulterior, framework-ul se va ocupa de transformarea lui în VST3, AU, AAX, LV2 sau în orice alt format nou care va apărea pe viitor (este rezonabil să presupunem că JUCE va implementa în cele din urmă și suportul pentru CLAP).
+
+Datorită lui JUCE, scapi de grija acestor formate diferite și te poți concentra pe partea cea mai distractivă: crearea unui plug-in excelent, lăsând detaliile tehnice de conexiune în seama framework-ului.

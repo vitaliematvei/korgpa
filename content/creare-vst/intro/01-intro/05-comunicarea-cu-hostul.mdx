@@ -1,0 +1,79 @@
+---
+title: 'Comunicarea cu gazda (host)'
+description: 'Comunicarea cu gazda (host)'
+order: 5
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Plug-in-ul și programul gazdă trebuie să comunice permanent între ele.
+De exemplu, DAW-ul va interoga plug-in-ul cu privire la configurațiile de bus (canale) pe care le suportă, punând întrebări precum: „Suporți un bus mono? Suporți un bus stereo?” și așa mai departe.
+Iar plug-in-ul trebuie să răspundă la aceste întrebări.
+
+În această relație, programul gazdă este cel care deține controlul.
+DAW-ul trimite comenzi și solicitări de informații către plug-in, iar acesta este obligat să răspundă.
+De exemplu, dacă un plug-in declară că poate fi folosit doar pe semnal stereo, DAW-ul poate decide să nu îi permită utilizatorului să plaseze acest plug-in pe o pistă mono.
+
+Viața unui plug-in trece prin următoarele etape:
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/02.jpg"
+    alt="Figura 02"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 02: </strong>Ciclul de viata al unui plug-in
+</p>
+
+# Încărcarea în memorie:
+
+    Când utilizatorul adaugă un plug-in pe o pistă, DAW-ul îl încarcă în memoria computerului (în RAM) apelând constructorul plug-in-ului.
+
+# Inspectarea proprietăților: Apoi, DAW-ul verifică caracteristicile plug-in-ului prin întrebări specifice:
+
+        - este un efect sau un sintetizator (synth)?
+
+        - acceptă sau generează mesaje MIDI?
+
+        - câte canale de intrare și de ieșire poate gestiona?
+
+        - are o interfață grafică (UI)?
+
+        - vine cu presetări din fabrică (factory presets)?
+
+        - semnalul de ieșire este întârziat? Cu alte cuvinte, introduce latență?
+
+Pentru fiecare dintre aceste întrebări există cereri separate în cod: acceptsMidi, hasEditor, getNumPrograms, getLatencySamples și așa mai departe.
+
+# Pregătirea pentru redare:
+
+Odată ce gazda a înțeles ce face plug-in-ul și vrea să pornească procesarea audio, trimite comanda prepareToPlay.
+Aceasta informează plug-in-ul și cu privire la rata de eșantionare (sample rate) și dimensiunea buffer-ului audio (buffer size) pe care urmează să le folosească.
+Acesta este momentul în care plug-in-ul își pregătește toate resursele înainte de a începe să primească semnal audio.
+De exemplu, la primirea comenzii prepareToPlay, plug-in-ul nostru de delay va rezerva suficientă memorie RAM pentru a stoca cele 5 secunde de sunet întârziat.
+Eliberarea resurselor: Omologul lui prepareToPlay este comanda releaseResources, trimisă atunci când DAW-ul a oprit redarea audio.
+Acesta este locul perfect în care plug-in-ul poate elibera resursele de care nu mai are nevoie.
+
+# Procesarea audio propriu-zisă:
+
+Cea mai importantă comandă este processBlock.
+Această cerere este trimisă de sute sau chiar mii de ori pe secundă de către aplicația gazdă și este locul în care plug-in-ul își face toată treaba, adică procesează semnalul audio primit.
+
+- Deși DAW-ul mai poate trimite și alte comenzi, noi ne vom petrece cea mai mare parte a timpului lucrând cu prepareToPlay și processBlock.
+- Desființarea: Când utilizatorul decide că nu mai vrea să folosească acest plug-in și îl șterge de pe pistă, destructorul îl descarcă definitiv din memoria computerului.
+
+## Procesor versus Editor
+
+Etapele descrise mai sus arată cum comunică partea de procesare (processor) a plug-in-ului cu gazda.
+În realitate, un plug-in este format din două părți distincte:
+
+- Procesorul (Processor): se ocupă exclusiv de procesarea semnalului audio.
+
+- Editorul (Editor): se ocupă de interfața grafică (UI) a plug-in-ului.
+
+Deși nu este obligatoriu, majoritatea plug-in-urilor au un editor. Când utilizatorul face click pe plug-in pentru a-i deschide fereastra, gazda trimite comanda createEditor către plug-in pentru ca acesta să poată afișa interfața grafică.
+În timp ce o instanță a procesorului există întotdeauna în memorie pe parcursul rulării, editorul va fi creat și va exista doar atunci când aplicația gazdă are nevoie să afișeze interfața pe ecran.
