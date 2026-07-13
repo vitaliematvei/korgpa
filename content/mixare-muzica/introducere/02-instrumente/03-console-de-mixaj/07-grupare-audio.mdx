@@ -1,0 +1,114 @@
+---
+title: 'Grupare audio'
+description: 'Grupare audio'
+order: 7
+category: 'nivel'
+level: 'Incepator'
+---
+
+## Gruparea audio (Audio grouping)
+
+Pentru a gestiona mai multe semnale în mod colectiv, un grup de canale trebuie mai întâi însumat (summed) într-o magistrală de grup — o practică numită subgrupare (subgrouping).
+Semnalul de grup (practic, un submix) poate fi apoi procesat și rutat către magistrala principală de mix (mix bus).
+Console diferite oferă numere diferite de magistrale (buses) de grup, multiplii de opt fiind cei mai întâlniți.
+Fiecare bus de grup este mono, dar foarte des grupurile sunt folosite în perechi stereo formate din grupuri consecutive impare și pare — fiecare reprezentând canalul stâng, respectiv drept.
+De exemplu, în grupurile 1–2, grupul 1 este stânga, iar grupul 2 este dreapta.
+Formatul Canale:Grupuri:Buses-de-Mix este folosit în mod curent pentru a descrie numărul acestor resurse pe o consolă.
+De exemplu, 16:8:2 desemnează 16 canale, opt buses de grup și două buses de mix (adică un bus de mix stereo).
+
+Fiecare canal poate fi alocat unor grupuri diferite folosind o matrice de rutare (routing matrix) aflată pe fiecare bandă de canal (channel strip).
+O matrice de rutare este o colecție de butoane care pot fi amplasate fie vertical, lângă fader, fie într-o zonă dedicată de pe channel strip (Figura 10.15), cea din urmă variantă fiind mai comună pe consolele mari, unde pot exista până la 48 de grupuri.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-15.jpg"
+    alt="Figura 10.15"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.15:</strong>Matrice de rutare. (a) O configurație tipică pentru o matrice de rutare pe o consolă mare. Fiecare bus de grup are un buton dedicat. (b) O configurație tipică pentru o matrice de rutare pe o consolă mai mică. Fiecare buton alocă semnalul canalului către o pereche de grupuri, iar pan-pot-ul canalului poate determina către care dintre cele două este trimis semnalul.
+
+</p>
+
+Matricile de rutare vin în două formate — cele care au un buton independent pentru fiecare bus de grup și cele care au un buton pentru fiecare pereche de grupuri.
+Un potențiometru de panoramare (pan-pot) determină de obicei cum este panoramat semnalul atunci când este trimis către o pereche de grupuri.
+De exemplu, dacă sunt selectate grupurile 1 și 2, iar pan-pot-ul este rotit complet la stânga (hard-left), semnalul va fi trimis doar către grupul 1.
+
+În ceea ce privește fluxul de semnal (signal flow), semnalul trimis către grup este o copie a semnalului de pe canal.
+Avem nevoie de o modalitate de a deconecta semnalul original de la mix bus, deoarece copia trimisă la grup va fi oricum rutată către mix bus (rareori ne dorim atât originalul, cât și copia împreună pe mix bus).
+Pentru a realiza acest lucru, fiecare matrice de rutare are un comutator de alocare a mixajului (mix assignment switch) care determină dacă semnalul original al canalului alimentează sau nu mix bus-ul.
+Copia este preluată post-pan-pot (și, prin urmare, post-fader), direct de pe canal; ca atare, orice procesare aplicată semnalului de pe canal (inclusiv mișcările de fader) afectează copia trimisă la grup.
+Trebuie clarificat faptul că, prin gruparea audio, avem un control total al procesării atât asupra fiecărui canal individual, cât și asupra grupului în sine.
+Putem, de exemplu, să aplicăm o compresie specifică pe toba mare (kick), o compresie diferită pe toba mică (snare) și o altă compresie pe întregul mix de tobe.
+
+Functiile de grup se împart în două categorii: grupuri master (master groups) și grupuri integrate (in-line groups).
+Consolele care oferă grupuri master pun la dispoziție o secțiune dedicată de controale (benzi) pentru fiecare bus de grup în secțiunea master.
+Fiecare bandă conține un fader care setează nivelul general al grupului și câteva controale suplimentare, cum ar fi un buton de solo sau un comutator de alocare la mix bus.
+Acesta din urmă este necesar deoarece, în timpul înregistrării sau al procesului de bouncing, buses-urile de grup nu sunt în mod normal alocate către mix bus.
+Comutatorul de alocare la mix bus funcționează și ca un control de mute, deoarece poate deconecta semnalul de grup de la mix bus.
+Pentru a permite procesarea semnalului de grup, fiecare grup oferă un punct de inserție (insertion point).
+
+Figura 10.16a arată fluxul de semnal al unei console cu grupuri audio master.
+Rețineți că semnalul către bus-ul de grup este o copie preluată post-pan.
+Fiecare grup are un punct de insert (în acest caz half-normaled, ca pe un patchbay standard), un fader și un comutator de alocare la mix bus.
+Pe această consolă, grupurile impare pot fi alocate doar către stânga, iar grupurile pare doar către dreapta — forțând practic grupurile să funcționeze ca perechi stereo.
+Majoritatea consolelor au, de asemenea, un buton pentru a aloca fiecare grup către ambele canale ale mix bus-ului.
+În Figura 10.16b putem vedea matricea de rutare de lângă faderul fiecărui canal, care include un buton de alocare la mix bus și la fiecare pereche de grupuri.
+Există, de asemenea, patru benzi de grup master; fiecare conține un fader și un comutator de alocare fie la bus-ul de mix stâng, fie la cel drept. Figura 10.16c arată adăugarea mufelor de insert de grup pe spatele consolei.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-16.jpg"
+    alt="Figura 10.16"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.16:</strong>O consolă de bază cu patru grupuri audio master. În această ilustrație, canalele 1–2 sunt alocate grupurilor 1–2; restul canalelor sunt alocate către magistrala principală de mix (mix bus), la fel ca și grupurile 1–2.
+
+</p>
+
+Grupurile in-line se găsesc doar pe consolele in-line de format mare.
+Aceste console au în continuare o matrice de rutare per canal, dar nu oferă benzi dedicate pentru grupurile master.
+În schimb, fiecare bandă de canal își găzduiește grupul asociat (de exemplu, canalul 1 găzduiește grupul 1, canalul 2 găzduiește grupul 2 și așa mai departe).
+Odată găzduit, semnalul de grup este afectat de toate componentele canalului, inclusiv faderul, pan-pot-ul, egalizatorul integrat, compresorul și punctul de insert.
+Acestea oferă mult mai multă funcționalitate decât ar putea oferi orice grup master.
+Însă această funcționalitate vine cu un preț — fiecare canal poate fi folosit fie pentru a gestiona o pistă de pe multitrack, fie pentru a găzdui grupul său asociat; nu le poate face pe amândouă.
+Pentru a folosi grupuri in-line, trebuie să avem mai multe canale decât piste (tracks).
+Pe majoritatea consolelor mari, acest lucru nu este o problemă — dacă multitrack-ul are 24 de piste, acestea vor alimenta canalele 1–24, în timp ce canalele 25–48 vor fi disponibile ca grupuri in-line.
+Un scenariu posibil ar implica deconectarea tuturor canalelor de tobe (să zicem, 1–8) de la mix bus și rutarea lor către grupurile 25–26.
+Canalele 25–26 ar fi apoi folosite pentru a găzdui grupurile 25–26.
+Pentru a ruta cele două grupuri către mix bus, tot ce ar trebui să facem este să selectăm mix bus-ul pe matricile de rutare ale canalelor gazdă (Figura 10.17).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-17.jpg"
+    alt="Figura 10.17"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.17:</strong>Schema de bază a grupurilor audio. Canalele 1–8 sunt rutate către grupurile 25–26, care alimentează apoi canalele lor asociate.
+
+</p>
+Un buton de grup din secțiunea de intrare (input section) a fiecărui canal determină ce semnal alimentează calea canalului (channel path): fie semnalul de retur multitrack (pista care se întoarce de la multitrack prin intrarea de linie), fie semnalul de grup asociat (ceea ce transformă canalul în gazdă pentru grupul său asociat). 
+În cazul scenariului cu tobele ilustrat mai sus, acest buton va fi apăsat pe canalele 25 și 26. Apăsarea butonului de grup pe un canal care are deja selectat propriul grup asociat pe matricea de rutare va provoca microfonie/buclă de feedback (canalul va fi rutat către același grup care îl alimentează).
+
+Figura 10.18 ilustrează o consolă ipotetică, deoarece implică grupuri in-line pe o consolă de tip split. Cu toate acestea, demonstrează bine conceptul de grupuri audio. Fluxul de semnal din Figura 10.18 arată că apăsarea butonului de grup va introduce semnalul de grup asociat în calea canalului, înainte de butonul de fază (phase button). Toate grupurile în acest caz sunt pur și simplu trimise înapoi la canalele lor asociate. Figura 10.18b dezvăluie o matrice de rutare dedicată per canal, cu un buton de alocare per grup (și un buton pentru mix bus). De asemenea, butonul de grup a fost adăugat lângă butonul de fază.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-18.jpg"
+    alt="Figura 10.18"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.18:</strong>O consolă cu funcții de grup integrate (in-line groups). Canalele 1–3 sunt rutate către grupurile 5–6. Butoanele de grup apăsate pe canalele 5–6 introduc semnalul de grup în aceste canale, acestea fiind singurele alocate către magistrala principală de mix (mix bus).
+
+</p>

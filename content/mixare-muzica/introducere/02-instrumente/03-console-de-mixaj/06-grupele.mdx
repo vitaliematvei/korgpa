@@ -1,0 +1,56 @@
+---
+title: 'Grupele'
+description: 'Grupele'
+order: 6
+category: 'nivel'
+level: 'Incepator'
+---
+
+## Grupuri (Groups)
+
+Se întâmplă foarte rar ca pistele brute (raw tracks) să nu conțină câteva grupuri logice.
+Pistele individuale de tobe sunt exemplul perfect de grup care există în majoritatea producțiilor înregistrate; vocile, corzile (strings) și chitarele sunt, de asemenea, potențiale grupuri.
+În timp ce un grup de tobe poate fi format din 16 piste individuale, unele grupuri pot conține doar două — de exemplu, basul înregistrat prin microfon (bass-mic) și basul tras direct prin linie (bass-direct).
+În timpul mixajului, dorim adesea să modificăm nivelul, să punem pe mute, pe solo sau să procesăm colectiv un grup de canale.
+Funcția de grupare ne permite să facem exact acest lucru.
+Există două tipuri de grupuri: de control și audio.
+
+# Gruparea de control (Control grouping)
+
+Gruparea de control este simplă și directă.
+Mai întâi alocăm un set de canale unui grup, astfel încât mișcarea unui singur fader determină mutarea simultană a tuturor celorlalte fadere din grup.
+Tăierea sunetului (cut/mute) sau punerea pe solo a unui canal va aplica aceeași comandă tuturor celorlalte canale din grup.
+Unele console definesc acest comportament ca fiind o legare (linking), în timp ce gruparea propriu-zisă denotă o relație de tip master-slave (principal-secundar) — doar modificările aduse canalului principal (master) determină modificări corespunzătoare la sub-canale (subs), însă modificările aduse sub-canalelor nu afectează celelalte piste.
+
+# Gruparea VCA (VCA grouping)
+
+Gruparea VCA este o formă alternativă de grupare de control.
+Pentru ca faderele să răspundă fizic la mișcarea altor fadere, acestea trebuie să fie motorizate.
+Consolele fără fadere motorizate pot obține un rezultat similar folosind o funcție numită grupare VCA (Voltage-Controlled Amplifier).
+În cazul grupării VCA, un set de fadere master pentru grupurile VCA sunt amplasate în secțiunea master a consolei, alături de butoanele de cut și solo aferente fiecărui grup.
+Canalele individuale pot fi apoi alocate unui grup VCA folosind o comandă dedicată de pe fiecare bandă de canal (channel strip).
+
+Mișcarea unui fader master VCA modifică nivelul tuturor canalelor alocate acelui grup VCA (faderul fizic al fiecărui canal individual nu se va mișca).
+Activarea funcțiilor cut sau solo pe un grup VCA va aplica cut sau solo tuturor canalelor alocate.
+
+Figura 10.14 arată configurația unei console mici cu grupuri VCA.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-14.jpg"
+    alt="Figura 10.14"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.14:</strong>O consolă de bază cu două grupuri VCA. În ilustrația de mai sus, canalele 1 și 2 sunt alocate grupului VCA 1. Mișcarea faderului aferent grupului VCA 1 va modifica nivelul canalelor 1 și 2, deși faderele acestora nu se vor mișca fizic.
+
+</p>
+
+Gruparea de control este excelentă atunci când vrem să controlăm colectiv un set de canale.
+Pe lângă controalele standard de nivel, cut și solo, consolele digitale (și mixerele software/programele DAW) permit uneori gruparea unor parametri suplimentari, cum ar fi potențiometrele de panoramare (pan-pots), trimiterile auxiliare (aux sends) sau comutatoarele de inversare de fază (phase-invert).
+
+Cu toate acestea, gruparea de control nu modifică ruta originală a semnalului (signal path); prin urmare, este imposibil să procesezi colectiv (cu efecte) un grup de canale prin această metodă.
+Acest lucru este des solicitat — de exemplu, în cazurile în care vrem să comprimăm întregul mixaj al tobelor.
+Atunci când este necesară o procesare colectivă, sau dacă o consolă analogică nu oferă funcția de grupare de control, gruparea audio (audio grouping) este soluția.
