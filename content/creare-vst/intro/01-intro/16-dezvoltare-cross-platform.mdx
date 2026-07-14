@@ -1,0 +1,23 @@
+---
+title: 'Dezvoltarea cross-platform (multi-platformă)'
+description: 'Dezvoltarea cross-platform (multi-platformă)'
+order: 16
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Majoritatea dezvoltatorilor de plug-in-uri își lansează produsele atât pentru Mac, cât și pentru Windows.
+Pentru a face acest lucru, în mod ideal, vei avea nevoie de acces la ambele sisteme de operare.
+Din păcate, nu poți compila (construi) un plug-in de Windows pe un Mac și nici un plug-in de Mac de pe un PC cu Windows.
+De asemenea, crearea unui plug-in pentru iOS se poate face exclusiv de pe un Mac.
+
+În prezent, există două tipuri de computere Mac: cele mai vechi, care folosesc procesoare Intel, și cele noi, care folosesc procesoare bazate pe arhitectura ARM, cunoscute și sub numele de Apple Silicon (seriile de procesoare M1, M2, M3 etc.).
+Vestea bună este că nu ai nevoie de două Mac-uri: poți crea plug-in-uri compatibile cu ambele tehnologii de pe oricare dintre ele (fie de pe cel cu Intel, fie de pe cel cu ARM).
+Totuși, dacă vrei să te ocupi serios de dezvoltarea de plug-in-uri, în faza de testare ar fi ideal să ai acces fizic la ambele platforme de Mac.
+
+Rularea sistemului macOS pe un PC obișnuit este posibilă, dar extrem de complicată și instabilă (așa-numitul sistem „Hackintosh”), așa că nu prea merită să îți pierzi timpul cu asta.
+În schimb, procesul invers este mult mai simplu: poți rula Windows pe Mac fie într-o mașină virtuală (virtual machine), fie folosind o partiție dedicată prin BootCamp (însă BootCamp funcționează doar pe Mac-urile mai vechi cu procesoare Intel, nu și pe cele noi cu procesoare ARM).
+De asemenea, poți rula oricând Linux într-o mașină virtuală.
+
+Pentru moment, nu îți bate capul cu rularea plug-in-ului pe mai multe platforme deodată; nu e cazul să dai fuga la magazin ca să îți cumperi un al doilea computer.
+Doar ține minte acest aspect important: un plug-in VST3 construit (compilat) pe PC-ul tău cu Windows nu va rula pe Mac-ul unui prieten și invers.

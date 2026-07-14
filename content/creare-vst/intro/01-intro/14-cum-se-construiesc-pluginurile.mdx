@@ -1,0 +1,82 @@
+---
+title: 'Cum sunt create plug-in-urile'
+description: 'Cum sunt create plug-in-urile'
+order: 14
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Acum că ai o idee despre responsabilitățile unui plug-in audio, următoarea întrebare este: cum se construiește, de fapt, unul?
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/18.jpg"
+    alt="Figura 18"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 18: </strong>Procesul de compilare si link al codului sursa
+</p>
+Totul începe cu codul sursă al plug-in-ului. Îți vei scrie codul în limbajul
+C++, însă computerul nu înțelege direct acest limbaj. El vorbește doar limbajul
+mașină (numit uneori și assembly sau limbaj de asamblare) — un set de
+instrucțiuni de nivel foarte scăzut (low-level), extrem de greu de descifrat
+pentru oameni. Dacă ai auzit vreodată zicala că un computer funcționează doar cu
+unu și zero, ei bine, exact despre limbajul mașină este vorba.
+
+În mod ideal, ne-am scrie programele într-o limbă naturală, cum este româna sau engleza, dar limbajul uman nu este suficient de precis pentru a-i comunica computerului exact ce vrem să facă.
+Așa că folosim limbaje de programare speciale, cum este C++, care reprezintă un compromis între ceea ce pot înțelege oamenii și precizia de care are nevoie computerul.
+Un compilator (compiler) se ocupă apoi de transformarea codului C++ în limbaj mașină.
+
+Codul sursă se scrie în fișiere text cu extensiile .cpp (de la „C plus plus”) și .h (fișiere header).
+Vei avea fișiere sursă separate pentru partea de procesare audio a plug-in-ului (clasa de procesare) și pentru partea de interfață grafică (editorul care gestionează elementele vizuale).
+
+Fișierele sursă C++ sunt convertite de compilator în așa-numitele fișiere obiect (object files), care conțin codul mașină pentru calculator.
+Acest proces este cunoscut sub numele de construirea programului (procesul de build).
+Se generează câte un fișier obiect pentru fiecare fișier .cpp.
+
+Apoi, un alt program numit linker combină aceste fișiere obiect separate într-un singur fișier numit binar (binary).
+În cazul unui plug-in, acest binar este o bibliotecă partajată (shared library) sau un DLL (Dynamic Link Library).
+Un DLL nu este un program de sine stătător pe care să poți da dublu click ca să ruleze, ci trebuie să fie încărcat de un alt program — în cazul nostru, aplicația gazdă (DAW-ul).
+
+În cele din urmă, această bibliotecă partajată este plasată într-un bundle (pachet), care este practic doar un folder special în sistemul de fișiere al computerului.
+Acest bundle are extensia .vst3 pentru plug-in-urile în format VST3 sau .component pentru formatul Audio Unit (specific macOS).
+
+De curiozitate, hai să vedem ce se ascunde în interiorul unui astfel de pachet.
+Presupun că ai deja instalat cel puțin un plug-in pe calculatorul tău:
+
+    - Pe macOS: Mergi în folderul /Library/Audio/Plug-Ins/VST3.
+    - Dă click dreapta pe un fișier .vst3 și alege Show Package Contents (Afișează conținutul pachetului) din meniul contextual. Acest lucru îți va dezvălui ce se află în interiorul folderului.
+
+    - Fișierul binar (biblioteca partajată propriu-zisă) se află în subfolderul Contents/MacOS.
+
+    - Subfolderul Resources este folosit pentru fișierele suplimentare de care are nevoie plug-in-ul, cum ar fi imagini, texturi sau fonturi.
+
+(Procesul de structurare este exact același și pentru plug-in-urile în format Audio Unit).
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/19.jpg"
+    alt="Figura 19"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 19: </strong>În interiorul pachetului VST3 al plug-in-ului de
+  Delay
+</p>
+
+Pe Windows, folosește File Explorer (Exploratorul de fișiere) pentru a naviga la
+adresa C:\Program Files\Common Files\VST3.
+
+Plug-in-urile din acest director pot apărea fie cu o pictogramă (iconiță) de folder, fie cu una de fișier.
+Dacă este un folder, poți da dublu-click pe el pentru a-i vedea conținutul.
+Biblioteca partajată (fișierul DLL) care conține codul binar se află în subfolderul Contents\x86_64-win.
+
+De menționat că, pe Windows, nu toate plug-in-urile VST3 folosesc această structură de tip pachet (bundle).
+Plug-in-urile VST3 mai vechi se prezintă direct ca un simplu fișier .dll de sine stătător, nu ca un folder.

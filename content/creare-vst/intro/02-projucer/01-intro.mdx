@@ -1,0 +1,24 @@
+﻿---
+title: 'JUCE și Projucer'
+description: 'JUCE și Projucer'
+order: 1
+category: 'JUCE'
+level: 'Incepator'
+---
+
+JUCE este un framework software care facilitează crearea de plug-in-uri audio.
+
+Limbajul de programare C++ vine la pachet cu o bibliotecă standard (standard library) care conține funcționalități utilizate în mod frecvent — cum ar fi structuri de date, rutine matematice și algoritmi de sortare — care îți vor economisi mult timp atunci când îți scrii propriile programe.
+De asemenea, Xcode și Visual Studio își instalează propriile biblioteci și framework-uri care le permit programelor să folosească funcțiile sistemului de operare al computerului.
+
+În esență, termenii bibliotecă (library), framework, pachet (package) sau modul (module) se referă la același lucru: o colecție de cod sursă scris deja de altcineva, astfel încât tu să nu mai fii nevoit să îl scrii de la zero.
+
+În cazul JUCE, framework-ul se ocupă de sarcini precum procesarea textului, desenarea de linii și alte forme pe ecran, construirea interfețelor grafice de utilizator (UI) și, bineînțeles, gestionarea semnalului audio.
+
+Multe biblioteci sunt oferite doar în format binar (compilat). Asta înseamnă că le poți integra (lega prin linking) în programul tău, dar nu poți să le vezi codul sursă.
+Din fericire, JUCE vine cu codul sursă complet.
+Acest lucru este extrem de util pentru a înțelege cum funcționează framework-ul în interior — fiind uneori chiar necesar atunci când documentația este neclară sau când vrei să repari anumite bug-uri.
+
+    ⚠️ Notă: Următoarele instrucțiuni au fost scrise pentru JUCE 7.
+    În momentul în care citești aceste rânduri, este foarte posibil ca site-ul JUCE și software-ul să arate diferit față de imaginile din carte.
+    Cu toate acestea, procesul de descărcare, instalare și configurare pentru JUCE va rămâne în mare parte același.

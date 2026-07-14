@@ -1,0 +1,44 @@
+---
+title: 'Ce este un IDE?'
+description: 'Ce este un IDE?'
+order: 15
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Compilatorul și linker-ul fac parte din IDE, care este Xcode pe Mac și Visual Studio pe Windows.
+
+Dacă ești la început în dezvoltarea software, s-ar putea să nu mai fi folosit un IDE până acum.
+IDE este acronimul pentru Integrated Development Environment (Mediu de Dezvoltare Integrat) și reprezintă o aplicație care combină diverse sarcini legate de crearea de software într-un singur instrument.
+
+# Un IDE conține:
+
+    - un editor de text în care vei scrie codul sursă C++;
+
+    - un compilator și un linker pentru a transforma codul sursă C++ în cod mașină pe care computerul îl poate rula;
+
+    - un debugger (depanator) care te ajută să identifici și să rezolvi problemele sau erorile din programul tău;
+
+    - un profiler pentru măsurarea și analizarea eventualelor probleme de performanță (consum de procesor/memorie);
+
+    - sisteme de control al versiunii (cum ar fi Git) pentru a ține evidența modificărilor aduse codului.
+
+Construirea (build-ul) unui plug-in poate părea un proces complicat, dar este mult mai simplu decât crezi: tot ce trebuie să faci este să apeși pe un singur buton, iar IDE-ul va compila codul sursă, va lega toate elementele între ele (linking) și va crea biblioteca partajată (DLL/bundle-ul).
+Când procesul este gata, pachetul plug-in-ului este copiat automat în folderul standard de plug-in-uri de pe computerul tău, astfel încât DAW-urile să îl poată găsi și folosi imediat.
+
+Această carte include instrucțiuni atât pentru Xcode, cât și pentru Visual Studio, pentru a veni în întâmpinarea cititorilor care folosesc Mac, dar și a celor care folosesc Windows.
+Este posibil să folosești și alte medii de dezvoltare pentru a scrie plug-in-uri cu JUCE, dar această carte nu ar avea cum să includă instrucțiuni pentru toate.
+
+Printre celelalte IDE-uri pe care s-ar putea să vezi că le folosesc dezvoltatorii audio se numără:
+
+    - CLion de la JetBrains, care rulează atât pe Windows, cât și pe Mac.
+
+    - VSCode (Visual Studio Code), care este un editor de cod cross-platform ce poate fi transformat într-un IDE complet. Totuși, nu recomand acest lucru pentru începători, deoarece configurarea compilatorului și a debugger-ului (toolchain-ul) poate fi destul de complicată.
+
+    - De asemenea, poți folosi orice alt editor de text, cum ar fi Notepad++, Emacs sau Vim, pentru a scrie cod JUCE. În acest caz, compilarea proiectului se face de obicei direct din linia de comandă (terminal).
+
+Deși merită să explorezi aceste opțiuni alternative după ce acumulezi ceva experiență, dacă este prima dată când scrii cod, îți sugerez să rămâi la Xcode (pe Mac) sau la Visual Studio (pe Windows).
+
+Dacă ești utilizator de Linux, poți folosi editorul tău de text preferat și poți compila proiectele folosind un fișier Makefile.
+
+    ⚠️ Notă: VSCode (Visual Studio Code) și Visual Studio sunt produse complet diferite, în ciuda numelor similare care pot crea confuzie. Și ca lucrurile să fie și mai derutante, în trecut a existat și o versiune de „Visual Studio pentru Mac”, însă aceea era destinată limbajului C#, nu pentru C++.

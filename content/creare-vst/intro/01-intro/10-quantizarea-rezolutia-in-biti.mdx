@@ -1,0 +1,65 @@
+---
+title: 'Cuantizarea și rezoluția în biți (Bit depth)'
+description: 'Cuantizarea și rezoluția în biți (Bit depth)'
+order: 10
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Până acum am discutat despre ce se întâmplă pe axa timpului (axa orizontală), însă axa verticală — adică înălțimea eșantioanelor — este la fel de importantă.
+Atunci când înregistrăm sunet, fiecare eșantion este o măsurătoare a presiunii aerului pe membrana microfonului în acel moment precis.
+Când redăm acel eșantion, el reprezintă presiunea aerului pe care o generează membrana difuzorului.
+
+În JUCE, valorile eșantioanelor sunt numere cu virgulă mobilă (floating-point) cuprinse între -1 și +1, însă convertorul analog-digital (ADC) și cel digital-analog (DAC) lucrează cu numere întregi (integers).
+Pe calculatoarele moderne, acestea sunt de obicei numere întregi pe 16 biți sau 24 de biți.
+Aceasta este ceea ce numim rezoluția în biți (bit depth) a eșantionului.
+
+    - Cu o rezoluție de 16 biți, eșantionul poate înregistra nivelul presiunii acustice sub formă de 65.536 de valori posibile.
+
+    - Cu un număr întreg pe 24 de biți, acest număr crește la 16,8 milioane de valori posibile.
+
+În timpul eșantionării, ADC-ul trebuie să transforme valoarea continuă a tensiunii electrice într-un număr discret, folosind un număr limitat de biți.
+Face acest lucru prin rotunjirea tensiunii la cel mai apropiat număr întreg.
+
+Acest proces de rotunjire se numește cuantizare (quantization), iar eroarea pe care o introduce în semnal se numește zgomot de cuantizare (quantization noise).
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/15.jpg"
+    alt="Figura 15"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 15: </strong>Reprezentare exagerată a cuantizării. Punctele
+  albastre sunt rotunjite la cel mai apropiat număr întreg.
+</p>
+Cât de mult contează rezoluția în biți în practică?
+
+Cu cât folosești mai mulți biți pentru a stoca eșantioanele, cu atât efectul zgomotului de cuantizare este mai mic.
+Evident, o rezoluție de 24 de biți oferă o reprezentare mult mai fidelă a tensiunii electrice originale decât una de 16 biți.
+
+# Întrebarea este: contează această diferență în practică?
+
+În cazul eșantioanelor pe 16 biți, zgomotul produs de eroarea de cuantizare este de 65.536 de ori mai încet decât sunetul util, ceea ce ne oferă un raport semnal-zgomot (SNR) de 96 dB.
+Este aproape imposibil pentru urechea umană să audă sunete la -96 dB, cu excepția cazului în care se aplică o amplificare masivă.
+Din acest motiv, formatul audio pe 16 biți este considerat, în general, suficient de bun.
+Cu toate acestea, formatul pe 24 de biți este extrem de comun în ziua de azi și coboară pragul de zgomot (noise floor) chiar și mai mult.
+
+# Cum stau lucrurile pentru programatori?
+
+Pentru un dezvoltator de plug-in-uri, această diferență nu contează atât de mult, deoarece noi lucrăm cu numere cu virgulă mobilă (floating-point) în loc de numere întregi.
+
+Dacă ai mai lucrat cu tipul de date float până acum, s-ar putea să fii puțin suspicios, deoarece acest tip de date poate avea probleme de precizie.
+De exemplu, numărul 0.1 este stocat în calculator, în realitate, ca fiind 0.10000000149.
+
+Ciudat, nu-i așa?
+
+Din fericire, tipul float pe 32 de biți (cu simplă precizie) are o precizie echivalentă cu 24 de biți, așa că se poate descurca de minune cu majoritatea semnalelor audio.
+Dacă este absolut necesar, JUCE îți permite să folosești tipul double pe 64 de biți (cu dublă precizie) pentru un prag de zgomot și mai scăzut.
+
+În concluzie, rezoluția în biți și zgomotul de cuantizare nu sunt lucruri care să te îngrijoreze atunci când scrii plug-in-uri.
+La capătul lanțului de semnal, programul gazdă (DAW-ul) poate aplica o tehnică numită dithering (stocasticizare).
+Aceasta adaugă intenționat o cantitate infimă de zgomot în semnal pentru a masca erorile de rotunjire provocate de cuantizare.

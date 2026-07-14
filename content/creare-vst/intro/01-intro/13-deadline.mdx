@@ -1,0 +1,81 @@
+---
+title: 'Nu rata deadline-ul! (Sau cum să eviți pârâiturile în sunet)'
+description: 'Nu rata deadline-ul! (Sau cum să eviți pârâiturile în sunet)'
+order: 13
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Una dintre cele mai importante reguli în programarea audio este să evităm complet erorile din sunet (pe care le numim glitches, clicks sau pops / pocnituri și pârâituri).
+Există o grămadă de motive din cauza cărora pot apărea aceste zgomote urâte, dar cel mai des întâlnit este atunci când plug-in-ul nu reușește să își termine treaba la timp — adică ratează deadline-ul de procesare.
+Și, evident, utilizatorii vor urî plug-in-ul tău dacă acesta agață sau scoate zgomote ciudate!
+Deoarece funcția processBlock este rulată de sute sau chiar mii de ori pe secundă, fiecare apelare are la dispoziție o fereastră de timp extrem de scurtă pentru a-și face treaba.
+De exemplu, la o rată de eșantionare de 44.1 kHz și un buffer de 128 de eșantioane, processBlock este apelat în medie de 345 de ori pe secundă.
+Asta înseamnă că fiecare apel trebuie să se finalizeze în mai puțin de 1/345 dintr-o secundă — adică în aproximativ 2.9 milisecunde.
+Extrem de puțin timp!
+
+# Cele două motive pentru care se poate rata deadline-ul:
+
+- Dimensiunea bufferului este prea mică:
+- Resursele de calcul consumate de DAW (host overhead) adunate cu procesarea efectivă făcută de plug-in durează prea mult. Rezultatul este o sacadare audio clară (stutter), deoarece DAW-ul nu primește bufferul complet la timp și nu are ce sunet nou să trimită către boxe.
+- Firul de execuție audio (audio thread-ul) a fost oprit temporar: În acest caz, pur și simplu nu mai rămâne destul timp pentru a procesa restul eșantioanelor din blocul curent. Această problemă poate apărea chiar și atunci când dimensiunea bufferului este una generoasă.
+
+# Multitasking-ul și Firul Audio (Audio Thread)
+
+La fel ca orice program de calculator, plug-in-ul tău rulează pe procesorul computerului (CPU).
+Procesoarele moderne au mai multe nuclee (cores), ceea ce înseamnă că pot rula mai multe programe simultan — proces numit multitasking.
+De asemenea, ele pot rula diferite părți ale aceluiași program în același timp, folosind fire de execuție separate (multithreading).
+Logica de procesare audio — adică tot ce se întâmplă în interiorul processBlock — rulează pe propriul său fir de execuție, numit audio thread.
+
+# Important:
+
+Acesta este un fir cu prioritate maximă (high-priority thread).
+Procesorul consideră firul audio mult mai important decât pe oricare altul din sistem.
+În orice secundă, computerul are de gestionat sute de fire de execuție active care cer atenție, însă firul audio are întotdeauna întâietate, deoarece are un deadline critic de respectat pentru a menține sunetul curat.
+Din acest motiv, este crucial ca această funcție (audio callback) a plug-in-ului să nu pună niciodată pe pauză firul de execuție pe care rulează.
+Operațiuni precum alocarea de memorie (ex: crearea de noi obiecte în timp real cu new sau malloc) sau apelurile de sistem (cum ar fi citirea unui fișier de pe disc sau scrierea în consolă) sunt complet normale în orice altă parte a unui program, dar sunt strict interzise în interiorul processBlock.
+Ele pot bloca firul audio pentru o perioadă imprevizibilă de timp.
+Dacă aceste operațiuni durează prea mult, processBlock va rata deadline-ul, iar sunetul va începe să pârâie.
+Prin urmare, orice operațiune care ar putea bloca sau „pune la somn” firul audio trebuie evitată cu sfințenie.
+Sunt convins că toate acestea îți par destul de abstracte acum, dar ne vom lovi de aceste probleme în mod real când vom începe să scriem cod.
+Pentru moment, reține doar atât: tot ce se întâmplă în processBlock trebuie să respecte reguli speciale pentru a menține firul audio in parametri normali.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/17.jpg"
+    alt="Figura 17"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 17: </strong>Plugin-urile folosesc un thread pentru procesare
+  audio si unul pentru editor.
+</p>
+
+## Firul pentru interfața grafică (UI Thread) și comunicarea între ele
+
+În plug-in există și alte fire de execuție.
+De exemplu, interfața grafică (cea pe care o vede utilizatorul în fereastra plug-in-ului) este gestionată de un fir cu prioritate mai mică.
+Acesta este numit de obicei UI thread (firul interfeței), main thread (firul principal) sau, în jargonul framework-ului JUCE, message thread (firul de mesaje).
+
+Spre deosebire de firul audio, firul de UI nu are deadline-uri atât de stricte.
+Cu toate acestea, plug-in-ul trebuie să facă aceste două fire să comunice între ele din când în când.
+
+Să luăm un exemplu: dacă utilizatorul rotește potențiometrul (knob-ul) de Delay Time, valoarea parametrului corespunzător din plug-in este actualizată cu noul timp.
+Acest lucru se întâmplă pe firul de UI, deoarece butonul fizic/grafic face parte din interfața plug-in-ului.
+În mod evident, și firul audio are nevoie de acest nou timp de delay în interiorul funcției processBlock pentru a procesa sunetul corect.
+Prin urmare, firul de UI trebuie să „îi spună” cumva firului audio că parametrul s-a schimbat.
+
+Majoritatea metodelor standard de comunicare între firele de execuție dintr-un program implică punerea temporară „la somn” a unuia dintre fire, folosind mecanisme de blocare numite locks sau mutex-uri.
+Însă, după cum am stabilit, punerea la somn (sau blocarea) este strict interzisă în codul audio!
+De aceea, în programarea audio folosim mecanisme speciale de comunicare care evită complet aceste blocaje (tehnici numite adesea lock-free).
+
+# Pe scurt, iată ce trebuie să reții până acum:
+
+    - Procesăm semnalul audio în blocuri (cunoscute și sub numele de buffere), prelucrând mai multe eșantioane deodată.
+
+    - Dimensiunea acestor blocuri este critică: blocuri mai mari înseamnă o latență mai mare, în timp ce blocuri mai mici înseamnă că devine mult mai greu pentru procesor să respecte deadline-ul.
+
+    - Există operațiuni pe care nu ai voie sub nicio formă să le faci pe firul audio (cum ar fi alocările de memorie sau citirea de pe disc), deoarece acesta nu trebuie să fie pus niciodată în așteptare.

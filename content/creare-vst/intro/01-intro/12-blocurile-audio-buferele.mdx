@@ -1,0 +1,67 @@
+---
+title: 'Procesarea semnalului audio în plug-in'
+description: 'Procesarea semnalului audio în plug-in'
+order: 12
+category: 'JUCE'
+level: 'Incepator'
+---
+
+De fiecare dată când aplicația gazdă (host-ul sau DAW-ul) are nevoie de semnal audio nou de la plug-in, îi va transmite acestuia comanda processBlock.
+Această operațiune este cunoscută și sub numele de audio callback (apel invers audio) și se întâmplă de sute sau chiar mii de ori pe secundă.
+Deși audio-ul digital este format dintr-un „flux” de 44.100 sau mai multe eșantioane (samples) pe secundă, ar fi extrem de ineficient ca DAW-ul să ceară plug-in-ului să proceseze semnalul eșantion cu eșantion (unul câte unul).
+Asta ar însemna trimiterea comenzii processBlock de 44.000 de ori pe secundă!
+În schimb, fluxul audio este împărțit în porțiuni mai mici, numite blocuri (blocks).
+Plug-in-ul va genera și va procesa cantitatea de eșantioane corespunzătoare unui singur bloc la fiecare apel.
+Un bloc tipic conține 128 de eșantioane, dar dimensiunea lui poate fi de doar 16 eșantioane sau de până la 4096.
+Dacă dimensiunea blocului este de 128 de eșantioane, iar rata de eșantionare (sample rate) este de 44.1 kHz, funcția processBlock a plug-in-ului este rulată de 44100 / 128 = 344.53 ori pe secundă (în medie, de aproximativ 345 de ori).
+Este totuși o frecvență uriașă, așa că îți poți imagina că această funcție (audio callback) trebuie să ruleze extrem de rapid.
+Cu cât dimensiunea blocului este mai mică, cu atât mai des trebuie gazda să trimită comanda processBlock.
+Dimensiunea acestor blocuri reprezintă un compromis important între latență și resursele consumate (overhead).
+
+# Eficientizarea resurselor:
+
+Fiecare apel processBlock implică un anumit efort de calcul (un cost de procesare) pentru sistemul gazdă.
+Punând plug-in-ul să lucreze pe blocuri întregi de eșantioane în loc de eșantioane individuale, acest efort de procesare (overhead) este distribuit pe mai multe eșantioane deodată, ceea ce este mult mai eficient.
+
+# Ritmul procesorului:
+
+Dacă dimensiunea blocului este prea mică, este posibil ca procesorul calculatorului să nu poată ține pasul cu fluxul rapid de comenzi, iar sunetul va începe să sacadeze (să pârâie sau să aibă întreruperi).
+
+# Latența:
+
+Pe de altă parte, cu cât blocul este mai mare, cu atât este mai mare întârzierea dintre momentul în care se cere blocul și cel în care se primesc rezultatele procesate de la plug-in.
+Această întârziere se numește latență.
+Imaginează-ți ce s-ar întâmpla dacă dimensiunea blocului ar fi setată la o valoare uriașă de 44.100 de eșantioane.
+Deoarece fiecare apel processBlock ar trebui să umple blocul cu o secundă întreagă de audio, ar exista o întârziere de o secundă între redarea audio și momentul în care sunetul iese efectiv prin difuzoare.
+Acest lucru face imposibilă înregistrarea oricărui instrument, deoarece vei fi mereu cu o secundă în urma restului trupei.
+În mod ideal, latența trebuie să fie atât de mică încât să nu o poți sesiza.
+Latența este inevitabilă în domeniul audio digital și provine din mai multe surse: driverul USB al plăcii de sunet (interfeței audio), subsistemul audio al sistemului de operare, procesarea internă a DAW-ului și, în cele din urmă, dimensiunea blocului folosit pentru procesare.
+Majoritatea DAW-urilor îi permit utilizatorului să configureze dimensiunea blocului, deși de obicei o numesc buffer size (dimensiunea bufferului).
+Deseori folosim termenii „bloc” (block) și „buffer” ca având același înțeles — amândoi se referă la același lucru.
+De exemplu, imaginea de mai jos arată ecranul de setări audio din Logic Pro, unde I/O Buffer Size este setarea pentru dimensiunea blocului.
+Observă cum această opțiune calculează automat latența totală rezultată, afișată la secțiunea Resulting Latency.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/16.jpg"
+    alt="Figura 16"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 16: </strong>Setare marime buffer I/O in Logic Pro
+</p>
+Pentru dimensiuni mai mari ale bufferului, latența crește. La o rată de
+eșantionare de 44.1 kHz, un buffer de 256 de eșantioane are o latență de 5,8
+milisecunde, în timp ce un buffer de 1024 de eșantioane ajunge la o latență de
+23,2 milisecunde.
+
+Aceasta este exact diferența indicată în cele două imagini (n.r. din manual): o latență de ieșire de 8,1 ms față de una de 25,5 ms.
+Restul latenței, de aproximativ 2,3 ms, este cauzat de componentele hardware ale computerului, de sistemul de operare și de aplicația Logic Pro în sine.
+
+Chiar dacă utilizatorul configurează dimensiunea bufferului audio direct din DAW, dimensiunea blocului nu este neapărat identică de la o rulare a funcției processBlock la alta.
+DAW-ul poate decide să apeleze processBlock cu o dimensiune mai mică a blocului dacă consideră că acest lucru este util — de regulă, atunci când se folosește automatizarea parametrilor (parameter automation).
+
+Cel mai bine este să privești dimensiunea bufferului din aplicația gazdă (host) ca fiind numărul maxim de eșantioane pe care funcția processBlock va trebui să le proceseze deodată.

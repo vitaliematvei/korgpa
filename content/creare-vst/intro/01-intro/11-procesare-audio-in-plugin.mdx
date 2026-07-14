@@ -1,0 +1,16 @@
+---
+title: 'Procesarea semnalului audio în plug-in'
+description: 'Procesarea semnalului audio în plug-in'
+order: 11
+category: 'JUCE'
+level: 'Incepator'
+---
+
+După cum ai văzut deja, audio-ul digital este descris printr-o listă de numere care reprezintă amplitudinile eșantioanelor (numite samples).
+Plug-in-ul va citi această listă de numere și o va modifica într-un anumit fel pentru a genera semnalul de ieșire.
+
+De exemplu, dacă plug-in-ul ar înmulți toate eșantioanele cu un factor de 2, sunetul ar deveni mai puternic, deoarece toate amplitudinile sunt acum mai mari — de fapt, înmulțirea cu doi înseamnă o creștere a volumului cu aproximativ 6 dB.
+În mod similar, împărțirea amplitudinilor la doi înseamnă o reducere a nivelului cu –6 dB.
+
+Secretul în crearea unui plug-in de efecte este să găsești o metodă interesantă de a modifica aceste eșantioane.
+Plug-in-ul pe care îl vei construi în această carte va întârzia sunetul (efect de delay) pentru o durată de timp stabilită și îl va amesteca (mixa) cu sunetul de intrare.

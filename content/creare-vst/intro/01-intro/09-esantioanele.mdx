@@ -1,0 +1,159 @@
+---
+title: 'O privire mai atentă asupra eșantioanelor'
+description: 'O privire mai atentă asupra eșantioanelor'
+order: 9
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Pentru programatorii DSP (procesarea digitală a semnalelor), lucrul cu datele eșantionate reprezintă pâinea noastră de zi cu zi.
+Prin urmare, este o idee excelentă să analizăm mai îndeaproape ce sunt, de fapt, aceste eșantioane.
+Imaginează-ți un fragment audio extrem de scurt.
+Rata de eșantionare este de 44100 Hz, iar în acest fragment avem exact 26 de eșantioane, ceea ce corespunde unei durate de aproximativ 0,6 milisecunde de date înregistrate.
+Dacă te întrebi cum am ajuns la această cifră, calculul este simplu: 26 eșantioane : 44100 eșantioane/secundă = approx 0,000589 secunde.
+Adică, prin rotunjire, în jur de 0,6 ms.
+Fiecare dintre aceste valori (eșantioane) reprezintă deplasarea membranei difuzorului la un moment specific în timp — ceea ce numim amplitudinea eșantionului.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/10.jpg"
+    alt="Figura 10"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10: </strong>O vedere detaliată a unui semnal eșantionat
+</p>
+
+Axele și intervalele de timp: Axa orizontală reprezintă timpul, însă nu exprimat în secunde, ci în număr de eșantioane.
+Observă că există un spațiu gol între eșantioane pe axa timpului.
+Acest lucru este absolut corect, deoarece convertorul analog-digital (ADC) al calculatorului efectuează citiri ale tensiunii doar o dată la câteva microsecunde.
+La o rată de eșantionare de 44,1 kHz, ADC-ul preia un eșantion la fiecare: 1/44100 = 0,0000227 secunde.
+Adică la fiecare 23 de microsecunde (23 μs).
+Prin urmare, intervalul de timp de la un eșantion la următorul este tot de 23 μs.
+Cu cât rata de eșantionare este mai mare, cu atât acest spațiu (interval) este mai mic.
+
+# Pierdem informație?
+
+Probabil te întrebi cum pot aceste date eșantionate să reprezinte cu fidelitate semnalul original.
+Cu siguranță, din moment ce facem citiri doar din când în când, trebuie să pierdem o parte din informație pe parcurs, nu?
+De exemplu, ce se întâmplă dacă apare următoarea situație...
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/11.jpg"
+    alt="Figura 11"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 11: </strong>O oscilație între două eșantioane
+</p>
+
+# Ce se întâmplă cu oscilațiile nevăzute?
+
+După eșantionarea acestui semnal, nu avem cum să știm că acea „oscilație” a avut loc între cele două eșantioane, deoarece ADC-ul (convertorul analog-digital) pur și simplu nu a apucat să o detecteze.
+
+Iată însă secretul: dacă o astfel de oscilație poate avea loc între eșantioane, înseamnă că rata de eșantionare aleasă este prea mică.
+Semnalul analogic original conține, se pare, frecvențe mult mai mari decât ne-am fi așteptat.
+
+# Regula de aur: Semnalul limitat în bandă
+
+Când lucrăm cu date eșantionate, pornim mereu de la premisa că semnalul este limitat în bandă (band-limited).
+Asta înseamnă că el nu conține frecvențe mai mari de jumătate din rata de eșantionare.
+
+    - Cu alte cuvinte: Trebuie să ne asigurăm că rata de eșantionare este de cel puțin două ori mai mare decât cea mai înaltă frecvență prezentă în semnal.
+
+    - Frecvența maximă pe care o poate conține un semnal se numește limita Nyquist.
+
+    - Dacă folosim o rată de eșantionare de 44100 Hz, limita Nyquist este de 22050 Hz.
+
+    - Semnalul eșantionat poate reproduce cu fidelitate absolută orice frecvență mai mică de 22050 Hz — ceea ce este ideal, fiind cu mult peste limita auzului uman.
+
+    - Frecvențele mai mari de 22050 Hz, însă, nu vor putea fi reproduse corect.
+
+# Cum rezolvăm asta în practică?
+
+De altfel, orice ADC modern are un circuit electronic (un filtru trece-jos analogic) care elimină toate frecvențele mult prea mari pentru rata de eșantionare aleasă.
+Astfel, problema acelei „oscilații” nevăzute nu apare în practica înregistrărilor audio.
+
+Singura excepție este atunci când chiar vrei să captezi acele fluctuații de foarte înaltă frecvență în semnalul tău digital.
+În acest caz, singura soluție este să mărești rata de eșantionare a dispozitivului de înregistrare.
+
+# Concluzia (The Takeaway)
+
+Atunci când rata de eșantionare este suficient de mare, semnalul eșantionat devine echivalent cu semnalul original, continuu.
+Dacă avem un semnal limitat în bandă, știm cu precizie matematică cum arată unda audio între eșantioane, deoarece există un singur semnal posibil în univers care poate fi descris exact de acele puncte.
+
+# Pentru semnalele aratate anetrior, semnlaul real este:
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/12.jpg"
+    alt="Figura 12"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 12: </strong>Reconstruirea semnalului intre sample
+</p>
+Observă că linia care unește eșantioanele este netedă și curbă. Uneori, ea poate urca mai sus sau coborî mai jos decât cele mai apropiate două eșantioane, dar nu oscilează niciodată haotic.
+Putem calcula cu precizie absolută acest semnal pornind de la eșantioanele date. 
+Pentru cititorii pasionați de matematică: acest lucru se realizează prin convoluția semnalului eșantionat cu funcția „sinc”, adică sin(pi x)/(pi x). 
+(Dar poți uita complet de asta pentru moment!)Lucrul esențial de reținut este acesta: Există o singură soluție matematică corectă.
+Nu poți pur și simplu să tragi orice fel de linie între eșantioane. 
+De exemplu, o interpolare polinomială ar putea trece și ea prin toate punctele eșantionate, însă nu ar reprezenta corect semnalul analogic original (linia punctată fiind cel real, original):
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/13.jpg"
+    alt="Figura 13"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 13: </strong>Interpolarea polinomiala al semnalului
+</p>
+Aproximarea polinomială ar putea părea destul de asemănătoare cu semnalul real
+la o primă vedere, însă uneori trece complet pe lângă țintă.
+
+Interpolarea liniară este chiar și mai rea. Prin interpolare liniară, ne imaginăm că există o linie dreaptă între fiecare pereche de eșantioane.
+După cum îți poți da seama din imaginea de pe pagina următoare, rezultatul nu este nici pe departe apropiat de cum arată semnalul în realitate.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/14.jpg"
+    alt="Figura 14"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 14: </strong>Interpolarea lineara al semnalului
+</p>
+
+Din păcate, calculele matematice necesare pentru a găsi forma exactă a semnalului analogic continuu sunt lente.
+Prin urmare, în practică nu avem de ales și trebuie să folosim un anumit tip de aproximare atunci când vrem să știm ce se întâmplă între eșantioane.
+Subliniez acest aspect deoarece determinarea formei semnalului dintre eșantioane este o sarcină extrem de comună în programarea audio.
+Ne vom lovi în detaliu de această problemă într-un capitol următor, unde va trebui să lucrăm cu timpi de întârziere (delay) exprimați printr-un număr fracționar de eșantioane.
+
+# Aspecte esențiale de reținut despre rata de eșantionare:
+
+- Semnalul audio nu trebuie să încerce să descrie frecvențe mai mari decât limita Nyquist (care este jumătate din rata de eșantionare). Cu alte cuvinte, semnalul digital trebuie să fie limitat în bandă (band-limited).
+- La înregistrare, filtrul ADC-ului se ocupă deja de acest lucru. Totuși, în cazul unui plug-in, este foarte ușor să depășești limita Nyquist, mai ales atunci când folosești procesări neliniare, cum ar fi modelarea formei de undă (waveshaping).
+  Deși ai doar eșantioane care descriu fragmente din semnalul analogic real, acestea sunt suficiente pentru a-l reproduce cu precizie absolută.
+  Pornind de la premisa că semnalul este limitat în bandă, eșantionarea nu duce la pierderea niciunei informații despre acel semnal!
+  Poți oricând să prezici cum arată semnalul continuu între oricare două eșantioane, deși calcularea unei potriviri perfecte este costisitoare din punct de vedere computațional.
+  Adesea, un plug-in va avea parametri măsurați în secunde sau milisecunde (cum ar fi potențiometrul pentru timpul de întârziere — Delay Time — de la plug-in-ul pe care îl vom construi).
+  Însă codul de procesare audio măsoară timpul prin durata fiecărui eșantion.
+  Acesta se numește interval de eșantionare (T) și este egal cu 1/(rata de eșantionare).
+  După cum am văzut, la o rată de eșantionare de 44,1 kHz, intervalul de eșantionare este de 23 de microsecunde.
+  Prin urmare, pentru a converti timpul din secunde în număr de eșantioane (și invers), va trebui să folosim rata de eșantionare.
