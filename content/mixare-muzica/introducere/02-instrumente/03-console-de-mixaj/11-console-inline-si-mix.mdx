@@ -1,0 +1,30 @@
+---
+title: 'Consolele in-line și mixajul (In-line consoles and mixing)'
+description: 'Consolele in-line și mixajul (In-line consoles and mixing)'
+order: 11
+category: 'nivel'
+level: 'Incepator'
+---
+
+Designul in-line face ca consolele să fie mai mici și mai ieftine, dar la fel de eficiente pentru înregistrare.
+Totuși, când vine vorba de mixaj, acesta face lucrurile puțin mai complexe în comparație cu designul de tip split.
+
+Primul lucru care trebuie înțeles este că o consolă cu 24 de canale poate găzdui 48 de semnale de intrare, deoarece fiecare modul I/O are atât un traseu de canal (channel path), cât și un traseu de monitorizare (monitor path).
+Într-un studio cu 24 de piste, acest lucru înseamnă un plus de 24 de trasee de semnal libere în timpul mixajului (mixdown).
+
+După cum s-a menționat deja, diferitele secțiuni de procesare și rutare pot fi comutate doar pe un singur traseu la un moment dat.
+Partea delicată este că nu toate funcțiile pot fi comutate pe traseul de monitorizare — de exemplu, punctul de inserție (insert point) ar putea fi fixat pe traseul de canal.
+În general, traseul de canal este cel „puternic” — oferind funcționalitate completă — în timp ce traseul de monitorizare este mai limitat.
+Prin urmare, este logic să folosim traseul de canal pentru mixajul principal al semnalelor de întoarcere de la multitrack și să utilizăm traseul de monitorizare pentru o varietate de alte scopuri.
+
+În condiții normale, traseul de monitorizare este folosit pentru:
+
+    - Întoarceri de efecte (effect returns) — acestea pot fi trimise cu ușurință (patched) către traseul de monitorizare prin intermediul intrării sale de linie.
+    Putem, de exemplu, să trimitem o chitară de pe traseul de canal către o unitate de delay și să aducem semnalul de delay înapoi pe traseul de monitorizare al aceluiași modul I/O.
+
+    - Trimiteri auxiliare suplimentare (additional auxiliary sends) — chiar și cele mai respectabile console de format mare pot fi limitate la doar cinci auxiliare, dintre care doar unul singur ar putea fi stereo.
+    Deși acest lucru este suficient pentru înregistrare, poate limita utilizarea efectelor în timpul mixajului — ce facem dacă avem nevoie de mai mult de cinci efecte?
+    Prin obținerea unei copii a semnalului de canal pe traseul de monitorizare, o putem ruta către un grup, care apoi este trimis către o unitate de efecte.
+    În acest scenariu, controlul de nivel al traseului de monitorizare acționează ca o trimitere auxiliară (aux send) locală, în timp ce nivelul grupului acționează ca nivel auxiliar master.
+
+    - Copii ale semnalului (signal copies) — în diverse scenarii de mixaj este necesară o dublură a semnalului, iar traseul de monitorizare este gazda ideală pentru aceste copii. Un exemplu în acest sens este tehnica compresiei paralele (parallel compression).

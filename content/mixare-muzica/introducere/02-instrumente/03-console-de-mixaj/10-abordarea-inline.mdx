@@ -1,0 +1,87 @@
+---
+title: 'Abordarea in-line (Going in-line)'
+description: 'Abordarea in-line (Going in-line)'
+order: 10
+category: 'nivel'
+level: 'Incepator'
+---
+
+Modul în care designul in-line rezolvă problema dimensiunii mari a consolelor este prin „comprimarea” a 48 de canale în doar 24 de module I/O (intrări/ieșiri — cunoscute sub numele de benzi de canal sau channel strips pe o consolă de tip split).
+Acest lucru se realizează prin adăugarea unui traseu de semnal suplimentar pe lângă traseul de canal deja existent (channel path) pe fiecare modul I/O.
+
+    - Traseul de canal (channel path) este folosit pentru semnalele live.
+
+    - Noul traseu este utilizat pentru semnalele de întoarcere de la multitrack.
+
+Deoarece pe acestea din urmă le monitorizăm (atât în regie/control room, cât și în cabina de înregistrare/live room), noul traseu se numește traseu de monitorizare (monitor path).
+
+Elementele suplimentare necesare pentru fiecare modul I/O includ o mufă de intrare de linie (line input) pentru semnalul de întoarcere de la multitrack și un fader (sau un potențiometru rotativ — pot — în cazul consolelor mai mici) pentru a controla nivelul semnalului de pe traseul de monitorizare.
+
+Consolele in-line de mari dimensiuni sunt ușor de recunoscut după cele două fader-e prezente pe fiecare modul I/O (Figura 10.21).
+Va exista, totuși, un singur egalizator, compresor, trimitere auxiliară (aux send) și punct de inserție (insert point) pe fiecare modul I/O, însă fiecare dintre aceste secțiuni poate fi comutată fie pe traseul de canal, fie pe cel de monitorizare (în măsura în care designul consolei permite acest lucru).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-21.jpg"
+    alt="Figura 10.21"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.21: </strong>Consola SSL Origin de la Abbey Road Institute, Londra. 
+  Această fotografie arată în mod clar cele două fadere prezente pe fiecare modul I/O. 
+  În funcție de configurația consolei, un fader controlează nivelul traseului de monitorizare, iar celălalt pe cel al traseului de canal.
+
+</p>
+Prin urmare, putem reduce o consolă split de 48 de canale la o consolă in-line de doar 24 de canale. 
+Dar cum rămâne cu cele 24 de grupuri master suplimentare?
+
+Dacă le înlocuim cu 24 de grupuri in-line (ca în Figura 10.18), putem integra aceste grupuri direct în cele 24 de module I/O.
+În final, vom obține 24 de module I/O, fiecare conținând un traseu de canal (channel path), un traseu de monitorizare (monitor path) și un grup, toate configurate în mod in-line (Figura 10.22).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-22.jpg"
+    alt="Figura 10.22"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.22: </strong> O consola in-line cu 8 canale
+</p>
+
+Un studio cu 24 de piste ar putea beneficia de pe urma conceptului in-line, însă dacă studioul dispune de o cabină de înregistrare (live room) mică — unde se pot folosi maximum opt microfoane simultan — consola sa ar avea nevoie de doar opt grupuri.
+
+Un design specific în acest sens combină un traseu de canal (channel path) și unul de monitorizare (monitor path) pe fiecare modul I/O, folosind o secțiune de grupuri master în locul grupurilor in-line.
+Figura 10.23 ilustrează acest concept, în timp ce Figura 10.24 prezintă o astfel de consolă.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-23.jpg"
+    alt="Figura 10.23"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.23: </strong> O consola cu 4 grupe si cu 8 canale
+</p>
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-24.jpg"
+    alt="Figura 10.24"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.24: </strong>Consola Mackie Analog 8-Bus. Fiecare modul I/O
+  dispune de controale separate de nivel și panoramare (pan) pentru fiecare
+  traseu de semnal. În cazul modelului 8-Bus, nivelul unui traseu este controlat
+  prin intermediul unui fader, în timp ce nivelul celuilalt este controlat cu
+  ajutorul unui potențiometru rotativ (pot — rândul alb de butoane din stânga
+  indicatoarelor de nivel/meters). Cele opt fadere ale grupurilor master pot fi
+  observate în partea dreaptă (între faderele de canal și faderul master).
+</p>

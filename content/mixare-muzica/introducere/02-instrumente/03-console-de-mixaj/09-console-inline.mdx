@@ -1,0 +1,74 @@
+---
+title: 'Consolele in-line (In-line consoles)'
+description: 'Consolele in-line (In-line consoles)'
+order: 9
+category: 'nivel'
+level: 'Incepator'
+---
+
+## Aspectele legate de înregistrare
+
+Este imposibil să discutăm despre avantajele consolelor in-line fără a vorbi despre procesul de înregistrare, însă vom păstra această paranteză cât mai scurtă.
+În timpul unei sesiuni de înregistrare, consola gestionează două tipuri de semnale:
+
+    - (a) semnalele interpretării live, care sunt trimise prin intermediul grupurilor pentru a fi înregistrate pe trackerul multiplu (multitrack);
+
+    - (b) semnalele de întoarcere de la multitrack (multitrack return), care includ orice instrumente înregistrate anterior.
+
+Pe o consolă de tip split (consola partajată)—pe care am analizat-o până acum—unele canale se ocupă de semnalele live, în timp ce altele gestionează semnalele de întoarcere de la multitrack.
+Totuși, un singur canal nu poate procesa două semnale diferite în același timp.
+Figura 10.20 prezintă configurația unei console split în timpul procesului de înregistrare.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-20.jpg"
+    alt="Figura 10.20"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.20: </strong>O consolă cu opt canale și patru grupuri, așa cum ar putea fi utilizată într-o sesiune de înregistrare:
+
+    Canalele 1–4 vor gestiona semnalele live care vin prin intrările de microfon sau de linie.
+
+    Canalele 5–8 vor gestiona semnalele de întoarcere de la multitrack (multitrack return) prin intrările de linie.
+
+    Secțiunea de grupuri master va fi utilizată pentru a ruta semnalele de intrare către multitrack.
+
+</p>
+Consolele cu design de tip split pot fi de mari dimensiuni. 
+De exemplu, o înregistrare pe 24 de piste ar necesita o consolă cu 48 de canale: 24 de canale pentru semnalele live și alte 24 pentru semnalele de întoarcere de la multitrack (multitrack returns). 
+Dacă adăugăm și cele 24 de grupuri master, ajungem la un total de 72 de benzi de canal (strips).
+
+Dincolo de dimensiuni, fiecare bandă de canal costă destul de mult.
+Cu toate acestea, rareori avem nevoie de toate aceste funcții costisitoare pe toate canalele în același timp — fie procesăm semnalele live, fie semnalele de întoarcere de la multitrack, dar aproape niciodată pe ambele simultan.
+
+În contextul producției audio și al înregistrărilor de studio, termenul multitrack (tradus adesea ca multipistă sau înregistrare multitrack) se referă la metoda de a înregistra și reda mai multe surse audio în mod separat și independent unele de altele.
+
+Iată exact ce se are în vedere:
+
+1. Independență totală pentru fiecare instrument/voce
+
+Spre deosebire de o înregistrare simplă „stereo” (unde totul este amestecat pe două canale, stânga și dreapta), un sistem multitrack îți permite să pui fiecare element pe propria sa „pistă” (track).
+
+    - Pista 1: Toba mare
+
+    - Pista 2: Chitara bas
+
+    - Pista 3: Vocea principală
+
+    - Pista 4: Chitara armonie
+
+2. Două tipuri de tehnologii (Trecut și Prezent)
+   - În trecut (Analogic): Se foloseau magnetofoane uriașe de studio care trăgeau pe benzi magnetice late (de exemplu, benzi de 2 țoli). Aceste aparate aveau capete de redare/scriere separate pentru 8, 16, 24 sau chiar 32 de piste fizice pe aceeași bandă.
+
+   - În prezent (Digital): Rolul de multitrack a fost preluat de computer, prin programele de editare audio numite DAW (ex: Pro Tools, Cubase, Logic Pro), conectate la o placă de sunet (interfață audio) cu intrări și ieșiri multiple.
+
+3. De ce este crucial acest concept în textul tău?
+
+Când textul tradus vorbește despre „semnalele de întoarcere de la multitrack” (multitrack returns), se referă la următorul flux de lucru din studio:
+
+    - Trimiterea spre înregistrare: Sunetul din microfonul solistului intră în consolă și este trimis către o pistă specifică din calculator/magnetofon (multitrack) pentru a fi salvat.
+
+    - Întoarcerea pentru monitorizare (The Return): În timp ce solistul cântă, tu (ca inginer de sunet) trebuie să auzi ce s-a înregistrat deja (de exemplu, instrumentalul tras ieri). Acest sunet se „întoarce” din calculator înapoi în consolă pe canale separate, ca să poți face un mixaj temporar în căști pentru solist și pentru tine în monitoare.
