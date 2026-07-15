@@ -1,0 +1,125 @@
+---
+title: 'Configurarea căii către JUCE'
+description: 'Configurarea căii către JUCE'
+order: 3
+category: 'JUCE'
+level: 'Incepator'
+---
+
+# Mac
+
+Din folderul JUCE, dă dublu-click pe Projucer.app pentru a deschide aplicația. Este foarte posibil ca pe Mac-ul tău să apară doar numele Projucer, fără extensia .app la sfârșit.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/20.jpg"
+    alt="Figura 20"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 20: </strong> Aplicatia projucer si folderul JUCE in Mac
+</p>
+ste posibil ca sistemul să afișeze o avertizare că urmează să deschizi un fișier
+descărcat de pe internet. Nu îți face griji, este complet sigur! Dă click pe
+Open (sau Deschide) pentru a continua.
+
+În bara de meniu, la secțiunea Projucer, selectează opțiunea Global Paths… (Căi globale).
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/21.jpg"
+    alt="Figura 21"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 21: </strong>Opțiunea de meniu Global Paths (Căi globale)
+</p>
+
+Se va deschide urmatoarea fereastra:
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/22.jpg"
+    alt="Figura 22"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 22: </strong> Fereastra de setare al caii globale
+</p>
+Cele două câmpuri importante sunt Path to JUCE (Calea către JUCE) și JUCE
+Modules (Modulele JUCE). În captura de ecran de mai sus, acestea încep cu
+~/JUCE. Simbolul tildă (~) este un caracter special care face referire la
+folderul tău personal (home folder). Cu alte cuvinte, pe computerul meu, calea
+~/JUCE trimite de fapt către folderul /Users/matthijs/JUCE.
+
+Presupunând că ai plasat folderul JUCE în folderul tău personal, totul este corect și nu trebuie să modifici nimic. Dacă ai pus folderul JUCE în altă parte, folosește butonul cu trei puncte (...) pentru a-i selecta noua locație.
+
+Când ai terminat, închide fereastra Global Paths și ieși din Projucer.
+
+# Windows
+
+Din folderul JUCE, dă dublu-click pe Projucer.exe pentru a deschide aplicația. Este foarte posibil ca pe PC-ul tău să apară doar numele Projucer, fără extensia .exe la sfârșit.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/23.jpg"
+    alt="Figura 23"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 23: </strong> Aplicatia Projucer si folderul JUCE in Windows
+</p>
+
+Este posibil ca Microsoft Defender SmartScreen să afișeze o avertizare că încerci să pornești o aplicație nerecunoscută. Nu îți face griji, Projucer este complet sigur! Dacă se întâmplă acest lucru, dă click pe More info (Mai multe informații) și apoi pe Run anyway (Rulați oricum).
+
+În bara de meniu a aplicației Projucer, la secțiunea File (Fișier), selectează opțiunea Global Paths… (Căi globale).
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/24.jpg"
+    alt="Figura 24"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 24: </strong>Opțiunea de meniu Global Paths (Căi globale)
+</p>
+Se va deschide urmatoarea fereastra:
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/25.jpg"
+    alt="Figura 25"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 25: </strong> Fereastra de setare al caii globale
+</p>
+Cele două câmpuri importante sunt Path to JUCE (Calea către JUCE) și JUCE
+Modules (Modulele JUCE). În mod implicit, acestea sunt setate pe C:\JUCE și
+C:\JUCE\modules.
+
+Totuși, deoarece ai extras fișierul ZIP în directorul Documents (Documente), va trebui să modifici aceste căi pentru a indica locul exact în care se află folderul JUCE:
+
+    - Folosește butonul cu trei puncte (...) pentru a selecta locația C:\Users\numeletau\Documents\JUCE pentru câmpul Path to JUCE.
+
+    - Locația pentru JUCE Modules trebuie să fie folderul modules aflat în interiorul acestuia (adică C:\Users\numeletau\Documents\JUCE\modules).
+
+Când ai terminat, închide fereastra Global Paths și ieși din Projucer.

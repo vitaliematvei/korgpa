@@ -1,0 +1,57 @@
+---
+title: 'Folderul JUCE'
+description: 'Folderul JUCE'
+order: 4
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Haide să aruncăm o privire rapidă asupra conținutului folderului JUCE, pentru a-ți face o idee despre ce anume este inclus, mai exact, în acesta.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/26.jpg"
+    alt="Figura 26"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 26: </strong> Fisierele in folderul JUCE pe Mac(stanga) pe
+  Windows(dreapta)
+</p>
+Iată adaptarea în limba română a acestui text, păstrând tonul tehnic, dar
+accesibil și natural:
+
+Pe lângă cele două aplicații, Projucer și DemoRunner, folderul conține mai multe fișiere text și subfoldere.
+Pe Projucer l-ai văzut deja pe scurt, iar DemoRunner îl vom explora în secțiunea următoare.
+Fișierele și folderele care încep cu punct, cum ar fi .clang-tidy, pot fi ignorate. (Aceste fișiere sunt ascunse în mod implicit pe Mac, dar sunt vizibile pe Windows).
+
+Dintre fișierele text, README.md este cel mai important.
+Extensia .md vine de la Markdown. Dacă nu ai un cititor de Markdown instalat pe computer, poți deschide aceste fișiere .md cu orice editor de text obișnuit (cum ar fi Notepad sau TextEdit).
+
+Celelalte fișiere text conțin informații importante despre modificările aduse framework-ului JUCE de-a lungul timpului.
+Uneori, o astfel de modificare poate crea probleme cu codul deja existent, lucru documentat în BREAKING_CHANGES.md.
+Nu este ceva de care trebuie să îți faci griji acum, dar este bine de știut unde poți găsi aceste informații.
+Fișierul CMakeLists.txt oferă suport pentru CMake în JUCE.
+Nu vom folosi CMake în această carte, așa că poți ignora liniștit acest fișier.
+
+Aruncă o privire și prin subfoldere. Acestea sunt:
+
+    - docs – conține documentație suplimentară pentru JUCE. Documentația principală poate fi găsită online la adresa
+    # <a href="https://docs.juce.com" target="_blank" rel="noopener noreferrer">https://docs.juce.com</a>
+
+    - examples – conține codul sursă pentru mai multe pluginuri de exemplu, precum și demo-urile rulate de aplicația DemoRunner.
+    Îți recomand să revii la acest folder după ce termini cartea, deoarece ai foarte multe de învățat din aceste exemple.
+
+    - extras – conține codul sursă pentru utilitare suplimentare livrate odată cu JUCE, inclusiv codul pentru aplicația Projucer.
+    Pentru noi, cea mai importantă de aici este aplicația AudioPluginHost, pe care o vom folosi pentru a testa pluginul pe care îl vom dezvolta.
+
+    - modules – conține codul sursă propriu-zis al framework-ului JUCE. Din motive de eficiență, framework-ul a fost împărțit în module separate, astfel încât pluginul tău să includă doar modulele de care are cu adevărat nevoie.
+    De exemplu, nu vom folosi modulul juce_video, deoarece pluginul nostru nu va rula videoclipuri.
+
+Aceasta a fost doar o scurtă prezentare a ceea ce se află în interiorul JUCE.
+Nu trebuie neapărat să ții minte toate aceste detalii.
+JUCE este structurat în așa fel încât să își ascundă toată complexitatea internă de utilizator.
+Tot ce trebuie să faci este să folosești aplicația Projucer pentru a-ți configura proiectul JUCE, iar de restul lucrurilor se ocupă sistemul, în culise.
