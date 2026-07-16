@@ -1,0 +1,22 @@
+---
+title: 'Solo Safe'
+description: 'Solo Safe'
+order: 17
+category: 'nivel'
+level: 'Incepator'
+---
+
+Funcția Solo safe (sau solo isolate) oferă o rezolvare pentru problemele care apar din cauza mecanismului de solo destructiv (solo-in-place).
+Mai exact, aceasta previne oprirea (muting-ul) canalelor marcate ca solo safe atunci când un alt canal este pus pe solo.
+Cum funcționează și de ce este necesar?
+
+    - Traseul grupurilor audio: Un exemplu clasic de canale care ar trebui setate pe solo safe sunt cele care găzduiesc un grup audio (bus).
+    Dacă pui pe solo un kick (toba mare), iar acest lucru oprește automat grupul de tobe (drum bus) în care kick-ul este rutat, monitoarele nu vor mai reda niciun sunet.
+    Pentru a preveni această întrerupere, canalele grupului de tobe sunt marcate ca solo safe.
+
+    - Problema inversă (Solo pe grup): Aceeași lipsă de semnal poate apărea și dacă pui pe solo direct grupul audio, deoarece această acțiune va opri canalele sursă din spate, inclusiv kick-ul.
+
+    # Notă tehnică:
+    Deoarece o consolă nu poate detecta automat care sunt canalele sursă individuale trimise către un anumit grup audio, pentru a preveni tăierea acestora, consola va trece automat în modul de solo non-destructiv atunci când sunt activate canalele marcate ca solo safe.
+
+Pe lângă grupurile audio, canalele de întoarcere de efecte (effect returns) sunt, de asemenea, configurate de cele mai multe ori ca solo safe (pentru a nu pierde reverbul sau delay-ul atunci când asculți un canal individual în solo).

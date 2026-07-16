@@ -1,0 +1,100 @@
+---
+title: 'Proiectul de tip plug-in'
+description: 'Proiectul de tip plug-in'
+order: 6
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Când creăm un nou program, ne referim de obicei la acesta ca fiind un proiect.
+Proiectul organizează toate fișierele și opțiunile de configurare necesare pentru a construi software-ul respectiv.
+
+Fiecare IDE are propriul mod de a-și organiza proiectele.
+Pentru Visual Studio, acesta este un fișier .sln (care vine de la „solution” – soluție) și care conține unul sau mai multe fișiere .vcxproj.
+Pentru Xcode, acesta este un pachet .xcodeproj – un tip special de folder care conține diversele fișiere ce alcătuiesc proiectul.
+
+Să presupunem că vrei să îți dezvolți pluginul pe un Mac, folosind Xcode.
+În teorie, deoarece JUCE este un framework cross-platform, exact același cod ar trebui să ruleze fără probleme și pe Windows.
+Ceea ce este excelent, pentru că înseamnă că și utilizatorii de Windows vor putea folosi pluginul tău, fără ca tu să depui vreun efort suplimentar!
+
+Există totuși o mică problemă: pe Windows nu există Xcode, iar Visual Studio nu poate deschide proiecte .xcodeproj.
+În mod similar, pe macOS nu există Visual Studio, iar Xcode nu poate deschide proiecte .sln sau fișiere .vcxproj.
+În mod normal, ar trebui să creezi un proiect complet nou în Visual Studio și să îți imporți manual toate fișierele sursă.
+
+Să ai proiecte separate în Xcode și Visual Studio poate că nu sună extrem de complicat la început, dar de fiecare dată când faci o modificare într-unul dintre ele, va trebui să îți aduci aminte să o aplici și în celălalt.
+Ce bătaie de cap! Iar lucrurile devin și mai complicate dacă adaugi în ecuație Linux, iOS sau Android.
+
+Ideea din spatele JUCE este că ar trebui să fie ușor să îți dezvolți pluginul pe o platformă, iar apoi să fie la fel de ușor să îl faci să ruleze pe o alta.
+Singura modalitate de a realiza acest lucru este să scoatem IDE-ul din ecuația directă de management.
+
+# Aici intervine Projucer.
+
+Projucer este un instrument care gestionează proiectele JUCE într-un mod cross-platform.
+Projucer creează un fișier .jucer care descrie în detaliu tot ce ține de proiectul pluginului:
+
+    - Fișierele de cod sursă C++ pe care le folosește. Proiectul poate include și fișiere de cod scrise în alte limbaje, cum ar fi C, Objective-C, Swift, JavaScript și așa mai departe.
+    În această carte ne vom limita doar la C++, deoarece învățarea unui singur limbaj este deja o provocare destul de mare.
+
+    - Imagini, fonturi, fișiere audio și alte resurse (assets).
+    De exemplu, dacă pluginul tău afișează un logo, acesta ar putea fi o imagine PNG sau JPEG care va fi încorporată direct în plugin în momentul compilării.
+
+    - Setările pentru compilator și alte opțiuni de configurare care definesc modul în care codul sursă și celelalte fișiere vor fi compilate pentru a genera pluginul propriu-zis.
+
+Projucer nu este un IDE complet precum Xcode sau Visual Studio. El se ocupă doar de gestionarea fișierelor de proiect, nu compilează codul C++.
+Prin urmare, va trebui în continuare să folosești Xcode sau Visual Studio în combinație cu Projucer.
+
+Figura de mai jos ilustrează acest proces:
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/30.jpg"
+    alt="Figura 30"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 30: </strong> Projucer administreaza proiectul, IDE
+  construieste proiectul
+</p>
+
+# Fluxul de lucru (workflow-ul) este următorul:
+
+    - Mai întâi, creezi proiectul de tip plug-in folosind Projucer. Fișierul .jucer rezultat descrie ce fișiere de cod sursă și ce alte resurse alcătuiesc pluginul.
+    Vei vedea exact cum se face acest lucru în secțiunea următoare.
+
+    - Projucer are un buton numit „Save and Open in IDE” (Salvează și deschide în IDE) care generează proiectul .xcodeproj și îl deschide în Xcode.
+    Pe Windows, acesta creează proiectul .sln și îl deschide în Visual Studio.
+    De asemenea, sunt suportate și fișierele de tip Makefile pentru Linux sau proiectele de Android Studio.
+
+    - Pe Mac, folosești Xcode pentru a edita fișierele de cod sursă și pentru a compila proiectul într-un plug-in în format VST3 sau AU.
+
+    - Pe Windows, folosești Visual Studio pentru a edita fișierele de cod sursă și pentru a compila proiectul într-un plug-in în format VST3.
+
+Majoritatea dezvoltatorilor preferă fie Mac, fie Windows, așa că, de regulă, îți vei face dezvoltarea doar pe Mac sau doar pe Windows.
+Să presupunem că ai folosit Projucer pe Mac pentru a crea fișierul .jucer și ai scris codul sursă al pluginului în Xcode.
+Pentru a genera versiunea de Windows a pluginului, copiezi tot folderul pe o mașină cu Windows, deschizi fișierul .jucer în Projucer pe Windows și exporți proiectul în Visual Studio.
+
+Sau invers: creezi proiectul pe Windows și faci toată dezvoltarea în Visual Studio.
+Copiezi fișierul .jucer împreună cu fișierele de cod sursă pe Mac atunci când ești gata să creezi versiunea pentru Mac și exporți proiectul în Xcode.
+
+Datorită Projucer, nu trebuie să îți faci griji cu privire la menținerea unor proiecte separate pentru mai multe IDE-uri. Tot ce ține de proiectul tău este descris în fișierul .jucer.
+
+Cel mai important lucru de reținut este că, de fiecare dată când vrei să adaugi un nou fișier sursă în proiect, acest lucru trebuie făcut în Projucer, nu în Xcode sau Visual Studio.
+După aceea, exporți din nou din Projucer în Xcode sau Visual Studio pentru a actualiza fișierele .xcodeproj sau .sln.
+La fel se procedează și pentru modificarea opțiunilor de compilare sau a altor setări de configurare.
+
+Această abordare este puțin diferită de modul în care funcționează de obicei dezvoltarea în C++.
+Dacă ai deja ceva experiență în programare, probabil te-ai fi așteptat să adaugi fișierele sursă direct în Xcode sau Visual Studio.
+Orice modificări pe care le faci la setările proiectului direct în IDE vor fi suprascrise de Projucer, așa că este esențial să tratezi fișierele .xcodeproj și .sln ca fiind temporare.
+
+Regula de aur este: Projucer controlează proiectul, nu IDE-ul (Xcode sau Visual Studio).
+
+Poate fi un mod de lucru diferit de cel cu care te-ai obișnuit, dar este extrem de practic pentru dezvoltarea cross-platform.
+Când folosești JUCE, vei folosi exclusiv Projucer pentru a-ți crea și gestiona proiectele!
+
+    ⚠️ Notă: Projucer este un instrument excelent pentru a începe, dar poate deveni anevoios în cazul proiectelor foarte mari.
+    De aceea, JUCE oferă suport și pentru CMake.
+    Acesta este un instrument în linie de comandă care servește aceluiași scop ca Projucer, dar este utilizat pe scară largă în întreaga industrie C++, dincolo de ecosistemul JUCE.
+    În această carte vom rămâne la Projucer, însă merită să explorezi CMake odată ce începi să te lovești de limitările Projucer-ului.

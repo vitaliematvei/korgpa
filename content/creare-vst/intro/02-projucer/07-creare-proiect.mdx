@@ -1,0 +1,76 @@
+---
+title: 'Creare proiect'
+description: 'Creare proiect'
+order: 7
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Mergi în folderul JUCE și deschide aplicația Projucer.
+Aceasta va deschide fereastra New Project (Proiect nou):
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/31.jpg"
+    alt="Figura 31"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 31: </strong> Fereastra New Project in Projucer
+</p>
+
+În partea stângă ai diverse opțiuni pentru tipul de proiect pe care vrei să îl creezi.
+JUCE nu este destinat doar creării de pluginuri; cu el poți dezvolta și aplicații complete (care nici măcar nu trebuie să aibă vreo legătură cu partea audio).
+
+Noi vrem să creăm un proiect nou de tip plugin, așa că selectează Basic din secțiunea Plug-In.
+
+În partea dreaptă poți completa proprietățile proiectului:
+
+    - Project Name (Numele proiectului). Aici dai un nume proiectului tău. În mod implicit scrie NewProject, dar poți da click pe acest câmp pentru a tasta altceva. Schimbă-l în Delay. Nu este un nume foarte incitant, știu, dar vei putea redenumi pluginul într-un mod mai cool mai târziu.
+
+    - Modules (Module). Modulele JUCE care vor fi incluse în proiect. Lasă-le pe cele selectate în mod implicit pentru moment.
+
+    - Exporters (Exportatori / Instrumente de export). Dacă ești pe Mac, asigură-te că este selectat Xcode (macOS). Pentru a construi și o versiune de iOS a pluginului, selectează de asemenea și Xcode (iOS).
+    Cititorii de pe Windows ar trebui să selecteze Visual Studio 2026.
+
+    # Notă:
+    Eu am selectat toate cele trei opțiuni de export, deoarece vreau să construiesc versiuni pentru Mac, iOS și Windows din același proiect .jucer.
+
+Când ai terminat, dă click pe butonul mov Create Project… (Creează proiectul) și alege unde vrei să salvezi proiectul.
+Această acțiune va crea automat un folder nou.
+
+Odată ce proiectul a fost salvat, fereastra Projucer se va schimba pentru a afișa noul proiect proaspăt creat:
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/32.jpg"
+    alt="Figura 32"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 32: </strong> Un proiect nou
+</p>
+
+# Elementele acestei ferestre sunt:
+
+    - Conținutul proiectului. Aici sunt listate fișierele de cod sursă C++, modulele JUCE incluse și IDE-urile pe care le vei folosi.
+
+    - Butonul cu roată dințată – deschide setările suplimentare ale proiectului.
+
+    - Butonul de export – cu ajutorul lui exporți proiectul din Projucer în Visual Studio sau Xcode.
+
+    - Autentificarea în contul de utilizator pe site-ul juce.com (vom discuta mai multe despre asta într-un capitol următor).
+
+    - Zona principală de lucru. Inițial, aceasta afișează logo-ul JUCE și numărul versiunii.
+    Atunci când selectezi un element din lista din stânga, proprietățile acestuia vor fi afișate aici.
+
+    ⚠️ Notă: Dacă în acest moment apare un mic mesaj pop-up în colțul din stânga-jos al ferestrei Projucer care spune „The path to your JUCE folder is incorrect” (Calea către folderul tău JUCE este incorectă), înseamnă că Projucer nu poate găsi locul unde este instalat folderul JUCE.
+    Pentru a remedia această problemă, dă click pe Set path pentru a deschide fereastra Global Paths și asigură-te că de la câmpurile Path to JUCE și JUCE Modules calea indică exact locul de pe hard disk unde ai pus folderul JUCE (vezi secțiunea de mai sus din acest capitol).
+
+{/* am ramas Getting to know Projucer .60 */}

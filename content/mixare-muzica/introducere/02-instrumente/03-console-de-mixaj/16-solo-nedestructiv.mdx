@@ -1,0 +1,28 @@
+---
+title: 'Solo-ul non-destructiv'
+description: 'Solo-ul non-destructiv'
+order: 16
+category: 'nivel'
+level: 'Incepator'
+---
+
+În modul non-destructiv, niciun canal nu este tăiat (cut / muted).
+În schimb, canalele puse pe solo sunt redirecționate către un bus de solo dedicat (solo bus).
+Atât timp cât funcția solo este activă, consola direcționează automat acest bus de solo către monitoare (boxe/căști), tăind temporar sursa curentă de monitorizare (care, în mod normal, este bus-ul de mixaj principal / mix bus).
+În cazul solo-ului non-destructiv, ieșirea principală de mixaj (mix output) rămâne intactă, deoarece toate canalele continuă să fie însumate în bus-ul de mix.
+
+Cei trei termeni — PFL (pre-fade listen), AFL (after-fade listen) și APL (after-pan listen) — indică punctul de pe traseul semnalului de unde este preluată acea copie:
+
+    - PFL preia semnalul înainte de fader-ul canalului și de potențiometrul de panoramare (pan-pot); prin urmare, atât nivelul din mix, cât și poziția în spațiul stereo (panoramarea) sunt ignorate.
+
+    - AFL preia semnalul după fader, dar înainte de panoramare; astfel, păstrează nivelul din mix, dar ignoră poziționarea stereo.
+
+    - APL preia semnalul după fader și panoramare, ceea ce înseamnă că sunt păstrate atât nivelul de volum, cât și poziția stereo.
+
+Doar o consolă care oferă solo de tip APL are nevoie de un bus de solo stereo; pentru modurile PFL și AFL, un bus de solo mono este perfect suficient.
+
+În secțiunea master a consolei există un potențiometru de volum pentru bus-ul de solo (solo-bus level).
+Se recomandă reglarea acestui control astfel încât semnalele să nu fie nici amplificate, nici atenuate atunci când sunt puse pe solo.
+Practic, acest lucru înseamnă aducerea bus-ului de solo la același nivel cu bus-ul de mixaj principal.
+Orice alt reglaj l-ar putea tenta pe inginerul de sunet să modifice volumul monitoarelor după activarea funcției solo; ulterior, când solo-ul este dezactivat, nivelul mixajului monitorizat va scădea sau va crește brusc, ceea ce va duce din nou la ajustarea volumului din monitoare.
+Cel mai mare pericol în acest caz este tendința de a crește constant și necontrolat volumul de monitorizare din studio.

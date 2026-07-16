@@ -6,12 +6,87 @@ category: 'JUCE'
 level: 'Incepator'
 ---
 
-Aplicația DemoRunner pune în valoare capacitățile framework-ului JUCE. Haide să ne jucăm puțin cu ea ca să îți faci o idee despre ce poate face JUCE. Dă dublu-click pe aplicație pentru a o rula.
+Aplicația DemoRunner pune în valoare capacitățile framework-ului JUCE. Haide să ne jucăm puțin cu ea ca să îți faci o idee despre ce poate face JUCE.
+Dă dublu-click pe aplicație pentru a o rula.
 
     - Pe macOS: este posibil ca sistemul să te avertizeze că urmează să deschizi un fișier descărcat de pe internet. Dă click pe Open (Deschide) pentru a continua. În continuare, îți va cere permisiunea de a folosi microfonul. Dă click pe OK pentru a acorda permisiunea.
 
     - Pe Windows: este posibil ca sistemul să te avertizeze că încerci să pornești o aplicație nerecunoscută. Dă click pe More info (Mai multe informații) și apoi pe Run anyway (Rulați oricum) pentru a continua.
 
-În fereastra DemoRunner, dă click pe butonul Browse Demos (Răsfoiește demo-uri). Acesta va deschide un panou cu mai multe categorii: Audio, DSP, Utilities și GUI. Fiecare dintre aceste categorii conține mai multe proiecte demo.
+În fereastra DemoRunner, dă click pe butonul Browse Demos (Răsfoiește demo-uri).
+Acesta va deschide un panou cu mai multe categorii: Audio, DSP, Utilities și GUI.
+Fiecare dintre aceste categorii conține mai multe proiecte demo.
 
-Dă click pe Audio, apoi selectează AudioSynthesiserDemo.h. Ecranul se va schimba în următorul:
+Dă click pe Audio, apoi selectează AudioSynthesiserDemo.h.
+Ecranul se va schimba în următorul:
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/27.jpg"
+    alt="Figura 27"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 27: </strong> Aplicatia DemoRunner
+</p>
+Fila Demo afișează o claviatură de pian. Dă click pe clapele pianului de pe
+ecran pentru a auzi un sintetizator de bază redând note muzicale. Poți alege
+între un sunet simplu de undă sinusoidală (sine wave) sau un sunet eșantionat de
+violoncel (sampled cello).
+
+Pe lângă click-urile pe pianul de pe ecran, poți cânta folosind rândul din mijloc al tastaturii computerului tău.
+De exemplu, tasta A redă nota Do central (C4).
+Dacă ai un controler MIDI conectat la computer, îl poți folosi chiar și pe acesta pentru a cânta cu acest sintetizator.
+
+Dacă nu auzi niciun sunet, mergi la fila Settings (Setări).
+În secțiunea Audio, poți schimba dispozitivele audio folosite pentru intrare și ieșire, și tot de acolo poți să îți configurezi controlerul MIDI (dacă deții unul).
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/28.jpg"
+    alt="Figura 28"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 28: </strong> Setarile audio in DemoRunner
+</p>
+n cele din urmă, dacă ești curios cum arată codul sursă pentru oricare dintre
+demo-uri, mergi la fila Code (Cod) și vei vedea codul C++ în toată splendoarea
+sa.
+
+Acesta nu este un editor de cod complet, așa că nu vei putea face modificări direct aici.
+Este absolut în regulă dacă nimic din acest cod nu are încă sens pentru tine — tocmai de aceea ai această carte în față!
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/29.jpg"
+    alt="Figura 29"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 29: </strong> DemoRunner afișează codul sursa al demo-ului
+  selectat
+</p>
+Încearcă și celelalte demo-uri. Câteva dintre preferatele mele sunt:
+
+    - Audio > PluckedStringsDemo: Îți permite să cânți la un instrument asemănător unei harpe folosind mouse-ul.
+
+    - DSP > ConvolutionDemo: Îți permite să încarci un fișier audio (cum ar fi un fișier .wav) și să îi aplici un răspuns la impuls (impulse response), pentru a simula redarea sunetului printr-un cabinet de chitară sau printr-un casetofon vechi.
+
+    - Utilities > Box2DDemo: JUCE include motorul de fizică Box2D — în caz că vrei să scrii un joc cu el, presupun.
+
+    - GUI > GraphicsDemo: Demonstrează capacitățile de randare grafică ale JUCE.
+
+    - GUI > WidgetsDemo: Îți arată diversele tipuri de elemente de control pentru interfața grafică incluse în JUCE.
+
+DemoRunner este un instrument extrem de util, nu doar pentru a te impresiona cu ceea ce poate face JUCE, ci și pentru momentele în care te întrebi cum să implementezi ceva anume — de exemplu, deschiderea unei ferestre noi.
+Este foarte probabil ca DemoRunner să aibă deja un demo pentru asta, complet cu exemplul de cod sursă. O referință extrem de practică!
