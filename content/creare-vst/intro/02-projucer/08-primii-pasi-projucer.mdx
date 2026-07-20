@@ -1,0 +1,123 @@
+---
+title: 'Primii pași în Projucer (Ghid de orientare)'
+description: 'Primii pași în Projucer (Ghid de orientare)'
+order: 8
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Panoul din partea stângă a ferestrei Projucer este împărțit în trei secțiuni principale:
+File Explorer, Modules și Exporters.
+La deschiderea aplicației, secțiunea Exporters este deja extinsă.
+Poți deschide oricare dintre celelalte secțiuni făcând clic pe antetele lor de culoare mov.
+
+Să aruncăm mai întâi o privire peste secțiunea File Explorer:
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/33.jpg"
+    alt="Figura 33"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 33: </strong> File Explorer arata fisierele sursa
+</p>
+
+# File Explorer (Exploratorul de fișiere)
+
+File Explorer listează fișierele cu cod sursă C++ care fac parte din proiect, precum și eventualele fișiere de imagini, sunete, fonturi și așa mai departe.
+Deoarece acesta este un proiect nou, el conține doar patru fișiere în interiorul unui folder numit Source.
+Mai târziu, pe măsură ce vei adăuga alte fișiere sursă în proiect, le vei gestiona direct din acest File Explorer.
+
+În imaginea de mai sus, fișierul PluginProcessor.cpp este selectat.
+Acest lucru afișează codul sursă din fișierul respectiv în partea dreaptă.
+Poți edita codul direct aici, deși acest editor este destul de limitat în comparație cu un IDE complet (cum ar fi Xcode sau Visual Studio); în plus, oricum nu poți compila codul direct din Projucer.
+
+Vom petrece mult mai mult timp cu aceste fișiere sursă mai târziu, dar, ca să înțelegi ce se întâmplă, iată rolul fiecăruia:
+
+    - PluginProcessor.cpp și PluginProcessor.h: Acestea conțin codul pentru obiectul DelayAudioProcessor, care este partea din plug-in responsabilă cu procesarea audio propriu-zisă.
+    Acesta va primi semnalul audio de la gazdă (DAW), îl va modifica într-un anumit fel și va trimite sunetul procesat înapoi către gazdă.
+
+    - PluginEditor.cpp și PluginEditor.h: Acestea definesc obiectul DelayAudioProcessorEditor, care se ocupă de interfața grafică (UI) a plug-in-ului, cunoscută și sub numele de editor.
+    Acesta va desena pe ecran toate potențiometrele (knobs), butoanele și textele și va permite utilizatorului să interacționeze cu ele.
+
+Poți lua o scurtă pauză din citit acum pentru a trece prin aceste fișiere de cod sursă, doar ca să-ți faci o idee despre ce conțin.
+Este perfect în regulă dacă totul pare o „limbă străină” (sau o încrengătură de neînțeles) în acest moment.
+Lucrurile vor începe să aibă mult mai mult sens în capitolele următoare.
+
+# Separarea în fișiere .h și .cpp
+
+Observă că programul este împărțit în fișiere .cpp și .h.
+Aceasta este o practică standard în limbajul C++:
+
+    - Fișierul .h este cunoscut sub numele de „header” (antet) și conține declararea elementelor din care este alcătuit programul tău (clase, variabile, funcții).
+
+    - Fișierul .cpp, cunoscut sub numele de fișier sursă sau de implementare, definește modul în care acele elemente funcționează de fapt (corpul funcțiilor).
+
+Uneori există doar un fișier .h, fără un fișier .cpp corespunzător. Limbajele mai moderne nu mai folosesc această separare între header și sursă, deoarece este destul de redundantă și incomodă, iar versiunile viitoare de C++ încearcă și ele să renunțe la ea.
+Deocamdată, reține doar că de obicei vom avea nevoie de ambele fișiere pentru a scrie cod în C++.
+
+    # Notă:
+    Unii dezvoltatori folosesc extensia .hh sau .hpp pentru fișierele header și .cc sau .cxx pentru fișierele de implementare.
+    Înseamnă exact același lucru.
+    Menționez asta doar pentru că s-ar putea să te lovești de aceste extensii când analizezi codul scris de alții.
+
+# Panoul Modules (Module)
+
+Panoul Modules listează modulele JUCE care sunt incluse în acest plug-in.
+Pentru a rămâne cât mai flexibil, framework-ul JUCE este alcătuit din module separate, fiecare fiind responsabil de o funcționalitate specifică.
+Astfel, trebuie să incluzi în proiect doar modulele de care ai cu adevărat nevoie (evitând încărcarea inutilă a codului).
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/34.jpg"
+    alt="Figura 34"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 34: </strong> Panoul 'Module'
+</p>
+
+Deoarece acesta este un proiect de plug-in audio, el include diverse module
+juce_audio, precum și modulele juce_graphics și juce_gui pentru crearea
+interfeței grafice a utilizatorului (UI).
+Dacă proiectul tău va avea nevoie de module suplimentare, le poți adăuga direct de aici.
+Ba mai mult, poți chiar să-ți creezi propriile module cu cod reutilizabil.
+
+În cele din urmă, panoul Exporters listează IDE-urile (mediile de dezvoltare) pe care le vei folosi pentru a compila și genera (build) acest plug-in.
+În captura de ecran de mai jos sunt afișate trei astfel de profiluri de export (exporters), deoarece intenționez să compilez plug-in-ul pentru Mac, iOS și Windows.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/35.jpg"
+    alt="Figura 35"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 35: </strong> Panoul 'Exporters'
+</p>
+
+Sub fiecare profil de export (exporter) se găsesc două configurații: Debug și Release.
+
+    - Debug: Vei folosi configurația Debug în timpul dezvoltării propriu-zise a plug-in-ului.
+    Aceasta adaugă informații suplimentare și extrem de utile în timpul procesului de compilare (simboluri de debug), care ajută debugger-ul să identifice exact ce a mers prost atunci când programul se blochează sau crapă (crash).
+
+    - Release: Configurația Release este destinată versiunii finale a plug-in-ului, cea care va fi distribuită utilizatorilor finali.
+    Aceasta elimină toate datele de debugging din fișierul final (pentru a-i reduce dimensiunea) și îl compilează cu optimizările activate (pentru a rula cât mai rapid și eficient).
+
+Exemple de optimizări în funcție de IDE:
+
+    În Xcode: Dacă selectezi configurația Debug sub exportatorul de Xcode și derulezi până la setarea Optimisation, vei vedea valoarea -O0 (no optimisation).
+    În schimb, în configurația Release, opțiunea de optimizare este setată implicit pe -O3 (fastest with safe optimisations).
+
+    În Visual Studio: Dacă selectezi configurația Debug sub exportatorul de Visual Studio și mergi la setarea Optimisation, aceasta va apărea ca Disabled (/Od).
+    Sub configurația Release, opțiunea este setată automat pe Full optimisation (/Ox).

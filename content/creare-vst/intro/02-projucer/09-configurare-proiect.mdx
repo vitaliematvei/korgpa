@@ -1,0 +1,163 @@
+---
+title: 'Configurarea proiectului'
+description: 'Configurarea proiectului'
+order: 9
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Acum vom finaliza configurarea noului nostru proiect de plug-in.
+Fă clic pe pictograma mov în formă de rotiță din partea de sus a ferestrei Projucer pentru a deschide panoul cu setările proiectului (project settings):
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/36.jpg"
+    alt="Figura 36"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 36: </strong> Setare proiect in Projucer
+</p>
+Aici vei completa detaliile despre ceea ce face plug-in-ul. Există o mulțime de
+setări, însă poți păstra valorile implicite (defaults) pentru majoritatea
+acestor câmpuri. Dacă te întrebi vreodată la ce folosește o anumită setare, fă
+clic pe butonul (i) de lângă numele acesteia.
+
+# Acordă o atenție deosebită următoarei setări: Plugin Formats (Formate de plug-in)
+
+Există mai multe formate de plug-in utilizate în mod curent în industrie, iar JUCE le poate genera pe toate pornind de la aceeași bază de cod (codebase).
+
+    - În mod implicit, sunt deja selectate opțiunile VST3 și AU (Audio Units).
+
+    - Dacă vrei să compilezi plug-in-ul și pentru iOS, selectează și opțiunea AUv3.
+
+    - Fă clic pe mica săgeată orientată în jos pentru a extinde această secțiune și asigură-te că este bifată și opțiunea Standalone.
+
+    - De ce Standalone? Această opțiune va crea o aplicație de sine stătătoare care rulează direct plug-in-ul (fără a mai fi nevoie să îl deschizi într-un DAW).
+    Acest lucru este extrem de util pentru testare și depanare (debugging) și este o funcționalitate pe care o vom folosi într-un capitol următor.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/vst/juce/37.jpg"
+    alt="Figura 37"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 37: </strong> Setare formate plug-in
+</p>
+
+Pe lângă VST3 și AU, mulți dezvoltatori de plug-in-uri creează și versiuni în format AAX.
+Formatul AAX este dedicat programului Pro Tools, însă crearea lui necesită contactarea celor de la Avid pentru a obține o versiune specială de Pro Tools destinată dezvoltatorilor, lucru care depășește scopul acestei cărți.
+
+Poți modifica oricând setarea Plugin Formats mai târziu.
+Astfel, dacă începi doar cu VST3, AU și Standalone, dar decizi ulterior că vrei să adaugi AUv3 pentru iOS sau AAX, trebuie doar să bifezi acele opțiuni și să exporți din nou proiectul.
+
+    # Notă:
+    Chiar dacă pe Windows poți selecta formatele AU sau AUv3, nu le vei putea compila pe un PC — acestea sunt tehnologii exclusive pentru macOS/iOS.
+
+# Plugin Characteristics (Caracteristici plug-in)
+
+În această carte vom construi un plug-in de efecte.
+Cu JUCE este posibil să dezvolți și alte tipuri de plug-in-uri, cum ar fi un sintetizator sau un efect MIDI.
+Pentru scopurile noastre, toate aceste opțiuni speciale trebuie lăsate nebifate (goale).
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/38.jpg"
+    alt="Figura 38"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 38: </strong> Setare caracteristici plug-in
+</p>
+
+# Plugin Name (Numele plug-in-ului)
+
+Dacă ți se pare că alegerea mea de a numi acest plug-in pur și simplu „Delay” este mult prea banală (sau de-a dreptul cringe), poți introduce aici un nume mult mai bun pe care l-ai gândit chiar tu (cum ar fi MySuperAwesomeDelay?).
+Sub acest nume va fi afișat plug-in-ul în interiorul DAW-ului.
+
+# Plugin Manufacturer (Producătorul plug-in-ului)
+
+Aici vei introduce numele companiei tale.
+În sistemele de operare și în DAW-uri, plug-in-urile sunt identificate printr-o combinație unică între numele lor propriu și cel al producătorului.
+
+În mod implicit, JUCE completează acest câmp cu yourcompany.
+Poți lăsa această valoare neschimbată sau o poți înlocui cu propriul tău nume sau brand.
+
+    Important: Dacă modifici această opțiune, asigură-te că folosești noul nume (fără spații sau caractere speciale) și în setarea Bundle Identifier.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/39.jpg"
+    alt="Figura 39"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 39: </strong> Setările pentru codul plug-in-ului și cel al
+  producătorului
+</p>
+
+# Plugin Manufacturer Code (Codul producătorului)
+
+Acesta este un identificator (ID) care îți identifică în mod unic compania.
+Trebuie să fie format din exact patru caractere și să conțină cel puțin o literă mare.
+Valoarea implicită este Manu. Dacă ai modificat opțiunea Plugin Manufacturer, ar trebui să o schimbi și pe aceasta.
+
+# Plugin Code (Codul plug-in-ului)
+
+Plug-in-ul în sine are nevoie, de asemenea, de un ID unic de patru caractere care să înceapă cu o literă mare.
+Projucer generează acest cod în mod aleatoriu. Schimbă-l în Dlay.
+
+# C++ Language Standard (Standardul de limbaj C++)
+
+Setează această opțiune la C++20.
+Aceasta este versiunea limbajului C++ pe care o vom folosi pe parcursul proiectului.
+
+    - Sfat util: Acesta este un moment excelent pentru a-ți salva modificările folosind opțiunea din meniu File > Save Project.
+    Uneori, Projucer se poate bloca sau închide pe neașteptate (crash), iar ultimul lucru pe care ți-l dorești este să-ți pierzi progresul.
+
+    - Notă: Dacă opțiunea Save Project este inactivă (gri) sau dacă primești un mesaj de eroare de tipul „Error writing to file… Save and export is disabled.”, schimbă setarea Display the JUCE Splash Screen pe Enabled.
+
+# Configurarea exportatorilor (Exporters)
+
+În continuare, vom ajusta câteva setări specifice pentru mediile de dezvoltare (IDEs).
+Deschide panoul Exporters și configurează opțiunile în funcție de sistemul tău de operare:
+Pentru Xcode (macOS)
+
+Selectează profilul Debug de sub Xcode și verifică următoarele setări:
+
+    - Enable Plugin Copy Step: Asigură-te că este setat pe Enabled.
+    Această opțiune va copia automat plug-in-ul în folderul ~/Library/Audio/Plug-Ins după fiecare compilare, astfel încât să poată fi detectat direct de către DAW-uri (hosts).
+
+    - Add Recommended Compiler Warning Flags: Setează pe Enabled pentru a activa avertismentele suplimentare din partea compilatorului.
+
+Pentru Visual Studio (Windows)
+
+Selectează profilul Debug de sub Visual Studio (de exemplu, Visual Studio 2022) și verifică următoarele opțiuni:
+
+    - Enable Plugin Copy Step: Setează pe Enabled.
+    Această opțiune va copia automat fișierul .vst3 în folderul standard C:\Program Files\Common Files\VST3 imediat după compilare, pentru a fi găsit ușor de DAW-uri.
+
+    - Warning Level: Asigură-te că este setat pe High pentru a activa avertismentele detaliate din partea compilatorului.
+
+    De ce sunt importante avertismentele (warnings)?
+    Faptul că lăsăm compilatorul să genereze cât mai multe avertismente ne ajută extrem de mult să evităm greșelile banale de programare.
+    Deși aceste recomandări pot părea uneori extrem de stricte sau pedante (și s-ar putea să vrei să le dezactivezi în propriile tale proiecte viitoare), fiind la început, avem nevoie de tot ajutorul pe care îl putem primi.
+
+Uf, cam asta ar fi tot pentru moment! Există o mulțime de alte setări pe care le-ai putea modifica, dar majoritatea sunt destinate scenariilor avansate sau fazei în care ești pregătit să lansezi versiunea finală a plug-in-ului.
+
+Asigură-te că salvezi din nou proiectul în Projucer înainte de a merge mai departe.
+
+Următorul pas este să exporți proiectul din Projucer pentru a-l putea deschide în IDE-ul tău.
+În capitolele următoare vom explica în detaliu cum să instalezi Xcode (pentru Mac) și Visual Studio (pentru Windows), precum și cum să faci primii pași în aceste medii de dezvoltare.

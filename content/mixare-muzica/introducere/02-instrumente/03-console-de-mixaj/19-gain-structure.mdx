@@ -1,0 +1,101 @@
+---
+title: 'Gain Structure'
+description: 'Gain Structure'
+order: 19
+category: 'nivel'
+level: 'Incepator'
+---
+
+# Gain structure-ul corect
+
+(structura corectă a câștigului de semnal) este o tehnică ce ne ajută să reducem zgomotul nedorit, îmbunătățind astfel raportul semnal-zgomot (Signal-to-Noise Ratio — SNR) general al mixajului.
+Componentele analogice sunt surse de zgomot — microfoanele, preamplificatoarele, compresoarele, egalizatoarele, potențiometrele de panoramare (pan-pot) și benzile magnetice analogice sunt doar câteva exemple de echipamente care adaugă zgomotul lor intrinsec în semnal.
+
+Este corect să spunem că, din momentul în care o interpretare acustică este convertită într-un semnal electric și până când acel semnal ajunge pe magistrala de mixaj (mix bus) ca parte din mixul final, sute de componente analogice i-au adăugat zgomot.
+Echipamentele de înaltă calitate (cum ar fi consolele de format mare) sunt proiectate pentru a respecta specificații stricte de zgomot redus, însă unele echipamente vintage sau ieftine pot adăuga o cantitate alarmantă de zgomot.
+Indiferent de calitatea echipamentului folosit, câteva reguli simple ne pot ajuta să minimizăm zgomotul acumulat.
+
+Principiul unei structuri corecte a câștigului este simplu: nu amplifica niciodată zgomotul.
+
+# Exemplu practic:
+
+Să presupunem că un egalizator are un zgomot propriu de fond la –70 dB, iar noi introducem în el un semnal cu un vârf (peak) la –20 dB.
+Raportul semnal-zgomot (SNR) rezultant la ieșire va fi de 50 dB.
+
+    - Scenariul 1 (Greșit): Dacă amplificăm ieșirea egalizatorului cu 20 dB, vom amplifica atât zgomotul, cât și semnalul.
+    Vom obține nivelul semnalului la 0 dB, dar zgomotul va urca la –50 dB.
+    Raportul semnal-zgomot (SNR) rămâne tot la 50 dB (Figura 10.31a).
+
+    - Scenariul 2 (Corect): Să vedem ce se întâmplă dacă amplificăm semnalul măcar înainte de egalizator.
+    Vârful semnalului de –20 dB va deveni 0 dB (ca mai înainte), dar zgomotul adăugat ulterior de egalizator va rămâne la –70 dB.
+    Astfel, raportul semnal-zgomot (SNR) la ieșire va fi de 70 dB (Figura 10.31b).
+
+Prin urmare, atunci când amplificăm nivelul unui semnal, amplificăm implicit și zgomotul tuturor componentelor anterioare din lanț.
+O eroare și mai mare este să atenuăm un semnal pentru ca apoi să îl amplificăm din nou.
+Figura 10.32 ilustrează un semnal de 0 dB care trece prin două etaje de câștig (gain stages)...
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-31.jpg"
+    alt="Figura 10.31"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.31: </strong>O demonstrație privind aplicarea câștigului (gain) și efectul acestuia asupra
+raportului semnal-zgomot (SNR).
+
+    (a) Câștigul este aplicat după adăugarea zgomotului, rezultând un semnal de ieșire cu un SNR de 50 dB și un nivel de zgomot la –50 dB.
+
+    (b) Câștigul este aplicat înainte de adăugarea zgomotului, rezultând un SNR mai ridicat și un prag de zgomot (noise floor) mai scăzut.
+
+Nivelul de zgomot atât al semnalului original, cât și al etajului de câștig au fost omise din această ilustrație pentru a păstra simplitatea. Putem presupune că acestea sunt prea scăzute pentru a fi afișate pe scara dată.
+
+</p>
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/10-32.jpg"
+    alt="Figura 10.32"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10.32: </strong>Scăderea raportului semnal-zgomot (SNR) atunci
+  când amplificăm un semnal după ce l-am atenuat. Un semnal de intrare va părăsi
+  sistemul la același nivel, însă zgomotul generat de primul etaj de câștig
+  (gain stage) va fi amplificat de cel de-al doilea etaj de câștig, rezultând un
+  nivel al zgomotului de ieșire de –20 dB și un SNR de doar 20 dB.
+</p>
+...unul atenuează cu 50 dB, iar celălalt amplifică cu 50 dB. Ambele etaje adaugă
+un zgomot de fond la –70 dB. Al doilea etaj va amplifica zgomotul generat de
+primul. Semnalul de intrare va părăsi acest sistem cu nivelul său nemodificat,
+dar cu un zgomot suplimentar de 50 dB.
+
+Pentru a proteja semnalul de amplificări inutile, regula de aur a structurii corecte a câștigului (gain structure) stipulează:
+
+    - Setează semnalul la nivelul optim cât mai devreme posibil în lanțul de semnal și menține-l acolo.
+
+Pentru a păstra semnalul la un nivel optim, ne dorim ideal ca toate componentele prin care trece să nu îl amplifice și nici să nu îl atenueze; cu alte cuvinte, toate ar trebui setate la amplificare unitară (unity gain / 0 dB).
+
+Să analizăm câteva exemple practice:
+
+    - Dacă semnalul dintr-un canal este prea slab, este mai bine să îl amplificăm folosind potențiometrul de câștig de la intrare (input gain) sau fader-ul canalului?
+
+    - Dacă semnalul de intrare într-un procesor de reverberație este prea slab, ar trebui să îl amplificăm din trimiterea auxiliară principală (master aux send) sau din câștigul de intrare (input gain) al procesorului de reverberație?
+
+    - Dacă nivelul general al mixului este prea scăzut, ar trebui să ridicăm fader-ele canalelor sau nivelul general al mixului (master fader)?
+
+Răspunsul la toate aceste întrebări este prima opțiune în fiecare caz, aceasta reprezentând etajul situat mai devreme în lanțul audio.
+
+Dacă luăm prima întrebare, de exemplu: amplificarea semnalului folosind fader-ul canalului va amplifica, de asemenea, și zgomotul adăugat de compresoarele și egalizatoarele care îl precedă.
+Setarea nivelului optim încă din etajul de input gain înseamnă că atât compresorul, cât și egalizatorul și fader-ul primesc un semnal la nivel optim.
+Dacă fader-ul canalului este folosit apoi pentru a atenua semnalul, acesta va atenua și orice zgomot adăugat înaintea lui.
+
+Dacă se aplică o structură corectă a câștigului, intrarea (input gain) a unui procesor de reverberație ar trebui setată la amplificare unitară (unity gain / 0 dB), iar nivelul trimis către reverberație ar trebui ajustat din master aux send.
+
+O structură corectă a câștigului nu înseamnă că semnalele nu ar trebui deloc amplificate sau atenuate — ci pur și simplu ne ajută să decidem ce comandă să folosim atunci când avem mai multe opțiuni la dispoziție.
+Există, desigur, multe cazuri în care amplificarea sau atenuarea este decizia corectă.
+Un exemplu este câștigul de compensare (makeup gain) al unui compresor, care readuce semnalul la un nivel optim după pierderea de nivel cauzată de procesul de compresie.
