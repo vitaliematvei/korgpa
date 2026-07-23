@@ -1,0 +1,88 @@
+﻿---
+title: 'AudioPluginHost'
+description: 'AudioPluginHost'
+order: 2
+category: 'JUCE'
+level: 'Incepator'
+---
+
+## Testarea pluginului cu AudioPluginHost
+
+Testarea pluginului într-un DAW complet, precum REAPER sau Logic Pro, poate fi anevoioasă.
+Majoritatea DAW-urilor sunt aplicații de mari dimensiuni care necesită timp pentru a se încărca, iar DAW-ul trebuie repornit de fiecare dată când aduci o modificare pluginului.
+Toată această așteptare se acumulează…
+
+Atunci când pluginul nu funcționează corect din cauza unui bug, s-ar putea să vrei să-i examinezi comportamentul intern folosind debugger-ul din IDE (mai multe despre acest subiect într-un capitol ulterior).
+Acest lucru necesită rularea întregului DAW în debugger.
+Din păcate, pentru a combate pirateria software, nu toate DAW-urile permit atașarea unui debugger.
+Pe calculatoarele cu procesoare Apple Silicon, acest lucru necesită dezactivarea SIP (System Integrity Protection), lucru pe care s-ar putea să nu vrei să-l faci.
+
+Din fericire, JUCE vine la pachet cu un DAW de dimensiuni miniaturale numit AudioPluginHost, care se lansează extrem de rapid și poate fi rulat direct din debugger.
+În timpul etapei de dezvoltare, este mult mai convenabil să rulezi pluginul în interiorul AudioPluginHost.
+
+# Primul pas este construirea (build) aplicației AudioPluginHost din codul sursă:
+
+    - Mergi în folderul JUCE, apoi în extras/AudioPluginHost.
+    - Deschide fișierul AudioPluginHost.jucer în Projucer.
+    - Ca și până acum, va trebui să exporți acest proiect din Projucer către mediul tău de dezvoltare (IDE).
+    - Asigură-te că IDE-ul tău este selectat în Projucer și apasă butonul rotund de export.
+    - Xcode ar putea afișa un avertisment: „AudioPluginHost este un proiect descărcat de pe Internet. Ești sigur că vrei să îl deschizi?”. Dă click pe Trust and Open (Încredere și Deschide).
+    - Apasă butonul de rulare (Run) din IDE (cel care arată ca un buton de Play) pentru a compila și rula aplicația.
+    - În Visual Studio, folosește butonul verde închis pe care scrie Local Windows Debugger sau apasă F5.
+    - În Xcode, poți folosi scurtătura de la tastatură Command+R.
+
+După ce compilarea se încheie cu succes, aplicația AudioPluginHost se va lansa.
+Pe Mac, aceasta va cere permisiunea de acces la microfon.
+De asemenea, ar putea solicita permisiunea de a accesa fișierele din folderul Documents.
+
+## Prima dată când lansezi AudioPluginHost, interfața arată astfel:
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/44.jpg"
+    alt="Figura 44"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 44: </strong>O sesiune goala de AudioPluginHost
+</p>
+Ar trebui să vezi mai multe blocuri dreptunghiulare ce reprezintă intrările și
+ieșirile audio și MIDI disponibile. Aceste blocuri pot arăta diferit pe
+calculatorul tău, în funcție de echipamentul hardware audio de care dispui. În
+partea de jos a ferestrei se află o claviatură virtuală.
+
+Pentru a utiliza AudioPluginHost, vei adăuga un bloc nou pentru pluginul de Delay, iar apoi vei conecta pinii de intrare și ieșire ai acestor blocuri pentru a crea un traseu de semnal de la o sursă audio, prin plugin, până la ieșirea audio.
+
+Înainte de a continua, observă că IDE-ul arată puțin diferit acum, deoarece rulezi AudioPluginHost în interiorul debugger-ului.
+În Xcode, există un buton nou de „Stop” în bara de instrumente, care poate fi folosit pentru a închide aplicația. De asemenea, în partea de jos a ferestrei apare un panou mic cu mesaje informative.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/45.jpg"
+    alt="Figura 45"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 45: </strong>Toolbar Xcode cand ruleaza AudioPluginHost
+</p>
+În Visual Studio, întreaga fereastră se modifică pentru a afișa mai multe
+panouri ale debugger-ului. În bara de instrumente, butoanele de rulare (Run) au
+fost înlocuite de butoane de pauză (Pause) și oprire (Stop).
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/46.jpg"
+    alt="Figura 46"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 46: </strong>Visual Studio cand ruleaza AudioPluginHost
+</p>

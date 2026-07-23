@@ -1,0 +1,91 @@
+﻿---
+title: 'Configurarea AudioPluginHost și încărcarea pluginului'
+description: 'Configurarea AudioPluginHost și încărcarea pluginului'
+order: 3
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Pentru a configura dispozitivele audio în AudioPluginHost, dă dublu click pe unul dintre blocuri, de exemplu pe Audio Input.
+Această acțiune va deschide fereastra Audio Settings.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/47.jpg"
+    alt="Figura 47"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 47: </strong>Fereastra Audio Settings in AudioPluginHost
+</p>
+
+Aici poți modifica proprietățile intrărilor și ieșirilor audio utilizate de AudioPluginHost.
+Folosește butonul Test pentru a verifica dacă difuzoarele sau căștile tale funcționează corespunzător.
+De asemenea, tot de aici poți seta rata de eșantionare (sample rate) și dimensiunea buffer-ului audio (audio buffer size).
+
+Nu vom folosi intrările și ieșirile MIDI în această carte.
+
+Dacă ești mulțumit de setările audio, închide fereastra.
+
+## Scanarea și adăugarea pluginului
+
+Înainte de a putea adăuga pluginul de Delay în sesiune, trebuie să-i indici aplicației AudioPluginHost unde îl poate găsi.
+Din bara de meniu, mergi la Options > Edit the List of Available Plugins… pentru a deschide fereastra corespunzătoare.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/48.jpg"
+    alt="Figura 48"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 48: </strong>Adaugare plugin in AudioPluginHost
+</p>
+
+Această fereastră afișează toate pluginurile pe care AudioPluginHost le recunoaște.
+Inițial, vor fi listate doar câteva pluginuri furnizate implicit de JUCE, deoarece AudioPluginHost nu a scanat încă pluginurile de pe calculatorul tău.
+
+În partea de jos a ferestrei se află opțiunea Scan mode. Aici, selectează Out-of-process.
+Uneori, pluginurile pot funcționa defectuos în timpul scanării, provocând închiderea neașteptată (crash) a aplicației AudioPluginHost.
+Scanând out-of-process (într-un proces separat), vei evita astfel de blocaje.
+
+Apasă butonul Options…, iar apoi Scan for new or updated VST3 plug-ins. Aceasta va deschide o casetă de dialog de unde poți selecta folderele pe care dorești să le scanezi.
+Apasă simplu butonul Scan pentru a continua.
+
+Dacă ai multe pluginuri instalate, scanarea ar putea dura ceva timp.
+Unele pluginuri ți-ar putea solicita autorizarea.
+Pe Mac, s-ar putea să vrei să scanezi și după pluginuri în format Audio Unit (AU).
+
+Odată ce scanarea s-a încheiat, ar trebui să vezi o intrare pentru Delay în listă.
+Acum poți închide această fereastră.
+
+# Rutarea semnalului
+
+Pentru a începe să folosești pluginul Delay, dă click dreapta oriunde în fereastra principală din AudioPluginHost pentru a deschide un meniu pop-up cu toate pluginurile instalate.
+De asemenea, poți folosi opțiunea Plugins > Create Plug-in din bara de meniu.
+
+În meniul pop-up, navighează către yourcompany și selectează Delay — sau orice alt nume ai ales pentru pluginul tău. Această acțiune va adăuga în sesiune un bloc nou care reprezintă pluginul.
+
+    Sfat: Pentru a vizualiza interfața grafică a pluginului, dă dublu click pe blocul Delay.
+
+Trage un cablu virtual de la pinul verde din partea de jos a blocului Delay către blocul Audio Output. Repetă procedura și pentru celălalt pin verde. Astfel, conectezi ieșirea pluginului la difuzoarele sau căștile sistemului.
+
+    Notă: Este posibil ca blocul tău de Audio Output să aibă mai mult de doi pini. În acest caz, pinii pe care trebuie să-i folosești depind de configurația sistemului tău de monitorizare și s-ar putea să fie nevoie să experimentezi puțin pentru a-i găsi pe cei corecți.
+
+Acum trebuie să conectezi ceva și la intrarea (input) pluginului.
+
+    ⚠️ Atenție: NU conecta pluginul la blocul Audio Input!
+
+    Dacă intrarea audio (Audio Input) este setată pe microfonul calculatorului, iar ieșirea (Audio Output) pe difuzoare, microfonul va capta sunetul redat de difuzoare. Acest lucru va crea o buclă de microfonie (feedback loop) care se va amplifica rapid până la un volum extrem de deranjant.
+
+În loc să folosești microfonul ca sursă de semnal, este mult mai util (și mai puțin periculos!) să testezi pluginul cu un set de fișiere audio.
+
+Înainte de a configura acest lucru, hai să salvăm sesiunea într-un fișier. Din bara de meniu, alege File > Save pentru a salva această sesiune ca fișier .filtergraph. Eu am salvat-o sub numele Delay.filtergraph pe Desktop.
+
+{/* de terminat Creating a session .116 */}
