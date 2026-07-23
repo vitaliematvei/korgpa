@@ -1,0 +1,48 @@
+---
+title: 'Piste si canale'
+description: 'Piste si canale'
+order: 2
+category: 'Mixere'
+level: 'Incepator'
+---
+
+Spre deosebire de o configurație bazată pe o consolă analogică, în cazul secvențatoarelor audio nu există o separare între multipistă (multitrack) și mixer — acestea sunt combinate într-o singură aplicație.
+Multipista este reprezentată sub forma unei ferestre de secvențiere (numită și fereastră de aranjament, editare sau proiect), unde vedem diferitele piste și regiuni audio.
+De fiecare dată când creăm o pistă nouă, aceasta apare în fereastra de secvențiere, iar în fereastra mixerului este creat un nou canal de mixer (mixer strip).
+Schimbarea de terminologie este importantă — pierdem termenul de „canal” (channel) și vorbim despre piste (tracks) și canalele de mixer asociate acestora (Figura 11.1).
+Piste
+
+# Secvențatoarele audio oferă câteva tipuri de piste. Cele mai utilizate în procesul de mixaj sunt:
+
+    - Audio — în fereastra de secvențiere, acestea conțin pistele brute și regiunile audio aferente (referințe către fișierele audio de pe hard disk).
+
+    - Aux (Auxiliare) — utilizate în special pentru gruparea semnalului audio și pentru găzduirea efectelor ca parte a unei configurații de trimitere aux (aux send).
+    În fereastra de secvențiere, aceste piste afișează doar date de automatizare.
+
+    - Master — reprezintă cel mai frecvent magistrala stereo principală (main stereo bus).
+    În fereastra de secvențiere, aceste piste afișează doar date de automatizare.
+
+# Alte două tipuri de piste, deși mai puțin comune, pot fi totuși folosite la mixaj:
+
+    - MIDI — utilizate pentru a înregistra, edita și reda informații MIDI.
+    Uneori sunt folosite în timpul mixajului pentru a automatiza unități digitale externe sau pentru a salva și reapela setările și presetările acestora.
+    De asemenea, pot fi folosite în procesul de drum triggering (înlocuirea/dublarea sunetelor de tobă).
+
+    - Instrument — piste care conțin date MIDI, ce sunt convertite în semnal audio de către un instrument virtual.
+    În mixer, acestea arată și se comportă exact ca pistele audio.
+    Pot fi folosite în timpul procesului de drum triggering, având un sampler ca instrument virtual.
+
+Există și variații. De exemplu, Cubase își clasifică pistele auxiliare în FX Channel (canal de efecte) și Group Channel (canal de grup).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/11-1.jpg"
+    alt="Figura 11.1"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 11.1: </strong>Mixerul aplicației Digital Performer (în stânga)
+  și fereastra de secvențiere (în dreapta).
+</p>

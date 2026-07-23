@@ -1,0 +1,84 @@
+---
+title: 'Rutarea'
+description: 'Rutarea'
+order: 6
+category: 'Mixere'
+level: 'Incepator'
+---
+
+## Gruparea audio
+
+Gruparea audio (audio grouping) oferă libertatea de a procesa semnalul atât individual, cât și colectiv.
+Spre deosebire de consolele analogice, mixerul software nu are o matrice dedicată de rutare (routing matrix).
+Pentru a grupa mai multe piste audio, pur și simplu setăm ieșirea fiecărei piste incluse către o magistrală (bus), iar apoi direcționăm acea magistrală către o pistă auxiliară (aux).
+Putem procesa fiecare pistă individual folosind sloturile de inserție (inserts) proprii și putem procesa întregul grup audio folosind inserțiile de pe pista aux.
+Figura 11.5 ilustrează modul în care se realizează acest lucru.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/11-5.jpg"
+    alt="Figura 11.5"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 11.5: </strong>Gruparea audio pe un mixer software (Digital
+  Performer). Ieșirile diferitelor piste de tobe (de la OH la Tom 3) sunt rutate
+  către magistrala (bus) 1–2, care este selectată ca intrare pentru o pistă
+  auxiliară (Drums); ieșirea pistei auxiliare este setată către magistrala
+  stereo (stereo bus). Privind sloturile de inserție din partea de sus, putem
+  observa că fiecare pistă este procesată individual, dar există și o procesare
+  colectivă aplicată pe grupul de tobe.
+</p>
+
+# Trimiteri și efecte (Sends and effects)
+
+După cum am menționat deja, adăugarea efectelor se face de obicei folosind funcția de trimitere (send).
+Pistele individuale sunt trimise către o magistrală (bus) la alegere, iar, la fel ca în cazul grupării audio, magistrala este direcționată către o pistă auxiliară (aux).
+Pluginul de efect este încărcat ca inserție pe pista aux și trebuie să ne asigurăm că ieșirea acestuia este setată exclusiv pe semnal procesat (100% wet).
+Pista aux are ieșirea setată către mixul stereo principal.
+Figura 11.6 ilustrează acest proces.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/11-6.jpg"
+    alt="Figura 11.6"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 11.6: </strong>Trimiteri (sends) pe un mixer software (Pro
+  Tools). Fiecare pistă de voce este trimisă către magistrala (bus) 1–2.
+  Intrarea pistei auxiliare (aux) este setată pe bus 1–2, iar ieșirea pe
+  magistrala stereo (stereo bus). De asemenea, controlul wet/dry al pluginului
+  este setat complet pe semnal procesat (100% wet). În această configurație,
+  pistele audio furnizează semnalul neprocesat (dry — deoarece fiecare pistă are
+  ieșirea setată către magistrala stereo), iar pista auxiliară adaugă doar
+  semnalul procesat (wet).
+</p>
+
+# Alte variante de rutare
+
+Sistemul de rutare a intrărilor/ieșirilor (I/O routing) poate fi util pentru mult mai multe lucruri decât simpla grupare și trimitere de efecte. De exemplu, un compresor încărcat pe sloturile de inserție este poziționat pre-fader, dar ce facem dacă vrem să ajustăm manual volumul vocii (gain-riding) pe fader înainte ca semnalul să ajungă în compresor? Putem ruta ieșirea pistei de voce către o pistă aux și să inserăm compresorul pe acea pistă aux. Figura 11.7a arată cum se face acest lucru în Logic. Un mic truc oferă o alternativă mai bună în această situație: putem insera un plugin de gain înaintea compresorului și să automatizăm acel plugin (Figura 11.7b). Totuși, aceasta s-ar putea să nu fie soluția ideală dacă vrem să folosim o suprafață de control (control surface) pentru a controla faderul în timp real. Cubase oferă o soluție elegantă pentru acest gen de situații — fiecare canal de mixer pune la dispoziție atât inserții pre-fader, cât și post-fader.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/11-7.jpg"
+    alt="Figura 11.7"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 11.7: </strong>(a) Setarea ieșirii unei piste către o
+  magistrală (bus) și direcționarea acesteia către o pistă auxiliară (aux) ne
+  permite să ajustăm manual nivelul de volum (gain-riding) înainte de compresie.
+  Semnalul va trece prin EQ, prin faderul pistei audio (Vox Pre) pe care îl
+  ajustăm manual, prin compresorul de pe pista aux și prin faderul pistei aux
+  (Vox). (b) Același rezultat poate fi obținut dacă plasăm un plugin de gain
+  înaintea compresorului și automatizăm acel plugin în loc de fader. Semnalul va
+  trece prin EQ; prin pluginul de gain (pe care îl automatizăm); prin compresor;
+  și prin faderul pistei audio.
+</p>

@@ -1,0 +1,67 @@
+---
+title: 'Canale de mixer'
+description: 'Canale de mixer'
+order: 3
+category: 'Mixere'
+level: 'Incepator'
+---
+
+Figura 11.2 prezintă canalele de mixer (mixer strips) din diferite aplicații, precum și ansamblul de secțiuni și comenzi pe care le oferă fiecare.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/11-2.jpg"
+    alt="Figura 11.2"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 11.2: </strong>Canalele de mixer din diferite aplciatii
+</p>
+
+Pistele de tip audio, aux și instrument arată la fel.
+Pistele master oferă mai puține opțiuni, în timp ce pistele MIDI sunt evident diferite.
+Putem observa că, în ciuda variațiilor de interfață grafică, toate aplicațiile oferă aceleași funcții de bază.
+Canalele de mixer sunt foarte similare cu benzile de canal (channel strips) ale unei console analogice — au o intrare, iar semnalul parcurge un traseu specific și este, în cele din urmă, rutat către o ieșire.
+Figura 11.3 arată traseul simplificat al semnalului dintr-un canal de mixer tipic.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/11-3.jpg"
+    alt="Figura 11.3"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 11.3: </strong>Diagrama traseului de semnal pentru un canal de
+  mixer software tipic. Rețineți că o singură linie poate indica un traseu de
+  semnal fie mono, fie stereo pe tot parcursul său — în funcție de tipul pistei.
+</p>
+Deoarece pistele pot fi mono sau stereo, canalele de mixer pot fi complet mono
+sau stereo pe tot parcursul lor. Cu toate acestea, un canal de mixer poate avea
+o intrare mono care se transformă în stereo pe parcursul traseului de semnal (de
+regulă, prin inserarea unui plugin de la mono la stereo).
+
+Faderul, butonul Mute și comanda Pan (panoramarea) nu au nevoie de nicio introducere.
+Funcția Solo va fi detaliată în curând, iar automatizarea și indicatoarele de nivel (meters) au capitole dedicate în această carte.
+Celelalte secțiuni sunt:
+
+    - Selectarea intrării (Input selection) — determină ce semnal alimentează canalul de mixer.
+    Opțiunile sunt fie magistralele interne (buses), fie intrările fizice ale interfeței audio.
+    Cu toate acestea, doar canalele auxiliare (aux) funcționează cu adevărat în acest mod.
+    Canalele audio sunt întotdeauna alimentate de regiunile audio din fereastra de secvențiere.
+    Când o pistă audio este înregistrată, selectarea intrării determină sursa materialului înregistrat, însă semnalul audio este mai întâi salvat în fișiere și abia apoi trimis către canalul de mixer (prin urmare, procesoarele încărcate pe canal nu sunt imprimate pe disc).
+
+    - Selectarea ieșirii (Output selection) — rutează ieșirea canalului de mixer fie către o ieșire fizică, fie către o magistrală (bus).
+    Unele aplicații permit selecții multiple, astfel încât aceeași pistă să poată fi rutată către oricâte destinații.
+    Acest lucru poate fi util în scheme de rutare foarte specifice (de exemplu, alimentarea unui semnal de side-chain).
+    În mod obișnuit, canalele de mixer sunt rutate către ieșirea stereo fizică principală.
+
+    - Sloturile de inserție (Insert slots) — ne permit să încărcăm pluginuri în serie pe traseul semnalului, pentru a facilita adăugarea de procesoare.
+    Cu toate acestea, sloturile de inserție sunt folosite și pentru adăugarea de efecte, după cum vom vedea în curând.
+    Ordinea de procesare este întotdeauna de sus în jos.
+
+    - Sloturile de trimitere (Send slots) — similare trimiterilor auxiliare (aux sends) tradiționale, acestea direcționează o copie a semnalului (pre- sau post-fader) către o magistrală (bus) și ne permit să controlăm nivelul de trimitere sau să îl întrerupem complet.
+    Fiecare slot de trimitere poate fi rutat către o magistrală diferită, iar selecția se face local, pentru fiecare canal de mixer în parte (de exemplu, două canale de mixer pot avea primele lor sloturi rutate către magistrale diferite).
