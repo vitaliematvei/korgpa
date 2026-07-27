@@ -1,0 +1,96 @@
+---
+title: 'Arhitectura interna'
+description: 'Arhitectura interna'
+order: 8
+category: 'Mixere'
+level: 'Incepator'
+---
+
+## Notația numerelor întregi (Integer notation)
+
+Formele de undă digitale sunt reprezentate printr-o serie de numere.
+Rata de eșantionare (sample rate) definește numărul de eșantioane pe secundă, iar fiecare eșantion conține o valoare care reprezintă amplitudinea formei de undă la un anumit moment în timp.
+
+Valori posibile folosite pentru a reprezenta amplitudinea sunt determinate de numărul de biți ai fiecărui eșantion, precum și de notația utilizată pentru numere.
+Dacă fiecare eșantion este notat ca un număr întreg pe 16 biți (16-bit integer), valorile posibile sunt de la 0 la 65.535 (notația numerelor întregi negative este ignorată în această secțiune pentru simplitate).
+
+Cea mai mare amplitudine pe care o poate susține un eșantion pe 16 biți este reprezentată de numărul 65.535, valoare care, pe un indicator de vârf (peak meter), ar aprinde întreaga scală.
+O astfel de amplitudine la nivel maxim este egală cu 0 dBFS (Decibels Relative to Full Scale), acesta fiind cel mai înalt nivel posibil pe care îl poate procesa orice sistem digital.
+
+Mixarea semnalelor digitale se face prin însumarea (adunarea) valorilor eșantioanelor:
+
+    - Adunarea a două eșantioane cu valoarea de 60.000 ar trebui să rezulte în 120.000.
+
+    - Cu toate acestea, deoarece 16 biți nu pot stoca un număr atât de mare, sistemul digital va limita (trim) rezultatul la valoarea maximă de 65.535.
+
+Această limitare duce la distorsiune prin tăiere (clipping distortion) — în mod normal, o alterare nedorită a semnalului.
+
+Același lucru se întâmplă și atunci când încercăm să amplificăm (boost) un semnal peste cea mai mare valoare posibilă.
+O amplificare de aproximativ 6 dB se obține prin dublarea valorii eșantionului.
+Astfel, amplificarea cu 6 dB a unei valori de 40.000 ar trebui să rezulte în 80.000, dar un sistem pe 16 biți o va tăia tot la 65.535.
+
+## Notația în virgulă mobilă (Floating-point notation)
+
+Fișierele audio sunt, cel mai frecvent, reprezentate ca numere întregi pe 16 sau 24 de biți (integer), iar un convertor D/A (digital-analog) așteaptă datele în această formă.
+Cu toate acestea, secvențiatoarele audio (DAW-urile) procesează semnalul digital folosind o altă notație, numită virgulă mobilă (floating point), care este puțin mai complexă.
+În notația în virgulă mobilă, o parte din biți (mantisa) reprezintă un număr întreg, în timp ce restul biților (exponentul) determină modul în care acest număr este înmulțit sau împărțit.
+Pentru a înțelege mai ușor, putem imagina un sistem simplificat cu un număr din 4 cifre: primele 3 cifre din dreapta reprezintă numărul întreg (mantișa), iar prima cifră din stânga arată câte zerouri se adaugă la dreapta mantișei.
+
+- Valoarea 3.256 înseamnă numărul 256 urmat de 3 zerouri, adică 256.000.
+- Valoarea 0.178 este egală cu 178 (zero zerouri adăugate).
+
+Cea mai răspândită notație în virgulă mobilă (cu 23 de biți pentru mantisă și 8 biți pentru exponent) poate reprezenta un interval uriaș de numere, extrem de mici sau extrem de mari.
+Un sistem pe 16 biți în virgulă mobilă suportă valori mult mai mici și mult mai mari decât un sistem pe 16 biți în numere întregi (integer).
+Spre deosebire de varianta integer, pe un sistem 16-bit floating-point adunarea 60.000 + 60.000 va rezulta corect în 120.000.
+
+# Precizia mantișei și dinamica audio
+
+Deși intervalul de numere suportat de sistemele moderne depășește orice calcul practic de care are nevoie omenirea, există totuși anumite limite de precizie.
+În sistemul simplificat de 4 cifre menționat anterior, putem reprezenta 256.000 și 178, dar nu putem reprezenta suma lor exactă: 256.178.
+Virgula mobilă permite numere foarte mici sau foarte mari, însă niciun număr nu poate depăși precizia mantișei.
+Analizând mai atent notația în virgulă mobilă, fiecare mantișă începe întotdeauna cu un 1 binar.
+Acest „1 implicit” este omis din stocare și înlocuit cu încă o cifră binară utilă.
+Astfel, precizia mantișei este întotdeauna cu un bit mai mare decât numărul de biți alocați: o mantișă pe 23 de biți are o precizie efectivă de 24 de biți.
+Precizia mantișei definește plaja dinamică (dynamic range) a unui sistem digital, unde fiecare bit adaugă aproximativ 6 dB (mai exact 20log_2).
+Mulți presupun eronat că celebra notație 32-bit float oferă o dinamică de 193 dB, când în practică mantișa pe 24 de biți oferă în jur de 144 dB.
+Două eșantioane (samples) dintr-un astfel de sistem pot reprezenta o amplitudine extrem de mare sau una extrem de mică (aflate la o diferență de circa 1.638 dB).
+Totuși, când cele două eșantioane sunt mixate, semnalele puternice „câștigă” calculul, iar orice semnal aflat la mai mult de 144 dB sub cel puternic este eliminat.
+În sistemul nostru simplificat, rezultatul adunării 256.000 + 178 rămâne 256.000.
+
+## Arhitectura pe 32-bit vs. 64-bit
+
+Există dezbateri, dezinformări (în special pe forumuri) și o lipsă de claritate privind tot ce ține de termenul „64 biți”.
+Acest lucru se datorează confuziei dintre arhitectura calculatorului și reprezentarea semnalului audio în DAW.
+Calculatoarele vechi foloseau o arhitectură pe 32 de biți, ceea ce înseamnă că procesoarele erau concepute să stocheze, să transfere și să proceseze nativ date pe 32 de biți.
+Deoarece adresele de memorie RAM erau pe 32 de biți, o aplicație putea accesa cel mult 4 GB (2^32) de memorie.
+Odată cu evoluția tehnologiei, această limită a devenit o problemă, iar procesoarele, sistemele de operare și DAW-urile au migrat către arhitectura pe 64 de biți.
+Totuși, acest lucru are puțină legătură directă cu semnalul audio din interiorul DAW-ului:Chiar și pe calculatoare vechi pe 32 de biți, dezvoltatorii puteau folosi procesare audio 64-bit float.
+Chiar și astăzi, pe calculatoare moderne pe 64 de biți, audio-ul este reprezentat în mod curent pe 32-bit float.
+În domeniul audio, 32-bit float este numit precizie simplă (single precision), iar 64-bit float este numit precizie dublă (double precision).
+Cubase oferă un motor audio opțional complet pe 64 de biți, în timp ce alte aplicații, precum Logic sau Pro Tools, folosesc 64 de biți doar pentru însumare (summing).
+
+# Beneficiile audio ale 64-bit float
+
+Beneficiile se reduc la plaja dinamică și la reducerea distorsiunilor — dar nu distorsiuni de neliniaritate (cum dau procesoarele de tip compresor), ci distorsiuni de rotunjire ce apar atunci când se însumează două semnale și nu există suficiente cifre pentru a exprima rezultatul (ca în exemplul 256.000 + 178 = 256.000).
+În aceste cazuri, datele de la cel mai mic nivel sunt tăiate, adăugând o distorsiune minusculă la nivelul celui mai puțin semnificativ bit (least significant bit).
+Urechea umană are o plajă dinamică de aproximativ 120 dB, iar convertoarele AD depășesc rar această valoare.
+32-bit float are o dinamică de 144 dB, oferind o rezervă la pragul de jos (floorroom) de 25 dB — orice distorsiune din această zonă fiind inaudibilă.
+Pentru a genera peste 25 dB de distorsiune ar fi nevoie, teoretic, de însumarea a 32 de canale (deși în practică, dacă sursa este pe 16-bit integer, e nevoie de mult mai multe canale).
+Prin urmare, distorsiunea audibilă într-un motor audio 32-bit float este teoretic posibilă.
+64-bit float oferă o plajă dinamică de 319 dB (o rezervă la pragul de jos de aproape 200 dB).
+Ar fi necesară însumarea a peste 17 miliarde de canale pentru ca distorsiunea să devină audibilă.
+
+# De ce nu se folosește exclusiv 64-bit float?
+
+Procesarea pe 64 de biți consumă dublul memoriei RAM față de 32 de biți.
+Deși performanța procesorului pe mașinile moderne pe 64 de biți este aproape identică la ambele opțiuni, principala diferență este consumul de memorie.
+O strategie des întâlnită este însumarea la precizie dublă: fișierele rămân pe 32-bit float (salvând RAM), dar atunci când semnalele sunt însumate, calculul se face în 64-bit float, urmat de un proces de dither înapoi la 32-bit float.
+Acest lucru înlocuiește distorsiunea cu un zgomot de dither insesizabil, care nu se acumulează la fel de agresiv.
+
+# Câtă memorie consumă de fapt?
+
+Calculul de bază pentru memoria folosită de buffer este: (Dimensiune buffer) × (Număr canale) × 2.
+Un proiect cu un buffer de 512 esantioane și 128 de canale audio consumă doar 0,5 MB pe 32-bit float, comparativ cu 1 MB pe 64-bit float.
+Chiar dacă cifra reală ar fi de 10 ori mai mare din cauza altor procesări, vorbim tot de câțiva megabiți — mult mai puțin decât consumă un plugin de tip sampler.
+Alegerea între 32-bit float și 64-bit float depinde de proiect și de specificațiile sistemului.
+Totuși, pe măsură ce hardware-ul avansează, penalizările de memorie devin nesemnificative, iar motoarele audio full 64-bit tind să devină standardul.

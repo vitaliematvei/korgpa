@@ -1,0 +1,32 @@
+---
+title: 'Compensarea latenței introduse de plug-in-uri (Plugin Delay Compensation)'
+description: 'Compensarea latenței introduse de plug-in-uri (Plugin Delay Compensation)'
+order: 15
+category: 'Mixere'
+level: 'Incepator'
+---
+
+Tocmai am văzut că plug-in-urile procesează un număr fix de eșantioane (samples) în cadrul fiecărei iterații.
+În mod ideal, un plug-in ar trebui să primească un buffer audio, să îl proceseze și să livreze buffer-ul rezultat imediat.
+Cu toate acestea, anumite plug-in-uri pot furniza semnalul procesat doar după un anumit timp, ceea ce înseamnă că ieșirea lor este întârziată.
+
+Există două motive principale pentru această latență (delay) produsă de plug-in-uri:
+
+    - Procesarea pe hardware extern (DSP): Aici intră plug-in-urile care rulează pe plăci de expansiune DSP (cum ar fi cardurile UAD).
+    Acestea trimit semnalul audio către componentele hardware dedicate, care returnează sunetul procesat înapoi în DAW.
+    Transferul, procesarea și returnarea datelor necesită timp, introducând astfel o întârziere.
+
+    - Algoritmi complexi ce necesită un volum mare de date: Acești algoritmi au nevoie de mai multe eșantioane decât cele furnizate de un singur buffer de redare. De exemplu, un egalizator cu fază liniară (linear-phase EQ) poate avea nevoie de aproximativ 12.000 de eșantioane pentru a-și aplica algoritmul — mult peste valoarea obișnuită de 1.024 de eșantioane pe care o primește per iterație. Pentru a depăși această limitare, plug-in-ul acumulează buffer-e succesive până când strânge numărul necesar de eșantioane. Abia atunci, după trecerea unui anumit timp, începe procesarea și trimiterea semnalului înapoi către aplicație.
+
+# Efectele latenței și soluția
+
+În forma sa cea mai puțin dăunătoare, latența plug-in-urilor provoacă decalaje temporale între instrumente, dând impresia că muzicienii nu cântă în ritm.
+Un astfel de mixaj, mai ales când decalajele sunt subtile, poate lăsa o impresie greșită sau inconfortabilă, deși sursa problemei poate fi greu de identificat la o primă ascultare.
+
+În cea mai gravă formă a sa, întârzierea cauzează efectul de filtrare în pieptene (comb filtering), deficiențe de ton și colorarea timbrului.
+De exemplu, dacă apare o latență pe pista de tobă mare (kick), combinarea ei cu microfoanele de ambient/deasupra (overheads) va genera anulări de fază și efect de comb filtering.
+
+Din fericire, toate secvențiatoarele audio (DAW-urile) oferă compensare automată a latenței plug-in-urilor (automatic plugin delay compensation).
+Pe scurt, acest lucru se realizează prin alinierea tuturor pieselor: sistemul se asigură că toate buffer-ele audio sunt întârziate exact cu același număr de eșantioane.
+
+{/* am ramas la 12 Phase 182 */}

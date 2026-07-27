@@ -1,0 +1,25 @@
+---
+title: 'Exportul audio (Bouncing)'
+description: 'Exportul audio (Bouncing)'
+order: 10
+category: 'Mixere'
+level: 'Incepator'
+---
+
+Este util să explicăm ce se întâmplă atunci când facem un export audio (bounce) — fie că este vorba despre exporturi intermediare (stems / randări de piese) sau despre exportul mixajului final.
+
+Dacă exportăm într-un fișier pe 16 biți, pierdem 9 biți din plaja dinamică, adică o valoare de 54 dB.
+Acești 54 dB sunt pierduți definitiv, chiar dacă fișierul exportat este convertit înapoi în format float la redare.
+În plus, o astfel de reducere a rezoluției pe biți introduce fie distorsiuni, fie zgomot de dither.
+Deși nu este la fel de critic pentru exporturile finale, utilizarea formatului de 16 biți pentru exporturi intermediare pur și simplu degradat calitatea audio.
+Prin urmare, este mult mai înțelept să exportați în fișiere pe 24 de biți.
+
+O altă problemă este că conversia de la float la integer (dar nu și invers) afectează calitatea audio într-o oarecare măsură, chiar dacă nesemnificativă.
+Unele aplicații ne permit să exportăm direct în fișiere 32-bit float, ceea ce înseamnă că fișierul randat nu suferă nicio degradare.
+Cu toate acestea, procesul rezultă în fișiere mai mari, care s-ar putea să nu fie suportate de toate aplicațiile audio, inclusiv de unele programe folosite de inginerii de mastering.
+
+# Exportul în fișiere pe 16 biți: O idee proastă, cu excepția cazului în care este absolut necesar.
+
+    - 24 de biți: O idee bună.
+
+    - 32-bit float: O idee excelentă pentru exporturile intermediare, atâta timp cât spațiul pe disc nu reprezintă o problemă.

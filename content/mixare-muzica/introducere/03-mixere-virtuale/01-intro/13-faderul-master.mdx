@@ -1,0 +1,80 @@
+---
+title: 'Fader-ul Master (The Master Fader)'
+description: 'Fader-ul Master (The Master Fader)'
+order: 13
+category: 'Mixere'
+level: 'Incepator'
+---
+
+Datorită naturii sistemelor în virgulă mobilă (float), fader-ul Master din secvențiatoarele audio (DAW-uri) este, în esență, un fader de scalare (scaling fader).
+Este numit astfel deoarece tot ce face este să scaleze ieșirea mixajului într-un interval dorit de valori.
+
+Dacă mixajul intră în clipping pe canalul Master, fader-ul Master îl poate scala în jos la un nivel adecvat.
+Este important de reținut că un canal Master poate intra în clipping chiar dacă niciunul dintre canalele individuale nu depășește pragul de distorsiune.
+În aceste situații, nu este nevoie să coborâți fader-ele tuturor canalelor — folosiți pur și simplu fader-ul Master.
+În situația opusă, în care nivelul mixajului este prea scăzut, fader-ul Master ar trebui folosit pentru a-l scala în sus.
+
+Acest lucru merită reținut și atunci când facem un export audio (bounce).
+Fader-ul Master (sau, mai înțelept, un plug-in de gain pe canalul Master) ar trebui folosit pentru a seta nivelul exportat la o valoare optimă.
+Determinarea nivelului optim este ușoară dacă avem un afișaj numeric de vârf (numeral peak display):
+
+    - Resetăm afișajul de vârf de pe canalul Master.
+
+    - Redăm o dată întreaga secțiune destinată exportului.
+
+    - Noua valoare indicată pe afișaj va fi egală cu cantitatea de amplificare sau atenuare necesară pentru a aduce semnalul la 0 dB (sau la o marjă de siguranță de −3 dB) (Figura 11.13).
+
+    <div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/11-13.jpg"
+    alt="Figura 11.13"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 11.13: </strong>Canalul Master din Cubase după ce secțiunea
+  destinată exportului (bounced range) a fost redată. Valoarea superioară arată
+  măsurătoarea de vârf (−11,9 dB) și ne indică faptul că fader-ul Master poate
+  fi ridicat cu aproape 11,9 dB înainte de a apărea clipping-ul.
+</p>
+
+# Comportamentul canalului Master în Pro Tools
+
+Canalul Master din Pro Tools merită o atenție deosebită.
+Spre deosebire de toate celelalte tipuri de piese, un canal Master în Pro Tools are sloturile de efecte (inserts) configurate post-fader.
+Acest lucru este conceput pentru a permite aplicarea dither-ului în ultima etapă a lanțului de semnal digital.
+
+Consecința este că orice procesare dinamică aplicată pe canalul Master, cum ar fi un limiter, va fi afectată de mișcarea fader-ului Master.
+Dacă automatizați o trecere în liniște (fade out) din fader-ul Master, nivelul de limitare și efectul său sonor se vor modifica pe parcursul tranziției (Figura 11.14a).
+
+    <div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/11-14.jpg"
+    alt="Figura 11.14"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 11.14: </strong>(a) Deoarece limitatorul (limiter) de pe canalul Master este poziționat post-fader, orice mișcare a fader-ului va modifica intensitatea efectului de limitare.
+
+(b) Pistele audio individuale sunt mai întâi rutate către un canal auxiliar, unde este aplicată limitarea, și abia apoi trimise către ieșirea principală (main output), unde dither-ul are loc post-fader.
+
+De reținut că, în această configurație, atât fader-ul canalului auxiliar, cât și cel al canalului Master se află după limitator, astfel încât ambele pot fi automatizate. Automatizarea canalului auxiliar este de preferat, lăsând fader-ul Master ca un control de scalare independent de automatizări.
+
+</p>
+
+Deși este un efect rareori dorit, acesta se poate auzi pe unele mixaje comerciale.
+
+Pentru a rezolva această problemă:
+
+    - Canalele individuale sunt rutate către o magistrală (bus) care alimentează un canal auxiliar (Aux Track).
+
+    - Limitarea se aplică pe acest canal auxiliar.
+
+     - Dither-ul se aplică pe canalul Master (Figura 11.14b).
+
+Și în acest caz, posibilitatea de a avea atât inserții pre-fader, cât și post-fader pe fiecare canal de mixer, așa cum oferă Cubase, ar fi extrem de utilă.

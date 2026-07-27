@@ -1,0 +1,119 @@
+---
+title: 'Ce înseamnă asta pentru noi?'
+description: 'Ce înseamnă asta pentru noi?'
+order: 9
+category: 'Mixere'
+level: 'Incepator'
+---
+
+Motorul audio al secvențiatoarelor (DAW-urilor) este bazat pe notația în virgulă mobilă pe 32 de biți (32-bit floating-point).
+
+Fișierele audio care alcătuiesc track-urile brute sunt convertite din numere întregi (integer) în format 32-bit float în timp real, direct în timpul redării.
+Datele audio sunt menținute în format floating point pe tot parcursul mixajului și sunt convertite înapoi în numere întregi abia înainte de conversia D/A (digital-analog) sau în momentul exportului (bouncing) către un fișier audio de tip integer (Figura 11.9).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/11-9.jpg"
+    alt="Figura 11.9"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 11.9: </strong>Fluxul audio macro într-un secvențiator audio și
+  conversiile Integer/Float
+</p>
+
+Din plaja uriașă de valori pe care le pot stoca numerele 32-bit float, valorile eșantioanelor din interiorul aplicației sunt cuprinse în intervalul −1.0 până la 1.0 (punctul zecimal denotă un număr în virgulă mobilă).
+Acest interval, care poate fi considerat și ca procent (de la −100% la 100%), a fost ales deoarece permite gestionarea uniformă a diferitelor rezoluții pe biți (bit depths).
+De exemplu:
+
+    - O valoare maximă de 255 într-un fișier integer pe 8 biți
+
+    - O valoare maximă de 65.535 într-un fișier integer pe 16 biți
+
+Ambele reprezintă capătul scalei (full scale) și, prin urmare, ambele vor fi reprezentate ca 1.0 (100%) în interiorul DAW-ului.
+
+Știm deja că un sistem bazat pe numere întregi pe 16 biți intră în clipping (distorsiune) atunci când sunt însumate două eșantioane aflate la nivel maxim (65.535).
+Secvențiatoarele audio, datorită implementării 32-bit float, nu au nicio problemă în a aduna două eșantioane cu valoarea 1.0 (nivelul maxim de pe formatul integer).
+Mixerele software funcționează perfect cu valori de eșantion precum 2.0, 4.0, 808.0 și numere mult mai mari.
+
+Având capacitatea de a depăși cu mult intervalul standard de valori, am putea teoretic să însumăm un milion de canale aflate la nivel maxim (integer full scale) sau să amplificăm (boost) semnalele cu aproximativ 764 dB, și tot nu am provoca un clipping intern pe un sistem 32-bit floating-point.
+
+În practică, nici măcar cel mai solicitant mixaj nu va cauza clipping în domeniul 32-bit floating-point.
+
+## Nivelul de referință și distorsiunea pe canalul Master
+
+Deoarece valoarea 1.0 reprezintă nivelul maxim în sistemul integer (integer full scale), secvențiatoarele audio (DAW-urile) sunt concepute să afișeze 0 dB pe indicatorul de nivel (meter) atunci când se atinge această valoare.
+Spunem că 1.0 este nivelul de referință al secvențiatoarelor audio și desemnează 0 dB.
+
+Totuși, acesta nu este 0 dBFS.
+Sistemele în virgulă mobilă (floating-point) pot procesa valori cu aproximativ 764 dB mai mari decât 1.0, ceea ce înseamnă că, în esență, 0 dB din DAW reprezintă aproximativ −764 dBFS.
+
+Cu toate acestea, știm cu toții că secvențiatoarele audio pot intra în clipping, iar distorsiunea rezultată poate fi extrem de evidentă și deranjantă.
+Motivul este că, la un moment dat, datele de tip float sunt convertite înapoi în numere întregi (integer), iar valoarea 1.0 este transformată înapoi în nivelul maxim integer (65.535 pentru sistemele pe 16 biți).
+
+În timpul acestei conversii, orice valoare care depășește 1.0 este tăiată (trimmed) la 1.0, ceea ce provoacă distorsiune prin tăiere (clipping distortion), exact ca atunci când sunt limitate numerele întregi.
+
+Aspectul esențial de reținut este că această tăiere — și distorsiunea prin clipping aferentă — poate apărea doar în timpul conversiei de la float la integer, nicăieri altundeva în interiorul mixerului software.
+Această conversie are loc în momentul în care mixajul părăsește canalul Master (master track); prin urmare, doar semnalele care depășesc nivelul maxim în această etapă vor provoca distorsiuni.
+
+Deși toate canalele mixerului au un indicator de clipping cu pragul setat la 1.0, niciunul dintre aceste indicatoare nu semnalează o distorsiune reală — cu o singură excepție: cel de pe canalul Master.
+
+Doar semnalizarea de pe canalul Master indică distorsiune reală prin clipping.
+Canalele individuale nu pot intra în clipping.
+Oricât de neverosimil ar părea acest fapt, el poate fi demonstrat cu ușurință printr-un experiment simplu, ilustrat în Figura 11.11.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/11-10.jpg"
+    alt="Figura 11.10"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 11.10: </strong>Această captură de ecran din Pro Tools arată un
+  semnal care este mai întâi amplificat cu 12 dB din fader-ul pistei audio, iar
+  apoi atenuat cu aceeași valoare folosind fader-ul canalului Master. În ciuda
+  indicatorului de clipping aprins pe pista audio, această configurație nu va
+  genera nicio distorsiune.
+</p>
+
+Putem configura o sesiune cu o singură pistă audio și un canal Master, ambele având fader-ele setate la amplificare unitară — unity gain (0 dB).
+Apoi, inserăm un generator de semnal pe pista audio și îl configurăm să genereze o undă sinusoidală la 0 dB.
+
+Dacă ridicăm fader-ul pistei audio cu, să zicem, 12 dB, ambele indicatoare de clipping se vor aprinde (presupunând că monitorizarea nivelului este setată post-fader), iar distorsiunea prin clipping va fi clar audibilă.
+
+Totuși, dacă reducem apoi fader-ul de pe canalul Master (master fader) cu 12 dB, distorsiunea dispare complet, chiar dacă indicatorul de clipping de pe pista audio rămâne aprins.
+
+Prin amplificarea undei sinusoidale cu 12 dB, valoarea acesteia depășește pragul de referință, motiv pentru care indicatorul se aprinde.
+Însă, pe măsură ce fader-ul Master atenuază semnalul înapoi la un nivel valid de 0 dB, acesta nu mai depășește limita la ieșirea din canalul Master — etapă după care ar fi apărut distorsiunea reală prin clipping.
+
+Este important de știut că distorsiunea prin clipping va apărea întotdeauna atunci când un mixaj care depășește limita este exportat (bounced), dar nu și atunci când este doar ascultat/monitorizat.
+Acest lucru este periculos, deoarece un mixaj care pare curat în boxe ar putea distorsiona odată exportat.
+
+Atât Pro Tools, cât și Cubase sunt imune la acest risc, deoarece mixajul monitorizat și cel exportat sunt identice.
+Cu toate acestea, când un mixaj depășește pragul maxim în Logic sau Digital Performer, s-ar putea ca distorsiunea să nu fie audibilă în timp real din cauza rezervei de nivel (headroom) puse la dispoziție de anumite interfețe audio.
+Cu toate acestea, mixajul va distorsiona odată ce este exportat.
+Monitorizarea indicatorului de clipping de pe canalul Master în aceste aplicații este vitală.
+
+Dacă pistedele individuale nu pot intra în clipping, care mai este rostul indicatoarelor de depășire?
+Există câteva motive pentru care este în interesul nostru să păstrăm semnalul audio sub pragul de clipping:
+
+    - Limitările anumitor procesoare: Unele efecte presupun că cea mai mare valoare posibilă a unui eșantion este 1.0.
+    Un noise gate, de exemplu, nu va procesa semnalele care depășesc această valoare, deoarece 1.0 reprezintă pragul său maxim posibl (0 dB).
+
+    - Acumularea pe Master: Cu cât există mai multe semnale care depășesc pragul pe canalele individuale, cu atât este mai probabil să provocăm clipping pe canalul Master.
+    Deși această problemă se poate rezolva ușor mai târziu, de ce să tratezi o problemă când o poți preveni?
+
+    - Comportamentul neprevăzut al unor plug-in-uri: Unele plug-in-uri — fără un motiv evident — limitează (trim) semnalele care depășesc valoarea 1.0, ceea ce generează distorsiune prin clipping direct în interiorul mixerului software.
+
+În concluzie, aprinderea indicatoarelor de clipping pe orice alt canal în afară de Master are puține șanse să indice o distorsiune reală, totuși:
+
+    - O tehnică bună de lucru este păstrarea tuturor semnalelor sub pragul de clipping.
+
+Indicatoarele de clipping sunt integrate și în unele plug-in-uri.
+Este posibil, de exemplu, ca o amplificare din EQ să provoace clipping la intrarea unui compresor aflat în lanț după el.
+De asemenea, este posibil ca acel compresor să reducă nivelul semnalului sub pragul maxim, iar astfel indicatorul de pe canalul mixerului (mixer strip) să nu se mai aprindă.
+Aceeași regulă se aplică și în cazul depășirilor din interiorul lanțului de plug-in-uri — ele indică rar o distorsiune reală, dar este înțelept să menținem semnalele sub pragul de clipping.

@@ -1,0 +1,94 @@
+---
+title: 'Dither-ul'
+description: 'Dither-ul'
+order: 11
+category: 'Mixere'
+level: 'Incepator'
+---
+
+În cadrul unui sistem audio digital, distorsiunea digitală poate fi rezultatul procesării sau al reducerii rezoluției pe biți (bit reduction).
+
+Procesarea digitală se face prin calcule matematice aplicate valorilor eșantioanelor.
+Deoarece variabilele din memoria calculatoarelor noastre au o precizie limitată, un sistem digital nu poate stoca uneori rezultatul exact al unui calcul.
+De exemplu, o anumită poziție a unui fader ar putea necesita împărțirea valorii unui eșantion de 1.0 la 3, rezultând o serie infinită de cifre 3 după virgulă.
+În astfel de cazuri, sistemul rotunjește rezultatul (de exemplu, la 0.333334).
+Deoarece valoarea rotunjită nu este identică cu cea reală, apare distorsiunea.
+În aceste condiții, sistemul devine neliniar, exact ca un sistem analogic.
+
+Din fericire, distorsiunea produsă de calculele din interiorul DAW-ului este foarte redusă și, în majoritatea cazurilor, inaudibilă.
+Problemele apar atunci când această distorsiune se acumulează (distorsiune a distorsiunii unei distorsiuni etc.).
+
+Unii dezvoltatori de plug-in-uri folosesc procesare la precizie dublă (double precision).
+În esență, calculele din interiorul plug-in-ului se fac în format 64-bit float în loc de 32-bit float.
+Orice distorsiune generată în astfel de sisteme este introdusă la niveluri extrem de joase (în jur de −300 dB).
+Însă, pentru a readuce semnalul audio la formatul standard de 32-bit float folosit de aplicație, plug-in-ul trebuie să aplice o reducere a biților.
+Dacă nu se aplică dither în timpul acestei reduceri, se va genera o nouă distorsiune.
+
+# De ce produce reducerea biților distorsiune?
+
+Atunci când convertim de la o rezoluție mai mare la una mai mică, sistemul trunchiază (truncates) biții cei mai puțin semnificativi, introducând erori în fluxul de date.
+
+Să luăm un exemplu simplificat: dacă prin trunchiere am elimina toate cifrele de după virgulă dintr-o secvență precum 0.1, 0.8, 0.9, 0.7, rezultatul ar fi o serie de zerouri.
+În practică însă, ultimele trei numere din exemplu sunt mult mai aproape de 1 decât de 0.
+Nici rotunjirea nu ar rezolva problema, deoarece ar genera erori de rotunjire — o secvență distorsionată de tipul 0.1, 0.2, 0.1, 0.3.
+
+## Ce este dither-ul și cum funcționează?
+
+Dither-ul este un zgomot aleatoriu de nivel foarte scăzut. Nu este un zgomot simplu, ci unul generat pe baza teoriilor de probabilitate.
+Dither-ul face ca orice eroare de rotunjire sau trunchiere să devină complet aleatorie.
+Prin definiție, distorsiunea este corelată cu semnalul audio; aleatorizând erorile, le decorrelăm de semnal și eliminăm astfel distorsiunea.
+Acest lucru face ca sistemul să devină liniar, însă cu prețul adăugării unui zgomot de fond minuscul.
+
+Adevărata putere a dither-ului constă în faptul că ne permite să păstrăm informația din biții trunchiați.
+Zgomotul aleatoriu agită detaliile de la nivelurile cele mai joase și le introduce în biții care nu sunt trunchiați, astfel încât informația rămâne audibilă chiar și după reducerea rezoluției.
+
+Explicația completă se bazează pe faptul că sistemele digitale au o plajă dinamică nelimitată, dar un prag de zgomot (noise floor) bine definit, determinat de numărul de biți.
+În practică, un sistem pe 16 biți oferă o dinamică nelimitată, având pragul de zgomot la aproximativ −96 dB.
+Urechea umană poate percepe informații sub acest prag de zgomot, dar până la o anumită limită.
+Fără dither, informația din biții eliminați este pierdută și apare distorsiunea.
+Cu dither, distorsiunea dispare, iar detaliile de la nivel scăzut sunt menținute, deși la un moment dat vor fi mascate de zgomot.
+
+# Când și cum aplicăm dither?
+
+Teoretic, orice procesare dintr-un sistem digital poate rezulta în distorsiuni digitale — compresoare, egalizatoare, reverberații, chiar și fader-e sau panner-e.
+Datorită plajei uriașe de valori, sistemele floating-point sunt mult mai puțin predispuse la distorsiuni digitale comparativ cu cele integer.
+În interiorul unui DAW, majoritatea acestor distorsiuni apar la un nivel de aproximativ −140 dB, fiind în mare parte inaudibile.
+
+Producătorii de console digitale de mari dimensiuni aplică dither frecvent pe parcursul lanțului de semnal.
+DAW-urile nu fac acest lucru automat, dar multe plug-in-uri o fac (ca parte din procesarea la precizie dublă).
+Dither-ul trebuie aplicat la momentul și în locul potrivit; adăugarea lui la întâmplare nu elimină distorsiunea, ci doar adaugă zgomot peste ea.
+
+Singurul moment în care trebuie să aplicăm dither este în cadrul reducerii rezoluției pe biți (bit reduction).
+
+Această reducere are loc de fiecare dată când exportăm (bounce) într-un fișier pe 16 biți.
+Deoarece reducerea biților poate cauza distorsiuni minore și la exportul în fișiere pe 24 de biți, există un motiv întemeiat pentru a aplica dither și în acest caz.
+Singura situație în care nu este nevoie de dither este atunci când exportăm în fișiere 32-bit float.
+
+## Regula de aur pentru dither este foarte simplă:
+
+    Aplicați dither o singură dată, ca ultimul proces din etapa de mixaj.
+
+## Algoritmi și Noise-Shaping
+
+Generarea zgomotului de dither este un proces complex.
+Diferiți producători au dezvoltat algoritmi variați, majoritatea folosind o tehnică numită noise-shaping (modelarea zgomotului), ce permite minimizarea nivelului perceput al zgomotului.
+Deoarece urechea noastră este mai puțin sensibilă la zgomot pe anumite frecvențe, mutarea unei părți din energia dither-ului către acele frecvențe face zgomotul mult mai puțin sesizabil.
+
+Majoritatea DAW-urilor includ funcții de dither — fie ca un plug-in individual, o opțiune globală sau o setare în fereastra de export (bounce).
+În plus, numeroase plug-in-uri (în special limitatoarele și loudness maximizers) oferă propriile opțiuni de dither.
+
+În esență, procesul adaugă zgomotul de dither și apoi elimină orice informație care depășește rezoluția pe biți a fișierului de destinație.
+Figura 11.11 arată un plug-in de dither încărcat pe canalul Master în Pro Tools pentru a se asigura că este ultimul proces din lanț (plasat chiar și după fader-ul Master).
+În interfață se pot observa parametrii tipici: rezoluția țintă (destination bit depth) și tipul de noise-shaping, pregătind semnalul pentru un export pe 16 biți.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/11-11.jpg"
+    alt="Figura 11.11"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 11.11: </strong> Plugin Dither
+</p>

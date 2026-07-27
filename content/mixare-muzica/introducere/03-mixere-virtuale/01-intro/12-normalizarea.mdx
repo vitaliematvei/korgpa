@@ -1,0 +1,52 @@
+---
+title: 'Dither-ul'
+description: 'Dither-ul'
+order: 12
+category: 'Mixere'
+level: 'Incepator'
+---
+
+Figura 11.12 prezintă două regiuni audio.
+Este util să explicăm modul în care funcționează scala din Pro Tools (sau din orice alt DAW):
+
+    - Linia din mijloc reprezintă liniștea absolută (aproximativ −151 dB).
+
+    - Marcajul superior reprezintă 0 dB.
+
+    - Fiecare înjumătățire a scalei vizuale corespunde unei reduceri de −6 dB.
+
+Din acest motiv, cea mai mare parte a afișajului este alocată semnalelor cu nivel ridicat — spațiul vizual folosit pentru a arăta variațiile de nivel între −12 și −18 dB este egal cu tot spațiul alocat pentru intervalul cuprins între −18 și −151 dB.
+
+Prin urmare, ar putea părea că regiunea din dreapta are un nivel substanțial mai mic decât cea din stânga, însă în realitate regiunea din stânga este mai slabă cu doar 18 dB.
+
+Desori ne dorim ca semnalele noastre să fie la niveluri optime.
+Un proces de tip offline numit normalizare (normalization) ne permite să facem acest lucru — el amplifică nivelul semnalului până la valoarea maximă posibilă, fără a provoca clipping.
+De exemplu, dacă cel mai înalt vârf de semnal (peak) este la −18 dB, întregul semnal va fi amplificat cu 18 dB.
+Fiind un proces offline, normalizarea creează un fișier nou care conține semnalul audio maximizat.
+
+Cu toate acestea, normalizarea are dezavantajele ei.
+În timpul procesului au loc erori de rotunjire care duc la apariția aceleiași distorsiuni discutate anterior.
+Aceasta este o problemă mai ales atunci când lucrăm cu fișiere pe 16 biți.
+
+În mod normal, înregistrările puternice nu sunt puse chiar lângă cele slabe, ca în Figura 11.12 — cel mai adesea avem o întreagă pistă înregistrată la un nivel scăzut.
+O abordare mult mai atentă la calitatea sunetului constă în amplificarea semnalului în timp real (realtime), direct în domeniul 32-bit float.
+
+Acest lucru se poate face foarte ușor prin încărcarea unui plug-in de Gain pe primul slot de insert (insert slot) al pistei cu nivel scăzut.
+Această metodă este foarte similară cu practica din domeniul analogic de a mări câștigul de intrare (gain) devreme pe lanțul de semnal atunci când o cale pe bandă fusese înregistrată la un nivel prea mic.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/11-12.jpg"
+    alt="Figura 11.12"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 11.12: </strong> Afișarea scalelor formelor de undă. Regiunile
+  din stânga și din dreapta sunt identice, cu singura diferență că regiunea din
+  dreapta este cu 18 dB mai încetă decât cea din stânga. Scalele din ferestrele
+  editoarelor sunt împărțite astfel încât fiecare înjumătățire vizuală
+  corespunde unei reduceri de −6 dB a nivelului. Prin urmare, cea mai mare parte
+  din ceea ce vedem reprezintă secțiunea cu volum ridicat a formei de undă.
+</p>

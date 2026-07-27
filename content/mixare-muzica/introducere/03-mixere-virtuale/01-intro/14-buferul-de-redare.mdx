@@ -1,0 +1,61 @@
+---
+title: 'Buffer-ul de redare (The Playback Buffer)'
+description: 'Buffer-ul de redare (The Playback Buffer)'
+order: 14
+category: 'Mixere'
+level: 'Incepator'
+---
+
+Secvențiatoarele audio (DAW-urile) procesează semnalul audio în iterații (secvențe de calcul).
+În timpul fiecărei iterații, aplicația citește eșantioane (samples) din diferitele fișiere audio, le procesează folosind opțiunile mixerului și plug-in-urile, însumează toate piese diferite și livrează mixajul final către interfața audio pentru redare.
+
+Fiecare iterație implică o multitudine de memorie tampon (buffers); fiecare astfel de buffer reprezintă o pistă mono sau o magistrală (bus) mono.
+Dimensiunea buffer-ului de redare (playback buffer size) determină câte eșantioane audio conține fiecare dintre aceste spații de memorie.
+
+De exemplu, dacă dimensiunea buffer-ului este setată la 480 de eșantioane:
+
+    - În timpul fiecărei iterații, câte 480 de eșantioane din fiecare fișier sunt încărcate în buffer-ele pieselor.
+
+    - Fiecare plug-in procesează exact 480 de eșantioane.
+
+    - Diferitele piese sunt însumate în buffer-ul magistralei de mixaj (mix-bus buffer), care conține la rândul său 480 de eșantioane.
+
+După ce buffer-ul de mixaj a fost calculat, el este trimis către interfața audio.
+La o dimensiune a buffer-ului de 480 de eșantioane și o rată de eșantionare (sample rate) de 48.000 Hz, interfeței audio îi va lua exact 10 ms să redea fiecare buffer de mixaj.
+
+În timp ce interfața audio redă buffer-ul curent, o nouă iterație se află deja în desfășurare.
+Fiecare iterație trebuie finalizată, iar un nou buffer de mixaj trebuie livrat interfeței audio înainte ca buffer-ul anterior să se termine de redat (în mai puțin de 10 ms în cazul nostru).
+Dacă o iterație durează mai mult de atât, interfața audio nu va mai avea ce să redea, redarea continuă se va opri și poate apărea un mesaj de avertizare privind suprasolicitarea procesorului (CPU overload).
+Un computer trebuie să fie suficient de puternic încât să proceseze semnalul audio în timp real mai rapid decât timpul necesar pentru a-l reda.
+
+# Latența și alegerea dimensiunii optime
+
+Dimensiunea buffer-ului de redare determină latența de monitorizare a semnalelor de intrare (input latency) — cu cât dimensiunea buffer-ului este mai mică, cu atât latența de intrare este mai scăzută.
+Acest lucru este crucial în timpul înregistrării, dar devine mai puțin important în faza de mixaj (mixdown), unde semnalele de intrare sunt rareori folosite.
+
+Totuși, setările mai mici înseamnă și mai multe iterații — fiecare cu propriul consum suplimentar de resurse (processing overhead) — ceea ce înseamnă că veți putea folosi mai puține plug-in-uri în mixaj.
+Cu un buffer foarte mic (de exemplu, 32 de eșantioane), unele aplicații pot deveni imprevizibile, pot produce zgomote/păpăituri (clicks) sau pot omite redarea.
+
+Pe de altă parte, în funcție de aplicație, un buffer prea mare poate afecta precizia anumitor aspecte ale mixajului, cum ar fi automatizările.
+
+Când alegeți dimensiunea buffer-ului, aceasta ar trebui să fie:
+
+    - Suficient de mare pentru a permite un număr satisfăcător de plug-in-uri și o performanță stabilă.
+
+    - Niciun exces peste această limită nu aduce beneficii reale.
+
+O valoare rezonabilă de la care puteți începe să experimentați este de 1.024 de eșantioane.
+
+ <div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/11-15.jpg"
+    alt="Figura 11.15"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 11.15: </strong>Fereastra de configurare din Digital Performer în care este setată dimensiunea buffer-ului de redare (playback buffer size).
+
+</p>
