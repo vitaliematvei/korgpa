@@ -1,0 +1,79 @@
+﻿---
+title: 'Ce este faza'
+description: 'Ce este faza'
+order: 1
+category: 'Faza'
+level: 'Incepator'
+---
+
+Faza, cel puțin în teoria sunetului, descrie relația temporală dintre două sau mai multe unde sinusoidale de aceeași frecvență.
+Faza se măsoară în grade.
+O undă sinusoidală începe atunci când începe ciclul său — marcat prin 0°.
+Un ciclu complet înseamnă 360° (care reprezintă totodată 0°), o jumătate de ciclu înseamnă 180°, un sfert de ciclu 90° și așa mai departe.
+Dacă o undă sinusoidală ajunge la un sfert din ciclul său exact când începe ciclul altei unde sinusoidale de aceeași frecvență, se spune că cele două sunt defazate cu 90° (Figura 12.1).
+
+ <div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/12-1.jpg"
+    alt="Figura 12.1"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 12.1: </strong>Două unde sinusoidale identice, defazate cu 90° una față de cealaltă.
+
+</p>
+
+Gradul de defazare depinde de decalajul temporal dintre cele două unde sinusoidale, dar și de frecvența lor.
+Pentru același decalaj temporal, frecvențe diferite vor avea defazări diferite.
+Undele complexe, precum toate semnalele înregistrate sau sintetizate (cu excepția undelor sinusoidale), conțin numeroase frecvențe.
+Dacă două unde complexe sunt decalate una față de cealaltă, fiecare frecvență din componența lor va avea propriul său grad de defazare.
+
+În mixaj, nu ne interesează neapărat undele sinusoidale, ci mai degrabă undele complexe.
+Când două unde similare sunt mixate, interacțiunea lor de fază devine importantă.
+Mai întâi trebuie să definim ce înseamnă „similare”:
+
+- **Unde identice** — așa cum sugerează și numele, acestea sunt similare din toate punctele de vedere și sunt, de regulă, rezultatul unei duplicări.
+  De exemplu, prin duplicarea unei piese de voce într-un secvențiator audio, obținem două unde identice.
+  Prin trimiterea unui premier (snare) către două grupuri diferite, creăm de asemenea două semnale duplicate.
+- **Unde ale aceluiași eveniment** — două microfoane care captează același eveniment muzical.
+  De exemplu, două microfoane așezate în fața unei chitări acustice sau microfonul de tobă mare (kick) și microfoanele de ambient (overheads) — deși microfonul de tobă mare captează în principal toba mare, iar overhead-urile captează întregul set de tobe, ambele înregistrări vor conține aceeași execuție a tobei mari.
+
+Este important să definim și ce înseamnă „nesimilare”: două duble (takes) ale oricărui instrument, oricât de asemănătoare ca execuție, nu sunt considerate unde similare.
+Pe baza acestui principiu, dublarea pieselor (double-tracking) nu face obiectul problemelor de fază.
+
+Există o singură excepție de la cele de mai sus. Sunetul unei tobe mari este determinat în mare măsură de primul său ciclu, care poate fi suficient de similar între două tobe mari — chiar dacă acestea au fost înregistrate folosind tobe și microfoane diferite.
+În practică, faza devine un factor important mai ales atunci când suprapunem (layering) două sample-uri de tobă mare.
+
+Există trei tipuri de relații de fază între unde similare:
+
+- **În fază sau coerente în fază** — când undele încearcă/încep exact în același moment.
+- **Defazate sau decalate în fază** — când undele încearcă/încep la momente diferite.
+  De exemplu, dacă întârziem sau deplasăm copia unei piese de voce, dar nu și originalul.
+  De asemenea, dacă două microfoane sunt plasate la distanțe diferite față de un instrument, ele vor capta aceeași undă, însă microfonul mai îndepărtat o va face puțin mai târziu.
+- **Fază inversată** — când ambele unde încep exact în același moment, dar amplitudinea lor este inversată (adică în oglindă față de linia de zero).
+  Mulți oameni confundă inversarea de fază cu o defazare de 180°, însă cele două nu sunt același lucru.
+  Când două unde (altele decât cele sinusoidale) sunt defazate cu 180°, ele nu încep în același moment și rareori amplitudinea lor apare inversată (Figura 12.2).
+
+     <div className="my-4 flex justify-center">
+
+      <img
+      src="/images/mixing/12-2.jpg"
+      alt="Figura 12.2"
+      className="h-auto w-full max-w-xs"
+
+  />
+
+  </div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 12.2: </strong>Cinci piese mono în Digital Performer. (a) Unda originală în dinți de ferăstrău (sawtooth) crescătoare. (b) Aceeași undă în dinți de ferăstrău, doar că defazată cu 180° față de original. (c) Unda originală în dinți de ferăstrău cu faza inversată. (d) O piesă de voce. (e) Aceeași piesă de voce cu faza inversată.
+
+</p>
+
+Un lucru pe care ni-l arată efectul Haas este că o întârziere perceptibilă va fi auzită doar dacă decalajul temporal dintre două unde similare este mai mare de 30–40 ms.
+În acest text vom folosi valoarea de 35 ms și vom considera „fereastra Haas” drept orice decalaj temporal cuprins între 1 și 35 ms.
+În mod normal, luăm în calcul faza atunci când decalajele temporale se încadrează în fereastra Haas.
+În termeni de mixaj, un decalaj temporal mai mare de 35 ms este o întârziere audibilă (delay), iar faza nu mai prezintă interes.

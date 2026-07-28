@@ -1,0 +1,158 @@
+---
+title: 'Probleme de fază în timpul mixajului'
+description: 'Probleme de fază în timpul mixajului'
+order: 3
+category: 'Faza'
+level: 'Incepator'
+---
+
+Deși mai rare, problemele de fază pot apărea și în timpul procesului de mixaj; iată câteva exemple:
+
+- **Lipsa compensării întârzierii cauzate de plug-in-uri (Plugin Delay Compensation)** — întârzierile necompensate ale plug-in-urilor sunt o invitație deschisă la probleme de fază.
+  De exemplu, dacă un plug-in de compresie întârzie toba mică cu 500 de eșantioane (samples), sunt șanse mari ca la mixarea cu overhead-urile să apară efectul de filtrare în pieptene.
+- **Conversiile digital-analog pe echipamentele externe (outboard)** — unitățile digitale convertesc semnalul audio din analog în digital și înapoi, proces care durează puțin timp.
+  Acest lucru introduce o scurtă întârziere, dar suficient de lungă pentru a provoca filtrare în pieptene dacă semnalul este apoi însumat cu o piesă identică.
+- **Întârzierile foarte scurte** — întârzierile scurte care se încadrează în fereastra Haas pot provoca filtrare în pieptene dacă sunetul original și cel întârziat sunt însumate intern.
+- **Egalizatoarele** — prin natura construcției lor, egalizatoarele produc întârzieri de grup (group delay) pe anumite intervale de frecvență.
+  Problemele de fază sunt vizibile în special în cazul amplificărilor mari de câștig (gain boost).
+
+---
+
+### Trucuri
+
+Am menționat că atunci când două unde identice nu sunt în fază, dar fiecare este redată printr-un difuzor diferit, rezultatul este destul de diferit de filtrarea în pieptene.
+Două trucuri de mixaj se bazează pe o astfel de configurație stereo.
+În ambele cazuri, două semnale mono identice sunt trimise în extremele câmpului stereo, iar unul dintre semnale este fie întârziat, fie i se inversează faza.
+Pentru a le deosebi, vom numi semnalul nemodificat **semnal original**, iar copia care este fie întârziată, fie cu faza inversată, **copie-fantomă** (ghost copy).
+
+#### Trucul Haas
+
+Trucul Haas nu a fost inventat de Helmut Haas, ci este, în esență, o demonstrație a efectului Haas.
+Haas a fost interesat de ce se întâmplă atunci când un sunet inițial este urmat rapid de sunete similare din direcții diferite.
+Descoperirile sale ne arată că direcționalitatea sunetului este determinată exclusiv de sunetul inițial, cu condiția ca:
+
+1. sunetele succesive să ajungă într-un interval de **1–35 ms** față de sunetul inițial;
+2. sunetele succesive să nu fie cu mai mult de **10 dB** mai puternice decât sunetul inițial.
+
+Deși sunetele succesive nu oferă indicii de direcționalitate, ele joacă totuși un rol spațial.
+Trucul Haas presupune pur și simplu panoramarea unui semnal original într-o extremă și trimiterea unei copii-fantomă, întârziată cu 1–35 ms, în extrema opusă (Figura 12.4).
+
+ <div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/12-4.jpg"
+    alt="Figura 12.4"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 12.4: </strong>Trucul Haas. Un semnal mono este trimis atât în
+  stânga, cât și în dreapta, dar un canal este întârziat cu 1–35 ms.
+</p>
+
+Trucul Haas se obține, de obicei, în două moduri:
+
+- Primul presupune panoramarea completă (hard pan) a unei piese mono pe un canal, duplicarea ei, panoramarea copiei în canalul opus și deplasarea (nudging) acesteia cu câteva milisecunde (Figura 12.5).
+
+     <div className="my-4 flex justify-center">
+
+      <img
+      src="/images/mixing/12-5.jpg"
+      alt="Figura 12.5"
+      className="h-auto w-full max-w-xs"
+
+  />
+
+  </div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 12.5: </strong>Trucul Haas prin duplicare. O modalitate de a
+  obține efectul Haas este prin duplicarea unei piese mono, deplasarea (nudging)
+  copiei cu câteva milisecunde în timp (30 ms în captura de ecran de mai sus) și
+  panoramarea fiecărei piese într-o extremă opusă.
+</p>
+
+- Al doilea presupune încărcarea unui delay stereo pe
+  o piesă mono și setarea unui canal fără întârziere, iar a celuilalt cu o
+  întârziere scurtă, între 1 și 35 ms.
+
+Trucul Haas oferă un sunet larg, deschis și spațios; deși sunetul poate fi localizat pe canalul neîntârziat, există o senzație de imagine stereo difuză.
+Poate fi aplicat în timpul mixajului în trei scopuri principale:
+
+- **Pentru a îngroșa sunetele panoramate în extreme** — folosirea trucului Haas pe instrumente deja panoramate la maxim le poate face să sună mai masiv, mai ales într-o aranjare încrucișată.
+  De exemplu, este ceva obișnuit să dublezi piese de chitară cu distors (double-tracking) și să panoramezi fiecare piesă mono în canale opuse.
+  Aplicarea trucului Haas pe fiecare piesă de chitară (trimiterea copiei întârziate în canalul opus, ca în Figura 12.6) oferă un efect mai plin și mai puternic.
+
+       <div className="my-4 flex justify-center">
+
+        <img
+        src="/images/mixing/12-6.jpg"
+        alt="Figura 12.6"
+        className="h-auto w-full max-w-xs"
+
+  />
+
+    </div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 12.6: </strong>Trucul Haas într-o configurație încrucișată
+  (crossed setup). Chitara 1 este trimisă în stânga, iar copia ei întârziată în
+  dreapta. Chitara 2 este trimisă în dreapta, iar copia ei întârziată în stânga.
+</p>
+
+- **Ca alternativă la panoramare** — uneori, când panoramăm o piesă mono, toate opțiunile de panoramare par mai puțin ideale.
+  De exemplu, într-un aranjament aerisit cu trei piese mono (voce, bas și chitară), cel mai probabil atât basul, cât și vocea vor fi panoramate pe centru.
+  Panoramarea chitării tot pe centru o va plasa în cea mai aglomerată zonă a mixului, unde mascarea frecvențelor este ridicată (creând totodată un mix monofonic).
+  Panoramarea chitării într-o parte sau alta va crea un dezechilibru stereo.
+  Aplicând trucul Haas, putem deschide sunetul monofonic al chitării, oferindu-i lărgime stereo și plasând-o într-o zonă cu mascare redusă.
+- **O panoramare mai realistă** — urechea folosește diferențele de amplitudine, timp și frecvență pentru a localiza sunetele.
+  Potențiometrul de panoramare (pan-pot) funcționează doar prin modificarea amplitudinii; prin urmare, rezultatele sunt mai puțin naturale.
+  Trucul Haas adaugă metodei standard de panoramare diferențele de timp, iar cu un filtru pe canalul întârziat putem adăuga și mici diferențe de frecvență.
+  Totuși, această aplicație este limitată la instrumentele deja panoramate într-o extremă — nu putem panoramat semnalul original în altă parte.
+
+Una dintre setările pe care le putem controla în trucul Haas este valoarea întârzierii aplicate pe copia-fantomă.
+Timpi diferiți de delay dau efecte ușor diferite, așa că rămâne la latitudinea urechii să decidă care este cea mai bună opțiune.
+Un lucru de luat în calcul este ce se întâmplă atunci când mixul este însumat în mono.
+Cu siguranță, filtrarea în pieptene rezultată își va lăsa amprenta (adesea o pierdere de frecvențe înalte), însă unii timpi de întârziere, în special cei mai lungi, se însumează în mono mai curat decât alții.
+Astfel, când verificăm în mono, căutăm timpul de delay cel puțin distructiv.
+
+O altă setare pe care o putem controla este nivelul copiei-fantomă.
+Efectul Haas se aplică doar dacă copia-fantomă este cu mai puțin de 10 dB mai tare decât semnalul original.
+În funcție de timpul de delay, s-ar putea să nu se mai aplice nici la valori mai mici de 10 dB.
+Presupunând că atât originalul, cât și copia-fantomă sunt inițial la același nivel, creșterea nivelului copiei va părea la început să echilibreze imaginea stereo.
+Cu o creștere puțin mai mare, se obține un efect destul de derutant, nenatural, dar interesant — poate fi descris ca un delay audibil în care este imposibil de spus care extremă este cea întârziată.
+Atenuarea copiei-fantomă sub nivelul semnalului original face efectul mai puțin sesizabil și imaginea stereo a semnalului original ceva mai puțin vagă.
+În definitiv, merită să experimentați cu niveluri diferite și să luați decizia finală bazându-vă pe gust și intuiție.
+
+Trucul Haas poate fi îmbunătățit în două moduri:
+
+1.  Aplicarea unui filtru pe canalul fantomă — de obicei un filtru trece-jos (low-pass) — poate oferi rezultate mai naturale și poate chiar reduce filtrarea în pieptene când mixul este trecut în mono.
+    Acest lucru este util mai ales când trucul Haas este folosit pentru o panoramare mai realistă.
+2.  Când efectul Haas este folosit pentru a îngroșa sunetele, este posibilă o altă îmbunătățire: în timp ce folosim un delay pe canalul fantomă, modulăm timpul de întârziere cu o rată redusă și o adâncime mică (low rate / low depth — Figura 12.7).
+
+<div className="my-4 flex justify-center">
+    <img
+        src="/images/mixing/12-7.jpg"
+        alt="Figura 12.7"
+        className="h-auto w-full max-w-xs"
+
+    />
+
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 12.7: </strong>Trucul Haas modulat folosind un plug-in de delay
+  (Digidesign DigiRack Mod Delay II). Această instanță mono-to-stereo a
+  plug-in-ului implică un canal stâng neutru, cu un timp de delay de 0 ms.
+  Canalul drept este întârziat cu 30 ms și modulat folosind o adâncime (depth)
+  de 50% și o rată (rate) de 0,75 Hz.
+</p>
+Acest lucru oferă un impact mai bogat și o dimensiune mai mare efectului. Deși
+rezultatele nu sunt întotdeauna potrivite, merită experimentat.
+
+Trucul Haas este adesea eficient doar dacă este folosit pe un singur instrument, eventual două, din mix.
+Când este utilizat pe mai multe, poate aglomera extremele și poate duce la o imagine stereo generală nespecifică, făcând mai mult rău decât bine mixului.
+Ca în cazul multor altor trucuri de mixaj, exagerarea duce la pierderea impactului.
+
+{/* am ramas la 13 Faders .195 */}

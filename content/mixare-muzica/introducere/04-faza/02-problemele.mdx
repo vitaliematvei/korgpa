@@ -1,0 +1,62 @@
+---
+title: 'Problemele'
+description: 'Problemele'
+order: 2
+category: 'Faza'
+level: 'Incepator'
+---
+
+Problemele de fază apar atunci când însumăm unde similare care sunt fie decalate în fază, fie au faza inversată.
+Dacă decalajul temporal implicat este mai mic de 35 ms, este de așteptat să apară filtrarea în pieptene (comb filtering), urmată de modificări tonale și colorații ale timbrului.
+Dacă două unde au faza inversată una față de cealaltă, se vor anula reciproc și vor provoca o atenuare a nivelului; dacă ambele au aceeași amplitudine, se vor anula complet, având ca rezultat o tăcere absolută.
+
+Trebuie precizat că toate acestea sunt valabile atunci când cele două unde sunt însumate intern — fie electronic, fie matematic în interiorul mixerului.
+Dacă fiecare dintre unde este redată printr-un difuzor diferit, rezultatul va fi altul, așa cum vom vedea în curând.
+Cu toate acestea, dacă ieșirea stereo este însumată în mono (folded to mono), vor apărea aceleași probleme de fază.
+
+### Probleme de fază pe materialele înregistrate
+
+Spre marea noastră neșansă, piesele brute (raw tracks) implică adesea probleme de fază — în special cele din producțiile înregistrate acustic.
+Un exemplu este înregistrarea unui amplificator de chitară realizată cu un microfon aflat la câțiva metri de grilă.
+Când atât amplificatorul, cât și microfonul sunt aproape de o podea reflectantă, sunetul direct și cel reflectat ulterior vor produce, cel mai probabil, o filtrare în pieptene sesizabilă în momentul în care ajung la microfon.
+În astfel de cazuri, filtrarea în pieptene este imprumată direct pe o singură piesă, iar inginerul de mixaj are, de obicei, puține opțiuni la îndemână.
+Totuși, atunci când două sau mai multe piese reprezintă aceeași dublă a aceluiași instrument, se pot aduce anumite îmbunătățiri.
+Iată câțiva dintre „suspectii de serviciu” pentru piesele care ar putea beneficia de o corecție de fază:
+
+- **Piese sus/jos sau față/spate** — tobele mici (snares) sunt adesea înregistrate cu două microfoane dispuse sus și jos, în timp ce tobele mari și cabinetele de chitară pot fi înregistrate cu două microfoane, față și spate.
+  Deoarece cele două microfoane sunt poziționate pe părți opuse ale sursei sonore, este foarte probabil ca ele să capteze presiuni acustice opuse (contrar convingerilor generale, acest lucru nu se întâmplă întotdeauna, mai ales dacă microfoanele se află la distanțe diferite de instrument).
+  Inginerii de sunet sunt conștienți de acest lucru și, de regulă, inversează faza unui microfon înainte de înregistrare.
+  În acest fel, cele două piese ajung la mixaj gata pregătite, în fază.
+- **Microfoane de proximitate (close-mic) și overhead-uri** — este posibil ca toba mare, toba mică sau orice alt microfon de proximitate să aibă faza inversată sau decalată în raport cu overhead-urile.
+  Din nou, un inginer de sunet bun va lua overhead-urile ca referință și se va asigura că toate piesele de tobă sunt coerente în fază cu acestea.
+- **Microfon și semnal direct (DI)** — pe lângă înregistrarea convențională cu microfon, chitarele (în special chitara bas) pot fi înregistrate și folosind o casetă DI (Direct Injection) sau ieșirea directă din amplificator.
+  Rămânând în domeniul electronic, semnalele directe se deplasează aproape cu viteza luminii.
+  Sunetul are nevoie de un timp suplimentar pentru a străbate aerul dintre amplificator și microfon, ceea ce are ca rezultat o instanță ușor întârziată a piesei de microfon în comparație cu piesa directă.
+  Acesta este un exemplu de decalaj de fază care, odată corectat, poate aduce îmbunătățiri spectaculoase ale timbrului.
+
+Problemele de fază nu sunt întotdeauna evidente pentru ureche.
+În cazul inversărilor de fază, verificăm suspecții obișnuiți și vedem ce se întâmplă când activăm comutatorul de inversare a fazei (phase-invert switch).
+Uneori diferența este sesizabilă, în bine sau în rău; alteori nu este. De asemenea, putem mări imaginea (zoom) pe piesele asociate pentru a căuta inversări de fază.
+Mărirea poate fi utilă și atunci când căutăm decalaje de fază.
+Pentru a corecta decalajele de fază, deplasăm regiunea audio întârziată înapoi în timp până când se aliniază cu piesa asociată.
+Putem, de asemenea, să întârziem piesa devansată până când se aliniază cu cea întârziată, însă această soluție mai puțin directă este folosită mai ales atunci când ajustarea fină (nudging) nu este disponibilă, cum ar fi în cazul unui monopost de bandă magnetică (tape multitrack).
+
+Atunci când aliniem două piese decalate în fază, nu este întotdeauna posibil să determinăm vizual valoarea exactă a deplasării, iar valori diferite vor genera timbre diferite.
+Corecțiile fine de fază se fac, în mare parte, de ureche.
+
+Verificările și corecțiile de fază se efectuează cel mai bine înainte de începerea mixajului.
+Piesele asociate se verifică pentru inversări și decalaje de fază.
+
+ <div className="my-4 flex justify-center">
+
+  <img
+    src="/images/mixing/12-3.jpg"
+    alt="Figura 12.3"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 12.3: </strong>Decalaj de fază pe înregistrările de chitară. Această captură de ecran arată două înregistrări de chitară realizate simultan folosind microfoane plasate la distanțe diferite de amplificator. Decalajul temporal, de aproximativ 5 ms, este vizibil aici.
+
+</p>
