@@ -1,0 +1,91 @@
+---
+title: 'Redare fisiere audio'
+description: ''
+order: 4
+category: 'JUCE'
+level: 'Incepator'
+---
+
+### Redarea fișierelor audio (pe Mac)
+
+Pe sistemele Mac poți folosi un plugin dezvoltat de Apple pentru a reda fișiere audio.
+
+1. **Adăugarea plugin-ului:** Fă din nou clic dreapta în interiorul ferestrei `AudioPluginHost` și alege din meniul contextual: **Apple > AUAudioFilePlayer**.
+2. **Conectarea semnalului:** Conectează ieșirile (outputs) noului bloc `AUAudioFilePlayer` la intrările (inputs) blocului `Delay`.
+3. **Încărcarea fișierelor:** Fă dublu-clic pe blocul `AUAudioFilePlayer` pentru a-i deschide interfața (UI). Apasă pe butonul **Audio Files +…** din partea de sus pentru a deschide fereastra de selectare și a alege unul sau mai multe fișiere audio. _(De asemenea, poți trage fișierele cu mausul directe în fereastră - Drag & Drop)._
+4. **Pornirea redării:** Selectează din listă fișierul pe care vrei să-l asculți și bifează opțiunea **Loop** (Redare în buclă). Apoi apasă butonul **Play** pentru a porni redarea.
+
+Ar trebui să auzi sunetul original difuzat în difuzoarele computerului, deoarece în acest moment plugin-ul de `Delay` doar transmite semnalul primit mai departe, fără a-l modifica.
+
+Când ai terminat, apasă combinația de taste **Command + S** pentru a salva modificările aduse fișierului de grafic de filtre (_filtergraph_).
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/51.jpg"
+    alt="Figura 51"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 51: </strong>Utilizarea plugin-ului AUAudioFilePlayer în
+  AudioPluginHost
+</p>
+
+### Redarea fișierelor audio (pe Windows)
+
+Pe Windows, din păcate, nu există nicio unealtă integrată pe care să o putem folosi direct pentru redarea fișierelor audio.
+Ai la dispoziție câteva opțiuni:
+
+1. **Folosirea unui plugin de sintetizator sau sampler:** De exemplu, fă clic dreapta în interiorul ferestrei `AudioPluginHost` și alege **Sine Wave Synth (Internal)**.
+   Conectează ieșirile noului bloc `Sine Wave Synth` la intrările blocului `Delay`. Apoi conectează intrarea blocului `Sine Wave Synth` la blocul **MIDI Input**.
+   Acum poți folosi claviatura virtuală de pe ecran pentru a cânta note.
+   Desigur, dacă ai instalate alte plugin-uri de sintetizator, le poți folosi și pe acelea.
+   Dacă ai un plugin de tip sampler, îl poți folosi pentru a încărca și reda fișiere audio.
+2. **Descărcarea unui plugin pentru redare audio:** O căutare rapidă indică `vstPlayer` de la Mirax Labs. Nu l-am testat și nu știu cât este de bun.
+3. **Descărcarea codului sursă al plugin-ului AudioFilePlayer (de la Matkat Music) și compilarea lui de către tine:** Din moment ce această carte este despre învățarea dezvoltării de plugin-uri, îți recomand să încerci această variantă — mai ales că ai reușit deja să compilezi cu succes câteva proiecte.
+
+Deschide browserul tău preferat și mergi la **[github.com/hollance/AudioFilePlayerPlugin](https://github.com/hollance/AudioFilePlayerPlugin)**.
+Dacă nu ai mai folosit GitHub până acum, acesta este un site unde dezvoltatorii își distribuie proiectele open-source.
+De altfel, însuși codul sursă al JUCE este găzduit tot pe GitHub.
+
+Compilarea acestui plugin nu implică nimic din ce nu ai mai făcut deja. Așa că... să trecem la treabă!
+
+#### Pașii pentru compilarea plugin-ului AudioFilePlayer:
+
+1. **Descărcarea codului sursă:** GitHub.
+   Pe pagina de GitHub, apasă pe butonul verde **Code** și alege **Download ZIP**.
+
+2. **Dezarhivarea:** Folderul Downloads.
+   În scurt timp, în folderul tău _Downloads_ va apărea un fișier numit `AudioFilePlayerPlugin-master.zip`. Extrage conținutul acestui fișier.
+
+3. **Deschiderea în Projucer:** Fișierul .jucer.
+   Deschide fișierul `AudioFilePlayer.jucer` în aplicația **Projucer**.
+
+4. **Exportul în IDE:** Visual Studio 2022.
+   În partea de sus a ferestrei Projucer, selectează exporter-ul **Visual Studio 2022** și apasă butonul rotund pentru a deschide mediul de dezvoltare (IDE).
+
+5. **Compilarea (Build):** Visual Studio.
+   În Visual Studio, în panoul **Solution Explorer**, fă clic dreapta pe proiectul **AudioFilePlayer_VST3** și alege **Build** din meniul contextual.
+
+Dacă totul merge bine, în câteva minute compilarea se va încheia cu succes și vei avea noul fișier `AudioFilePlayer.vst3` salvat în locația:
+
+`C:\Program Files\Common Files\VST3`
+
+Acum poți închide fereastra Visual Studio.
+
+---
+
+### Testarea noului plugin în AudioPluginHost
+
+1. Închide `AudioPluginHost` (salvând modificările, dacă este cazul) și redeschide-l. În mod normal, ar trebui să deschidă automat ultima sesiune folosită. Dacă nu o face, folosește **File > Open…** pentru a încărca sesiunea `Delay.filtergraph`.
+2. Din meniul **Options**, alege **Edit the List of Available Plug-ins…** și scanează după plugin-uri VST3 noi, astfel încât `AudioPluginHost` să găsească plugin-ul pe care tocmai l-ai compilat.
+3. Înapoi în fereastra principală `AudioPluginHost`, fă clic dreapta și alege **Matkat Music LLC > AudioFilePlayer** pentru a-l adăuga în sesiune.
+4. Conectează ieșirile noului bloc `AudioFilePlayer` la intrările blocului `Delay`.
+5. Fă dublu-clic pe blocul `AudioFilePlayer` pentru a-i deschide interfața (UI).
+6. Folosește browserul de fișiere din interfață pentru a naviga către un fișier audio. După ce ai selectat fișierul, butonul verde din partea de jos va afișa **Start**. Apasă pe acest buton pentru a porni redarea.
+
+Ar trebui să auzi sunetul original în difuzoarele computerului, deoarece plugin-ul `Delay` doar transmite semnalul mai departe în acest moment, fără a-l modifica. Plugin-ul `AudioFilePlayer` va reda fișierul în buclă (_loop_) automat până când apeși pe **Stop**.
+
+Când ai terminat, apasă **Ctrl + S** pentru a salva modificările în fișierul de grafic (_filtergraph_).

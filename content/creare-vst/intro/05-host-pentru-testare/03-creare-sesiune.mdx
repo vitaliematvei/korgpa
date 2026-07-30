@@ -65,27 +65,58 @@ Pe Mac, s-ar putea să vrei să scanezi și după pluginuri în format Audio Uni
 Odată ce scanarea s-a încheiat, ar trebui să vezi o intrare pentru Delay în listă.
 Acum poți închide această fereastră.
 
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/49.jpg"
+    alt="Figura 49"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 49: </strong>Adaugare plug-in la sesiune
+</p>
+
 # Rutarea semnalului
 
 Pentru a începe să folosești pluginul Delay, dă click dreapta oriunde în fereastra principală din AudioPluginHost pentru a deschide un meniu pop-up cu toate pluginurile instalate.
 De asemenea, poți folosi opțiunea Plugins > Create Plug-in din bara de meniu.
 
-În meniul pop-up, navighează către yourcompany și selectează Delay — sau orice alt nume ai ales pentru pluginul tău. Această acțiune va adăuga în sesiune un bloc nou care reprezintă pluginul.
+În meniul pop-up, navighează către yourcompany și selectează Delay — sau orice alt nume ai ales pentru pluginul tău.
+Această acțiune va adăuga în sesiune un bloc nou care reprezintă pluginul.
 
     Sfat: Pentru a vizualiza interfața grafică a pluginului, dă dublu click pe blocul Delay.
 
-Trage un cablu virtual de la pinul verde din partea de jos a blocului Delay către blocul Audio Output. Repetă procedura și pentru celălalt pin verde. Astfel, conectezi ieșirea pluginului la difuzoarele sau căștile sistemului.
+Trage un cablu virtual de la pinul verde din partea de jos a blocului Delay către blocul Audio Output.
+Repetă procedura și pentru celălalt pin verde.
+Astfel, conectezi ieșirea pluginului la difuzoarele sau căștile sistemului.
 
-    Notă: Este posibil ca blocul tău de Audio Output să aibă mai mult de doi pini. În acest caz, pinii pe care trebuie să-i folosești depind de configurația sistemului tău de monitorizare și s-ar putea să fie nevoie să experimentezi puțin pentru a-i găsi pe cei corecți.
+    Notă: Este posibil ca blocul tău de Audio Output să aibă mai mult de doi pini.
+    În acest caz, pinii pe care trebuie să-i folosești depind de configurația sistemului tău de monitorizare și s-ar putea să fie nevoie să experimentezi puțin pentru a-i găsi pe cei corecți.
 
 Acum trebuie să conectezi ceva și la intrarea (input) pluginului.
 
     ⚠️ Atenție: NU conecta pluginul la blocul Audio Input!
 
-    Dacă intrarea audio (Audio Input) este setată pe microfonul calculatorului, iar ieșirea (Audio Output) pe difuzoare, microfonul va capta sunetul redat de difuzoare. Acest lucru va crea o buclă de microfonie (feedback loop) care se va amplifica rapid până la un volum extrem de deranjant.
+    Dacă intrarea audio (Audio Input) este setată pe microfonul calculatorului, iar ieșirea (Audio Output) pe difuzoare, microfonul va capta sunetul redat de difuzoare.
+    Acest lucru va crea o buclă de microfonie (feedback loop) care se va amplifica rapid până la un volum extrem de deranjant.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/50.jpg"
+    alt="Figura 50"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 50: </strong>Conectare plug-in la audio-output
+</p>
 
 În loc să folosești microfonul ca sursă de semnal, este mult mai util (și mai puțin periculos!) să testezi pluginul cu un set de fișiere audio.
 
-Înainte de a configura acest lucru, hai să salvăm sesiunea într-un fișier. Din bara de meniu, alege File > Save pentru a salva această sesiune ca fișier .filtergraph. Eu am salvat-o sub numele Delay.filtergraph pe Desktop.
-
-{/* de terminat Creating a session .116 */}
+Înainte de a configura acest lucru, hai să salvăm sesiunea într-un fișier.
+Din bara de meniu, alege File > Save pentru a salva această sesiune ca fișier .filtergraph.
+Eu am salvat-o sub numele Delay.filtergraph pe Desktop.

@@ -1,0 +1,116 @@
+---
+title: 'Pornirea automată a aplicației AudioPluginHost'
+description: ''
+order: 5
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Până acum ai rulat aplicația **AudioPluginHost** direct din IDE.
+Cu toate acestea, este incomod să ții o fereastră de IDE deschisă tot timpul doar pentru a rula această aplicație.
+Există o metodă mai inteligentă.
+
+Mai întâi, închide AudioPluginHost. Există două modalități de a face asta:
+
+1. Închide-i fereastra ca la orice altă aplicație sau alege **File > Quit** din meniu.
+2. Apasă butonul **Stop** din bara de unelte a IDE-ului.
+
+Diferența este că închiderea ferestrei va opri aplicația în mod corect, permițându-i să salveze mai întâi modificările aduse sesiunii.
+Butonul **Stop** va întrerupe imediat aplicația — util, de exemplu, atunci când aplicația a înghețat și nu mai răspunde la comenzi.
+
+În condiții normale, este mai bine să închizi AudioPluginHost prin metoda obișnuită.
+Însă, în timpul dezvoltării, se poate întâmpla ca un bug din cod să provoace comportamente neașteptate (cum ar fi emiterea unor sunete foarte puternice), caz în care butonul **Stop** funcționează ca o frână de urgență excelentă.
+
+#### Mutarea aplicației într-un loc accesibil
+
+Este o idee bună să copiezi aplicația AudioPluginHost într-un loc mai la îndemână, deoarece în acest moment este ascunsă adânc în folderul de build.
+
+- **Pentru Xcode:** În _Project Navigator_, derulează până la grupul _Products_ și extinde-l. Vei găsi acolo o intrare numită `AudioPluginHost.app`. Dă click dreapta pe ea și alege **Show in Finder**. În fereastra de Finder care apare, trage `AudioPluginHost.app` pe Desktop (sau în orice alt folder dorești).
+- **Pentru Visual Studio:** În _Solution Explorer_, dă click dreapta pe **AudioPluginHost_App** și alege **Open Folder in File Explorer**.
+  În fereastra Explorer care se deschide, navighează în subfolderul `x64`, apoi `Debug`, apoi `App`.
+  De aici, trage fișierul `AudioPluginHost.exe` pe Desktop (sau într-un folder la alegere).
+
+Acum AudioPluginHost este ușor de găsit și îi poți da simplu dublu-click pentru a o lansa.
+
+---
+
+### Configurarea IDE-ului pentru lansare automată
+
+În continuare, vom configura IDE-ul astfel încât să lanseze automat AudioPluginHost și să încarce sesiunea `Delay.filtergraph` imediat după ce plugin-ul a fost compilat.
+
+Poți închide fereastra AudioPluginHost din IDE și din Projucer, nu vom mai avea nevoie de ea acolo.
+
+**Notă:** De fiecare dată când faci update la o versiune nouă de JUCE, asigură-te că recompilezi și noua versiune de AudioPluginHost urmând pașii de mai sus, apoi o copiezi din nou pe desktop. În acest fel te asiguri că folosești mereu cea mai recentă versiune.
+
+Configurează IDE-ul astfel încât butonul **Run** (care, după cum îți amintești, nu funcționa direct pentru proiectul de plugin) să deschidă automat AudioPluginHost. Întoarce-te în fereastra IDE-ului pentru proiectul plugin-ului **Delay**:
+
+- **În Xcode:**
+
+1. Selectează target-ul **Delay - VST3** și alege **Edit Scheme…** din meniu.
+2. În fereastra care apare, selectează **Run** din partea stângă.
+3. Dă click pe **Executable** și alege **Other…**. Navighează până pe Desktop și selectează `AudioPluginHost.app`.
+4. AudioPluginHost va încărca automat cea mai recentă sesiune la pornire, dar îi poți spune să deschidă o anumită sesiune: tot în fereastra _Scheme Editor_, la tab-ul **Arguments**, sub secțiunea **Arguments Passed On Launch**, adaugă calea către fișierul `Delay.filtergraph`. Dacă această cale conține spații, pune întreaga cale între ghilimele duble.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/54.jpg"
+    alt="Figura 54"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 54: </strong> Setare Xcode sa ruleze automat AudioPluginHost
+</p>
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/55.jpg"
+    alt="Figura 55"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 55: </strong> Spunem AudioPluginHost ce graf sa incarce
+</p>
+
+- **În Visual Studio:**
+
+1. Dă click dreapta pe **Delay_VST3** în _Solution Explorer_ și alege **Properties**.
+2. În fereastra pop-up, mergi la secțiunea **Debugging**.
+3. Schimbă câmpul **Command** cu calea exactă unde se află `AudioPluginHost.exe`.
+4. La câmpul **Command Arguments**, adaugă calea către fișierul `Delay.filtergraph` pe care l-ai salvat.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/56.jpg"
+    alt="Figura 56"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 56: </strong> Setare VisualStudio sa ruleze automat
+  AudioPluginHost
+</p>
+
+---
+
+### Testarea configurării
+
+Acum, când apeși butonul **Run**, IDE-ul va compila fișierul VST3 și îl va copia în folderul de sistem dedicat VST-urilor, la fel ca înainte.
+Apoi va lansa automat AudioPluginHost, care ar trebui să se încarce în doar câteva secunde și să deschidă sesiunea din `Delay.filtergraph`, permițându-ți să îți testezi imediat plugin-ul.
+Încearcă!
+
+Nu este nevoie de o rescanare a plugin-urilor — AudioPluginHost va încărca întotdeauna versiunea cea mai recent compilată.
+Folosind această metodă, AudioPluginHost rulează în interiorul debugger-ului din IDE, ceea ce înseamnă că dacă plugin-ul nu funcționează cum trebuie, poți folosi debugger-ul pentru a identifica eroarea.
+
+**Atenție:** Uneori, după ce faci anumite modificări în Projucer, e posibil ca setările pentru lansarea AudioPluginHost să dispară misterios din IDE.
+De obicei, Projucer actualizează proiectul exportat fără să strice setările existente, dar uneori suprascrie complet fișierele de proiect.
+Dacă butonul **Run** nu mai funcționează dintr-odată sau afișează eroarea _„Unable to start program”_, verifică dacă `AudioPluginHost` este încă setat ca executabil principal al proiectului.
+
+{/* am ramas la  7: Output gain .129 */}
