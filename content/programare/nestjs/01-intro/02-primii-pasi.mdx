@@ -1,0 +1,140 @@
+---
+title: 'Primii pași'
+description: 'Primii pași'
+order: 2
+category: 'nestjs'
+level: 'Incepator'
+---
+
+## Primii pași
+
+În acest set de articole vei învăța concepte fundamentale din Nest. Pentru a te familiariza cu componentele de bază ale aplicațiilor Nest, vom construi o aplicație CRUD simplă, ale cărei funcționalități vor acoperi o mare parte din noțiunile introductive.
+
+---
+
+### Limbajul
+
+Suntem îndrăgostiți de **TypeScript**, dar înainte de toate — iubim **Node.js**. De aceea, Nest este compatibil atât cu TypeScript, cât și cu JavaScript pur. Nest folosește cele mai recente funcționalități ale limbajului, așa că, pentru a-l utiliza cu JavaScript nativ (_vanilla_), vom avea nevoie de un compilator Babel.
+
+În exemplele furnizate vom folosi în principal TypeScript, însă poți comuta oricând blocurile de cod la sintaxa JavaScript pură (este suficient să apeși butonul de schimbare a limbajului din colțul din dreapta-sus al fiecărui fragment de cod).
+
+---
+
+### Cerințe preliminare
+
+Asigură-te că ai instalată pe sistemul tău de operare o versiune de **Node.js (versiune >= 20)**.
+
+---
+
+### Configurare (Setup)
+
+Generarea unui proiect nou este extrem de simplă folosind **Nest CLI**. Cu `npm` instalat, poți crea un proiect Nest nou rulate următoarele comenzi în terminal:
+
+```bash
+$ npm i -g @nestjs/cli
+$ nest new nume-proiect
+
+```
+
+> **Sfat:** Pentru a crea un proiect nou cu un set mai strict de reguli TypeScript, adaugă flag-ul `--strict` la comanda `nest new`.
+
+Va fi creat directorul `nume-proiect`, se vor instala modulele Node și câteva fișiere de bază (_boilerplate_), iar folderul `src/` va fi populat cu fișierele principale ale aplicației:
+
+```text
+src/
+├── app.controller.spec.ts
+├── app.controller.ts
+├── app.module.ts
+├── app.service.ts
+└── main.ts
+
+```
+
+Iată o scurtă prezentare a acestor fișiere principale:
+
+- **`app.controller.ts`**: Un controller simplu cu o singură rută.
+- **`app.controller.spec.ts`**: Testele unitare pentru controller.
+- **`app.module.ts`**: Modulul rădăcină (_root module_) al aplicației.
+- **`app.service.ts`**: Un serviciu simplu cu o singură metodă.
+- **`main.ts`**: Fișierul de intrare (_entry file_) al aplicației, care folosește funcția principală `NestFactory` pentru a crea o instanță a aplicației Nest.
+
+Fișierul `main.ts` include o funcție asincronă care va inițializa (_bootstrap_) aplicația:
+
+```typescript
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  await app.listen(process.env.PORT ?? 3000);
+}
+bootstrap();
+```
+
+Pentru a crea o instanță a aplicației Nest, folosim clasa `NestFactory`. Aceasta expune câteva metode statice care permit crearea instanței de aplicație. Metoda `create()` returnează un obiect de aplicație ce respectă interfața `INestApplication`. Acest obiect pune la dispoziție o serie de metode descrise în capitolele următoare. În exemplul `main.ts` de mai sus, pornim pur și simplu serverul HTTP, permițând aplicației să aștepte cereri HTTP de la clienți.
+
+> **Notă:** Un proiect generat cu Nest CLI creează o structură inițială care încurajează dezvoltatorii să respecte convenția de a păstra fiecare modul în propriul său director dedicat.
+
+> **Sfat:** În mod implicit, dacă apare o eroare la crearea aplicației, procesul se va opri cu codul `1`. Dacă vrei ca în schimb să arunce o eroare, poți dezactiva opțiunea `abortOnError` (de ex.: `NestFactory.create(AppModule, { abortOnError: false })`).
+
+## Platforma
+
+Nest își propune să fie un framework agnostic față de platformă (_platform-agnostic_). Această independență față de o platformă anume permite crearea de componente logice reutilizabile, de care dezvoltatorii pot profita în mai multe tipuri de aplicații. Din punct de vedere tehnic, Nest poate funcționa cu orice framework HTTP din Node.js, odată ce este creat un adaptor.
+
+Există două platforme HTTP suportate nativ (_out-of-the-box_): **Express** și **Fastify**. O poți alege pe cea care se potrivește cel mai bine nevoilor tale.
+
+- **`platform-express`**: Express este un framework web minimalist și consacrat pentru Node.js. Este o librărie testată în producție (_battle-tested_), care beneficiază de o mulțime de resurse create de comunitate. Pachetul `@nestjs/platform-express` este utilizat în mod implicit. Pentru mulți utilizatori Express este mai mult decât suficient și nu trebuie să facă nicio configurare suplimentară pentru a-l activa.
+- **`platform-fastify`**: Fastify este un framework axat pe performanță ridicată și consum redus de resurse (_low overhead_), creat special pentru a oferi eficiență și viteză maximă.
+
+Indiferent de platforma utilizată, aceasta își expune propria interfață de aplicație. Acestea sunt definite ca `NestExpressApplication`, respectiv `NestFastifyApplication`.
+
+Atunci când pasazi un tip către metoda `NestFactory.create()`, ca în exemplul de mai jos, obiectul `app` va avea disponibile metode specifice exclusiv acelei platforme. Reține însă că **nu este nevoie să specifici un tip** decât dacă intenționezi cu adevărat să accesezi API-ul nativ al platformei din spate.
+
+```typescript
+const app = await NestFactory.create<NestExpressApplication>(AppModule);
+```
+
+---
+
+## Rularea aplicației
+
+Odată ce procesul de instalare s-a încheiat, poți rula următoarea comandă în terminalul sistemului tău de operare pentru a porni aplicația și a asculta cererile HTTP de la clienți:
+
+```bash
+$ npm run start
+
+```
+
+> **Sfat:** Pentru a accelera procesul de dezvoltare (compilare de până la 20 de ori mai rapidă), poți folosi builder-ul SWC adăugând flag-ul `-b swc` la scriptul de start: `npm run start -- -b swc`.
+
+Această comandă pornește aplicația, iar serverul HTTP va asculta pe portul definit în fișierul `src/main.ts`. După ce aplicația a pornit, deschide browserul și accesează `http://localhost:3000/`. Ar trebui să vezi mesajul _Hello World!_.
+
+Pentru a urmări modificările din fișiere în timp real, poți rula următoarea comandă:
+
+```bash
+$ npm run start:dev
+
+```
+
+Această comandă va monitoriza fișierele, recompilând și repornind automat serverul la fiecare salvare.
+
+---
+
+## Verificarea și formatarea codului (Linting & Formatting)
+
+Interfața Nest CLI face toate eforturile pentru a oferi un mediu de lucru (_workflow_) fiabil și ușor de scalat. Prin urmare, un proiect Nest proaspăt generat vine cu un **linter** și un **formatter** preinstalate (mai exact, `eslint` și `prettier`).
+
+**Sfat:** Nu ești sigur care este diferența dintre un formatter și un linter? Formatter-ele (ex: Prettier) se ocupă doar de stilul și aspectul codului (spații, ghilimele), în timp ce Linter-ele (ex: ESLint) analizează codul pentru a identifica erori de logică sau practici greșite.
+
+Pentru a asigura stabilitate și extensibilitate maximă, Nest folosește pachetele CLI de bază `eslint` și `prettier`. Această configurare permite o integrare curată și nativă în mediile de dezvoltare (IDE-uri) prin intermediul extensiilor oficiale.
+
+Pentru mediile automate de integrare, unde nu se folosește un IDE (cum ar fi serverele de Continuous Integration, Git hooks etc.), proiectul Nest vine cu scripturi `npm` gata de utilizare:
+
+```bash
+# Verifică și corectează automat codul cu ESLint
+$ npm run lint
+
+# Formatează codul cu Prettier
+$ npm run format
+
+```

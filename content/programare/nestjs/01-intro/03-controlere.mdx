@@ -1,0 +1,451 @@
+---
+title: 'Controlere'
+description: 'Controlere'
+order: 3
+category: 'nestjs'
+level: 'Incepator'
+---
+
+# Controllere (_Controllers_)
+
+Controllerele sunt responsabile de gestionarea cererilor (_requests_) primite de la clienți și de trimiterea răspunsurilor (_responses_) înapoi către aceștia.
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/nestjs/controlere-in-nest.jpg"
+    alt="Figura 56"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 1: </strong> Controlere in nest
+</p>
+
+Scopul unui controller este să gestioneze cereri specifice din aplicație. Mecanismul de **rutare** determină ce controller va procesa fiecare cerere. Adesea, un controller are mai multe rute, iar fiecare rută poate executa o acțiune diferită.
+
+Pentru a crea un controller de bază, folosim clase și **decoratori**. Decoratorii leagă clasele de metadata necesară, permițându-i framework-ului Nest să creeze o hartă de rutare (_routing map_) care conectează cererile la controllerele corespunzătoare.
+
+> **Sfat:** Pentru a crea rapid un controller CRUD cu validare încorporată, poți folosi generatorul CLI: `nest g resource [nume]`.
+
+---
+
+## Rutare (_Routing_)
+
+În exemplul următor, vom folosi decoratorul `@Controller()`, care este obligatoriu pentru a defini un controller de bază. Vom specifica un prefix opțional de cale (_route path prefix_): `'cats'`. Utilizarea unui prefix în decoratorul `@Controller()` ne ajută să grupăm rutele conexe și reduce codul repetitiv. De exemplu, dacă vrem să grupăm rutele care gestionează interacțiunea cu o entitate de tip pisică sub calea `/cats`, specificăm prefixul `'cats'`. Astfel, nu va trebui să repetăm acea porțiune de cale pentru fiecare rută din fișier.
+
+```typescript
+// cats.controller.ts
+import { Controller, Get } from '@nestjs/common';
+
+@Controller('cats')
+export class CatsController {
+  @Get()
+  findAll(): string {
+    return 'Această acțiune returnează toate pisicile';
+  }
+}
+```
+
+> **Sfat:** Pentru a crea un controller folosind CLI, execută comanda: `$ nest g controller [nume]`.
+
+Decoratorul metodei de cerere HTTP `@Get()` plasat înaintea metodei `findAll()` îi spune framework-ului Nest să creeze un handler pentru un endpoint specific de cereri HTTP. Acest endpoint este definit de metoda cererii HTTP (GET în acest caz) și de calea rutei.
+
+Care este calea rutei? Calea rutei pentru un handler este determinată prin combinarea prefixului (opțional) declarat pentru controller cu orice cale specificată în decoratorul metodei. Deoarece am setat un prefix (`cats`) și nu am adăugat nicio cale specifică în decoratorul metodei (`@Get()`), Nest va mapa cererile `GET /cats` către acest handler.
+
+Dacă prefixul controllerului este `cats`, iar decoratorul metodei este `@Get('breed')`, ruta rezultată va fi `GET /cats/breed`.
+
+În exemplul de mai sus, când este efectuată o cerere GET către acest endpoint, Nest direcționează cererea către metoda `findAll()`. Numele metodei alese este complet arbitrar; Nest nu atribuie nicio semnificație numelui metodei, deși declararea ei este obligatorie pentru a lega ruta de o funcție.
+
+Această metodă va returna un cod de stare **200 OK** împreună cu răspunsul asociat (în acest caz, un simplu string). De ce se întâmplă asta? Pentru că Nest folosește două opțiuni diferite pentru manipularea răspunsurilor:
+
+- **Standard (recomandat):** Folosind această metodă nativă, când un handler returnează un obiect sau un array JavaScript, acesta va fi **serializat automat în JSON**. Când returnează un tip primitiv (ex: string, number, boolean), Nest va trimite doar valoarea, fără a încerca să o serializeze. În plus, codul de stare al răspunsului este întotdeauna **200** în mod implicit, cu excepția cererilor POST care folosesc **201**. Putem schimba ușor acest comportament adăugând decoratorul `@HttpCode(...)` la nivel de handler.
+- **Specific librăriei (_Library-specific_):** Putem folosi obiectul de răspuns nativ din librăria folosită în spate (de ex. Express), care poate fi injectat folosind decoratorul `@Res()` în semnatura metodei (ex: `findAll(@Res() response)`). Cu această abordare, ai posibilitatea de a folosi metodele native de manipulare a răspunsului expuse de acel obiect (de exemplu, în Express: `response.status(200).send()`).
+
+> **Atenție:** Nest detectează când un handler folosește fie `@Res()`, fie `@Next()`, semnalând că ai ales opțiunea specifică librăriei. Dacă sunt folosite ambele abordări în același timp, modul Standard este dezactivat automat pentru acea rută. Pentru a le folosi pe ambele simultan (de exemplu, injectând obiectul de răspuns doar pentru a seta cookie-uri/header-e, lăsând restul pe seama framework-ului), trebuie să setezi opțiunea `passthrough` pe `true` în decorator: `@Res({ passthrough: true })`.
+
+---
+
+## Obiectul Cererii (_Request object_)
+
+Handlerele au adesea nevoie de acces la detaliile cererii trimise de client. Nest oferă acces la obiectul cererii (_request object_) din platforma de bază (Express în mod implicit). Poți accesa obiectul cererii instruind Nest să îl injecteze folosind decoratorul `@Req()` în semnătura handlerului:
+
+```typescript
+// cats.controller.ts
+import { Controller, Get, Req } from '@nestjs/common';
+import type { Request } from 'express';
+
+@Controller('cats')
+export class CatsController {
+  @Get()
+  findAll(@Req() request: Request): string {
+    return 'Această acțiune returnează toate pisicile';
+  }
+}
+```
+
+> **Sfat:** Pentru a beneficia de tipurile Express (cum este parametrul `request: Request`), asigură-te că ai instalat pachetul `@types/express`.
+
+Obiectul cererii reprezintă cererea HTTP și conține proprietăți pentru parametrii URL (_query string_), parametri de rută, header-e HTTP și corpul cererii (_body_). În majoritatea cazurilor, nu este nevoie să accesezi manual aceste proprietăți. În schimb, poți folosi decoratori dedicați, cum ar fi `@Body()` sau `@Query()`.
+
+Iată lista decoratorilor incluși și obiectele corespunzătoare din platformă:
+
+| Decorator NestJS          | Obiectul nativ (Express)            |
+| ------------------------- | ----------------------------------- |
+| `@Request()`, `@Req()`    | `req`                               |
+| `@Response()`, `@Res()`\* | `res`                               |
+| `@Next()`                 | `next`                              |
+| `@Session()`              | `req.session`                       |
+| `@Param(key?: string)`    | `req.params` / `req.params[key]`    |
+| `@Body(key?: string)`     | `req.body` / `req.body[key]`        |
+| `@Query(key?: string)`    | `req.query` / `req.query[key]`      |
+| `@Headers(name?: string)` | `req.headers` / `req.headers[name]` |
+| `@Ip()`                   | `req.ip`                            |
+| `@HostParam()`            | `req.hosts`                         |
+
+- Decoratorul `@Res()` este pur și simplu un alias pentru `@Response()`. Când injectezi oricare dintre acești decoratori, treci handlerul în modul _Library-specific_ și devii responsabil de gestionarea răspunsului (trebuie să apelezi `res.json(...)` sau `res.send(...)`, altfel serverul va rămâne blocat în așteptare).
+
+---
+
+## Resurse (_Resources_)
+
+Mai devreme am definit un endpoint pentru preluarea resurselor (ruta GET). În mod obișnuit, vrem să oferim și un endpoint care creează înregistrări noi. Pentru asta, să creăm handlerul POST:
+
+```typescript
+// cats.controller.ts
+import { Controller, Get, Post } from '@nestjs/common';
+
+@Controller('cats')
+export class CatsController {
+  @Post()
+  create(): string {
+    return 'Această acțiune adaugă o pisică nouă';
+  }
+
+  @Get()
+  findAll(): string {
+    return 'Această acțiune returnează toate pisicile';
+  }
+}
+```
+
+Nest oferă decoratori pentru toate metodele HTTP standard: `@Get()`, `@Post()`, `@Put()`, `@Delete()`, `@Patch()`, `@Options()` și `@Head()`. În plus, `@All()` definește un endpoint care le gestionează pe toate.
+
+---
+
+## Caractere jolly în rute (_Route wildcards_)
+
+Rutele bazate pe șabloane (_pattern-based_) sunt de asemenea suportate în NestJS. De exemplu, asteriscul (`*`) poate fi folosit ca wildcard pentru a se potrivi cu orice combinație de caractere la sfârșitul unei căi.
+
+```typescript
+@Get('abcd/*')
+findAll() {
+  return 'Această rută folosește un wildcard';
+}
+
+```
+
+Calea `'abcd/*'` se va potrivi cu `abcd/`, `abcd/123`, `abcd/abc` și așa mai departe. Cratima (`-`) și punctul (`.`) sunt interpretate ad litteram în căile bazate pe string-uri.
+
+> **Notă:** În versiunile recente de Express (v5), sistemul de rutare a devenit mai strict și necesită wildcard-uri cu nume (ex: `abcd/*splat`). Totuși, deoarece Nest oferă un strat de compatibilitate, poți folosi în continuare asteriscul simplu (`*`). Pentru asteriscuri folosite la mijlocul unei rute, Express necesită wildcard-uri numite (ex: `ab{*splat}cd`), în timp ce Fastify nu le suportă deloc.
+
+---
+
+## Coduri de stare (_Status code_)
+
+După cum am menționat, codul de stare implicit este **200**, cu excepția cererilor POST care au implicit **201**. Poți schimba ușor acest comportament folosind decoratorul `@HttpCode(...)`:
+
+```typescript
+@Post()
+@HttpCode(204)
+create() {
+  return 'Această acțiune adaugă o pisică nouă';
+}
+
+```
+
+> **Sfat:** Importă `HttpCode` din pachetul `@nestjs/common`.
+
+Dacă codul de stare este dinamic, poți folosi obiectul de răspuns nativ (injectat cu `@Res()`) sau poți arunca o excepție în caz de eroare.
+
+---
+
+## Header-e de răspuns (_Response headers_)
+
+Pentru a specifica un header personalizat, poți folosi decoratorul `@Header()` sau obiectul de răspuns specific librăriei (apelând `res.header()` direct):
+
+```typescript
+@Post()
+@Header('Cache-Control', 'no-store')
+create() {
+  return 'Această acțiune adaugă o pisică nouă';
+}
+
+```
+
+---
+
+## Redirecționare (_Redirection_)
+
+Pentru a redirecționa un răspuns către un URL specific, poți folosi decoratorul `@Redirect()` sau obiectul de răspuns nativ (`res.redirect()`). `@Redirect()` primește doi parametri opționali: `url` și `statusCode` (valoarea implicită pentru `statusCode` este `302`).
+
+```typescript
+@Get()
+@Redirect('https://nestjs.com', 301)
+
+```
+
+Dacă vrei să determini dinamici URL-ul sau codul de stare, poți returna un obiect ce respectă interfața `HttpRedirectResponse` din `@nestjs/common`, care va suprascrie argumentele din decorator:
+
+```typescript
+@Get('docs')
+@Redirect('https://docs.nestjs.com', 302)
+getDocs(@Query('version') version) {
+  if (version && version === '5') {
+    return { url: 'https://docs.nestjs.com/v5/' };
+  }
+}
+
+```
+
+---
+
+## Parametri de rută (_Route parameters_)
+
+Rutele cu căi statice nu funcționează când trebuie să accepți date dinamice ca parte din URL (ex: `GET /cats/1`). Pentru a defini rute cu parametri, poți adăuga token-uri de parametri în calea rutei, accesați ulterior prin decoratorul `@Param()`:
+
+> **Sfat:** Rutele cu parametri trebuie declarate **după** rutele statice, pentru a preveni interceptarea traficului destinat căilor statice.
+
+```typescript
+@Get(':id')
+findOne(@Param() params: any): string {
+  console.log(params.id);
+  return `Această acțiune returnează pisica cu id-ul #${params.id}`;
+}
+
+```
+
+De asemenea, poți pasa numele parametrului direct în decorator pentru o referire mai curată:
+
+```typescript
+@Get(':id')
+findOne(@Param('id') id: string): string {
+  return `Această acțiune returnează pisica cu id-ul #${id}`;
+}
+
+```
+
+---
+
+## Rutare pe sub-domenii (_Sub-domain routing_)
+
+Decoratorul `@Controller` poate primi o opțiune `host` pentru a impune ca host-ul HTTP al cererilor să se potrivească cu o anumită valoare:
+
+```typescript
+@Controller({ host: 'admin.example.com' })
+export class AdminController {
+  @Get()
+  index(): string {
+    return 'Pagina de administrare';
+  }
+}
+```
+
+> **Atenție:** Deoarece Fastify nu suportă routere imbricate (_nested routers_), dacă folosești rutarea pe sub-domenii este recomandat să folosești adaptorul Express.
+
+Opțiunea `host` poate folosi la rândul ei token-uri dinamice, accesibile prin decoratorul `@HostParam()`:
+
+```typescript
+@Controller({ host: ':account.example.com' })
+export class AccountController {
+  @Get()
+  getInfo(@HostParam('account') account: string) {
+    return account;
+  }
+}
+```
+
+---
+
+## Partajarea stării (_State sharing_)
+
+În Nest, aproape totul este partajat (_shared_) între cererile primite (conexiunile la baza de date, serviciile de tip Singleton cu stare globală etc.). Node.js **nu** folosește modelul _Multi-Threaded Stateless_ cu un fir de execuție separat per cerere. Prin urmare, utilizarea instanțelor Singleton în Nest este complet sigură.
+
+Totuși, există cazuri izolate în care aveți nevoie de un ciclu de viață bazat pe fiecare cerere în parte (_request-scoped_), cum ar fi caching-ul per-request în GraphQL sau multi-tenancy.
+
+---
+
+## Asincronicitate (_Asynchronicity_)
+
+Nest suportă complet funcțiile asincrone (`async/await`). Fiecare funcție `async` trebuie să returneze un `Promise`, permițând returnarea unei valori amânate pe care Nest o va rezolva automat:
+
+```typescript
+// cats.controller.ts
+@Get()
+async findAll(): Promise<any[]> {
+  return [];
+}
+
+```
+
+Nest permite handlere-lor de rute să returneze și stream-uri observabile RxJS (`Observable`). Nest se va abona intern și va emite valoarea finală odată ce stream-ul se încheie:
+
+```typescript
+// cats.controller.ts
+@Get()
+findAll(): Observable<any[]> {
+  return of([]);
+}
+
+```
+
+---
+
+## Datele din cerere (_Request payloads_)
+
+Pentru a primi date într-o cerere POST, folosim decoratorul `@Body()`. În TypeScript, trebuie mai întâi să definim o schemă **DTO** (_Data Transfer Object_).
+
+Recomandăm utilizarea **claselor** în locul interfețelor pentru DTO-uri. Clasele fac parte din standardul ES6, deci rămân entități reale în JavaScript-ul compilat. Interfețele TypeScript sunt eliminate în timpul transpilării, ceea ce împiedică Nest să le consulte la runtime (lucru esențial pentru funcționalități precum Pipes/Validare).
+
+Să creăm clasa `CreateCatDto`:
+
+```typescript
+// create-cat.dto.ts
+export class CreateCatDto {
+  name: string;
+  age: number;
+  breed: string;
+}
+```
+
+Apoi putem folosi DTO-ul în `CatsController`:
+
+```typescript
+// cats.controller.ts
+@Post()
+async create(@Body() createCatDto: CreateCatDto) {
+  return 'Această acțiune adaugă o pisică nouă';
+}
+
+```
+
+> **Sfat:** `ValidationPipe` din Nest poate filtra proprietățile nepermise, eliminându-le automat pe cele care nu se află în DTO.
+
+---
+
+## Parametri de interogare (_Query parameters_)
+
+Pentru a extrage parametri din query string (ex: `GET /cats?age=2&breed=Persian`), folosim decoratorul `@Query()`:
+
+```typescript
+// cats.controller.ts
+@Get()
+async findAll(@Query('age') age: number, @Query('breed') breed: string) {
+  return `Această acțiune returnează pisicile filtrate după vârstă: ${age} și rasă: ${breed}`;
+}
+
+```
+
+Pentru obiecte complexe sau array-uri în query string (ex: `?filter[where][age]=30`), asigură-te că ai configurat parser-ul potrivit în adaptorul HTTP (precum parser-ul `extended` din Express sau pachetul `qs` în Fastify).
+
+---
+
+## Exemplu complet de resursă
+
+Iată un exemplu care demonstrează utilizarea mai multor decoratori pentru a crea un controller CRUD de bază:
+
+```typescript
+// cats.controller.ts
+import {
+  Controller,
+  Get,
+  Query,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+} from '@nestjs/common';
+import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto';
+
+@Controller('cats')
+export class CatsController {
+  @Post()
+  create(@Body() createCatDto: CreateCatDto) {
+    return 'Această acțiune adaugă o pisică nouă';
+  }
+
+  @Get()
+  findAll(@Query() query: ListAllEntities) {
+    return `Această acțiune returnează toate pisicile (limită: ${query.limit} elemente)`;
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return `Această acțiune returnează pisica cu id-ul #${id}`;
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
+    return `Această acțiune actualizează pisica cu id-ul #${id}`;
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return `Această acțiune șterge pisica cu id-ul #${id}`;
+  }
+}
+```
+
+---
+
+## Înregistrarea controllerului (_Getting up and running_)
+
+Controllerele trebuie întotdeauna să aparțină unui modul. Înregistrăm `CatsController` în modulul rădăcină `AppModule`:
+
+```typescript
+// app.module.ts
+import { Module } from '@nestjs/common';
+import { CatsController } from './cats/cats.controller';
+
+@Module({
+  controllers: [CatsController],
+})
+export class AppModule {}
+```
+
+---
+
+## Abordarea specifică librăriei (_Library-specific approach_)
+
+Așa arată rescrierea controllerului folosind direct obiectul de răspuns din Express (`@Res()`):
+
+```typescript
+import { Controller, Get, Post, Res, HttpStatus } from '@nestjs/common';
+import { Response } from 'express';
+
+@Controller('cats')
+export class CatsController {
+  @Post()
+  create(@Res() res: Response) {
+    res.status(HttpStatus.CREATED).send();
+  }
+
+  @Get()
+  findAll(@Res() res: Response) {
+    res.status(HttpStatus.OK).json([]);
+  }
+}
+```
+
+Deși funcționează și oferă control total, codul tău devine dependent de platformă (greu de testat și cu pierderea compatibilității cu Interceptoarele Nest sau decoratorii `@HttpCode()`). Pentru a păstra beneficiile ambelor lumi, activează opțiunea `passthrough`:
+
+```typescript
+@Get()
+findAll(@Res({ passthrough: true }) res: Response) {
+  res.status(HttpStatus.OK);
+  return [];
+}
+
+```

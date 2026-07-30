@@ -1,0 +1,66 @@
+﻿---
+title: 'Intro'
+description: 'Intro'
+order: 1
+category: 'intro'
+level: 'Incepator'
+---
+
+Nest (NestJS) este un framework conceput pentru construirea de aplicații Node.js pe partea de server, eficiente și scalabile.
+Acesta utilizează JavaScript progresiv, este construit nativ și oferă suport complet pentru **TypeScript** (permițând totodată dezvoltatorilor să scrie cod în JavaScript pur) și combină elemente de **POO** (Programare Orientată pe Obiecte), **PF** (Programare Funcțională) și **PRF** (Programare Reactivă Funcțională).
+
+În spate, Nest utilizează framework-uri solide de HTTP Server, precum **Express** (opțiunea implicită), dar poate fi configurat opțional și pentru a folosi **Fastify**!
+
+Nest oferă un nivel de abstracție peste aceste framework-uri populare de Node.js (Express/Fastify), dar expune și API-urile acestora direct către dezvoltator.
+Acest lucru le oferă programatorilor libertatea de a folosi numeroasele module terțe (_third-party_) disponibile pentru platforma de bază.
+
+---
+
+## Filosofie
+
+În ultimii ani, datorită Node.js, JavaScript a devenit un adevărat „lingua franca” al web-ului, atât pentru aplicațiile frontend, cât și pentru cele backend.
+Acest lucru a dus la apariția unor proiecte excelente precum Angular, React și Vue, care îmbunătățesc productivitatea dezvoltatorilor și permit crearea de aplicații frontend rapide, testabile și extensibile.
+Cu toate acestea, deși există o mulțime de librării și instrumente excelente pentru Node (și JavaScript pe server), niciuna dintre ele nu rezolvă eficient principala problemă: **arhitectura**.
+
+Nest oferă o arhitectură gata de utilizare (_out-of-the-box_), care permite dezvoltatorilor și echipelor să creeze aplicații ușor de testat, scalabile, slab cuplate (_loosely coupled_) și simplu de întreținut.
+Arhitectura este puternic inspirată din Angular.
+
+---
+
+## Instalare
+
+Pentru a începe, poți generat structura proiectului folosind **Nest CLI** sau poți clona un proiect de start (ambele variante oferă același rezultat).
+
+Pentru a genera proiectul cu Nest CLI, rulează următoarele comenzi.
+Aceasta va crea un director nou pentru proiect și îl va popula cu fișierele de bază Nest și modulele suport, oferind o structură convențională de la care să pornești.
+Generarea unui proiect nou cu Nest CLI este metoda recomandată pentru cei aflați la primul contact cu framework-ul.
+
+```bash
+$ npm i -g @nestjs/cli
+$ nest new nume-proiect
+
+```
+
+> **Sfat:** Pentru a crea un proiect TypeScript cu reguli mai stricte de verificare, adaugă flag-ul `--strict` la comanda `nest new`.
+
+---
+
+### Alternative
+
+Alternativ, pentru a instala proiectul de start cu TypeScript folosind Git:
+
+```bash
+$ git clone https://github.com/nestjs/typescript-starter.git proiect
+$ cd proiect
+$ npm install
+$ npm run start
+
+```
+
+> **Sfat:** Dacă vrei să clonezi depozitul fără istoricul de Git, poți folosi utilitarul `degit`.
+
+Deschide browserul și accesează `http://localhost:3000/`.
+
+Pentru a instala varianta în JavaScript a proiectului de start, folosește `javascript-starter.git` în secvența de comenzi de mai sus.
+
+De asemenea, poți începe un proiect complet de la zero prin instalarea pachetelor principale. Reține însă că va trebui să configurezi singur fișierele de bază (_boilerplate_). Ca cerință minimă, vei avea nevoie de aceste dependențe: `@nestjs/core`, `@nestjs/common`, `rxjs` și `reflect-metadata`.
