@@ -1,0 +1,105 @@
+﻿---
+title: 'Planificarea nivelurilor'
+description: 'Planificarea nivelurilor'
+order: 1
+category: 'Fadere'
+level: 'Incepator'
+---
+
+O întrebare comună pe care probabil fiecare inginer de mixaj și-a pus-o cel puțin o dată este: _Care fader urcă primul și unde mai exact trebuie poziționat?_ Există câteva lucruri pe care trebuie să le luăm în considerare pentru a răspunde la această întrebare.
+
+**Faderelor le place să urce.** Nu ar trebui să fie o surpriză dacă, pe parcursul unei sesiuni de mixaj, toate faderele urcă unul câte unul — de mai multe ori — ajungând în final exact în aceleași poziții relative.
+Acesta este rezultatul axiomului _„ce se aude mai tare se percepe ca fiind mai bun”_.
+
+Iată un exemplu despre cât de ușor pot scăpa lucrurile de sub control: asculți mixajul și realizezi că nu ești sigur de nivelul dobei mici (_snare_).
+Așa că decizi să o amplifici. Acest lucru o va face, cel mai probabil, mai definită, deci mișcarea pare să fie cea corectă.
+Câteva momente mai târziu, când lucrezi la voce, îți dai seama că aceasta nu mai iese în evidență, deoarece doba mică este aproape la fel de tare.
+Așa că amplifici vocea. Acum vocea iese în evidență cum trebuie.
+Apoi observi că doba mare (_kick_) pare prea slabă, din moment ce doba mică este mult mai tare.
+Așa că amplifici doba mare.
+Dar acum îți lipsește ambianța setului de dobe, așa că amplifici microfoanele de overhead, apoi tom-urile, apoi cinelele, apoi basul, apoi chitarele... și, înainte să-ți dai seama, ești înapoi de unde ai plecat — ești din nou nesigur în privința dobei mici.
+
+**Faderelor le place să urce.** Există câteva moduri de a rezolva acest sindrom ciclic:
+
+1. Înțelege că faderele sunt cele mai puțin sofisticate instrumente pentru a face ceva să iasă în evidență.
+2. Ascultarea din perspectiva întregului mixaj (_mix-perspective_) reduce la minimum posibilitatea de a face mișcări individuale de nivel.
+3. Este nevoie de puțină disciplină pentru a te ține de plan, mai ales când vine vorba de amplificări de nivel.
+
+După ce asimilezi aceste trei idei, s-ar putea să constați totuși că faderelor le place în continuare să urce.
+Așadar, soluția supremă este aceasta: **lasă la dispoziție o rezervă suplimentară de amplificare (_extra gain_)**.
+
+Blocajul cauzat de epuizarea rezervei de amplificare (_extra-gain dead-end_) este ilustrat în Figura 13.6.
+
+<div className="my-4 flex justify-center">
+    <img
+        src="/images/mixing/13-6.jpg"
+        alt="Figura 13.6"
+        className="h-auto w-full max-w-xs"
+
+    />
+
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 13.6: </strong>Blocajul cauzat de epuizarea rezervei de
+  amplificare (extra-gain dead-end). Pista de voce se află în poziția maximă de
+  +12 dB, ceea ce înseamnă că faderul nu mai poate aplica nicio amplificare
+  suplimentară de nivel dacă ar fi nevoie.
+</p>
+
+Acesta apare atunci când un fader este împins până la capătul superior, dar instrumentul ar mai avea totuși nevoie de puțin volum.
+Acest scenariu poate fi rezolvat în diverse moduri, dar ar fi mult mai simplu să planifici nivelurile corect încă de la început, astfel încât acest blocaj să nu apară niciodată.
+
+Am spus deja că rezerva de amplificare a faderului este bine să fie păstrată pentru situații de urgență. Prin urmare, în etapa inițială a mixajului, în mod normal nu ne dorim niciun fader peste 0 dB. Dacă luăm în calcul și faptul că faderelor le place să urce, ar fi înțelept să lăsăm o rezervă și mai mare, astfel încât să rămână o anumită distanță de parcurs înainte de a începe să folosim _extra-gain-ul_. De exemplu, ar fi o idee bună să începi mixajul prin setarea celui mai tare instrument la **–6 dB** (ceea ce îți oferă 6 dB de amplificare virtuală suplimentară, pe lângă rezerva standard).
+
+Planificarea nivelurilor necesită setarea mai întâi a celui mai tare instrument din mixaj, iar apoi a celorlalte fadere în raport cu acesta.
+Un exemplu de mișcări inițiale pentru o producție în care se așteaptă ca vocea principală să fie cel mai tare element ar implica:
+
+- Setarea pistei de voce principală la –6 dB;
+- Setarea nivelului microfoanelor de overhead în raport cu vocea principală;
+- Pista de voce poate fi apoi pusă pe _mute_ dacă dorești să începi mixajul propriu-zis de la tobe.
+
+Mixajele brute (_rough mixes_) pot fi de asemenea de ajutor — dacă un mixaj brut se încheie cu cel mai ridicat fader la +4 dB, acel fader ar trebui să fie la 0 dB (sau puțin sub) în mixajul final, iar restul nivelurilor să fie setate prin comparație cu acest nivel.
+O altă strategie este crearea unui mixaj rapid de balans (doar din fadere) al pistelor cheie înainte de a începe mixajul propriu-zis, ajustând apoi nivelurile faderelor astfel încât cel mai ridicat fader să fie fix la 0 dB sau puțin sub.
+
+**Regulă:** Setează nivelurile inițiale în raport cu ceea ce crezi că va fi cel mai tare instrument din mixaj.
+
+Aceasta este versiunea digitală a planificării nivelurilor.
+Mixajul analogic funcționează puțin diferit, dar putem împrumuta din înțelepciunea analogică în beneficiul domeniului digital.
+Spre deosebire de secvențioasele software (DAW-uri), consolele analogice nu au o limită rigidă de suprasolicitare (_hard clipping threshold_) — nivelurile pot depăși 0 dB.
+Când planifică nivelurile pe echipamente analogice, inginerii se uită uneori la indicatoarele **VU-meter** — o indicare mult mai bună a volumului perceput (_loudness_) decât indicatoarele de vârf (_peak meters_) dintr-un mixer software.
+Cineva ar putea mixa o piesă dance în Logic și ar putea începe prin a seta doba mare la –6 dB.
+Apoi, când este introdus un alt instrument, acesta ar putea avea nevoie de amplificare suplimentară și poate ajunge la capătul de cursă al faderului.
+Utilizarea unui indicator VU-meter în primele etape ale planificării nivelurilor poate fi la fel de benefică și în mediul digital.
+
+### **Experimentul „de la extreme spre interior”**
+
+Uneori, deciziile legate de nivel sunt greu de luat și ne este dificil să stabilim cât de tare ar trebui să se audă un anumit instrument.
+Experimentul „de la extreme spre interior” (_extremes-inward experiment_) poate fi de ajutor în aceste situații.
+Așa cum este ilustrat în Figura 13.7, procesul este următorul:
+
+- Trage faderul complet în jos.
+- Ridică-l treptat până când nivelul ți se pare rezonabil.
+- Marchează poziția faderului.
+- Urcă faderul complet în sus (sau până într-un punct în care instrumentul este clar prea tare).
+- Coboară-l treptat până când nivelul ți se pare rezonabil.
+- Marchează poziția faderului.
+- Acum ar trebui să ai două marcaje care definesc limitele unei „ferestre” de nivel.
+  Setează nivelul instrumentului în interiorul acestei ferestre, în funcție de importanța instrumentului.
+
+Dacă în urma experimentului constați că fereastra este prea lată — de exemplu, mai mare de 6 dB —, acest lucru sugerează că aplicarea unei compresii sau a unei egalizări ar putea fi benefică.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/13-7.jpg"
+    alt="Figura 13.7"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 13.7: </strong>O ilustrare a experimentului „de la extreme spre
+  interior”.
+</p>
+
+{/* am ramas 14 Panning .202 */}

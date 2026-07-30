@@ -1,0 +1,72 @@
+﻿---
+title: 'Scarile de masura'
+description: 'Scarile de masura'
+order: 1
+category: 'Scarile de masura'
+level: 'Incepator'
+---
+
+### **Scările de măsură**
+
+Figura 13.4 prezintă o scară tipică de fader.
+
+<div className="my-4 flex justify-center">
+    <img
+        src="/images/mixing/13-4.jpg"
+        alt="Figura 13.4"
+        className="h-auto w-full max-w-xs"
+
+    />
+
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 13.4: </strong> O scara de masrua tipica la fadere
+</p>
+
+Există probabil la fel de multe tipuri de scări de fader câți producători și dezvoltatori de software există.
+Deși numerele efective pot fi diferite, principiile discutate în această secțiune sunt comune pentru majoritatea faderelor.
+
+Unitatea de măsură tipică pentru scară este decibelul (dB), care se află într-o strânsă legătură cu modul în care urechea noastră percepe volumul sonor (_loudness_).
+Cel mai adesea, pașii gradați se bazează fie pe intervale de 10 dB (ceea ce subiectiv reprezintă o dublare sau o reducere la jumătate a volumului perceput), fie de 6 dB (ceea ce reprezintă aproximativ dublarea sau reducerea la jumătate a tensiunii sau a valorii eșantionului).
+
+Punctul de 0 dB este cunoscut și sub numele de **unity gain** (amplificare unitară) — o poziție în care faderul nici nu amplifică, nici nu atenuează nivelul semnalului.
+Orice poziție deasupra valorii de 0 dB indică o amplificare (_boost_) a nivelului, în timp ce tot ce se află dedesubt reprezintă o atenuare.
+
+Majoritatea faderelor pot amplifica semnalul; prin urmare, ele oferă o rezervă de amplificare (_extra-gain_).
+Valori obișnuite pentru această rezervă sunt de 6, 10 și 12 dB.
+Ar trebui să privim acest _extra-gain_ ca pe o zonă de urgență — folosirea lui implică o structură de câștig (_gain structure_) neoptimală și posibile degradări (adesea minore) ale sunetului.
+Ideal este ca această amplificare suplimentară să nu fie folosită, cu excepția rarei ocazii în care toate nivelurile din mixaj sunt stabilite, dar o anumită pistă mai are totuși nevoie de o ușoară împingere peste nivelul de _unity gain_.
+
+În partea cea mai de jos a scării se află **–∞** (minus infinit), o poziție în care semnalul devine inaudibil (obținută adesea printr-o atenuare de 120 dB sau mai mult, deși unele console analogice pur și simplu întrerup semnalul când faderul ajunge în această poziție).
+
+Un lucru foarte important care devine evident din Figura 13.5 este că, deși pașii de pe scară sunt distribuiți uniform din punct de vedere vizual, diferențele de dB dintre ei nu sunt constante.
+
+<div className="my-4 flex justify-center">
+    <img
+        src="/images/mixing/13-5.jpg"
+        alt="Figura 13.5"
+        className="h-auto w-full max-w-xs"
+
+    />
+
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 13.5: </strong>O demonstrație a scării neuniforme a faderului.
+  Aceste opt fadere din Pro Tools sunt setate la intervale de câte –10 dB.
+  Aceasta arată cât de greu poate fi să setezi orice valoare în intervalul
+  cuprins între –70 și –60 dB, în timp ce în intervalul cuprins între –20 și 0
+  dB este destul de ușor. Tastele de modificare (modifier keys) pot fi folosite
+  în combinație cu mișcările mouse-ului pentru a obține rezultate mai precise.
+</p>
+
+În partea de sus a scării (între –10 dB și +10 dB), pașii sunt din 5 în 5 dB; în partea de jos (–30 până la –70 dB), pașii sunt din 20 în 20 dB.
+Aceasta înseamnă că mișcarea faderului în zona sa inferioară va provoca schimbări de nivel mult mai drastice decât mișcarea lui în zona superioară.
+
+O altă cale de a privi acest lucru este că în zona superioară a faderului ajustările de nivel sunt mult mai precise — lucru pe care evident ni-l dorim în timpul mixajului.
+Acest lucru sugerează că este de dorit să menținem faderele în zona de înaltă rezoluție a scării; atât timp cât nu folosim _extra-gain_, zona cuprinsă între **–20 dB și 0 dB** este cea mai critică.
+O funcție utilă prezentată de unele secvențioase audio (DAW-uri) este posibilitatea de a introduce manual nivelul dorit de la tastatură sau de a avea un control mai precis asupra poziției faderului folosind taste de modificare (_modifier keys_).
+
+O altă consecință a scării neuniforme este că, atunci când automatizăm manual faderul în timp real (_gain riding_), cu cât acesta coboară mai mult, cu atât atenuarea devine mai drastică (și efectul opus atunci când îl ridicăm).
+Dacă facem un _fade out_ pe o pistă, de exemplu, s-ar putea să fie nevoie să încetinim mișcarea pe măsură ce ne apropiem de capătul inferior al scării.
