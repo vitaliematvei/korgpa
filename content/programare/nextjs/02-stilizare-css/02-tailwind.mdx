@@ -1,0 +1,58 @@
+---
+title: 'Tailwind'
+description: 'Tailwind'
+order: 2
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Tailwind este un cadru de lucru (_framework_) CSS care accelerează procesul de dezvoltare, permițându-ți să scrii rapid clase utilitare direct în codul tău React.
+
+În Tailwind, stilizezi elementele adăugându-le nume de clase.
+De exemplu, adăugarea clasei `"text-blue-500"` va face textul dintr-un `<h1>` albastru:
+
+```tsx
+<h1 className="text-blue-500">Sunt albastru!</h1>
+```
+
+Deși stilurile CSS sunt partajate la nivel global, fiecare clasă este aplicată individual fiecărui element.
+Acest lucru înseamnă că, dacă adaugi sau ștergi un element, nu trebuie să-ți faci griji pentru întreținerea fișierelor de stil separate, pentru conflictele de stiluri (_style collisions_) sau pentru creșterea dimensiunii pachetului CSS pe măsură ce aplicația ta se extinde.
+
+Când folosești `create-next-app` pentru a începe un proiect nou, Next.js te va întreba dacă vrei să folosești Tailwind. Dacă selectezi _yes_, Next.js va instala automat pachetele necesare și va configura Tailwind în aplicația ta.
+
+Dacă te uiți în `/app/page.tsx`, vei vedea că folosim clase Tailwind în exemplu:
+
+**/app/page.tsx**
+
+```tsx
+import AcmeLogo from '@/app/ui/acme-logo';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
+
+export default function Page() {
+  return (
+    // Acestea sunt clase Tailwind:
+    <main className="flex min-h-screen flex-col p-6">
+      <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
+    // ...
+  );
+}
+
+```
+
+Nu-ți face griji dacă este prima dată când folosești Tailwind. Pentru a economisi timp, am stilizat deja toate componentele pe care le vei folosi.
+
+Haidem să ne jucăm puțin cu Tailwind! Copiază codul de mai jos și lipește-l deasupra elementului `<p>` în `/app/page.tsx`:
+
+**/app/page.tsx**
+
+```tsx
+<div
+  className="relative w-0 h-0 border-l-[15px] border-r-[15px] border-b-[26px] \
+ border-l-transparent border-r-transparent border-b-black"
+/>
+```
+
+Se va afisa un triunghi negru
+
+{/* am ramas la https://nextjs.org/learn/dashboard-app/css-styling CSS MODULE */}

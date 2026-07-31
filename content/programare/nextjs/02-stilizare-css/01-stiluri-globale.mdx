@@ -1,0 +1,61 @@
+﻿---
+title: 'Stiluri globale'
+description: 'Stiluri globale'
+order: 1
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Dacă te uiți în interiorul folderului `/app/ui`, vei vedea un fișier numit `global.css`. Poți folosi acest fișier pentru a adăuga reguli CSS tuturor rutelor din aplicația ta — cum ar fi reguli de resetare CSS, stiluri generale la nivel de site pentru elemente HTML precum link-urile și multe altele.
+
+Poți importa `global.css` în orice componentă din aplicație, însă o bună practică este să îl adaugi în componenta de nivel superior (_top-level component_). În Next.js, acesta este layout-ul rădăcină (_root layout_, despre care vom vorbi mai târziu).
+
+Adaugă stilurile globale în aplicația ta navigând la `/app/layout.tsx` și importând fișierul `global.css`:
+
+**/app/layout.tsx**
+
+```tsx
+import '@/app/ui/global.css';
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+Cu serverul de dezvoltare încă pornit, salvează modificările și previzualizează-le în browser. Pagina ta principală ar trebui să arate acum așa:
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/nextjs/2.jpg"
+    alt="Figura 2"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 2: </strong>CSS
+</p>
+
+Iată adaptarea în limba română:
+
+---
+
+Dar stai puțin, nu ai adăugat nicio regulă CSS, de unde au apărut stilurile?
+
+Dacă arunci o privire în interiorul fișierului `global.css`, vei observa câteva directive `@tailwind`:
+
+**/app/ui/global.css**
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```

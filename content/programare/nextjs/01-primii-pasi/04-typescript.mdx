@@ -1,0 +1,34 @@
+---
+title: 'TypeScript'
+description: 'TypeScript'
+order: 4
+category: 'NextJS'
+level: 'Incepator'
+---
+
+De asemenea, vei observa că majoritatea fișierelor au extensia `.ts` sau `.tsx`. Acest lucru se datorează faptului că proiectul este scris în TypeScript. Am vrut să creăm un curs care să reflecte ecosistemul web modern.
+
+Este în regulă dacă nu știi TypeScript — îți vom oferi secvențele de cod TypeScript atunci când va fi necesar.
+
+Pentru moment, aruncă o privire peste fișierul `/app/lib/definitions.ts`. Aici definim manual tipurile de date care vor fi returnate din baza de date. De exemplu, tabelul `invoices` are următoarele tipuri:
+
+**/app/lib/definitions.ts**
+
+```typescript
+export type Invoice = {
+  id: string;
+  customer_id: string;
+  amount: number;
+  date: string;
+  // În TypeScript, acesta se numește "string union type".
+  // Înseamnă că proprietatea "status" poate fi doar unul dintre cele două șiruri: 'pending' sau 'paid'.
+  status: 'pending' | 'paid';
+};
+```
+
+Folosind TypeScript, te poți asigura că nu treci accidental un format greșit de date către componente sau baza de date (cum ar fi transmiterea unui _string_ în loc de _number_ pentru valoarea facturii).
+
+**Dacă ești dezvoltator TypeScript:**
+
+- Noi declarăm tipurile de date manual, dar pentru o mai bună siguranță a tipurilor (_type-safety_), îți recomandăm Prisma sau Drizzle, care generează automat tipurile pe baza schemei bazei tale de date.
+- Next.js detectează dacă proiectul tău folosește TypeScript și instalează automat pachetele și configurațiile necesare. De asemenea, Next.js vine cu un plugin TypeScript pentru editorul tău de cod, pentru a te ajuta cu completarea automată (_auto-completion_) și siguranța tipurilor.
