@@ -1,0 +1,142 @@
+---
+title: 'Procesorul audio (Audio processor)'
+description: 'Procesorul audio (Audio processor)'
+order: 2
+category: 'JUCE'
+level: 'Incepator'
+---
+
+## Procesorul audio (_Audio processor_)
+
+În prezent, codul plug-in-ului este format din două obiecte:
+
+- **`DelayAudioProcessorEditor`**: Se ocupă de interfața cu utilizatorul (UI) a plug-in-ului. Ai experimentat scurt cu acesta în capitolul anterior.
+- **`DelayAudioProcessor`**: Este obiectul principal al plug-in-ului. El gestionează comunicarea cu gazda (_host-ul_ / DAW-ul) și îndeplinește cel mai important rol pe care îl poate avea un plug-in: procesează semnalul audio (de unde și numele său).
+
+Până la sfârșitul acestui capitol ar trebui să ai o înțelegere destul de bună despre cum funcționează `DelayAudioProcessor` și ce părți trebuie să modifici pentru a-ți realiza propria procesare audio.
+
+Codul pentru `DelayAudioProcessor` se află în două fișiere: `PluginProcessor.h` și `PluginProcessor.cpp`. Ne vom uita mai întâi la fișierul de antet (_header file_).
+
+Deschide `PluginProcessor.h` în IDE. Sărind peste câteva linii de la început, fișierul conține următorul cod:
+
+```cpp
+class DelayAudioProcessor : public juce::AudioProcessor
+{
+public:
+    //=========================================================================
+    DelayAudioProcessor();
+    ~DelayAudioProcessor() override;
+
+    //=========================================================================
+    void prepareToPlay (double sampleRate, int samplesPerBlock) override;
+    void releaseResources() override;
+
+#ifndef JucePlugin_PreferredChannelConfigurations
+    bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
+#endif
+
+    void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+
+    // ...alte funcții omise...
+
+private:
+    //=========================================================================
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DelayAudioProcessor)
+};
+
+```
+
+Fișierul de antet (`.h`) îi spune compilatorului că plug-in-ul nostru are un obiect numit `DelayAudioProcessor`. De asemenea, el listează funcțiile care aparțin acestui obiect.
+
+În general, definirea unui obiect în C++ are această formă:
+
+```cpp
+class DelayAudioProcessor : public juce::AudioProcessor
+{
+    // ... tot ce aparține acestui obiect ...
+};
+
+```
+
+Prima linie spune că `DelayAudioProcessor` este un obiect nou, bazat pe un alt obiect: `juce::AudioProcessor`.
+
+Obiectul `juce::AudioProcessor` este furnizat de JUCE și știe absolut totul despre modul de comunicare cu host-ul. Făcând ca propriul nostru obiect să moștenească (_inherit_) funcționalitatea din `juce::AudioProcessor`, nu trebuie să scriem noi înșine tot codul de comunicare cu host-ul. În schimb, trebuie să scriem doar funcțiile care se ocupă de procesarea audio specifică plug-in-ului nostru.
+
+Tot ce aparține obiectului `DelayAudioProcessor` se află între acoladele `{` și `}`. După acolada de închidere `}` trebuie să existe un punct și virgulă `;` — acest punct și virgulă este adesea omis din neatenție, însă uitarea lui duce la o eroare de compilare.
+
+Următoarea linie după acolada de deschidere `{` este:
+
+```cpp
+public:
+
+```
+
+Un obiect are părți publice (_public_) și private (_private_). Tot ce urmează după `public:` este vizibil pentru alte obiecte din program. Tot ce urmează după `private:` poate fi utilizat doar de către `DelayAudioProcessor` însuși.
+
+Ca o analogie, gândește-te la o mașină. Elementele de comandă necesare pentru a conduce mașina, cum ar fi volanul și pedala de accelerație, sunt accesibile șoferului (`public`), dar motorul este ascuns sub capotă (`private`) și nu este ceva de care trebuie să te ocupi în mod normal în timp ce conduci.
+
+Celelalte linii din fișierul `.h` declară funcțiile pe care `DelayAudioProcessor` trebuie să le ofere pentru a acționa ca un plug-in corespunzător. Ori de câte ori host-ul are nevoie ca plug-in-ul să facă ceva, el va apela funcția corespunzătoare.
+
+În această carte vom lucra în special cu următoarele funcții:
+
+```cpp
+DelayAudioProcessor();
+
+```
+
+O funcție cu același nume ca al obiectului este un **constructor**. Când host-ul încarcă plug-in-ul în memoria computerului, o face folosind constructorul.
+
+```cpp
+~DelayAudioProcessor() override;
+
+```
+
+Există o altă funcție cu același nume ca al obiectului, dar cu un tilde `~` în față. Acesta este **destructorul**. Dacă utilizatorul elimină plug-in-ul de pe o piesă/canal, host-ul descarcă plug-in-ul din memoria computerului apelând destructorul.
+
+```cpp
+void prepareToPlay (double sampleRate, int samplesPerBlock) override;
+
+```
+
+Host-ul apelează `prepareToPlay` atunci când dorește să înceapă redarea semnalului audio prin acest plug-in. Notificarea în avans îi oferă plug-in-ului ocazia de a se pregăti. De exemplu, plug-in-ul nostru de Delay va folosi `prepareToPlay` pentru a rezerva suficient spațiu liber în memoria computerului pentru a stoca până la 5 secunde de sunet stereo.
+
+Această funcție are doi parametri: rata de eșantionare (_sample rate_) și dimensiunea maximă a blocului de date (_samplesPerBlock_). Amintește-ți că semnalul audio este procesat în grupuri de mai multe eșantioane simultan, cunoscute sub numele de blocuri (_blocks_). Prin parametrul `samplesPerBlock`, host-ul îi comunică plug-in-ului la ce dimensiune a blocului să se aștepte.
+
+```cpp
+void releaseResources() override;
+
+```
+
+Funcția `releaseResources` este omologul lui `prepareToPlay`. Este apelată atunci când host-ul a oprit redarea audio și este utilizată pentru a lăsa plug-in-ul să elibereze resursele de care nu mai are nevoie.
+
+```cpp
+#ifndef JucePlugin_PreferredChannelConfigurations
+bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
+#endif
+
+```
+
+Host-ul va transporta datele audio către și de la plug-in prin intermediul unui magistrale de semnal (_bus_). Această terminologie provine de la consolele de mixaj fizice și se referă la modul în care semnalul audio este rutat între diferite părți ale consolei. Funcția `isBusesLayoutSupported` negociază cu host-ul dacă magistralele utilizate vor fi mono, stereo sau dacă vor avea chiar mai multe canale.
+
+_Notă: Directivele `#ifndef` și `#endif` care înconjoară această funcție vor dezactiva `isBusesLayoutSupported` dacă este utilizată o opțiune din Projucer numită **Plugin Channel Configurations**. Noi am lăsat această opțiune necompletată, astfel încât plug-in-ul nostru va folosi funcția `isBusesLayoutSupported`. Menționez acest lucru doar pentru că vei întâlni și alte directive `#ifndef` și `#if` în cod, așa că acum știi că acestea sunt folosite pentru a activa sau dezactiva opțiuni de configurare din Projucer._
+
+Cea mai importantă funcție din `DelayAudioProcessor` este `processBlock`:
+
+```cpp
+void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+
+```
+
+Aici are loc **DSP**-ul (_Digital Signal Processing_ / procesarea digitală de semnal). În interiorul acestei funcții vei plasa codul de procesare audio al plug-in-ului.
+
+Host-ul apelează funcția `processBlock` de câteva sute sau chiar mii de ori pe secundă, în funcție de rata de eșantionare și dimensiunea blocului selectate. Nu-i așa că e uimitor? Acest lucru înseamnă că orice se întâmplă în `processBlock` trebuie să fie extrem de rapid, altfel va depăși limita de timp (_deadline-ul_) pentru procesarea audio!
+
+```cpp
+void getStateInformation (juce::MemoryBlock& destData) override;
+void setStateInformation (const void* data, int sizeInBytes) override;
+
+```
+
+Aceste două funcții sunt utilizate de host pentru a salva și restaura valorile parametrilor plug-in-ului. Acest lucru îi permite utilizatorului să își salveze sesiunea din DAW și să o reîncarce ulterior. Utilizatorii nu ar aprecia deloc dacă plug-in-ul ar uita valorile parametrilor săi!
+
+Exista mult mai multe funcții în `DelayAudioProcessor`, dar pentru majoritatea plug-in-urilor este suficient să le implementăm pe cele la care tocmai ne-am uitat.

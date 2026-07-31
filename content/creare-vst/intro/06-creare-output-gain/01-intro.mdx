@@ -1,0 +1,44 @@
+﻿---
+title: 'Intro'
+description: 'Intro'
+order: 1
+category: 'JUCE'
+level: 'Incepator'
+---
+
+În capitolul anterior ai gustat puțin din scrierea de cod când ai modificat funcția `paint` a obiectului de editor (_editor object_) al plug-in-ului.
+În acest capitol vei scrie cod „pe bune” și vei face plug-in-ul să proceseze propriu-zis semnal audio.
+
+Vei începe cu proiectul clasic pentru începători în programarea audio: crearea unui control de amplificare (_gain control_).
+În domeniul audio, _gain-ul_ (amplificarea) reprezintă o modificare a amplitudinii sunetului.
+În mare, amplitudinea corespunde cu cât de tare sau cât de încet se aude sunetul.
+Un gain mare înseamnă un volum mai ridicat.
+
+Multe plug-in-uri au un buton rotativ (_knob_) pentru a seta gain-ul de ieșire (_Output Gain_), compansând astfel orice creșteri sau scăderi de nivel rezultate în urma procesării audio.
+Plug-in-ul nostru de Delay va avea și el nevoie de un astfel de control.
+
+Conturul roșu evidențiază partea din plug-in pe care o vei construi în acest capitol și în următorul: Pentru moment ne vom concentra doar pe partea de procesare audio a plug-in-ului, urmând să creăm interfața grafică (UI) într-un capitol ulterior. Înainte de a începe să scriem codul pentru gain, să facem mai întâi un tur al obiectului procesor audio (_audio processor object_).Iată adaptarea în limba română, păstrând termenii din domeniul dezvoltării audio/plug-in-urilor clari și naturali:
+
+---
+
+În capitolul anterior ai gustat puțin din scrierea de cod când ai modificat funcția `paint` a obiectului de editor (_editor object_) al plug-in-ului. În acest capitol vei scrie cod „pe bune” și vei face plug-in-ul să proceseze propriu-zis semnal audio.
+
+Vei începe cu proiectul clasic pentru începători în programarea audio: crearea unui control de amplificare (_gain control_). În domeniul audio, _gain-ul_ (amplificarea) reprezintă o modificare a amplitudinii sunetului. În mare, amplitudinea corespunde cu cât de tare sau cât de încet se aude sunetul. Un gain mare înseamnă un volum mai ridicat.
+
+Multe plug-in-uri au un buton rotativ (_knob_) pentru a seta gain-ul de ieșire (_Output Gain_), compansând astfel orice creșteri sau scăderi de nivel rezultate în urma procesării audio. Plug-in-ul nostru de Delay va avea și el nevoie de un astfel de control.
+
+Conturul roșu evidențiază partea din plug-in pe care o vei construi în acest capitol și în următorul: Pentru moment ne vom concentra doar pe partea de procesare audio a plug-in-ului, urmând să creăm interfața grafică (UI) într-un capitol ulterior.
+Înainte de a începe să scriem codul pentru gain, să facem mai întâi un tur al obiectului procesor audio (_audio processor object_).
+
+<div className="my-4 flex justify-center">
+
+  <img
+    src="/images/vst/juce/57.jpg"
+    alt="Figura 57"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 57: </strong> Output Gain (marcat cu rosu)
+</p>

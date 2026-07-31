@@ -1,0 +1,122 @@
+---
+title: 'Aplicarea gain-ului (Applying gain)'
+description: 'Aplicarea gain-ului (Applying gain)'
+order: 4
+category: 'JUCE'
+level: 'Incepator'
+---
+
+## Aplicarea gain-ului (_Applying gain_)
+
+Modificarea nivelului unui semnal audio este pur și simplu o operație de înmulțire.
+
+De exemplu, dacă înmulțești fiecare eșantion (_sample_) din semnal cu `0.5`, noua amplitudine va fi la jumătate.
+
+Acest lucru nu înseamnă că sunetul se va auzi neapărat de două ori mai încet — amplitudinea este legată de senzația de volum (_loudness_), dar nu sunt exact același lucru —, însă cu siguranță va fi mai silențios decât înainte.
+
+Haide să implementăm cea mai simplă formă de gain posibilă. Mergi în `PluginProcessor.cpp` și caută funcția `processBlock`. Așa cum am menționat, acesta este locul în care plug-in-ul va realiza procesarea audio propriu-zisă.
+
+În prezent, codul arată astfel (am ajustat câteva linii pentru a se încadra mai bine în pagină):
+
+```cpp
+void DelayAudioProcessor::processBlock (
+    juce::AudioBuffer<float>& buffer,
+    juce::MidiBuffer& midiMessages)
+{
+    juce::ScopedNoDenormals noDenormals;
+    auto totalNumInputChannels = getTotalNumInputChannels();
+    auto totalNumOutputChannels = getTotalNumOutputChannels();
+
+    // În cazul în care avem mai multe ieșiri decât intrări...
+    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+        buffer.clear (i, 0, buffer.getNumSamples());
+
+    for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    {
+        auto* channelData = buffer.getWritePointer (channel);
+        // ..fă ceva cu datele...
+    }
+}
+```
+
+Înlocuiește următoarea secțiune de cod:
+
+```cpp
+for (int channel = 0; channel < totalNumInputChannels; ++channel)
+{
+    auto* channelData = buffer.getWritePointer (channel);
+    // ..fă ceva cu datele...
+}
+
+```
+
+cu această singură linie:
+
+```cpp
+buffer.applyGain(0.5f);
+
+```
+
+Astfel, omitând comentariile pentru scurtime, funcția `processBlock` va arăta așa:
+
+```cpp
+void DelayAudioProcessor::processBlock (
+    juce::AudioBuffer<float>& buffer,
+    juce::MidiBuffer& midiMessages)
+{
+    juce::ScopedNoDenormals noDenormals;
+    auto totalNumInputChannels = getTotalNumInputChannels();
+    auto totalNumOutputChannels = getTotalNumOutputChannels();
+
+    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+        buffer.clear (i, 0, buffer.getNumSamples());
+
+    buffer.applyGain(0.5f);
+}
+
+```
+
+Aceasta este tot ce vom face pentru moment. Compilează proiectul (_Build_) și rulează-l în **AudioPluginHost**. Treci un semnal audio prin el. Ar trebui să auzi în continuare sunetul, dar va fi mai încet decât înainte. La urma urmei, i-am tăiat amplitudinea la jumătate!
+
+Pentru a verifica dacă plug-in-ul funcționează într-adevăr așa cum trebuie, în timp ce sunetul rulează, dă clic dreapta pe blocul **Delay** din AudioPluginHost și alege **Toggle Bypass** din meniul contextual.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/vst/juce/58.jpg"
+    alt="Figura 58"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 58: </strong> Bypass Delay plug-in
+</p>
+
+Blocul Delay va deveni gri (ceea ce înseamnă că plug-in-ul este dezactivat / trecut în bypass), iar sunetul ar trebui să revină la volumul său original. Dacă nu poți auzi clar diferența, încearcă să folosești căști. De asemenea, ești liber să încerci asta în DAW-ul tău preferat și să comuți butonul de bypass al DAW-ului pentru a auzi diferența, sau să urmărești vumetru-ul (_level meter_) de pe consola de mixaj.
+
+Experimentează și cu alte valori pentru gain în afară de `0.5f`. Nu uita să pui litera `f` după număr, pentru a indica faptul că este un număr în virgulă mobilă de tip `float`.
+
+Câteva recomandări utile:
+
+- **Atenție la valorile mai mari de `1.0f**`, deoarece acestea vor crește nivelul semnalului.
+- Un gain de **`1.0f`** nu are niciun efect, deoarece înmulțirea cu 1 nu schimbă nimic.
+- Un gain de **`0.0f`** creează silențiozitate / liniște completă.
+- Valorile mai mici de **`0.0f`** funcționează și ele. Au același efect ca valorile pozitive, dar în plus **inversează polaritatea** (schimbă faza) semnalului.
+
+Deși programarea audio implică multă ascultare pentru a te asigura că lucrurile sună bine, este întotdeauna de ajutor să ai și o confirmare vizuală. Îți sugerez să descarci și să instalezi un plug-in de tip osciloscop sau vizualizator de formă de undă (_waveform viewer_), cum ar fi **s(M)exoscope**, **Signalizer** sau **Wave Observer**. După ce instalezi unul dintre aceste plug-in-uri, repornește AudioPluginHost și scanează din nou pentru a detecta plug-in-urile noi.
+
+Conectează osciloscopul în AudioPluginHost astfel:
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/vst/juce/59.jpg"
+    alt="Figura 59"
+    className="h-auto w-full max-w-lg"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 59: </strong> Vizualizare output in osciloscop
+</p>
+
+> _Comutarea butonului de bypass pe plug-in-ul Delay arată clar pe ecranul osciloscopului cum amplitudinea formei de undă este redusă la jumătate._

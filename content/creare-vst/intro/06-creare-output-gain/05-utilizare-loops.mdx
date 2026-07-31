@@ -1,0 +1,176 @@
+---
+title: 'Utilizarea buclelor (loops)'
+description: 'Utilizarea buclelor (loops)'
+order: 5
+category: 'JUCE'
+level: 'Incepator'
+---
+
+## Utilizarea buclelor (loops)
+
+Excelent, am reușit cu succes să modificăm nivelul semnalului audio! Dar probabil te întrebi cum funcționează de fapt toate acestea.
+
+Să ne uităm la argumentele funcției `processBlock`:
+
+```cpp
+void DelayAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
+                                         juce::MidiBuffer& midiMessages)
+
+```
+
+Există două argumente:
+
+1. `juce::AudioBuffer<float>& buffer`
+2. `juce::MidiBuffer& midiMessages`
+
+Îți amintești din capitolul 2 că, la fiecare câteva milisecunde, gazda (host-ul / DAW-ul) trimite un bloc de eșantioane audio (samples) către plug-in și se așteaptă ca acesta să le proceseze înainte de termenul limită.
+
+Eșantioanele audio sunt plasate într-un obiect de tip `juce::AudioBuffer`.
+Acest obiect este transmis funcției `processBlock` ca prim argument.
+În interiorul funcției, te poți referi la el folosind numele `buffer`.
+Termenii **bloc** (_block_) și **buffer** înseamnă același lucru și sunt folosiți ca sinonime.
+
+Eșantioanele audio din `AudioBuffer` sunt valori în virgulă mobilă (_floating-point_), de regulă între `-1.0f` și `1.0f`.
+Dacă dimensiunea blocului este de 128, există 128 de astfel de valori `float` în `AudioBuffer`.
+Pentru un semnal stereo, `AudioBuffer` conține 2 x 128 eșantioane: o listă de numere pentru canalul stâng și o listă pentru canalul drept.
+
+Rolul funcției `processBlock` este de a suprascrie valorile eșantioanelor din `AudioBuffer` cu unele noi. Linia `buffer.applyGain(0.5f);` face exact acest lucru: înmulțește toate eșantioanele din `AudioBuffer` cu 0.5, făcându-le mai încet placute.
+
+Funcția `buffer.applyGain` este foarte utilă, dar putem aplica gain-ul și noi înșine. Să încercăm asta doar pentru a vedea cum se face „manual”. Sperăm că te va ajuta să înțelegi puțin mai bine ce se întâmplă de fapt sub capotă la `buffer.applyGain`.
+
+Înlocuiește linia `buffer.applyGain(0.5f);` cu următorul cod:
+
+```cpp
+for (int channel = 0; channel < totalNumInputChannels; ++channel) {
+    auto* channelData = buffer.getWritePointer(channel);
+    for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
+        channelData[sample] = channelData[sample] * 0.5f;
+    }
+}
+
+```
+
+Acest cod face exact același lucru, dar scris pas cu pas. Compilează și rulează plug-in-ul; ar trebui să funcționeze la fel ca înainte.
+
+Cuvântul cheie `for` creează o **buclă** (_loop_), adică o secțiune de cod care se repetă de una sau mai multe ori. Aici avem două bucle, una în interiorul celeilalte. Acoladele `{` și `}` determină ce linii de cod aparțin fiecărei bucle.
+
+Privit în ansamblu, arată așa:
+
+```cpp
+for (... parcurgere canale ...) {
+    // cod care aparține buclei exterioare
+    for (... parcurgere eșantioane ...) {
+        // cod care aparține buclei interioare
+    }
+}
+
+```
+
+Obiectul `juce::AudioBuffer` conține datele audio pentru toate canalele din semnal.
+
+Prima buclă, numită **bucla exterioară**, ia aceste canale pe rând. Pentru un semnal mono există un singur canal, iar bucla se execută o singură dată. Însă o piesă stereo are două canale, iar tot ce se află în interiorul buclei se execută de două ori: mai întâi pentru canalul stâng, apoi pentru canalul drept.
+
+Observă cum codul din interiorul buclei a fost indentat cu patru spații. Acest lucru face mai ușor de văzut cui îi aparține fiecare linie de cod.
+
+A doua buclă, numită **bucla interioară**, parcurge toate eșantioanele (_samples_) din canalul curent și înmulțește fiecare valoare cu `0.5f`, folosind instrucțiunea:
+
+```cpp
+channelData[sample] = channelData[sample] * 0.5f;
+
+```
+
+Simbolul `*` înseamnă înmulțire. După înmulțire, valoarea nouă este scrisă înapoi în datele audio ale canalului.
+
+Dacă dimensiunea blocului este de 128 de eșantioane, bucla interioară face exact același lucru ca:
+
+```cpp
+channelData[0] = channelData[0] * 0.5f;
+channelData[1] = channelData[1] * 0.5f;
+channelData[2] = channelData[2] * 0.5f;
+// ... și așa mai departe ...
+channelData[126] = channelData[126] * 0.5f;
+channelData[127] = channelData[127] * 0.5f;
+
+```
+
+Dar nu am dori să scriem aceste 128 de linii de cod de mână — ar fi extrem de obositor — așa că folosim o buclă pentru a lăsa calculatorul să facă asta în locul nostru!
+
+Un lucru important de reținut este că în C++ (și în majoritatea limbajelor de programare), **numărătoarea începe de la 0**. Asta înseamnă că, dacă există 128 de eșantioane în buffer, primul eșantion are indicele `0`, iar ultimul are indicele `127`.
+
+Un alt motiv pentru a folosi o buclă este că, în realitate, nu știm dacă dimensiunea blocului va fi exact 128. Ar putea fi mai mare sau mai mică. Dimensiunea blocului este stabilită de gazdă (DAW) și de utilizator. În unele DAW-uri (în special FL Studio), dimensiunea blocului poate fi uneori de doar 1 eșantion. Când se face _offline rendering_ (export) în DAW, blocul poate ajunge până la 4096 de eșantioane. Iar uneori poate fi chiar și de 0 eșantioane!
+
+Prin urmare, codul din `processBlock` nu poate presupune nimic despre dimensiunea blocului, ci doar că nu va fi mai mare decât dimensiunea maximă transmisă în funcția `prepareToPlay`.
+
+De aceea, bucla interioară este scrisă astfel:
+
+```cpp
+for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
+    channelData[sample] = channelData[sample] * 0.5f;
+}
+
+```
+
+Expresia `int sample = 0;` creează o variabilă numită `sample` care începe numărătoarea de la 0. Cuvântul cheie `int` îi spune compilatorului că `sample` este un număr întreg (_integer_).
+
+Folosim valoarea variabilei `sample` pentru a indexa `channelData`, scriind `channelData[sample]`. Aceasta accesează al `sample`-lea element din lista de eșantioane a buffer-ului pentru canalul respectiv.
+
+La prima trecere prin buclă, `sample` este `0`, deci accesăm `channelData[0]`. Aceasta este o valoare `float` care reprezintă amplitudinea primului eșantion din buffer.
+
+După fiecare repetiție a buclei, expresia `++sample` incrementează (crește) valoarea contorului `sample` cu 1. La a doua trecere, `sample` este `1` și accesăm `channelData[1]`. La a treia trecere, `sample` este `2` și accesăm `channelData[2]`, și așa mai departe.
+
+Bucla continuă să se repete atâta timp cât `sample` este mai mic decât numărul total de eșantioane din buffer, condiție exprimată prin `sample < buffer.getNumSamples()`. Simbolul `<` este operatorul „mai mic decât”. El verifică dacă valoarea din stânga (`sample`) este în continuare mai mică decât valoarea din dreapta (`buffer.getNumSamples()`).
+
+În exemplul nostru cu un bloc de 128 de eșantioane, bucla se repetă până când `sample` devine 128, moment în care se oprește. Deoarece bucla este întreruptă în acel punct, ultimul eșantion procesat va fi `channelData[127]`.
+
+Este nevoie de puțin exercițiu pentru a te obișnui cu buclele `for`, dar în general structura lor este:
+
+```cpp
+for (valoare_de_start; condiție; incrementare) {
+    // ... codul din interiorul buclei ...
+}
+
+```
+
+În bucla noastră interioară, acestea sunt:
+
+- **Valoare de start:** `int sample = 0`
+- **Condiție:** `sample < buffer.getNumSamples()`
+- **Incrementare:** `++sample`
+
+În bucla exterioară, acestea sunt:
+
+- **Valoare de start:** `int channel = 0`
+- **Condiție:** `channel < totalNumInputChannels`
+- **Incrementare:** `++channel`
+
+Bucla se repetă până când condiția devine falsă. La fiecare repetiție nouă, incrementează contorul și apoi verifică din nou condiția. Atâta timp cât condiția este adevărată, codul din interiorul buclei continuă să se execute.
+
+> **Notă:** Nu știu dacă ai observat acest detaliu, dar am pus acolada `{` pe aceeași linie cu `for`, în timp ce acolada de deschidere pentru funcția `processBlock` se află pe linia următoare. Limbajului C++ nu-i pasă cu adevărat unde pui `{` și `}`, atâta timp cât ele încadrează liniile de cod care aparțin buclei sau funcției. În cazul buclelor `for` și al instrucțiunilor `if`, prefer să pun acolada pe aceeași linie, iar pentru funcții și clase pe linia următoare. Programatori diferiți folosesc stiluri de codare diferite — s-au purtat multe dispute online (_flamewars_) pe tema stilului „corect”.
+
+Apropo, în loc să scrii:
+
+```cpp
+channelData[sample] = channelData[sample] * 0.5f;
+
+```
+
+poți folosi forma prescurtată cu operatorul `*=`:
+
+```cpp
+channelData[sample] *= 0.5f;
+
+```
+
+Aceasta citește valoarea din buffer-ul audio, o înmulțește cu `0.5f` și apoi o salvează înapoi în buffer, în aceeași locație.
+
+Acum știi deja că adăugarea literei `f` (ex: `0.5f`) înseamnă că acel număr este în virgulă mobilă de precizie simplă (`float`). Poți scrie și `0.5` fără `f` la sfârșit. Acesta rămâne un număr în virgulă mobilă, dar de tip `double` (precizie dublă).
+
+Diferența este că un `double` poate descrie numere mult mai mici și mult mai mari decât un `float`, dar cu costul de a ocupa dublul memoriei. Unii dezvoltători fac procesarea audio pe `double` pentru a beneficia de precizia crescută, dar în această carte vom folosi `float` pentru tot.
+
+Nu este o eroare să scrii `0.5` în loc de `0.5f` atunci când folosești `float`, dar dacă compilatorul se așteaptă la o valoare `float` în loc de `double`, este mai bine să incluzi litera `f`.
+
+Ai fi putut scrie chiar și `channelData[sample] /= 2;`, ceea ce matematic este același lucru — împărțirea la doi este echivalentă cu înmulțirea cu 1/2 sau 0.5. Totuși, valoarea `2` fără punct zecimal este un număr întreg (`int`), nu un `float`.
+
+Ori de câte ori compilatorul de C++ întâlnește cod care amestecă tipuri de date diferite — `float` cu `double`, sau `float` cu `int` — el trebuie mai întâi să facă o **conversie de tip** (_data type conversion_). Numărul întreg `int` trebuie convertit într-un `float` înainte de a se putea face împărțirea. Aceste conversii suplimentare înseamnă că procesorul (CPU) trebuie să facă muncă în plus, fiind astfel mai puțin optime.
+
+{/* am ramas A closer look at processBlock . 144 */}

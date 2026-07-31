@@ -1,0 +1,64 @@
+---
+title: 'În interiorul fișierului `PluginProcessor.cpp`'
+description: 'În interiorul fișierului `PluginProcessor.cpp`'
+order: 3
+category: 'JUCE'
+level: 'Incepator'
+---
+
+## În interiorul fișierului `PluginProcessor.cpp`
+
+Fișierul de antet (_header_) îi spune compilatorului ce funcții există în obiectul `DelayAudioProcessor`, dar nu și ce fac ele cu adevărat. Pentru a vedea codul aflat în interiorul acestor funcții, trebuie să ne uităm în `PluginProcessor.cpp`.
+
+Deschide `PluginProcessor.cpp` și derulează până la aproximativ jumătatea paginii, unde vei găsi funcția `prepareToPlay`:
+
+```cpp
+void DelayAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+{
+    // Folosește această metodă ca loc pentru a face orice
+    // inițializare de dinaintea redării de care ai nevoie..
+}
+
+```
+
+Aceasta este implementarea funcției `prepareToPlay`. În prezent este goală, cu excepția unui comentariu util.
+
+S-ar putea ca IDE-ul tău să te avertizeze că parametrii `sampleRate` și `samplesPerBlock` nu sunt folosiți — ceea ce este corect, de vreme ce nu există încă niciun cod propriu-zis între acoladele `{` și `}`.
+
+Observă că în comentariu `prepareToPlay` este numită „metodă” (_method_). Acesta este un alt nume folosit frecvent pentru „funcție” (_function_) — programatorii mai vechi, cu părul carunt (ca mine), ar putea folosi și termenii „procedură” sau „subrutină” pentru a exprima același lucru. Vei descoperi adesea că un anumit concept din dezvoltarea software are mai multe denumiri, lucru care poate fi uneori derutant.
+
+Este posibil să scrii codul pentru `prepareToPlay` sau pentru orice altă funcție direct în interiorul fișierului `.h`, însă în C++ este mai obișnuit să îl pui în fișierul `.cpp`. Majoritatea celorlalte limbaje de programare nu au această împărțire între un fișier _header_ care conține declarațiile (adică „ce”-ul) și un fișier sursă care conține implementările (adică „cum”-ul). Este una dintre particularitățile limbajului C++.
+
+În acest punct, îți sugerez să arunci o privire rapidă peste restul fișierului `PluginProcessor.cpp` doar pentru a-ți face o idee despre ce se întâmplă acolo.
+
+Atunci când Projucer a creat aceste fișiere de cod sursă, a adăugat implementări de bază pentru funcțiile lui `DelayAudioProcessor`, astfel încât ele să facă deja ceva util acolo unde este necesar. Uneori nu fac nimic. Ideea este că tu vei completa aceste funcții cu funcționalitățile de care are nevoie plug-in-ul tău.
+
+Multe dintre aceste funcții nu trebuie modificate. De exemplu, funcția `isMidiEffect` îi spune host-ului: _„Nu, acest plug-in nu este un efect MIDI”_. Ceea ce este corect, de vreme ce noi vom procesa doar date audio, nu și MIDI. Implementarea ei arată astfel:
+
+```cpp
+bool DelayAudioProcessor::isMidiEffect() const
+{
+#if JucePlugin_IsMidiEffect
+    return true;
+#else
+    return false;
+#endif
+}
+
+```
+
+Directiva `#if` verifică dacă opțiunea de configurare `JucePlugin_IsMidiEffect` este activată pentru a determina dacă acest plug-in suportă MIDI sau nu. Aceasta corespunde opțiunii **Plugin Characteristics** din Projucer.
+
+În cazul nostru, această opțiune nu este activată deoarece construim un plug-in de efect audio, nu un efect MIDI. Așadar, când host-ul întreabă plug-in-ul dacă știe să lucreze cu MIDI, funcția `isMidiEffect` returnează `false` — care este modul din C++ de a spune „nu”.
+
+Poți găsi valorile acestor opțiuni de configurare în fișierul sursă `JucePluginDefines.h` din grupul **JUCE Library Code**. În acest mod, setările din Projucer ajung în codul C++. (În Visual Studio, acesta se află sub ținta _Delay_SharedCode_.)
+
+În regulă, ajunge cu explorarea. Este timpul să scriem niște cod audio!
+
+---
+
+> **Notă despre clase și obiecte:**
+> Am numit `DelayAudioProcessor` un „obiect”. Tehnic vorbind, ar fi trebuit să spun că este o **clasă** (_class_), adică un fel de „proiect/schiță”. Un **obiect** este instanța fizică creată în memoria computerului pe baza acelei schițe.
+> Acest concept poate fi puțin abstract, așa că un exemplu s-ar putea să ajute:
+> Să presupunem că avem o clasă `Filter` care poate elimina frecvențele înalte sau joase dintr-un semnal audio. În plug-in am putea dori să avem mai multe filtre în același timp, cum ar fi un filtru trece-jos (_low-pass_) urmat de un filtru trece-sus (_high-pass_). Aceasta înseamnă că vom avea nevoie de două instanțe ale clasei `Filter` — cu alte cuvinte, de **două obiecte filtru**, unul configurat ca _low-pass_ și unul ca _high-pass_.
+> De obicei, când spunem că ceva este un obiect, ne referim la o instanță specifică a unei clase, și nu la clasa în sine. Sper că această distincție are sens. Dacă nu, nu-ți face griji deocamdată. Reține doar că scrierea `class XYZ` înseamnă că definim ceva ce va putea fi utilizat ca obiect în programul nostru.
