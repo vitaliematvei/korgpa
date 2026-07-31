@@ -1,0 +1,74 @@
+﻿---
+title: 'Cum funcționează sunetul stereo'
+description: 'Cum funcționează sunetul stereo'
+order: 1
+category: 'Panoramare'
+level: 'Incepator'
+---
+
+## Cum funcționează sunetul stereo
+
+La 14 decembrie 1931, Alan Dower Blumlein, pe atunci cercetător și inginer la EMI, a depus cererea de brevet cu numărul 394.325, intitulată _„Îmbunătățiri aduse sistemelor de transmisie, înregistrare și reproducere a sunetului”_.
+Această cerere de 22 de pagini contura ideile și viziunea sa de a crea un sistem de reproducere audio mai bun decât cel monofonic utilizat în acea vreme.
+Ceea ce Blumlein descria drept „sunet binaural” este ceea ce noi numim astăzi **stereo**.
+Conceptul său original a fost atât de avansat pentru timpul său, încât mulți oameni nu l-au putut înțelege și nici nu i-au realizat potențialul.
+Primul disc vinil stereo a fost lansat în 1958 — la șaisprezece ani de la moartea misterioasă a lui Blumlein și la șase ani după expirarea drepturilor de brevet ale celor de la EMI.
+
+Termenul _binaural_ se referă la utilizarea ambelor urechi.
+Creierul nostru folosește diferențele dintre sunetul care ajunge la urechea stângă și cel care ajunge la cea dreaptă pentru a localiza sursa sonoră.
+Aceste diferențe se bazează pe trei criterii: **amplitudine**, **timp (fază)** și **frecvență**.
+De exemplu, dacă o trompetă emite un sunet din dreapta noastră, sunetul care ajunge la urechea dreaptă va fi mai puternic decât cel care ajunge la urechea stângă.
+Acest lucru se datorează faptului că capul absoarbe și reflectă o parte din energia sonoră care se deplasează spre urechea stângă.
+
+De asemenea, deoarece sunetul are nevoie de timp pentru a se propaga (aproximativ 1 milisecundă pentru fiecare 30 cm), el va ajunge la urechea stângă puțin mai târziu.
+În cele din urmă, deoarece frecvențele înalte nu se difractă foarte bine, ele nu se vor ocoli în jurul capului la fel ca frecvențele joase, astfel încât o cantitate mai mică din acestea va ajunge la urechea stângă.
+
+<div className="my-4 flex justify-center">
+    <img
+        src="/images/mixing/14-1.jpg"
+        alt="Figura 14.1"
+        className="h-auto w-full max-w-xs"
+
+    />
+
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 14.1: </strong>Sunetul produs la dreapta ascultatorului va avea
+  amplitudine, timp si frecventa diferite intre urechile stanga si dreapta
+</p>
+
+Utilizarea a două difuzoare în loc de căști nu produce exact același efect.
+În natură, sunetul proveni de la o sursă centrală aflată în fața ascultătorului parcurge o distanță egală, ajungând la ambele urechi în același timp, cu aceeași amplitudine și cu același conținut de frecvență.
+Totuși, o configurație stereo cu două canale nu are un difuzor central dedicat, așa că, pentru a crea o imagine centrală, ambele difuzoare emit exact același sunet.
+Neexistând un difuzor central fizic, această imagine din mijloc este cunoscută sub numele de **centru fantomă** (_phantom center_).
+
+Dacă am putea garanta că sunetul de la fiecare difuzor ajunge doar la urechea cea mai apropiată, simularea ar fi perfectă.
+Însă sunetul de la fiecare difuzor ajunge și la urechea opusă, ceva mai târziu, având un volum mai redus și mai puține frecvențe înalte.
+Această sosire întârziată derutează creierul și duce la o ușoară blurare (_smearing_) a imaginii sonore percepute.
+
+Acest efect de difuzare poate fi demonstrat în orice studio 5.1 prin compararea sunetului emis exclusiv de difuzorul central (centrul real) cu cel emis la niveluri egale de difuzoarele din stânga și din dreapta (centrul fantomă).
+Lipsa de claritate a acestuia din urmă poate fi surprinzătoare, mai ales în studiourile surround necalibrate corespunzător.
+
+Cea mai bună percepție stereo se obține atunci când ascultătorul este poziționat pe axa centrală, la distanță egală între o pereche de difuzoare configurate corect.
+Poziționarea în acest punct (numit _sweet spot_) este esențială pentru orice inginer de mixaj, însă majoritatea oamenilor ascultă muzică în condiții mult mai puțin ideale.
+Deși o parte din informația stereo se păstrează și în afara acestei zone optime, o mare parte din ea se pierde — mai ales pe măsură ce ne îndepărtăm de axa centrală.
+
+<div className="my-4 flex justify-center">
+    <img
+        src="/images/mixing/14-2.jpg"
+        alt="Figura 14.2"
+        className="h-auto w-full max-w-xs"
+
+    />
+
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 14.2: </strong>
+
+**(a)** O percepție stereo excelentă s-ar obține dacă sunetul de pe fiecare canal ar ajunge exclusiv la urechea corespunzătoare.
+
+**(b)** În practică, sunetul de la ambele difuzoare ajunge la ambele urechi, rezultând o imagine stereo mai puțin precisă.
+
+</p>

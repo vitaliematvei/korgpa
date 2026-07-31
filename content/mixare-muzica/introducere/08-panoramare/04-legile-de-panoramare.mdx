@@ -1,0 +1,152 @@
+---
+title: 'Legile de panoramare (Pan laws)'
+description: 'Legile de panoramare (Pan laws)'
+order: 4
+category: 'Panoramare'
+level: 'Incepator'
+---
+
+## Legile de panoramare (_Pan laws_)
+
+Nu toate potențiometrele de panoramare (_pan-pots_) se comportă la fel.
+În funcție de legea de panoramare (_pan law_) utilizată, nivelul semnalului poate să crească, să rămână constant sau să scadă pe măsură ce rotim potențiometrul din extremități către centru.
+Pentru a complica și mai mult lucrurile, comportamentul de panoramare diferă între stereo și mono.
+O consolă oferă de obicei o singură lege de panoramare pentru toate potențiometrele sale, deși unele console _in-line_ au două legi de panoramare diferite — una pentru traseul de canal (_channel path_) și alta pentru traseul de monitorizare (_monitor path_).
+
+Unele aplicații software îi permit utilizatorului să aleagă legea de panoramare folosită în mixerul virtual.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/14-7.jpg"
+    alt="Figura 14.7"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 14.7: </strong>Legea de panoramare (a) Cubase si (b) Loggic
+</p>
+
+În aceste aplicații, alegerea se face per proiect și nu la nivel global pentru întregul sistem (pentru a menține compatibilitatea retroactivă).
+Schimbarea legii de panoramare la jumătatea unui mixaj ar modifica nivelurile relative dintre instrumente, așa că alegerea trebuie făcută înainte de începerea mixajului.
+
+Există două principii principale de care trebuie să ținem cont în privința legii de panoramare:
+
+1. **Principiul acustic:** Dacă două difuzoare emit același semnal la același nivel, un ascultător aflat pe axa centrală va percepe o creștere de 3 dB față de ceea ce produce fiecare difuzor individual.
+   De exemplu, dacă două difuzoare emit câte 80 dBSPL fiecare, senzația de volum percepută va fi de 83 dBSPL.
+2. **Principiul însumării mono:** Când două canale sunt însumate în mono, jumătate din nivelul fiecăruia este trimis către ambele canale.
+   De exemplu, în cazul unui semnal panoramat complet la stânga (_hard-left_), difuzorul stâng ar putea produce 80 dBSPL, iar cel drept 0 dBSPL.
+   Jumătate din nivel înseamnă o reducere de aproximativ -6 dB, astfel încât, prin însumare în mono, fiecare difuzor va produce 74 dBSPL.
+   Pe baza primului principiu, volumul perceput în acest caz va fi de 77 dBSPL.
+   Observăm din acest exemplu că, dacă un semnal panoramat la o extremă este redat în mono, el scade cu 3 dB.
+   Pentru semnalele panoramate pe centru, însumarea mono nu face nicio diferență — jumătate din nivelul fiecărui canal trimis către ambele canale rezultă în exact același nivel pe ambele difuzoare.
+
+Astfel, nivelul semnalelor panoramate pe centru rămâne constant indiferent dacă sunt redate în stereo sau în mono.
+Faptul că, la însumarea în mono, imaginea centrală a mixajului rămâne neafectată, iar extremitățile scad cu 3 dB, nu este un lucru neapărat rău dacă luăm în considerare că majoritatea instrumentelor importante sunt panoramate pe centru.
+
+> **La însumarea în mono, imaginea centrală își păstrează nivelul, în timp ce extremitățile scad cu 3 dB.**
+
+Cele patru legi de panoramare comune — **0 dB, -3 dB, -4,5 dB și -6 dB** — sunt descrise mai jos, atât pentru modul stereo, cât și pentru cel mono.
+Înainte de a le analiza pe fiecare, este important ca ingineri de mixaj să înțelegem ce ne interesează cu adevărat.
+În funcție de legea de panoramare, nivelurile din mixaj se pot modifica pe măsură ce panoramăm.
+În general, nu ne dorim ca acest lucru să se întâmple în timpul mixajului, deoarece fiecare ajustare a poziției ar necesita modificări ulterioare ale faderelor.
+De vreme ce mixăm în stereo, singura noastră grijă reală este ca nivelurile să rămână uniforme când panoramăm stânga-dreapta.
+Odată ce mixajul este exportat (_bounced_), legea de panoramare este blocată — balanța de nivel fixată pe master devine definitivă.
+
+Comportamentul diferitelor legi în mono este extrem de important în teatru radiofonic — semnalele panoramate dintr-o extremă în alta (de exemplu, un personaj care traversează scena) vor fi percepute diferit pe receptoare stereo față de cele mono.
+
+---
+
+### Tipuri de legi de panoramare
+
+- **Legea de 0 dB:** Această opțiune nu scade nivelul semnalelor panoramate pe centru. Un semnal panoramat _hard-left_ poate produce o emisie de 80 dBSPL în difuzorul stâng.
+  Dacă semnalul este mutat apoi pe centru, ambele difuzoare vor produce 80 dBSPL, ceea ce duce la o creștere cu 3 dB a volumului perceput.
+  Un instrument va crește în nivel pe măsură ce îl panoramăm de la oricare dintre extremități către centru (cu alte cuvinte, nivelul instrumentului va scădea când este mutat din centru spre exterior).
+  În stereo, panoramarea de la stânga la dreapta va genera o amplificare de 3 dB pe centru.
+  În mono, se aplică scăderea standard de 3 dB la extremități, iar la panoramarea de la stânga la dreapta instrumentul va avea o amplificare de 6 dB pe centru.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/14-8.jpg"
+    alt="Figura 14.8"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 14.8: </strong> Volumul perceput la legea de panoramare 0 dB
+</p>
+
+- **Legea de -3 dB:** Compensează amplificarea de 3 dB de pe centru specifică legii de 0 dB.
+  Semnalele panoramate pe centru sunt trimise către fiecare difuzor cu o reducere de -3 dB față de nivelul unei extremități.
+  Cei 80 dBSPL rezultați dintr-un singur difuzor pentru un semnal panoramat complet stânga devin 77 dBSPL în fiecare difuzor atunci când semnalul este mutat pe centru, generând o senzație totală de volum perceput de 80 dBSPL.
+  La panoramarea de la stânga la dreapta în stereo, nivelul semnalelor rămâne constant.
+  Acest lucru este extrem de de dorit în timpul mixajului, deoarece ajustările de panoramare rar necesită corecții ulterioare ale faderelor.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/14-9.jpg"
+    alt="Figura 14.9"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 14.9: </strong> Volumul perceput la legea de panoramare -3 dB
+</p>
+
+- **Legea de -6 dB:** Se folosește pentru aplicații unde compatibilitatea mono
+  este critică. Oferă un nivel uniform în mono, dar creează o scădere de 3 dB pe
+  centru (_center dip_) în stereo. La fel ca legea de 0 dB, cea de -6 dB nu este
+  recomandată pentru mixajul stereo, deoarece poate necesita ajustări ale
+  faderelor după panoramare.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/14-10.jpg"
+    alt="Figura 14.10"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 14.10: </strong> Volumul perceput la legea de panoramare -6 dB
+</p>
+
+- **Legea de -4,5 dB:** Reprezintă un compromis între
+  legile de -3 dB și -6 dB. În stereo există o ușoară scădere de 1,5 dB pe centru,
+  iar în mono o amplificare de 1,5 dB pe centru. Deși nivelul semnalului nu este
+  perfect constant la panoramare nici în stereo, nici în mono, eroarea maximă este
+  de doar 1,5 dB (față de 3 dB în cazul legilor de -3 dB și -6 dB).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/14-11.jpg"
+    alt="Figura 14.11"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 14.11: </strong> Volumul perceput la legea de panoramare -4.5
+  dB
+</p>
+
+---
+
+### Alți factori de luat în considerare
+
+Iată câteva aspecte suplimentare care pot influența alegerea legii de panoramare:
+
+- **Răspunsul camerei și frecvențele joase:** Primul principiu menționează că însumarea puterii a două difuzoare produce o creștere de 3 dB pe axa centrală.
+  În practică, în încăperi mai puțin reverberante, creșterea volumului perceput poate fi de până la 6 dB, însă doar pentru frecvențele joase.
+  Având o amplificare a frecvențelor joase de 6 dB și a celor înalte de doar 3 dB, legea de -4,5 dB devine o alegere foarte rezonabilă.
+- **Fenomenul de mascare:** O altă problemă derivă din presupunerea că majoritatea efectului de mascare are loc în zona centrală, ceea ce înseamnă că panoramarea instrumentelor în lateral poate duce la o creștere aparentă a volumului perceput.
+  Legea de **-2,5 dB** are o amplificare subtilă de +0,5 dB pe centru tocmai pentru a compensa acest fenomen.
+  (În cea mai mare parte a istoriei sale, Pro Tools a folosit legea de -2,5 dB; doar recent au devenit disponibile și alte opțiuni).
+
+Atunci când aveți posibilitatea de a alege legea de panoramare, experimentele practice vă pot ajuta să determinați care dintre ele menține nivelurile uniforme pe măsură ce sunetele sunt panoramate.
+
+> **Legea de -3 dB este, în general, cea mai bună opțiune pentru mixajul stereo.**
+
+{/* am ramas The balance pot .210 */}

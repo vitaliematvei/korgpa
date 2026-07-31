@@ -91,18 +91,100 @@ Obiectul cererii reprezintă cererea HTTP și conține proprietăți pentru para
 
 Iată lista decoratorilor incluși și obiectele corespunzătoare din platformă:
 
-| Decorator NestJS          | Obiectul nativ (Express)            |
-| ------------------------- | ----------------------------------- |
-| `@Request()`, `@Req()`    | `req`                               |
-| `@Response()`, `@Res()`\* | `res`                               |
-| `@Next()`                 | `next`                              |
-| `@Session()`              | `req.session`                       |
-| `@Param(key?: string)`    | `req.params` / `req.params[key]`    |
-| `@Body(key?: string)`     | `req.body` / `req.body[key]`        |
-| `@Query(key?: string)`    | `req.query` / `req.query[key]`      |
-| `@Headers(name?: string)` | `req.headers` / `req.headers[name]` |
-| `@Ip()`                   | `req.ip`                            |
-| `@HostParam()`            | `req.hosts`                         |
+<table className="w-full border-collapse text-sm text-slate-900">
+  <thead className="bg-slate-300 text-left">
+    <tr>
+      <th className="border-2 border-slate-500 px-4 py-2 font-bold">
+        Decorator NestJS
+      </th>
+      <th className="border-2 border-slate-500 px-4 py-2 font-bold">
+        Obiectul nativ (Express)
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr className="odd:bg-white even:bg-slate-100">
+      <td className="border-2 border-slate-500 px-4 py-2 font-mono">
+        <code>@Request()</code>, <code>@Req()</code>
+      </td>
+      <td className="border-2 border-slate-500 px-4 py-2">
+        <code>req</code>
+      </td>
+    </tr>
+    <tr className="odd:bg-white even:bg-slate-100">
+      <td className="border-2 border-slate-500 px-4 py-2 font-mono">
+        <code>@Response()</code>, <code>@Res()</code>*
+      </td>
+      <td className="border-2 border-slate-500 px-4 py-2">
+        <code>res</code>
+      </td>
+    </tr>
+    <tr className="odd:bg-white even:bg-slate-100">
+      <td className="border-2 border-slate-500 px-4 py-2 font-mono">
+        <code>@Next()</code>
+      </td>
+      <td className="border-2 border-slate-500 px-4 py-2">
+        <code>next</code>
+      </td>
+    </tr>
+    <tr className="odd:bg-white even:bg-slate-100">
+      <td className="border-2 border-slate-500 px-4 py-2 font-mono">
+        <code>@Session()</code>
+      </td>
+      <td className="border-2 border-slate-500 px-4 py-2">
+        <code>req.session</code>
+      </td>
+    </tr>
+    <tr className="odd:bg-white even:bg-slate-100">
+      <td className="border-2 border-slate-500 px-4 py-2 font-mono">
+        <code>@Param(key?: string)</code>
+      </td>
+      <td className="border-2 border-slate-500 px-4 py-2">
+        <code>req.params</code> / <code>req.params[key]</code>
+      </td>
+    </tr>
+    <tr className="odd:bg-white even:bg-slate-100">
+      <td className="border-2 border-slate-500 px-4 py-2 font-mono">
+        <code>@Body(key?: string)</code>
+      </td>
+      <td className="border-2 border-slate-500 px-4 py-2">
+        <code>req.body</code> / <code>req.body[key]</code>
+      </td>
+    </tr>
+    <tr className="odd:bg-white even:bg-slate-100">
+      <td className="border-2 border-slate-500 px-4 py-2 font-mono">
+        <code>@Query(key?: string)</code>
+      </td>
+      <td className="border-2 border-slate-500 px-4 py-2">
+        <code>req.query</code> / <code>req.query[key]</code>
+      </td>
+    </tr>
+    <tr className="odd:bg-white even:bg-slate-100">
+      <td className="border-2 border-slate-500 px-4 py-2 font-mono">
+        <code>@Headers(name?: string)</code>
+      </td>
+      <td className="border-2 border-slate-500 px-4 py-2">
+        <code>req.headers</code> / <code>req.headers[name]</code>
+      </td>
+    </tr>
+    <tr className="odd:bg-white even:bg-slate-100">
+      <td className="border-2 border-slate-500 px-4 py-2 font-mono">
+        <code>@Ip()</code>
+      </td>
+      <td className="border-2 border-slate-500 px-4 py-2">
+        <code>req.ip</code>
+      </td>
+    </tr>
+    <tr className="odd:bg-white even:bg-slate-100">
+      <td className="border-2 border-slate-500 px-4 py-2 font-mono">
+        <code>@HostParam()</code>
+      </td>
+      <td className="border-2 border-slate-500 px-4 py-2">
+        <code>req.hosts</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 - Decoratorul `@Res()` este pur și simplu un alias pentru `@Response()`. Când injectezi oricare dintre acești decoratori, treci handlerul în modul _Library-specific_ și devii responsabil de gestionarea răspunsului (trebuie să apelezi `res.json(...)` sau `res.send(...)`, altfel serverul va rămâne blocat în așteptare).
 

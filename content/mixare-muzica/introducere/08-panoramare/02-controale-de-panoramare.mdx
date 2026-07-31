@@ -1,0 +1,60 @@
+---
+title: 'Controalele de panoramare (Pan controls)'
+description: 'Controalele de panoramare (Pan controls)'
+order: 2
+category: 'Panoramare'
+level: 'Incepator'
+---
+
+### Potențiometrul de panoramare (_Pan-pot_)
+
+Primul studio care a instalat un sistem stereo a fost Abbey Road din Londra.
+Multe alte studiouri i-au urmat exemplul, iar în scurt timp toate consolele au trebuit să integreze această nouă funcționalitate.
+La început, consolele ofereau un comutator cu trei poziții, care putea panorama un semnal mono fie la stânga, fie pe centru, fie la dreapta.
+Acest tip de comutator este vizibil în unele mixaje vechi în care bateria este panoramată într-o extremă, iar basul în cealaltă, precum și în tot felul de alte strategii de panoramare care astăzi sunt folosite doar ca efect creativ.
+
+În timp ce lucrau la filmul _Fantasia_ la sfârșitul anilor 1930, inginerii lui Walt Disney au vrut să creeze efectul de mișcare a sunetului între cele două părți ale ecranului.
+Continuând cercetările lui Blumlein și Fletcher (același Fletcher responsabil pentru curbele Fletcher-Munson, care a studiat și el sunetul multicanal la Bell Labs), ei au descoperit că, pe măsură ce nivelul unui difuzor scade continuu în raport cu celălalt, imaginea sonoră se deplasează treptat către difuzorul mai puternic.
+
+Inginerii de studio au putut folosi aceste cunoștințe: puteau trimite același semnal în două canale separate (_channel strips_), să panorameze fiecare canal la o extremă diferită, iar apoi să atenueze unul dintre ele.
+În funcție de nivelul de atenuare, inginerii puteau poziționa instrumentele oriunde pe întreaga panoramă stereo.
+Problema era că, având în vedere consolele mici folosite pe atunci, această metodă irosea un canal întreg.
+Astfel a fost inventat potențiometrul panoramic, cunoscut simplu sub numele de **pan-pot**.
+
+<div className="my-4 flex justify-center">
+    <img
+        src="/images/mixing/14-3.jpg"
+        alt="Figura 14.3"
+        className="h-auto w-full max-w-xs"
+
+    />
+
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 14.3: </strong>Panoramarea manuală. Același track este trimis
+  pe două canale, fiecare fiind panoramat la câte o extremă a mixajului. Când
+  semnalul care merge către un difuzor este atenuat, imaginea sonoră rezultată
+  se deplasează către celălalt difuzor.
+</p>
+
+Un _pan-pot_ face ceva foarte similar cu această configurație.
+El împarte un semnal mono în canalele stâng și drept și atenuează unul dintre canale cu o anumită valoare, modificând practic nivelul relativ dintre cele două difuzoare.
+Panoramarea completă către un singur difuzor necesită atenuarea totală a canalului opus.
+Panoramarea pe centru se obține prin trimiterea semnalului la niveluri egale către ambele difuzoare.
+
+<div className="my-4 flex justify-center">
+    <img
+        src="/images/mixing/14-4.jpg"
+        alt="Figura 14.4"
+        className="h-auto w-full max-w-xs"
+    />
+
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 14.4: </strong>În interiorul unui pot de panoramare (pan-pot).
+  Semnalul este divizat, iar fiecare copie este trimisă către un control de
+  gain. Potențiometrul propriu-zis controlează doar gradul de atenuare aplicat
+  pe un canal sau pe celălalt.
+</p>
