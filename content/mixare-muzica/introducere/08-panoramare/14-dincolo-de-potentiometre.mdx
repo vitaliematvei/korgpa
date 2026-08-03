@@ -1,0 +1,54 @@
+---
+title: 'Dincolo de potențiometrele de panoramare (Beyond pan-pots)'
+description: 'Dincolo de potențiometrele de panoramare (Beyond pan-pots)'
+order: 14
+category: 'Panoramare'
+level: 'Incepator'
+---
+
+## Dincolo de potențiometrele de panoramare (_Beyond pan-pots_)
+
+### Efectele de panoramare automată (_Autopanners_)
+
+Un _autopanner_ mută semnalul audio înainte și înapoi între partea stângă și cea dreaptă a panoramei stereo, într-un mod ciclic.
+Funcționarea unui _autopanner_ implică de obicei următorii parametri:
+
+- **Ritmul / Viteza (_Rate_)** — definită în Hz, determină numărul de cicluri pe secundă; fiecare ciclu constă în deplasarea semnalului de la centru către o extremă, apoi către cealaltă extremă și înapoi la centru.
+  Alternativ, durata unui ciclu poate fi definită într-o unitate raportată la tempo-ul piesei, cum ar fi o măsură sau o doime.
+  La o viteză redusă (sub 1Hz), mișcarea stânga-dreapta este clar perceptibilă.
+  Această sesizabilitate se pierde la viteze mai mari, unde efectul începe să semene cu cel al uneia dintre incintele acustice Leslie.
+- **Adâncimea (_Depth_)** — definește în procente cât de departe spre extreme va fi panoramat semnalul.
+  La o valoare de 100%, poziția variabilă de panoramare va atinge extremele; la 50%, va ajunge la jumătatea distanței către extreme și așa mai departe.
+  Cu cât setarea adâncimii este mai mare, cu atât efectul devine mai evident.
+- **Forma de undă (_Waveform_)** — definește forma modulației de panoramare.
+  O undă sinusoidală va varia poziția între stânga și dreapta într-un mod lin.
+  O undă pătrată va face ca semnalul să sară brusc de pe o parte pe cealaltă.
+- **Centrul (_Center_)** — definește poziția centrală a modulației.
+  Cu centrul setat la jumătatea distanței către extrema stângă, este posibil ca semnalul audio să se deplaseze doar înainte și înapoi între centru și extrema stângă.
+
+Efectul tradițional de _autopanner_ — o mișcare lentă și evidentă stânga-dreapta — și-a pierdut din popularitate de-a lungul anilor, poate din cauză că este perceput ca un artificiu (_gimmick_) ce nu joacă un rol vital în mixaj.
+Astăzi, tendința este de a folosi acest efect în mod subtil, sau ocazional în secțiuni specifice ale piesei (mai ales pentru a adăuga interes).
+
+Un efect de mișcare interesant poate fi obținut atunci când mai multe piese sunt panoramate automat în mod simultan, iar toate piesele se completează reciproc pentru a produce o imagine stereo relativ echilibrată; de exemplu, având trei chitări care se deplasează pe parcursul panoramei stereo, fiecare pornind dintr-o poziție diferită și fiind modulat poate cu o viteză (_rate_) diferită.
+
+Dispozitivele de _autopanning_ pot fi conectate la alte procesoare pentru a crea o tranziție ciclică (_morphing_) între două efecte.
+În loc ca ieșirile _autopanner_-ului să fie trimise direct în mixaj, fiecare ieșire poate fi rutată către o magistrală (_bus_) diferită, care alimentează un procesor diferit.
+De exemplu, ieșirea din stânga poate alimenta o reverberație, în timp ce ieșirea din dreapta poate alimenta un _delay_.
+Acest lucru va face ca un efect să apară atunci când celălalt dispare și invers.
+
+De asemenea, putem folosi doar o singură ieșire a _autopanner_-ului pentru un efect pe care dorim pur și simplu să îl facem să apară și să dispară treptat (totuși, un efect de _tremolo_ lent ar putea fi mai ușor de configurat în acest scop).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/14-17.jpg"
+    alt="Figura 14.17"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 14.17: </strong>Plug-inul AutoPan de la MOTU
+
+</p>
+
+{/* am ramas 15 Equalizers .223 */}

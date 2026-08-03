@@ -1,0 +1,70 @@
+---
+title: 'Potențiometrul de balanță (Balance pot)'
+description: 'Potențiometrul de balanță (Balance pot)'
+order: 5
+category: 'Panoramare'
+level: 'Incepator'
+---
+
+## Potențiometrul de balanță (_Balance pot_)
+
+Spre deosebire de potențiometrul de panoramare (_pan-pot_), semnalul de intrare într-un potențiometru de balanță este stereo, așa cum se poate observa în Figura 14.12.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/14-12.jpg"
+    alt="Figura 14.12"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 14.12: </strong>
+</p>
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/14-13.jpg"
+    alt="Figura 14.13"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 14.13: </strong>Atât (a), cât și (b) ilustrează imaginea
+  rezultată în urma unei anumite poziționări a potențiometrului de balanță. După
+  cum se poate observa în (b), când potențiometrul de balanță este rotit spre
+  stânga, lățimea imaginii stereo rezultate se îngustează, dar rămâne ancorată
+  în extrema panoramei stereo. (c) Dacă trebuie să panoramăm un semnal astfel
+  încât lățimea imaginii stereo să nu rămână fixată la margini, avem nevoie de
+  două potențiometre de panoramare (*pan-pots*) în locul unui singur
+  potențiometru de balanță.
+</p>
+
+Cele două canale de intrare trec fiecare printr-un etaj separat de amplificare (câștig) înainte de a fi direcționate către ieșirea stereo.
+Poziția potențiometrului determină nivelul de atenuare aplicat pe fiecare canal.
+
+Este important de reținut că **un potențiometru de balanță nu combină (_crossfeed_) niciodată semnalul de intrare de pe un canal către ieșirea celuilalt**.
+
+Acest lucru duce la o limitare serioasă în procesul de mixaj: imaginea semnalului stereo de intrare rămâne „ancorată” de cel puțin una dintre extreme.
+Acest fenomen este ilustrat în Figura 14.14.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/14-14.jpg"
+    alt="Figura 14.14"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 14.14: </strong>(a) Logic oferă doar control de balanță pentru
+  piesele stereo. Un control mai detaliat asupra imaginii stereo poate fi
+  obținut cu ajutorul pluginului *Direction Mixer*. (b) Pro Tools oferă control
+  de panoramare de tip *dual-mono* pentru piesele stereo, asigurând
+  funcționalitate completă pentru orice sarcină de procesare a imaginii stereo.
+</p>
+
+Putem îngusta lățimea stereo a semnalului de intrare, dar nu îl putem poziționa fără ca o margine să nu ajungă într-una dintre extreme.
+
+Pentru a putea îngusta lățimea unui semnal stereo și a-l poziționa liber oriunde în panorama stereo, sunt necesare două potențiometre de panoramare separate (Figura 14.13c). Din păcate, nu toate mixerele software oferă un control de tip _dual-mono_ pentru piesele stereo. Aplicații precum Logic oferă doar un control de balanță, iar utilizatorii sunt nevoiți să încarce un plugin dedicat pentru a putea plasa semnalele stereo în mod liber pe parcursul panoramei stereo (Figura 14.14).
