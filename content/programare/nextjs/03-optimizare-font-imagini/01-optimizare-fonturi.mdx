@@ -1,0 +1,19 @@
+﻿---
+title: 'De ce să optimizezi fonturile?'
+description: 'De ce să optimizezi fonturile?'
+order: 1
+category: 'NextJS'
+level: 'Incepator'
+---
+
+### De ce să optimizezi fonturile?
+
+Fonturile joacă un rol semnificativ în designul unui site web, însă utilizarea fonturilor personalizate în proiectul tău poate afecta performanța dacă fișierele de font trebuie preluate și încărcate prin rețea.
+
+**Cumulative Layout Shift (CLS)** este o metrică folosită de Google pentru a evalua performanța și experiența utilizatorului pe un site web.
+În cazul fonturilor, decalajul de aspect (_layout shift_) are loc atunci când browserul randeză inițial textul folosind un font de rezervă (_fallback_) sau un font de sistem, iar apoi îl înlocuiește cu fontul personalizat odată ce acesta s-a încărcat.
+Această schimbare poate modifica dimensiunea textului, spațierea sau structura paginii, deplasând elementele din jur.
+
+Next.js optimizează automat fonturile din aplicație atunci când folosești modulul `next/font`.
+Acesta descarcă fișierele de font în momentul compilării (_build time_) și le găzduiește alături de celelalte resurse statice.
+Acest lucru înseamnă că, atunci când un utilizator îți vizitează aplicația, nu vor exista cereri de rețea suplimentare pentru fonturi care să afecteze performanța.

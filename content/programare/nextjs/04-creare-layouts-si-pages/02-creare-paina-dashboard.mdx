@@ -1,0 +1,24 @@
+---
+title: 'Crearea paginii de dashboard'
+description: 'Crearea paginii de dashboard'
+order: 2
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Creează un dosar nou numit `dashboard` în interiorul `/app`.
+Apoi, creează un fișier nou `page.tsx` în interiorul dosarului `dashboard` cu următorul conținut:
+
+`/app/dashboard/page.tsx`
+
+```tsx
+export default function Page() {
+  return <p>Dashboard Page</p>;
+}
+```
+
+Acum, asigură-te că serverul de dezvoltare rulează și accesează `http://localhost:3000/dashboard`. Ar trebui să vezi textul „Dashboard Page”.
+
+Acesta este modul în care poți crea pagini diferite în Next.js: creezi un nou segment de rută folosind un dosar și adaugi un fișier de tip pagină în interiorul acestuia.
+
+Folosind un nume special pentru fișierele de pagină, Next.js îți permite să stochezi în același loc (_colocate_) componentele de UI, fișierele de testare și alt cod conex alături de rutele tale. Doar conținutul din interiorul fișierului de pagină va fi accesibil public. De exemplu, dosarele `/ui` și `/lib` sunt amplasate în același dosar `/app` alături de rutele tale.

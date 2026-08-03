@@ -1,0 +1,29 @@
+---
+title: 'De ce să optimizezi imaginile?'
+description: 'De ce să optimizezi imaginile?'
+order: 3
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Next.js poate livra resurse statice, cum ar fi imaginile, din dosarul principal `/public`.
+Fișierele din interiorul `/public` pot fi referențiate direct în aplicația ta.
+
+În HTML-ul obișnuit, ai adăuga o imagine în felul următor:
+
+```html
+<img
+  src="/hero.png"
+  alt="Screenshots of the dashboard project showing desktop version"
+/>
+```
+
+Cu toate acestea, acest lucru înseamnă că trebuie să te ocupi manual de următoarele:
+
+- Să te asiguri că imaginea este adaptabilă (_responsive_) pe diferite dimensiuni de ecran.
+- Să specifici dimensiunile imaginii pentru diferite dispozitive.
+- Să previi decalajul de aspect (_layout shift_) pe măsură ce imaginile se încarcă.
+- Să încarci amânat (_lazy load_) imaginile care se află în afara zonei vizibile a utilizatorului (_viewport_).
+
+Optimizarea imaginilor este un subiect amplu în dezvoltarea web, care ar putea fi considerat o specializare în sine.
+În loc să implementezi manual aceste optimizări, poți folosi componentul `next/image` pentru a-ți optimiza automat imaginile.

@@ -1,0 +1,46 @@
+---
+title: 'Adăugarea unui font principal'
+description: 'Adăugarea unui font principal'
+order: 2
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Hai să adăugăm un font personalizat de la Google în aplicația ta pentru a vedea cum funcționează acest lucru.
+
+În dosarul `/app/ui`, creează un fișier nou numit `fonts.ts`. Vei folosi acest fișier pentru a păstra fonturile care vor fi utilizate în întreaga aplicație.
+
+Importă fontul **Inter** din modulul `next/font/google` — acesta va fi fontul tău principal. Apoi, specifică ce subset dorești să încarci; în acest caz, `'latin'`:
+
+`/app/ui/fonts.ts`
+
+```typescript
+import { Inter } from 'next/font/google';
+
+export const inter = Inter({ subsets: ['latin'] });
+```
+
+În cele din urmă, adaugă fontul la elementul `<body>` din `/app/layout.tsx`:
+
+`/app/layout.tsx`
+
+```tsx
+import '@/app/ui/global.css';
+import { inter } from '@/app/ui/fonts';
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body className={`${inter.className} antialiased`}>{children}</body>
+    </html>
+  );
+}
+```
+
+Prin adăugarea fontului Inter la elementul `<body>`, acesta va fi aplicat în întreaga aplicație. De asemenea, adaugi și clasa Tailwind `antialiased` care netezește afișarea fontului. Nu este obligatoriu să folosești această clasă, dar adaugă o notă fină de finisaj.
+
+Deschide browserul, intră în instrumentele de dezvoltare (_DevTools_) și selectează elementul `body`. Ar trebui să vezi că `Inter` și `Inter_Fallback` sunt acum aplicate în secțiunea de stiluri.

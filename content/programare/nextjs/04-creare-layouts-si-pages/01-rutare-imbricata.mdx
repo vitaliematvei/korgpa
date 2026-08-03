@@ -1,0 +1,44 @@
+﻿---
+title: 'Rutare imbricată (Nested routing)'
+description: 'Rutare imbricată (Nested routing)'
+order: 1
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Next.js folosește o rutare bazată pe sistemul de fișiere (_file-system routing_), unde dosarele sunt utilizate pentru a crea rute imbricate (_nested routes_).
+Fiecare dosar reprezintă un segment de rută (_route segment_) care se mapează la un segment de URL.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/nextjs/3.jpg"
+    alt="Figura 3"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 3: </strong> URL sement
+</p>
+
+Poți crea interfețe de utilizator (UI) separate pentru fiecare rută folosind fișierele `layout.tsx` și `page.tsx`.
+
+`page.tsx` este un fișier special din Next.js care exportă un component React și este obligatoriu pentru ca ruta să poată fi accesată.
+În aplicația ta, ai deja un fișier de tip pagină: `/app/page.tsx` — aceasta este pagina principală asociată rutei `/`.
+
+Pentru a crea o rută imbricată, poți introduce dosare unele în altele și poți adăuga fișiere `page.tsx` în interiorul lor.
+De exemplu:
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/nextjs/4.jpg"
+    alt="Figura 4"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 4: </strong> Nested route
+</p>
+
+`/app/dashboard/page.tsx` este asociat cu calea `/dashboard`. Hai să creăm pagina pentru a vedea cum funcționează!
