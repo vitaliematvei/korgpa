@@ -1,0 +1,100 @@
+---
+title: 'O privire mai atentă asupra funcției processBlock'
+description: 'O privire mai atentă asupra funcției processBlock'
+order: 6
+category: 'JUCE'
+level: 'Incepator'
+---
+
+## O privire mai atentă asupra funcției `processBlock`
+
+Deoarece vei petrece mult timp lucrând în `processBlock`, este bine să înțelegi ce altceva se mai întâmplăm acolo.
+
+La începutul funcției `processBlock` se află următoarea linie de cod:
+
+```cpp
+juce::ScopedNoDenormals noDenormals;
+
+```
+
+După cum ai văzut, amplitudinile eșantioanelor (_samples_) din obiectul `AudioBuffer` sunt numere în virgulă mobilă (_floating-point_), de obicei între `-1.0f` și `1.0f`.
+Însă intervalul complet al unui astfel de număr este mult mai mare: tipul `float` poate stoca valori de la 10^-38 până la 10^38. Nu vom folosi numerele foarte mari (acelea ar fi extrem de tari ca volum!), dar le folosim pe cele foarte mici.
+
+De exemplu, când un sunet se stinge (_fade out_), amplitudinea lui devine tot mai mică în timp, scăzând încet spre zero.
+Odată ce valoarea eșantionului scade sub 10^-38, reprezentarea internă a tipului `float` comută pe un format diferit, cunoscut sub numele de **număr denormalizat** (_denormal_ sau _subnormal number_).
+Problema este că aceste numere denormalizate sunt extrem de lente la procesare, determinând creșterea bruscă și masivă a utilizării procesorului (CPU) de către plug-in.
+
+Prin utilizarea unui obiect `juce::ScopedNoDenormals`, îi spunem procesorului să rotunjească automat la zero numerele în virgulă mobilă atunci când devin foarte mici, în loc să le transforme în denormalizate.
+Pentru programarea audio, această rotunjire la zero este perfect acceptabilă, deoarece aceste valori microscopice oricum nu sunt audibile.
+Astfel, nu mai trebuie să ne facem griji deloc pentru această problemă. Excelent!
+
+> **Notă:** Termenul „scoped” din `ScopedNoDenormals` înseamnă că JUCE restaurează automat comportamentul anterior al procesorului odată ce `processBlock` se încheie.
+> Astfel, rotunjirea la zero are loc doar în interiorul `processBlock`, fără a afecta alte operațiuni cu numere în virgulă mobilă din program.
+
+Domeniul de vizibilitate (_scope_) în C++ este regiunea cuprinsă între o acoladă de deschidere `{` și una de închidere `}`.
+De exemplu, tot ce se află în interiorul `processBlock` este în domeniul de vizibilitate al acelei funcții, în timp ce tot ce se află în interiorul unei bucle `for` are propriul _scope_, având propriile acolade `{` și `}`.
+Domeniul de vizibilitate este un concept crucial în C++, fiind utilizat pentru a gestiona durata de viață a obiectelor și a variabilelor.
+
+Următorul bloc de cod din `processBlock` este:
+
+```cpp
+auto totalNumInputChannels = getTotalNumInputChannels();
+auto totalNumOutputChannels = getTotalNumOutputChannels();
+
+// In case we have more outputs than inputs, this code clears any output
+// channels that didn't contain input data, (because these aren't
+// guaranteed to be empty - they may contain garbage).
+// This is here to avoid people getting screaming feedback
+// when they first compile a plugin, but obviously you don't need to keep
+// this code if your algorithm always overwrites all the output channels.
+for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+    buffer.clear (i, 0, buffer.getNumSamples());
+
+```
+
+Scopul acestor linii este de a scrie silențiu în buffer-ul audio — adică eșantioane cu valoarea `0.0f` — în cazul în care există mai multe canale de ieșire decât canale de intrare.
+
+De ce este necesar acest lucru?
+Să presupunem că plug-in-ul are o magistrală de intrare mono (un canal) și una de ieșire stereo (două canale).
+Obiectul `juce::AudioBuffer` va conține două canale de date.
+Primul canal este umplut cu semnalul audio de la intrarea mono, dar al doilea canal va fi umplut cu numere arbitrare din memorie — sau, în terminologia oficială C++, „date reziduale” (_garbage_).
+
+Pentru a preveni redarea acestor date reziduale — care nu sună deloc plăcut, ca să spunem așa — înlocuim totul din acel canal de intrare neutilizat cu silențiu.
+
+Aceasta este o tehnică cunoscută sub numele de **„programare defensivă”** (_defensive programming_).
+De obicei, această situație nu apare — numărul de canale de ieșire este egal cu cel de intrare —, dar în cazul în care se întâmplă, acest scurt fragment de cod salvează urechile tuturor.
+
+Observă că comentariile `//` de deasupra buclei `for` explică exact același lucru, motiv pentru care lăsarea comentariilor în cod este importantă: explică _de ce_ se află acel cod acolo.
+
+În cazul în care ai mai auzit termenul dar nu ești sigur ce înseamnă, cuvântul „algoritm” din comentariu se referă la logica de procesare audio pe care o vei include în `processBlock`.
+Un algoritm este pur și simplu o serie de instrucțiuni pe care calculatorul le execută.
+
+Bucla `for` folosește o variabilă contor `i` (abreviere de la _index_).
+În interiorul buclei, funcția `buffer.clear()` este utilizată pentru a seta conținutul canalului `i` la silențiu.
+De câte ori se repetă această buclă depinde de tipul de piesă pe care este încărcat plug-in-ul și de configurația magistralelor (_bus configuration_).
+Este posibil ca această buclă să fie omisă complet atunci când `totalNumInputChannels` este mai mare sau egal cu `totalNumOutputChannels` — ceea ce, de fapt, este cazul obișnuit.
+
+> **Notă:** Această buclă `for` nu folosește acolade `{` și `}`.
+> În C++ este permis să omiti acoladele atunci când bucla conține o singură linie de cod.
+> Personal, consider că este mai clar să folosești întotdeauna `{` și `}`, deoarece lipsa lor poate duce ușor la erori de codare.
+> (Apostează cuvintele „goto fail” oricărui dezvoltator software și va încuviința solemn).
+
+Al doilea argument transmis funcției `processBlock` este un obiect `juce::MidiBuffer`, care conține mesajele MIDI ce necesită procesare.
+Mesajele MIDI descriu evenimente precum „note on” și „note off” și sunt utilizate de plug-in-urile de tip sintetizator.
+Nu vom folosi MIDI în această carte, așa că argumentul `midiMessages` nu va fi utilizat de codul din `processBlock`.
+
+Atât Xcode, cât și Visual Studio vor afișa avertismente (_warnings_) legate de acest lucru.
+Xcode raportează _„Unused parameter 'midiMessages'”_, în timp ce Visual Studio afișează _„'midiMessages': unreferenced formal parameter”_.
+Haide să îi spunem compilatorului C++ că intenționăm să nu folosim acest argument, astfel încât să știe că nu este o omisiune neintenționată.
+
+Modifică al doilea argument al funcției `processBlock` astfel:
+
+```cpp
+void DelayAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
+                                         [[maybe_unused]] juce::MidiBuffer& midiMessages)
+
+```
+
+Prin adăugarea atributului `[[maybe_unused]]` în dreptul argumentului, compilatorul de C++ va înțelege că nu vom folosi obiectul `juce::MidiBuffer` în interiorul funcției.
+
+Când recompilezi plug-in-ul, mesajul de avertisment ar trebui să dispară.

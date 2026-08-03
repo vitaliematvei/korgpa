@@ -172,5 +172,3 @@ Nu este o eroare să scrii `0.5` în loc de `0.5f` atunci când folosești `floa
 Ai fi putut scrie chiar și `channelData[sample] /= 2;`, ceea ce matematic este același lucru — împărțirea la doi este echivalentă cu înmulțirea cu 1/2 sau 0.5. Totuși, valoarea `2` fără punct zecimal este un număr întreg (`int`), nu un `float`.
 
 Ori de câte ori compilatorul de C++ întâlnește cod care amestecă tipuri de date diferite — `float` cu `double`, sau `float` cu `int` — el trebuie mai întâi să facă o **conversie de tip** (_data type conversion_). Numărul întreg `int` trebuie convertit într-un `float` înainte de a se putea face împărțirea. Aceste conversii suplimentare înseamnă că procesorul (CPU) trebuie să facă muncă în plus, fiind astfel mai puțin optime.
-
-{/* am ramas A closer look at processBlock . 144 */}

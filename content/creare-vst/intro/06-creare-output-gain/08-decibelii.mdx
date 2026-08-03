@@ -1,0 +1,84 @@
+---
+title: 'Decibelii'
+description: 'Decibelii'
+order: 8
+category: 'JUCE'
+level: 'Incepator'
+---
+
+## Decibeli (_Decibels_)
+
+Până acum ai folosit o valoare fixă pentru amplificare (_gain_) de `0.5`.
+Aceasta reduce amplitudinea la jumătate, dar cum se leagă acest lucru de tăria percepută a sunetului (_loudness_)?
+
+O valoare a amplificării de `0.5` este exprimată în așa-numite **unități liniare**, ceea ce este convenabil din punct de vedere matematic, deoarece putem pur și simplu să înmulțim amplitudinile eșantioanelor cu ea.
+Pe de altă parte, însă, `0.5` nu este o valoare foarte semnificativă din punct de vedere muzical.
+
+Ca muzician, s-ar putea să fii mai obișnuit să lucrezi în decibeli.
+Auzul uman este de natură **logaritmică**.
+Acest lucru înseamnă că putem auzi foarte bine diferențele dintre sunetele încetinite, dar cu cât sunetul devine mai tare, cu atât urechile noastre devin mai puțin sensibile.
+Exprimarea amplificării în decibeli sau dB, care urmează de asemenea o scară logaritmică, corespunde mai bine modului în care percepem volumul sonor.
+
+În `processBlock`, modifică bucla care aplică amplificarea după cum urmează:
+
+```cpp
+// 1
+float gainInDecibels = -6.0f;
+
+// 2
+float gain = juce::Decibels::decibelsToGain(gainInDecibels);
+
+for (int channel = 0; channel < totalNumInputChannels; ++channel) {
+    auto* channelData = buffer.getWritePointer(channel);
+    for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
+        channelData[sample] *= gain; // 3
+    }
+}
+
+```
+
+Am marcat părțile care s-au schimbat prin comentarii. Acestea sunt:
+
+1. Valoarea amplificării este plasată într-o variabilă nouă numită `gainInDecibels`.
+   Aceasta are valoarea `-6.0f` pentru –6 dB.
+2. Pentru a putea folosi această amplificare, ea trebuie convertită în unități liniare.
+   Pentru asta folosim o funcție utilitară din JUCE: `juce::Decibels::decibelsToGain()`.
+   Rezultatul este plasat în variabila `gain`.
+   Pentru –6 dB, valoarea variabilei `gain` va fi din nou de aproximativ `0.5f`.
+3. În loc de numărul constant `0.5f`, folosește variabila `gain` pentru a înmulți valorile eșantioanelor.
+
+Asta este tot ce trebuie să faci pentru a folosi decibelii.
+Încearcă! Plug-in-ul ar trebui să funcționeze ca înainte: când este activat, va reduce nivelul de ieșire cu 6 dB, ceea ce este echivalent cu înjumătățirea amplitudinii.
+
+Încearcă și alte valori în decibeli. Reține că 0 dB înseamnă nicio modificare a nivelului (amplificarea liniară este 1.0), în timp ce valorile dB mai mari decât zero înseamnă o amplificare/creștere a nivelului (_boost_).
+
+---
+
+### Formula matematică
+
+Dacă ești interesat de formula matematică folosită de `decibelsToGain()`, aceasta este:
+
+gain = 10^(gainInDecibels\20)
+
+Mai întâi, valoarea `gainInDecibels` este împărțită la 20, iar apoi îl ridicăm pe 10 la această putere.
+Când calculăm 10^(-6/20), răspunsul este `0.5012`, ceea ce este aproape `0.5`.
+De aceea spunem de obicei că o amplificare de 0.5 este egală cu –6 dB, chiar dacă este doar o aproximare.
+De asemenea, o amplificare de +6 dB este 10^(6/20) = 1.995 sau 2.0 prin rotunjire.
+
+Putem face și conversia inversă, de la amplificare liniară la decibeli:
+
+gainInDecibels = 20log_10(gain)
+
+Dacă calculăm 20log_10(0.5, obținem –6.02 dB.
+În mod similar, 20_10(2) = 6.02dB.
+Reține că formula folosește logaritmul în baza 10.
+Dacă încerci asta pe o calculatoare și apeși `log`, s-ar putea să se folosească logaritmul natural (în baza e),
+care va da un rezultat greșit.
+
+Oricum, dacă nu ești pasionat de matematică, poți uita aceste formule imediat.
+De aceea JUCE include funcțiile ajutătoare `decibelsToGain` și `gainToDecibels`.
+
+> **Notă:** Ai văzut că programul-gazdă (_host_-ul) apelează anumite funcții din `DelayAudioProcessor` atunci când are nevoie de ceva — cum ar fi `isBusesLayoutSupported` pentru a negocia dacă folosește mono sau stereo, `paint` pentru a desena interfața (_editor_-ul) și `processBlock` pentru a procesa semnalul audio.
+> Cu toate acestea, propriul tău cod poate apela și el funcții.
+> Exact asta faci când scrii `juce::Decibels::decibelsToGain(gainInDecibels)`.
+> Această funcție primește valoarea în decibeli ca argument din variabila `gainInDecibels` și returnează valoarea convertită în codul tău, astfel încât să o poți folosi la altceva.

@@ -1,0 +1,189 @@
+---
+title: 'Parametrii de plug-in (Plug‐in parameters)'
+description: 'Parametrii de plug-in (Plug‐in parameters)'
+order: 9
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Un plug-in care aplică întotdeauna o valoare fixă de amplificare (_gain_) nu este foarte util sau interesant, așa că haide să conectăm amplificarea la un parametru.
+În acest fel, utilizatorul va putea controla nivelul prin rotirea unui buton în interfața grafică (_editor_) a plug-in-ului.
+De asemenea, acest lucru îi permite DAW-ului să automatizeze valoarea amplificării.
+
+> **Avertisment:** O parte din codul ce urmează ar putea fi puțin derutant.
+> Intram brusc în zona avansată a limbajului C++.
+> Voi face tot posibilul să explic ce se întâmplă, dar nu mă aștept să înțelegi totul din prima.
+> Pur și simplu mergi mai departe cu pașii propuși.
+
+Parametrii plug-in-ului sunt deținuți de obiectul `DelayAudioProcessor`.
+Pentru a ne ajuta să îi gestionăm, vom folosi un obiect utilitar cu un nume foarte lung: `juce::AudioProcessorValueTreeState` (pe scurt, **APVTS**).
+
+Va trebui să creezi un astfel de obiect APVTS.
+Acest lucru se face în `PluginProcessor.h`. Deschide acel fișier și, imediat sub linia `private:`, adaugă următorul cod:
+
+```cpp
+juce::AudioProcessorValueTreeState apvts {
+    *this, nullptr, "Parameters", createParameterLayout()
+};
+
+juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+
+```
+
+Acest cod adaugă două elemente în obiectul `DelayAudioProcessor`:
+
+1. O variabilă numită `apvts` — reprezentând obiectul `AudioProcessorValueTreeState`.
+2. O funcție nouă numită `createParameterLayout` — o funcție ajutătoare care creează obiectele parametrilor ce vor fi adăugați în APVTS.
+
+Codul dintre acoladele `{` și `}` reprezintă argumentele transmise **constructorului** clasei `AudioProcessorValueTreeState`.
+Un constructor este o funcție specială care rezervă spațiu pentru obiect în memoria calculatorului și îl inițializează, configurându-l să se comporte așa cum ne dorim.
+Argumentele sunt:
+
+- `*this` – Primul argument conectează APVTS-ul la instanța curentă `DelayAudioProcessor`. Cuvântul cheie `this` din C++ înseamnă „eu însumi”, referindu-se la obiectul căruia îi aparține acest cod.
+  Simbolul asterisc `*` folosit aici nu reprezintă înmulțire (vom ignora detaliile acestui simbol pentru moment).
+- `nullptr` – Al doilea argument îți permite să furnizezi un manager de Anulare/Refacere (_undo/redo_) către APVTS.
+  Funcția Undo/Redo este un subiect avansat, așa că folosim cuvântul cheie `nullptr` pentru a-i spune APVTS-ului că nu dorim un manager de undo.
+- `"Parameters"` – Al treilea argument este un text (_string_) ce conține numele pentru structura APVTS.
+- `createParameterLayout()` – Ultimul argument este lista parametrilor pe care îi are plug-in-ul. În loc să scriem întreaga listă direct aici, apelăm funcția ajutătoare `createParameterLayout` pentru a crea obiectele parametrilor și transmitem lista returnată de aceasta ca al patrulea argument al constructorului APVTS.
+
+> **Notă:** Acoladele `{ }` folosite aici au o semnificație diferită față de cea dinainte.
+> Aceasta este una dintre ciudățeniile din C++: în mod normal, când apelezi o funcție, pui paranteze rotunde `( )` în jurul argumentelor.
+> Totuși, pentru un constructor se recomandă utilizarea acoladelor `{ }`, altfel compilatorul poate fi indus în eroare, crezând că încerci să apelezi o funcție obișnuită.
+> Astfel, aici `{ }` nu creează un domeniu de vizibilitate (_scope_) ca la bucla `for`, ci listează argumentele furnizate constructorului.
+
+---
+
+### Implementarea machetei de parametri (_Parameter Layout_)
+
+Pentru a implementa funcția `createParameterLayout`, comutăm în fișierul `PluginProcessor.cpp`.
+Adaugă următorul cod în acel fișier (îl poți plasa oriunde, atâta timp cât nu este în interiorul altei funcții, dar recomandarea este să îl pui la sfârșitul fișierului):
+
+```cpp
+juce::AudioProcessorValueTreeState::ParameterLayout
+DelayAudioProcessor::createParameterLayout()
+{
+    juce::AudioProcessorValueTreeState::ParameterLayout layout;
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        juce::ParameterID { "gain", 1 },
+        "Output Gain",
+        juce::NormalisableRange<float> { -12.0f, 12.0f },
+        0.0f));
+
+    return layout;
+}
+
+```
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/vst/juce/60.jpg"
+    alt="Figura 60"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 60: </strong>Forma unei functii in C++
+
+</p>
+
+Să analizăm fiecare parte a acestui cod:
+
+Numele `DelayAudioProcessor::createParameterLayout` indică faptul că aceasta este funcția `createParameterLayout` aparținând clasei `DelayAudioProcessor`.
+Funcția nu primește argumente, așa că parantezele `()` sunt goale.
+
+Tipul returnat este `juce::AudioProcessorValueTreeState::ParameterLayout`.
+Scopul acestui obiect este de a descrie parametrii care ar trebui adăugați în APVTS.
+În interiorul funcției, populăm acest obiect `layout` și apoi îl returnăm:
+
+```cpp
+juce::AudioProcessorValueTreeState::ParameterLayout
+DelayAudioProcessor::createParameterLayout()
+{
+    juce::AudioProcessorValueTreeState::ParameterLayout layout;
+    layout.add( ... );
+    return layout;
+}
+
+```
+
+Linia `layout.add(...)` adaugă noul obiect parametru în structura `ParameterLayout`.
+Momentan, plug-in-ul are un singur parametru, dar pe parcurs vei adăuga mai multe instrucțiuni `layout.add()`.
+
+Să privim în detaliu apelul `layout.add()`:
+
+```cpp
+layout.add(std::make_unique<juce::AudioParameterFloat>(
+    juce::ParameterID { "gain", 1 },
+    "Output Gain",
+    juce::NormalisableRange<float> { -12.0f, 12.0f },
+    0.0f));
+
+```
+
+Sintaxa `std::make_unique<juce::AudioParameterFloat>( ... )` creează un obiect nou de tip `juce::AudioParameterFloat` împachetat într-un pointer inteligent de tip `std::unique_ptr` (o funcționalitate din biblioteca standard C++ `std::`).
+
+Constructorul pentru `AudioParameterFloat` primește patru argumente:
+
+1. **Un identificator unic** sub forma unui obiect `juce::ParameterID`. Aici îi dăm identificatorul `"gain"`. Numărul `1` reprezintă versiunea parametrului (_version hint_), necesară pentru formatul Audio Unit (AU).
+2. **Numele parametrului** vizibil pentru utilizator (`"Output Gain"`).
+3. **Intervalul valorilor** (_range_), ca obiect `juce::NormalisableRange<float>`. Valoarea minimă este `-12.0f`, iar cea maximă este `12.0f` (exprimat în decibeli).
+4. **Valoarea implicită** (_default_), setată la `0.0f` (0dB).
+
+Dacă construiești (_build_) plug-in-ul și îl rulezi în **AudioPluginHost**, vei vedea exact același lucru ca înainte.
+Nu am creat încă o interfață grafică (UI) pentru acest parametru, deci nu apare încă în fereastra editorului.
+
+> **Sfat de depanare:** Dacă compilatorul dă o eroare referitoare la fișiere ca `memory` sau `unique_ptr.h`, cel mai probabil ai comis o greșeală în definirea parametrului (prea puține sau prea multe argumente transmise).
+> Asigură-te și că ai închis toate parantezele `)` corect.
+
+Pentru a dezvălui parametrii generați automat de gazdă, dă click dreapta pe blocul `Delay` în AudioPluginHost și alege **Show all parameters**.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/vst/juce/61.jpg"
+    alt="Figura 61"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 61: </strong>Afisare parametri pluin
+
+</p>
+Aceasta va deschide o fereastră cu un potentiometru glisor (_slider_) pentru parametrul _Output Gain_, configurat de la -12 la +12, cu valoarea inițială 0.
+
+---
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/vst/juce/62.jpg"
+    alt="Figura 62"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 62: </strong>Parametrii gain si bypass in REAPER
+
+</p>
+
+### Conectarea parametrului la procesarea audio
+
+Mutarea slider-ului nu afectează încă sunetul, deoarece am anunțat existența parametrului, dar nu am modificat codul de procesare din `processBlock`.
+
+Actualizează linia pentru `gainInDecibels` din `processBlock` astfel:
+
+```cpp
+float gainInDecibels = apvts.getRawParameterValue("gain")->load();
+
+```
+
+Codul nu mai folosește valoarea fixă `-6.0f`, ci citește valoarea parametrului `"gain"` în timp real.
+Rulează din nou plug-in-ul: acum parametrul _Output Gain_ este complet funcțional!
+
+> **Atenție la volum:** O amplificare mai mare de 0dB va crește nivelul semnalului.
+> Setarea parametrului la +12dB poate provoca distorsiuni digitale (_clipping_) și pocnitori dacă semnalul depășește intervalul [-1.0, +1.0].
+> Când testezi valori mari, este recomandat să dezactivezi conexiunile către blocul de ieșire audio sau să pui pe _Mute_ piesa Master din DAW pentru a-ți proteja difuzoarele și auzul.
+
+{/* am ramas Improving the class .169 */}

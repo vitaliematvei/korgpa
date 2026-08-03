@@ -1,0 +1,46 @@
+---
+title: 'Doar stereo (Stereo only)'
+description: 'Doar stereo (Stereo only)'
+order: 7
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Pentru a păstra lucrurile simple, codul din capitolele următoare va presupune că plug-in-ul de Delay va fi utilizat întotdeauna cu intrări stereo. Mai târziu îl vom face să funcționeze și cu intrări mono.
+
+În prezent, totuși, funcția `isBusesLayoutSupported` din fișierul `PluginProcessor.cpp` îi comunică gazdei (_host_-ului / DAW-ului) că plug-in-ul de Delay suportă atât magistrale mono, cât și stereo.
+
+Șterge întreaga funcție și înlocuiește-o cu următoarea:
+
+```cpp
+bool DelayAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
+{
+    return layouts.getMainOutputChannelSet() == juce::AudioChannelSet::stereo();
+}
+
+```
+
+Gazda (_host_-ul) va apela funcția `isBusesLayoutSupported()` a plug-in-ului pentru a verifica ce tip de magistrale (_buses_) suportă acesta — mono, stereo, surround și, posibil, alte formate.
+Funcția trebuie să returneze `true` pentru orice configurație de magistrală pe care plug-in-ul o poate gestiona.
+
+Anterior, funcțiile cu care ai lucrat, `paint` și `processBlock`, aveau ca tip de returnare `void`.
+Tipul de returnare al funcției `isBusesLayoutSupported` este `bool`, prescurtare de la _boolean_.
+Un tip boolean este o dată de bază care poate avea doar două valori posibile: `true` (adevărat) sau `false` (fals).
+
+Valoarea returnată este modul prin care funcția trimite un răspuns înapoi către apelant, în acest caz gazda (_host_-ul).
+Gazda întreabă: _„Suporti o magistrală mono?”_, iar `isBusesLayoutSupported` răspunde cu `false` sau „nu”.
+Apoi, gazda apelează din nou `isBusesLayoutSupported` și întreabă: _„Suporți o magistrală stereo?”_, iar acum funcția răspunde cu `true` sau „da”.
+
+Poți privi funcția ca pe o întrebare, iar valoarea returnată ca pe un răspuns.
+
+Operatorul `==` este utilizat pentru a compara două valori.
+Folosim `==` pentru a verifica dacă `layouts.getMainOutputChannelSet()`, care reprezintă canalele solicitate pentru magistrala de ieșire, este egal cu `juce::AudioChannelSet::stereo()`.
+Dacă este așa, operatorul `==` evaluează la `true`.
+
+Pentru orice altă configurație de canale solicitată, cum ar fi mono, comparația `==` evaluează la `false`.
+
+Instrucțiunea `return` părăsește funcția și returnează rezultatul acestei comparații.
+
+> **Notă:** Este posibil ca, dacă încarci din nou plug-in-ul în DAW-ul tău, acesta să ofere în continuare opțiunea Mono.
+> Mergi în managerul de plug-in-uri al DAW-ului (_plug-in manager_) și scanează din nou plug-in-ul (_rescan_), deoarece DAW-ul ar putea păstra în cache vechea configurație a magistralelor.
+> Uneori este necesară o repornire a calculatorului pentru a curăța această memorie cache.
