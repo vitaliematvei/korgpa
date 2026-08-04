@@ -1,0 +1,138 @@
+---
+title: 'Îmbunătățirea clasei'
+description: 'Îmbunătățirea clasei'
+order: 100
+category: 'JUCE'
+level: 'Incepator'
+---
+
+## Îmbunătățirea clasei
+
+Care a fost scopul acestui exercițiu? Ei bine, încă nu am terminat. Vreau să mutăm cât mai mult din logica responsabilă de gestionarea parametrilor — inclusiv calculul de conversie din decibeli în câștig liniar (_linear gain_) — din `DelayAudioProcessor` în clasa `Parameters`.
+
+În acest fel, procesorul audio trebuie să își facă griji doar pentru codul DSP propriu-zis, nu și pentru originea valorilor parametrilor.
+
+Modificați codul din `Parameters.h` după cum urmează:
+
+```cpp
+#pragma once
+#include <JuceHeader.h>
+
+class Parameters
+{
+public:
+    Parameters(juce::AudioProcessorValueTreeState& apvts);
+    static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+
+    // 1
+    void update() noexcept;
+
+    // 2
+    float gain = 0.0f;
+
+private:
+    // 3
+    juce::AudioParameterFloat* gainParam;
+};
+
+```
+
+Părțile modificate sunt:
+
+1. Am adăugat o funcție nouă, `update()`. Aici vom citi setarea curentă a parametrului _Output Gain_ și o vom salva în variabila `gain`.
+2. Am adăugat variabila `gain`. Acesta este un `float` ce păstrează valoarea curentă a câștigului exprimată în unități liniare, nu în decibeli.
+3. Variabila `gainParam` a fost mutată în secțiunea `private:`. Orice variabile sau funcții declarate ca private nu vor putea fi utilizate de către alte obiecte.
+
+În prezent, codul din `processBlock` execută `params.gainParam->get()`, dar acest lucru nu va mai compila. Încercați. Compilatorul de C++ va semnala că `gainParam` este acum un membru privat al clasei `Parameters`, ceea ce înseamnă că poate fi folosit doar de funcțiile din interiorul `Parameters` — cum este noua funcție `update` — dar nu și de din afară.
+
+Acest principiu este cunoscut sub numele de **ascunderea informației** (_information hiding_). `DelayAudioProcessor` nu ar trebui să știe că valoarea câștigului provine dintr-un `juce::AudioParameterFloat` exprimat în decibeli. În schimb, `DelayAudioProcessor` poate citi pur și simplu valoarea din variabila `gain` ori de câte ori are nevoie să afle câștigul de ieșire.
+
+---
+
+Adăugați funcția `update` la sfârșitul fișierului `Parameters.cpp`:
+
+```cpp
+void Parameters::update() noexcept
+{
+    gain = juce::Decibels::decibelsToGain(gainParam->get());
+}
+
+```
+
+Aceasta citește valoarea curentă din parametrul _Output Gain_ folosind `gainParam->get()` și o convertește din decibeli într-o valoare liniară de câștig. Este foarte similar cu ce am făcut anterior în `processBlock`. Mai târziu vom adăuga mai mult cod în această funcție pe măsură ce adăugăm noi parametri plug-in-ului.
+
+> **Notă:** Cuvântul cheie `noexcept` din spatele numelui funcției garantează că această funcție nu va arunca excepții (_exceptions_). În C++ și în multe alte limbaje de programare, excepțiile sunt folosite pentru a gestiona anumite tipuri de erori ce pot apărea în timpul rulării programului. Indicându-i compilatorului de C++ că nu vrem să folosim excepții în această funcție, acesta poate genera un cod mult mai optimizat. Codul audio **nu trebuie să arunce excepții**, așa că este un obicei bun să marcați toate funcțiile de procesare audio cu `noexcept` pentru un plus de viteză.
+
+---
+
+Pentru a folosi această nouă funcție `update`, înlocuiți următoarele linii din `processBlock` (în `PluginProcessor.cpp`):
+
+```cpp
+float gainInDecibels = params.gainParam->get();
+float gain = juce::Decibels::decibelsToGain(gainInDecibels);
+
+```
+
+cu:
+
+```cpp
+params.update();
+float gain = params.gain;
+
+```
+
+Aceasta face exact același lucru ca înainte, dar acum logica de citire a parametrului _Output Gain_ și conversia din decibeli rezidă în obiectul `Parameters`, mai exact în funcția `params.update()`. `DelayAudioProcessor` poate citi pur și simplu `params.gain` pentru a obține valoarea curentă, fără a-și pune problema de unde provine aceasta.
+
+---
+
+### Inițializarea variabilelor și evitarea bug-urilor subtile
+
+Deși codul pare să funcționeze corect, există un bug subtil. Variabila `gain` din obiectul `Parameters` nu este inițializată în constructorul acelui obiect. Ca urmare, valoarea inițială a lui `gain` ar putea fi orice valoare aleatorie din memorie.
+
+În anumite limbaje de programare, variabilele sunt inițializate automat cu zero, dar compilatorul C++ nu garantează acest lucru. Citirea lui `params.gain` va returna un număr arbitrar până la prima apelare a funcției `params.update()`.
+
+Visual Studio chiar avertizează că variabila `Parameters::gain` este neinițializată. Nu va cauza o problemă directă în codul nostru deoarece apelăm întotdeauna `params.update()` înainte de a folosi `params.gain`, dar pentru a preveni greșelile ulterioare, cel mai bine este să atribuim o valoare inițială „sigură” tuturor variabilelor noastre.
+
+Acest lucru s-ar putea face în constructor sau în lista de inițializare a membrilor (_member initializer list_), dar noi vom schimba pur și simplu declarația lui `float gain` în `Parameters.h` pentru a-i da valoarea inițială zero:
+
+```cpp
+float gain = 0.0f;
+
+```
+
+---
+
+### Simplificarea conversiilor de tip (_casting_)
+
+Un ultim detaliu: instrucțiunea `dynamic_cast<>` din constructorul `Parameters` este în regulă, dar pe măsură ce începeți să adăugați mai mulți parametri, veți avea o listă întreagă de astfel de instrucțiuni, iar codul va deveni greu de gestionat. Haideți să adăugăm o funcție ajutătoare (_helper function_) care să simplifice acest proces.
+
+În `Parameters.cpp`, adăugați următorul cod **imediat deasupra** constructorului:
+
+```cpp
+template<typename T>
+static void castParameter(juce::AudioProcessorValueTreeState& apvts,
+                          const juce::ParameterID& id, T& destination)
+{
+    destination = dynamic_cast<T>(apvts.getParameter(id.getParamID()));
+    jassert(destination); // parametrul nu există sau are un tip greșit
+}
+
+```
+
+Acest cod trebuie plasat deasupra constructorului deoarece îl vom apela din interiorul acestuia. În C++ nu puteți apela o funcție decât dacă a fost deja declarată, iar citirea fișierului sursă de către compilator se face de sus în jos.
+
+Modificați constructorul astfel:
+
+```cpp
+Parameters::Parameters(juce::AudioProcessorValueTreeState& apvts)
+{
+    castParameter(apvts, gainParamID, gainParam);
+}
+
+```
+
+Opțiunea `dynamic_cast` se face acum în interiorul funcției `castParameter`. Este ceva mai curat în acest mod și face codul mult mai lizibil.
+
+> **Notă:** Sintaxa `template<typename T>` permite funcției `castParameter` să gestioneze și parametri de plug-in care nu sunt de tip `AudioParameterFloat`, cum ar fi `AudioParameterBool` sau `AudioParameterChoice`. Aceasta este o tehnică cunoscută sub numele de **programare generică** (_generic programming_). Șabloanele (_templates_) sunt o funcționalitate avansată în C++. Nu trebuie să înțelegeți pe deplin cum funcționează acum, dar ideea este că reduc cantitatea de cod pe care trebuie să o scriem. Observați de asemenea că `castParameter` este o așa-numită funcție liberă (_free function_) — ea nu aparține niciunui obiect în mod particular.
+
+Compilați și rulați proiectul pentru a vă asigura că totul funcționează în continuare. Excelent, clasa noastră `Parameters` începe să prindă contur — dar există și mai multe lucruri pe care le putem face pentru a o îmbunătăți!

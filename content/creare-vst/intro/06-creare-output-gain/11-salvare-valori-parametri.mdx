@@ -1,0 +1,116 @@
+---
+title: 'Salvarea valorilor parametrilor'
+description: 'Salvarea valorilor parametrilor'
+order: 11
+category: 'JUCE'
+level: 'Incepator'
+---
+
+## Salvarea valorilor parametrilor
+
+Încercați următorul experiment: deschideți plug-in-ul în AudioPluginHost sau într-un DAW, schimbați parametrul _Output Gain_ de la 0 dB la –12 dB, salvați sesiunea, apoi închideți aplicația. Acum reporniți AudioPluginHost sau DAW-ul, reîncărcați sesiunea și verificați parametrii plug-in-ului. Ce valoare indică _Output Gain_?
+
+V-ați fi așteptat ca plug-in-ul să își amintească valoarea din momentul salvării (adică –12 dB), dar a revenit la valoarea implicită de 0 dB. Aceasta este o problemă, deoarece înseamnă că utilizatorii plug-in-ului își vor pierde sunetele configurate atent de fiecare dată când închid DAW-ul.
+
+Din fericire, există o cale prin care plug-in-ul își poate salva starea curentă și o poate reîncărca la următoarea utilizare. Vrem să ne păstrăm utilizatorii fericiți!
+
+Procesorul audio oferă două funcții dedicate serializării (salvării) și deserializării (încărcării) stării plug-in-ului: `getStateInformation` și `setStateInformation`.
+
+În `PluginProcessor.cpp`, căutați aceste funcții și completați-le după cum urmează:
+
+```cpp
+void DelayAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
+{
+    copyXmlToBinary(*apvts.copyState().createXml(), destData);
+}
+
+void DelayAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+{
+    std::unique_ptr<juce::XmlElement> xml(getXmlFromBinary(data, sizeInBytes));
+    if (xml.get() != nullptr && xml->hasTagName(apvts.state.getType())) {
+        apvts.replaceState(juce::ValueTree::fromXml(*xml));
+    }
+}
+
+```
+
+Asta este tot ce trebuie să faceți. Rulați din nou experimentul și veți observa că de această dată plug-in-ul își amintește setările. Excelent!
+
+---
+
+### Cum funcționează salvarea și încărcarea stării?
+
+Nu voi intra în toate detaliile despre cum funcționează exact codul din aceste două funcții; este suficient să aveți o înțelegere generală a procesului.
+
+- **`getStateInformation`** este folosită pentru a salva starea curentă a plug-in-ului. Rolul vostru este să serializați tot ce este important și să scrieți datele în obiectul `juce::MemoryBlock` furnizat. **Serializarea** este un termen tehnic pentru convertirea datelor într-un format ce poate fi stocat într-un fișier. Formatul de serializare folosit aici este **XML**, o metodă standard de organizare a datelor structurate.
+- Pentru plug-in-ul nostru, vrem să salvăm valorile curente ale tuturor parametrilor din APVTS. Un avantaj major al APVTS este că își poate serializa automat conținutul într-un document XML folosind funcția `createXml()`. Apoi, `copyXmlToBinary` este utilizată pentru a trece XML-ul în blocul de memorie.
+- În **`setStateInformation`**, procesul are loc în sens invers. Primiți un bloc de date binare. Mai întâi, este apelată funcția `getXmlFromBinary` pentru a parsa datele binare într-un document XML. Apoi, citim valorile parametrilor din acest XML și, în final, apelăm `apvts.replaceState()` pentru a actualiza toți parametrii cu noile valori.
+
+---
+
+### Vizualizarea datelor XML generate
+
+Dacă sunteți curioși cum arată structura XML generată, adăugați următoarea linie de cod în interiorul funcției `getStateInformation` și rulați din nou proiectul:
+
+```cpp
+DBG(apvts.copyState().toXmlString());
+
+```
+
+Comanda `DBG` provine de la _debug print_ (afișare pentru depanare) și scrie valoarea argumentului său în consola de depanare din IDE. Aici o folosiți pentru a afișa conținutul APVTS sub formă de text XML. Când salvați sesiunea în AudioPluginHost, instrucțiunea `DBG` va afișa în consolă ceva similar cu:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Parameters>
+  <PARAM id="gain" value="-12.0"/>
+</Parameters>
+
+```
+
+Așa se salvează starea unui plug-in într-un document XML.
+
+> În Xcode, puteți găsi consola de depanare în partea de jos a ferestrei. Dacă nu este vizibilă, apăsați pe butoanele mici de control de lângă pictograma cu coșul de gunoi pentru a o afișa.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/vst/juce/63.jpg"
+    alt="Figura 63"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 63: </strong>Debug in Xcode
+</p>
+
+În Visual Studio, localizați fila **Output** (_Rezultate_) din partea de jos a ferestrei de depanare (_debugger_).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/vst/juce/64.jpg"
+    alt="Figura 64"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 64: </strong>Debug in Visual Studio
+</p>
+
+Consola de depanare (_debug console_) va afișa și multe alte mesaje, dar le puteți ignora. Unele dintre ele arată ca niște mesaje de eroare, însă provin în mare parte din sistemul de operare, nu din plug-in-ul nostru. Comanda `DBG` este foarte utilă pentru a trimite mesaje informative în panoul de ieșire al IDE-ului (_debug output pane_), permițându-ne să inspectăm ce face plug-in-ul. O vom mai folosi din când în când în această carte.
+
+S-ar putea să vă întrebați unde anume este salvat codul XML. Acest lucru depinde de aplicația gazdă (_host/DAW_); de obicei, datele ajung direct în fișierul de proiect. În cazul AudioPluginHost, structura XML este salvată în fișierul `.filtergraph`, care este la rândul lui un fișier XML. Dacă deschideți fișierul `.filtergraph` într-un editor de text, veți vedea ceva de genul:
+
+```xml
+<PLUGIN name="Delay" format="VST3" category="Fx"
+        manufacturer="yourcompany" ... />
+  <STATE>Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9DCL3HiKV0jZLcFUq3hKt3xSqX1UgM1ZI...</STATE>
+</PLUGIN>
+
+```
+
+Câmpul `<STATE>` conține datele serializate ale plug-in-ului. Observați că acesta nu afișează codul XML direct, ci o versiune codificată a acestuia. Acest lucru se întâmplă deoarece formatul final de serializare nu trebuie să fie neapărat text XML. Nici JUCE și nici aplicațiile gazdă nu sunt condiționate de acest format; singurul lucru care contează este ca plug-in-ul să poată serializa și deserializa starea sa într-un bloc de date binare (_binary blob_). Avantajul principal al utilizării XML-ului este că APVTS oferă deja suport nativ pentru acesta.
+
+> **Notă:** Puteți șterge din nou instrucțiunea `DBG` din funcția `getStateInformation`. Sau o puteți păstra, dar „comentând-o” prin adăugarea caracterelor `//` în fața liniei, transformând-o într-un comentariu ignorat de compilatorul C++. În acest fel, o puteți reactiva cu ușurință mai târziu prin eliminarea celor două caractere `//`.
+
+{/* am ramas la Creating a Parameters class .163 */}

@@ -1,0 +1,158 @@
+---
+title: 'Îmbunătățirea parametrilor'
+description: 'Îmbunătățirea parametrilor'
+order: 10
+category: 'JUCE'
+level: 'Incepator'
+---
+
+## Îmbunătățirea parametrilor
+
+Deși noul nostru parametru funcționează perfect, există câteva lucruri pe care le putem îmbunătăți. Am folosit șirul de caractere (_string_) `"gain"` pentru a face referire la parametru, însă utilizarea string-urilor ca identificatori în acest mod este predispusă la erori. De exemplu, dacă ați fi greșit la tastare și ați fi scris `getRawParameterValue("gian")`, plug-in-ul s-ar fi prăbușit (_crash_), deoarece APVTS nu are un parametru cu identificatorul `"gian"`.
+
+Este mult mai bine să definim ID-ul parametrului ca o constantă și, din acel moment, să facem referire la el folosind numele acelei constante. În acest fel, compilatorul de C++ vă va avertiza dacă faceți o greșeală de tipar.
+
+Iată cum puteți realiza acest lucru.
+
+Margeți în `PluginProcessor.h` și adăugați următoarea linie în partea de sus, sub linia `#include`:
+
+```cpp
+const juce::ParameterID gainParamID { "gain", 1 };
+
+```
+
+Această linie declară o constantă numită `gainParamID`, care este un obiect de tip `juce::ParameterID`. Ca și până acum, aceasta folosește identificatorul `"gain"` și indicația de versiune (_version hint_) `1`. Ideea este că acesta va fi singurul loc în care veți mai tasta vreodată string-ul `"gain"`. Peste tot în altă parte veți folosi `gainParamID`.
+
+Înapoi în `PluginProcessor.cpp`, în cadrul funcției `createParameterLayout`, modificați liniile care adaugă parametrul după cum urmează:
+
+```cpp
+layout.add(std::make_unique<juce::AudioParameterFloat>(
+    gainParamID, // Aici s-a modificat!
+    "Output Gain",
+    juce::NormalisableRange<float> { -12.0f, 12.0f },
+    0.0f));
+
+```
+
+Totul rămâne la fel ca înainte, cu excepția faptului că acum se folosește constanta `gainParamID` în loc să se construiască de fiecare dată un nou obiect `juce::ParameterID`. Acest lucru este posibil deoarece `gainParamID` este, în fapt, deja un obiect de tip `juce::ParameterID`.
+
+---
+
+În `processBlock`, actualizați codul pentru `gainInDecibels` după cum urmează. Diferența este că ați înlocuit șirul de caractere `"gain"` cu `gainParamID.getParamID()`.
+
+```cpp
+float gainInDecibels = apvts.getRawParameterValue(gainParamID.getParamID())->load();
+
+```
+
+În final face exact același lucru, dar îi spune compilatorului exact care sunt intențiile noastre, permițându-i astfel să verifice dacă nu am greșit ceva. Foarte util!
+
+Compilați și verificați dacă plug-in-ul funcționează în continuare.
+
+---
+
+### Eficientizarea accesului la parametri
+
+Putem face lucrurile și mai bine. Utilizarea funcției `apvts.getRawParameterValue()` este destul de lentă. Chiar dacă o apelăm o singură dată per bloc de procesare (_block_), asta poate însemna cu ușurință de sute sau mii de ori pe secundă. Există o metodă mai rapidă și mai convenabilă pentru a citi valorile parametrilor.
+
+Mergeți în `PluginProcessor.h` și adăugați următoarea linie, din nou în secțiunea `private:` a clasei:
+
+```cpp
+juce::AudioParameterFloat* gainParam;
+
+```
+
+Aceasta creează un obiect de tip `juce::AudioParameterFloat`, numit `gainParam`. Ei bine, mai exact, simbolul `*` indică faptul că acesta este un **pointer** către un astfel de obiect.
+
+`gainParam` nu este el însuși un obiect `juce::AudioParameterFloat`, ci va face referire la unul dintre obiectele `juce::AudioParameterFloat` gestionate de APVTS. Deoarece APVTS deține și administrează parametrii plug-in-ului, noi vom folosi `gainParam` doar pentru a accesa direct unul dintre acești parametri.
+
+> Dacă conceptul de pointeri vă este nou, nu vă faceți griji — este una dintre cele mai dificile noțiuni de programare de asimilat la început. Pentru moment, tot ce trebuie să înțelegeți este că vom putea accesa direct parametrul _Output Gain_ prin intermediul obiectului `gainParam`.
+
+---
+
+### Curățarea constructorului
+
+Trebuie totuși să facem ca `gainParam` să pointeze către parametrul real. Acest lucru se realizează în constructorul clasei `DelayAudioProcessor`. Comutați în `PluginProcessor.cpp` și derulați până sus. Acolo veți găsi următorul cod, destul de greu de citit:
+
+```cpp
+DelayAudioProcessor::DelayAudioProcessor()
+#ifndef JucePlugin_PreferredChannelConfigurations
+: AudioProcessor (BusesProperties()
+#if ! JucePlugin_IsMidiEffect
+#if ! JucePlugin_IsSynth
+.withInput ("Input", juce::AudioChannelSet::stereo(), true)
+#endif
+.withOutput ("Output", juce::AudioChannelSet::stereo(), true)
+#endif
+)
+#endif
+{}
+
+```
+
+Aceasta este implementarea constructorului `DelayAudioProcessor`. Constructorul este executat atunci când gazda (_host-ul / DAW-ul_) încarcă plug-in-ul.
+
+Directivele de preprocesare `#ifndef`, `#if` și `#endif` fac codul foarte greu de urmărit. Acele linii există doar pentru ca Projucer să poată folosi un singur proiect-șablon (_template_) care să acopere toate tipurile posibile de plug-in-uri. Haideți să curățăm acest cod pentru a înțelege mai ușor ce se întâmplă.
+
+Înlocuiți codul de mai sus cu următorul:
+
+```cpp
+DelayAudioProcessor::DelayAudioProcessor() :
+    AudioProcessor(
+        BusesProperties()
+            .withInput("Input", juce::AudioChannelSet::stereo(), true)
+            .withOutput("Output", juce::AudioChannelSet::stereo(), true)
+    )
+{}
+
+```
+
+Așa este mult mai curat! Dar ce face mai exact acest cod?
+
+Un constructor este o funcție specială care are întotdeauna același nume ca și clasa din care face parte — motiv pentru care se numește `DelayAudioProcessor::DelayAudioProcessor`. Un constructor nu are un tip de dată returnat (_return type_). Poate primi argumente între parantezele rotunde `()`, dar acest constructor nu are niciunul.
+
+Deoarece `DelayAudioProcessor` moștenește clasa `juce::AudioProcessor`, trebuie să apelăm mai întâi constructorul acelei clase de bază. În C++, acest lucru se face scriind două puncte `:` urmate de `AudioProcessor` și argumentele pentru constructorul său. Spațiul de nume `juce::` nu este obligatoriu aici, deși ar fi corect și dacă l-am scrie.
+
+Argumentul pentru constructorul `juce::AudioProcessor` este un obiect `BusesProperties`, care specifică faptul că plug-in-ul are o intrare audio stereo și o ieșire audio stereo.
+
+---
+
+### Leagarea pointerului la parametru
+
+Acum că înțelegem mai bine ce face acest constructor, adăugați următoarele linii în interiorul lui. Constructorul funcționează ca o funcție obișnuită, așa că codul se plasează între acoladele `{ }`:
+
+```cpp
+auto* param = apvts.getParameter(gainParamID.getParamID());
+gainParam = dynamic_cast<juce::AudioParameterFloat*>(param);
+
+```
+
+Poate părea complicat la prima vedere, dar putem descompune codul pas cu pas:
+
+- `apvts.getParameter(gainParamID.getParamID())` — Caută și returnează obiectul parametrului din APVTS.
+- Parametrul este stocat temporar într-o variabilă locală numită `param`. Tipul acestei variabile este `juce::RangedAudioParameter*`, dar sintaxa prescurtată `auto*` îi spune compilatorului să deducă automat că este vorba despre „un anumit tip de pointer” (amintiți-vă că `*` este folosit pentru pointeri).
+- `dynamic_cast<juce::AudioParameterFloat*>` — O conversie de tip (_cast_) este o modalitate de a converti între tipuri de date diferite. Aceasta îi spune compilatorului C++ că obiectul din variabila `param` este, în realitate, un pointer către un obiect de tip `juce::AudioParameterFloat`.
+- Rezultatul conversiei `dynamic_cast` este salvat în variabila `gainParam`.
+
+Nu are prea mult sens încă? Este în regulă. Ce contează este că, de acum înainte, putem folosi `gainParam` pentru a citi direct valoarea curentă a parametrului.
+
+---
+
+### Utilizarea pointerului în `processBlock`
+
+Haideți să facem asta în `processBlock`. Înlocuiți linia existentă pentru `gainInDecibels` cu:
+
+```cpp
+float gainInDecibels = gainParam->get();
+
+```
+
+Deoarece `gainParam` este un pointer, trebuie să folosiți operatorul săgeată `->` pentru a apela funcția `get()` a obiectului parametru.
+
+Anterior, când apelați o funcție pe un obiect obișnuit, foloseați sintaxa `obiect.functie()`, de exemplu `buffer.getNumSamples()`. Acolo, `buffer` nu era un pointer. Dacă `buffer` ar fi fost un pointer, ar fi fost necesar să scrieți `buffer->getNumSamples()`.
+
+Aceasta este diferența dintre `.` și `->` în C++. Limbajul folosește sintaxe diferite pentru a face clar dacă lucrați cu un pointer sau cu un obiect direct.
+
+> **Notă:** Această abordare bazată pe pointeri este mult mai rapidă decât apelarea `apvts.getRawParameterValue`. Problema cu `getRawParameterValue` este că caută parametrul după nume în APVTS, ceea ce poate implica numeroase comparații de șiruri de caractere (_string-uri_), mai ales când aveți mulți parametri. Păstrând referința directă către obiectul `AudioParameterFloat*`, putem accesa imediat parametrul prin acest pointer, fără a-l mai căuta de fiecare dată. Aceasta este o formă de „stocare în cache” (_caching_) — memorarea referințelor astfel încât să nu fie nevoie să fie recalculate sau re-căutate repetat.
+
+Încercați modificările: compilați și rulați plug-in-ul. Totul ar trebui să funcționeze exact ca înainte!
