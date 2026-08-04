@@ -1,0 +1,30 @@
+---
+title: 'Popularea bazei de date (Seeding)'
+description: 'Popularea bazei de date (Seeding)'
+order: 5
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Acum că baza ta de date a fost creată, haide să o populăm cu câteva date inițiale.
+
+Am inclus un API pe care îl poți accesa direct din browser, care va rula un script de _seeding_ pentru a umple baza de date cu un set inițial de date.
+
+Scriptul folosește SQL pentru a crea tabelele și datele din fișierul `placeholder-data.ts` pentru a le popula după ce au fost create.
+
+Asigură-te că serverul tău local de dezvoltare rulează prin comanda `pnpm run dev` și accesează `localhost:3000/seed` în browser.
+Când procesul se va încheia, vei vedea mesajul **"Database seeded successfully"** în browser.
+După finalizare, poți șterge acest fișier.
+
+Iată adaptarea în limba română:
+
+## Depanare (_Troubleshooting_)
+
+- Asigură-te că dezvălui datele confidențiale (_secrets_) ale bazei de date înainte de a le copia în fișierul `.env`.
+- Scriptul folosește `bcrypt` pentru a cripta parola utilizatorului.
+  Dacă `bcrypt` nu este compatibil cu mediul tău de dezvoltare, poți actualiza scriptul pentru a folosi `bcryptjs` în loc.
+- Dacă întâmpini probleme în timpul populării bazei de date (_seeding_) și vrei să rulezi scriptul din nou, poți șterge tabelele existente executând comanda `DROP TABLE nume_tabel` în interfața de interogare (_query_) a bazei de date.
+  Consultă secțiunea _Executing queries_ de mai jos pentru mai multe detalii.
+
+> **Atenție:** Această comandă va șterge definitiv tabelele și toate datele din ele.
+> Este în regulă să faci asta în aplicația ta de test, deoarece lucrezi cu date de probă (_placeholder data_), dar **nu ar trebui să rulezi niciodată această comandă într-o aplicație aflată în producție**.

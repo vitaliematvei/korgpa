@@ -1,0 +1,19 @@
+---
+title: 'Separarea automată a codului (code-splitting) și preluarea în avans (prefetching)'
+description: 'Separarea automată a codului (code-splitting) și preluarea în avans (prefetching)'
+order: 3
+category: 'NextJS'
+level: 'Incepator'
+---
+
+## Separarea automată a codului (_code-splitting_) și preluarea în avans (_prefetching_)
+
+Pentru a îmbunătăți experiența de navigare, Next.js separă automat codul aplicației tale (_code splitting_) în funcție de segmentele de rută.
+Spre deosebire de o aplicație tradițională React de tip SPA (_Single Page Application_), unde browserul încarcă tot codul aplicației la prima accesare, Next.js adoptă o abordare diferită.
+
+Separarea codului pe rute înseamnă că paginile devin izolate.
+Dacă o anumită pagină generează o eroare, restul aplicației va continua să funcționeze fără probleme.
+În plus, browserul are mai puțin cod de procesat, ceea ce face ca aplicația ta să fie mult mai rapidă.
+
+Mai mult decât atât, în mediul de producție, de fiecare dată când componentele `<Link>` apar în zona vizibilă a ecranului (_viewport_), Next.js preia automat în fundal (_prefetching_) codul pentru ruta respectivă.
+În momentul în care utilizatorul dă clic pe link, codul pentru pagina de destinație este deja încărcat, iar tranziția între pagini devine aproape instantanee!

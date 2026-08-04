@@ -1,0 +1,22 @@
+---
+title: 'Executarea interogărilor (Executing queries)'
+description: 'Popularea bazei de date (Seeding)'
+order: 6
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Haide să executăm o interogare pentru a ne asigura că totul funcționează așa cum este de așteptat.
+Vom folosi un alt Route Handler, `app/query/route.ts`, pentru a interoga baza de date.
+În interiorul acestui fișier vei găsi funcția `listInvoices()`, care conține următoarea interogare SQL:
+
+```sql
+SELECT invoices.amount, customers.name
+FROM invoices
+JOIN customers ON invoices.customer_id = customers.id
+WHERE invoices.amount = 666;
+
+```
+
+Elimină comentariile din fișier (decomentează codul), șterge blocul `Response.json()` și accesează `localhost:3000/query` în browser.
+Ar trebui să vezi că sunt returnate suma unei facturi și numele clientului corespunzător.
