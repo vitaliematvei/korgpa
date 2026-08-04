@@ -1,0 +1,76 @@
+---
+title: 'Spectrul de frecvență'
+description: 'Spectrul de frecvență'
+order: 2
+category: 'Egalizarea'
+level: 'Incepator'
+---
+
+Oamenii sunt capabili să audă frecvențe cuprinse aproximativ între 20 Hz și 20 kHz (20.000 Hz), deși nu toată lumea poate auzi până la 20 kHz, iar abilitatea noastră de a auzi frecvențele înalte scade odată cu vârsta.
+Există destul de mulți ingineri de sunet care nu pot auzi frecvențe peste 16 kHz, deși acest lucru nu pare să afecteze calitatea mixurilor sau masterelor realizate de ei.
+
+Un aspect extrem de important al percepției noastre asupra frecvențelor este că aceasta **nu este liniară**; cu alte cuvinte, intervalul 100–200 Hz nu este perceput în același mod ca intervalul 200–300 Hz.
+Urechea noastră se raportează la cea mai fundamentală relație tonală: **octava**.
+Recunoaștem o schimbare de octavă ori de câte ori o frecvență este dublată sau înjumătățită.
+De exemplu, 110 Hz este cu o octavă mai jos de 220 Hz, iar 220 Hz este cu o octavă mai jos de 440 Hz.
+
+În timp ce lățimea de bandă dintre 110 și 220 Hz reprezintă o octavă întreagă, o lățime de bandă identică ca număr de Herți între 10.110 și 10.220 Hz nu înseamnă nici măcar un semiton.
+Din punct de vedere al mixajului, o atenuare de 6 dB între 10.110 și 10.220 Hz are un efect insesizabil în comparație cu o atenuare de 6 dB între 110 și 220 Hz.
+După cum vom vedea în curând, toate egalizatoarele sunt construite ținând cont de acest fenomen.
+
+---
+
+### Împărțirea pe octave și antrenarea urechii
+
+Domeniul nostru audibil acoperă aproape 10 octave, prima octavă fiind între 20 și 40 Hz, iar ultima între 10.000 și 20.000 Hz.
+Divizarea pe octave se face însă, în mod obișnuit, prin înjumătățirea succesivă a frecvenței de 16 kHz.
+Mulți ingineri audio își dezvoltă abilitatea de a identifica cele 10 octave diferite, lucru pe care cei mai mulți dintre noi îl pot realiza cu puțină practică.
+Inginerii dedicați exersează până când pot identifica benzi de o treime de octavă (1/3 octavă).
+
+Deși antrenarea urechii este benefică în orice etapă a mixajului, este aproape obligatorie când vine vorba de frecvențe.
+Unii oameni talentați posedă „auz absolut” (_perfect pitch_) — capacitatea de a identifica (fără nicio referință) un semiton sau chiar diviziuni de frecvență și mai fine.
+
+---
+
+### Frecvențele și notele muzicale
+
+În timp ce inginerii vorbesc în frecvențe, muzicienii vorbesc în note.
+Dincolo de faptul că trebuie adesea să comunicăm cu muzicienii, este util să cunoaștem relația dintre frecvențe și note:
+
+- **Mi (_E_) cel mai jos de la chitara bas:** 41 Hz
+- **Mi (_E_) cel mai jos de la o chitară standard:** 82 Hz (cu o octavă mai sus)
+- **Do de mijloc (_Middle C_ / C4):** 262 Hz
+- **La (_A4_, nota de acordaj peste Do de mijloc):** 440 Hz
+
+Deseori setăm filtrele trece-sus (_High-Pass Filters / HPF_) exact sub aceste frecvențe.
+De asemenea, frecvențele notelor legate de gama piesei pot funcționa mai bine în mix decât alte frecvențe.
+Putem deduct de asemenea frecvența de rezonanță a unui instrument identificând nota care îi rezonează cel mai puternic corpul.
+
+Fiecare dublare sau înjumătățire a acestor valori va oferi aceleași note, dar în octave diferite (toate aceste frecvențe sunt rotunjite; un tabel complet se găsește în Anexa B).
+
+---
+
+## Putem auzi dincolo de limitele 20 Hz - 20 kHz?
+
+Dezbaterea privind capacitatea oamenilor de a auzi frecvențe peste 20 kHz este celebră în ingineria audio.
+
+Știința definește auzul drept capacitatea de a percepe sunetul prin sistemul auditiv (canal auditiv, timpan și cohleea — organul care transformă undele în impulsuri nervoase decodificate de creier).
+Până în prezent, **niciun experiment științific nu a demonstrat că putem auzi frecvențe peste 20 kHz**.
+
+> Există studii care arată că transmiterea frecvențelor de nivel înalt peste 20 kHz prin conducție osoasă (tije metalice atașate de craniu) poate îmbunătăți percepția sunetului la persoanele cu deficiențe de auz.
+> Totuși, conținutul de înaltă frecvență în sine nu este distins.
+> Sistemele de sudură cu ultrasunete care folosesc frecvențe de peste 20 kHz pot perfora țesuturi, însă acest lucru nu este considerat „auz”.
+> În sensul fiziologic al auzului, niciun subiect nu a putut auzi frecvențe peste 20 kHz.
+
+### Cum ne afectează frecvențele inaudibile?
+
+Este bine de știut însă că frecvențele de peste 20 kHz pot influența conținutul din spectrul audibil (sub 20 kHz) prin două fenomene: **intermodulația** și **bătăile** (_beating_).
+Ambele pot genera frecvențe în domeniul audibil atunci când semnalul trece printr-un sistem hardware sau software.
+
+- Urechile noastre nu funcționează așa, însă sistemele analogice și digitale da.
+- Intermodulația are loc în orice echipament neliniar (esențialmente, orice componentă analogică). Există întotdeauna cel puțin un element neliniar în lanțul nostru de semnal: **boxele (monitoarele)**.
+- Dacă într-un sistem digital apar armonici (din cauza _clipping_-ului, de exemplu), harmoicele care depășesc frecvența Nyquist (jumătatea ratei de eșantionare) sunt oglindite înapoi în spectrul audibil (_aliasing_). Din acest motiv, distorsiunea digitală la rata de eșantionare de 44.1 kHz poate suna mult mai stridentă decât la 88.2 kHz.
+
+În ceea ce privește **limita inferioară**, frecvențele sub 20 Hz sunt simțite prin rezonanța organelor din corpul nostru, dar nu sunt distinse prin sistemul auditiv (ar fi simțite la fel și de o persoană fără auz).
+
+**Concluzie:** Nicio cercetare nu a arătat că oamenii sunt capabili să audă frecvențe sub 20 Hz sau peste 20 kHz, însă este cert că aceste frecvențe pot avea un efect direct asupra a ceea ce auzim sau simțim.

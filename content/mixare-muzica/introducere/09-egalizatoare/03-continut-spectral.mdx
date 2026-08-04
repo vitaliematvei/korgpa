@@ -1,0 +1,50 @@
+---
+title: 'Conținutul spectral'
+description: 'Conținutul spectral'
+order: 3
+category: 'Egalizarea'
+level: 'Incepator'
+---
+
+Unda sinusoidală (_sine wave_) este o formă de undă simplă, alcătuită dintr-o singură frecvență.
+În schimb, formele de undă precum cea dreptunghiulară (_square wave_) sau în dinte de fierăstrău (_sawtooth_) generează un set întreg de frecvențe: cea mai joasă se numește **frecvență fundamentală** (sau fundamentală), iar toate celelalte se numesc **armonici**.
+Fundamentala și armonicile se află într-o relație matematică foarte clară, atât ca nivel, cât și ca frecvență.
+Figura 15.2 prezintă conținutul spectral al unei unde în dinte de fierăstrău de 100 Hz.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-2.jpg"
+    alt="Figura 15.2"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 15.2: </strong>Conținutul armonic al unei unde în dinte de fierăstrău (*sawtooth*) de 100 Hz.
+
+</p>
+Formele de undă simple (sinusoidale, dreptunghiulare, dinte de fierăstrău) reprezintă blocurile fundamentale de construcție ale sintetizatoarelor. 
+Cu toate acestea, sunetele naturale pe care le înregistrăm au un conținut spectral mult mai complex, care depășește simpla combinație dintre o fundamentală și armonicile ei.
+
+Conținutul spectral al oricărui instrument este format din patru componente (sau _parțiale_).
+Combinate, aceste patru componente constituie jumătate din timbrul unui instrument (cealaltă jumătate fiind anvelopa dinamică):
+
+- **Fundamentala:** Cea mai joasă frecvență dintr-un sunet. Fundamentala este cea care definește înălțimea (_pitch-ul_) notei.
+- **Armonicile:** Frecvențe care reprezintă un multiplu întreg al fundamentalei. De exemplu, pentru o fundamentală de 100 Hz, armonicile vor fi 200, 300, 400, 500 Hz și așa mai departe. Armonicile au o influență uriașă asupra sunetului — se spune că _fundamentala îi dă sunetului înălțimea, iar armonicile îi dau culoarea_.
+- **Inarmonicile / Overtones (_Tonurile superioare_):** Frecvențe care nu sunt neapărat un multiplu întreg al fundamentalei. O frecvență de 150 Hz, de exemplu, este un _overtone_ pentru o fundamentală de 100 Hz. Instrumentele precum toba mică (_snare_) au o înălțime a notei foarte vagă, dar produc mult zgomot — un sunet tipic cauzat de prezența dominantă a acestor _overtones_.
+- **Formantele:** Frecvențe generate de rezonanțele fizice ale instrumentului sau ale corpului uman, care nu se modifică în funcție de nota/înălțimea produsă. Formantele contribuie decisiv la amprenta sonoră — de exemplu, datorită lor suntem capabili să recunoaștem vocea fiecărei persoane în parte.
+
+---
+
+### Reconstrucția fundamentalei lipsă
+
+Conținutul spectral al fiecărui instrument se întinde de la frecvența fundamentală până la 20 kHz și chiar dincolo de această limită (până și o tobă mare are o anumită energie peste 10 kHz).
+Merită menționat că pot exista anumite frecvențe și sub fundamentală, datorate rezonanței corpului instrumentului sau subharmonicilor produse de neliniaritatea echipamentelor de înregistrare.
+
+O capacitate remarcabilă a creierului nostru este aceea de a **reconstrui fundamentala lipsă**.
+Ori de câte ori fundamentala sau armonicile inferioare sunt eliminate, creierul folosește armonicile rămase pentru a deduce ce lipsește.
+
+Acesta este exact motivul pentru care recunoaștem nota Mi (_E_) de pe chitara bas ca fiind cea mai joasă notă, chiar dacă difuzoarele noastre nu pot reda frecvența ei fundamentală de 41 Hz.
+Acest fenomen are o aplicație extrem de utilă în mixaj și va fi discutat în detaliu în curând.
+
+{/* am ramas la Bands and associations .229 */}
