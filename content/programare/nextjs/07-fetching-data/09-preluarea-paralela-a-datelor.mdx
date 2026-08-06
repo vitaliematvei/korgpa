@@ -1,0 +1,42 @@
+---
+title: 'Preluarea paralelă a datelor (Parallel data fetching)'
+description: 'Preluarea paralelă a datelor (Parallel data fetching)'
+order: 9
+category: 'NextJS'
+level: 'Incepator'
+---
+
+O modalitate frecventă de a evita cascadele (_waterfalls_) este inițierea tuturor cererilor de date în același timp — în paralel.
+
+În JavaScript, poți folosi funcțiile `Promise.all()` sau `Promise.allSettled()` pentru a lansa toate Promise-urile simultan.
+De exemplu, în `data.ts`, folosim `Promise.all()` în cadrul funcției `fetchCardData()`:
+
+```typescript
+// /app/lib/data.ts
+export async function fetchCardData() {
+  try {
+    const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
+    const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
+    const invoiceStatusPromise = sql`SELECT
+        SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
+        SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
+        FROM invoices`;
+
+    const data = await Promise.all([
+      invoiceCountPromise,
+      customerCountPromise,
+      invoiceStatusPromise,
+    ]);
+
+    // ...
+  }
+}
+
+```
+
+Prin utilizarea acestui tipar (_pattern_), poți:
+
+- **Porni executarea tuturor cererilor simultan**, ceea ce este mult mai rapid decât așteptarea fiecărei cereri într-o cascadă.
+- **Folosi un tipar nativ JavaScript** ce poate fi aplicat în orice bibliotecă sau framework.
+
+Cu toate acestea, există un dezavantaj dacă te bazezi exclusiv pe acest tipar: ce se întâmplă dacă o singură cerere de date este mult mai lentă decât toate celelalte?

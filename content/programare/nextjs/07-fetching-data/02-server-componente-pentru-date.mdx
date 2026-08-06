@@ -1,0 +1,16 @@
+---
+title: 'Utilizarea Server Components pentru preluarea datelor'
+description: 'Utilizarea Server Components pentru preluarea datelor'
+order: 2
+category: 'NextJS'
+level: 'Incepator'
+---
+
+În mod implicit (_by default_), aplicațiile Next.js folosesc React Server Components.
+Preluarea datelor prin Server Components este o abordare relativ nouă și vine cu o serie de avantaje importante:
+
+- **Suport nativ pentru Promise-uri JavaScript:** Oferă o soluție nativă pentru sarcini asincrone, cum ar fi preluarea datelor.
+  Poți folosi sintaxa `async/await` direct, fără a mai avea nevoie de `useEffect`, `useState` sau alte biblioteci de data-fetching.
+- **Execuție directă pe server:** Deoarece Server Components rulează pe server, poți păstra interogările complexe și logica intensivă pe server, trimitând către client doar rezultatul procesat.
+- **Interogare directă a bazei de date:** Fiind executate pe server, poți interoga baza de date în mod direct, fără un strat API intermediar.
+  Acest lucru te scutește de scrierea și întreținerea de cod suplimentar.

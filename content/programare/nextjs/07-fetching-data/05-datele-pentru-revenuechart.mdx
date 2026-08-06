@@ -1,0 +1,29 @@
+---
+title: 'Preluarea datelor pentru <RevenueChart/>'
+description: 'Preluarea datelor pentru <RevenueChart/>'
+order: 5
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Pentru a prelua datele necesare componentei `<RevenueChart/>`, importă funcția `fetchRevenue` din `data.ts` și apeleaz-o în interiorul componentei tale:
+
+```tsx
+// /app/dashboard/page.tsx
+import { Card } from '@/app/ui/dashboard/cards';
+import RevenueChart from '@/app/ui/dashboard/revenue-chart';
+import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
+import { lusitana } from '@/app/ui/fonts';
+import { fetchRevenue } from '@/app/lib/data';
+
+export default async function Page() {
+  const revenue = await fetchRevenue();
+  // ...
+}
+```
+
+În continuare, urmează acești pași:
+
+1. Decomentează componenta `<RevenueChart/>`.
+2. Navighează în fișierul componentei (`/app/ui/dashboard/revenue-chart.tsx`) și decomentează codul din interiorul acestuia.
+3. Deschide `localhost:3000/dashboard` și ar trebui să vezi un grafic generat pe baza datelor despre venituri (_revenue_).

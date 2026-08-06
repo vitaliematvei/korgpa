@@ -1,0 +1,48 @@
+---
+title: 'Preluarea datelor pentru pagina principală a dashboard-ului'
+description: 'Preluarea datelor pentru pagina principală a dashboard-ului'
+order: 4
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Acum că ai înțeles diferitele modalități de preluare a datelor, să trecem la preluarea datelor pentru pagina principală a dashboard-ului.
+Navighează în fișierul `/app/dashboard/page.tsx`, lipeste următorul cod și acordă-ți puțin timp pentru a-l explora:
+
+```tsx
+// /app/dashboard/page.tsx
+import { Card } from '@/app/ui/dashboard/cards';
+import RevenueChart from '@/app/ui/dashboard/revenue-chart';
+import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
+import { lusitana } from '@/app/ui/fonts';
+
+export default async function Page() {
+  return (
+    <main>
+      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+        Dashboard
+      </h1>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {/* <Card title="Collected" value={totalPaidInvoices} type="collected" /> */}
+        {/* <Card title="Pending" value={totalPendingInvoices} type="pending" /> */}
+        {/* <Card title="Total Invoices" value={numberOfInvoices} type="invoices" /> */}
+        {/* <Card
+          title="Total Customers"
+          value={numberOfCustomers}
+          type="customers"
+        /> */}
+      </div>
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
+        {/* <RevenueChart revenue={revenue} /> */}
+        {/* <LatestInvoices latestInvoices={latestInvoices} /> */}
+      </div>
+    </main>
+  );
+}
+```
+
+Codul de mai sus este comentat intenționat. În continuare vom analiza și vom activa fiecare secțiune în parte.
+
+- Pagina este un Server Component asincron (`async`), ceea ce îți permite să folosești sintaxa `await` direct în interiorul ei pentru a prelua date.
+- Există 3 componente principale destinate afișării datelor: `<Card>`, `<RevenueChart>` și `<LatestInvoices>`.
+  Acestea sunt momentan comentate și urmează să fie implementate.
