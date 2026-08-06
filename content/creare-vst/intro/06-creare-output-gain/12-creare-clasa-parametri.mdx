@@ -1,0 +1,238 @@
+---
+title: Crearea clasei Parameters'
+description: 'Crearea clasei Parameters'
+order: 12
+category: 'JUCE'
+level: 'Incepator'
+---
+
+În acest moment avem un singur parametru, dar până la finalizarea pluginului vom avea mai mulți — zece în total.
+
+Unii dezvoltători adaugă toți parametrii direct în obiectul `AudioProcessor`, așa cum tocmai am făcut noi, însă este mai curat să creăm un obiect nou `Parameters` dedicat acestui scop.
+De asemenea, acesta este un prilej bun pentru a explica cum vă puteți crea propriile obiecte.
+
+Este o practică standard ca obiectele noi să fie plasate în propriile lor fișiere sursă, așa că haideți să adăugăm câteva fișiere noi în proiect.
+
+> **Notă:** Primul impuls ar putea fi să adăugați noile fișiere sursă direct din IDE, dar lucrurile nu funcționează așa în JUCE.
+> Va trebui să folosiți Projucer pentru acest tip de operațiuni.
+> Projucer este cel care gestionează proiectul, inclusiv fișierele sursă pe care le conține acesta.
+
+Deschideți Projucer și încărcați proiectul `Delay.jucer`.
+În panoul **File Explorer**, selectați folderul **Source**, astfel încât fișierele noi să fie adăugate în interiorul acestuia. Faceți clic pe butonul rotund cu **+** din partea de jos a panoului și alegeți **Add New CPP & Header File…**
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/vst/juce/64.jpg"
+    alt="Figura 64"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 64: </strong>Adaugare fisier in projucer
+</p>
+
+Va apărea o fereastră de dialog a sistemului pentru gestionarea fișierelor, cerându-vă să introduceți numele fișierului.
+Numiți-l `Parameters` și faceți clic pe **Save**.
+După ce ați terminat, în panoul **File Explorer** vor fi adăugate două fișiere noi: `Parameters.cpp` și `Parameters.h`.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/vst/juce/65.jpg"
+    alt="Figura 65"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 65: </strong>Fisierele noi apara in File Explorer
+</p>
+În continuare, va trebui să exportați din nou proiectul din Projucer către IDE-ul dumneavoastră. 
+De acum înainte, când faceți modificări în Projucer, nu mai apăsați pe butonul rotund din partea de sus a ferestrei pentru a exporta proiectul. 
+În schimb, folosiți **File > Save Project** sau apăsați combinația de taste **Ctrl+P** (pe Windows) sau **Command+P** (pe Mac).
+
+Acest lucru este extrem de important, mai ales pentru utilizatorii de Windows!
+Când apăsați butonul rotund, Projucer va suprascrie toate fișierele de proiect din Visual Studio și va deschide proiectul într-o fereastră nouă de IDE, în loc să îl reîncarce pe cel existent.
+În plus, veți pierde și setările care pornesc automat `AudioPluginHost`.
+Utilizarea opțiunii **Save Project** previne apariția acestei probleme.
+
+Alegeți **File > Save Project** din bara de meniu a Projucer.
+IDE-ul se va reîncărca și va afișa cele două fișiere noi în **Project Navigator** (în Xcode) sau în **Solution Explorer** (în Visual Studio).
+În Visual Studio va trebui să faceți clic pe **Reload All** pentru a actualiza proiectul.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/vst/juce/66.jpg"
+    alt="Figura 66"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 66: </strong>Avertizare Visual Studio ca proiectul a fost
+  modificat
+</p>
+
+## Crearea clasei Parameters
+
+Deschideți fișierul `Parameters.h` și înlocuiți conținutul acestuia cu următorul cod:
+
+```cpp
+// 1
+#pragma once
+// 2
+#include <JuceHeader.h>
+// 3
+class Parameters
+{
+public:
+// 4
+Parameters(juce::AudioProcessorValueTreeState& apvts);
+// 5
+static juce::AudioProcessorValueTreeState::ParameterLayout
+createParameterLayout();
+// 6
+juce::AudioParameterFloat* gainParam;
+};
+
+```
+
+Acest cod definește o nouă clasă numită `Parameters` — prima noastră clasă creată de la zero! — iar scopul ei este de a facilita gestionarea tuturor parametrilor pluginului pe care îi vom adăuga ulterior. Amintiți-vă că o clasă descrie ce este un obiect și ce funcții conține acesta.
+
+În acest cod apar câteva elemente noi, marcate prin comentarii. De sus în jos:
+
+1. Linia `#pragma once` îi spune compilatorului de C++ să citească fișierul `Parameters.h` o singură dată, chiar dacă este inclus prin `#include` de mai multe ori. Nu vă faceți griji pentru asta deocamdată.
+2. Deoarece acest fișier face referire la obiecte JUCE, includem fișierul `JuceHeader.h` pentru ca compilatorul C++ să știe ce înseamnă spațiul de nume `juce::`.
+3. Definim o clasă nouă numită `Parameters`.
+4. Constructorul utilizat pentru a inițializa un obiect nou `Parameters`. Acesta primește un singur argument: o referință către APVTS.
+5. Ați mai văzut `createParameterLayout` anterior; această funcție creează parametrii pluginului atunci când APVTS este inițializat. În prezent, funcția se află în `DelayAudioProcessor`, dar o vom muta în obiectul `Parameters` în scurt timp.
+6. În mod similar, pointerul `gainParam` va aparține de acum obiectului `Parameters`.
+
+În continuare, veți muta o parte din cod din `DelayAudioProcessor` în noua clasă `Parameters`. Dacă vi se pare ciudat că v-am pus mai întâi să scrieți cod într-un fișier doar pentru ca apoi să-l dați _cut & paste_ în altul, atunci bun venit în lumea programării!
+
+Acest proces se numește **refactorizare** (_refactoring_) și este o etapă normală în dezvoltarea software-ului. Este foarte obișnuit să începeți prin a scrie codul într-un anumit fel, ca apoi, la jumătatea drumului, să vă dați seama că ar trebui să reorganizați lucrurile. Majoritatea mediilor de dezvoltare (IDE-uri) au chiar unelte integrate pentru refactorizare, dar noi o vom face manual.
+
+Deschideți `PluginProcessor.h` și ștergeți următoarele linii. Nu mai aveți nevoie de ele aici, deoarece funcția și variabila s-au mutat în obiectul `Parameters`:
+
+```cpp
+juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+juce::AudioParameterFloat* gainParam;
+
+```
+
+Tot în `PluginProcessor.h`, actualizați codul care declară obiectul APVTS astfel încât să arate așa:
+
+```cpp
+juce::AudioProcessorValueTreeState apvts {
+*this, nullptr, "Parameters", Parameters::createParameterLayout()
+};
+
+```
+
+Diferența este că acum apelați `Parameters::createParameterLayout()` în loc de simplul `createParameterLayout()`.
+
+Imediat dedesubt, adăugați următoarea linie:
+
+```cpp
+Parameters params;
+
+```
+
+Aceasta îi spune clasei `DelayAudioProcessor` că deține un obiect `Parameters` numit `params`. Sau, în limbaj C++, că deține o instanță a clasei `Parameters`.
+
+Imediat ce faceți aceste modificări, IDE-ul va afișa o eroare. Xcode va spune _„Unknown type name 'Parameters'”_, iar Visual Studio va sublinia `Parameters` cu o linie roșie șpărgălită și va afișa _„identifier 'Parameters' is undefined”_. Acest lucru se întâmplă deoarece `DelayAudioProcessor` nu știe încă ce este `Parameters`.
+
+Chiar dacă ați adăugat fișierele `Parameters.cpp` și `.h` în proiect, asta nu înseamnă că toate celelalte fișiere sursă din proiect le recunosc automat. Pentru a rezolva problema, trebuie să includeți fișierul header.
+
+Derulați în sus în `DelayAudioProcessor` (în fișierul `PluginProcessor.h`) și adăugați următoarea linie:
+
+```cpp
+#include "Parameters.h"
+
+```
+
+Cel mai bine este să o plasați imediat sub celelalte linii `#include`. Mesajul de eroare ar trebui să dispară. Din acest motiv fișierele sursă C++ au, de obicei, una sau mai multe instrucțiuni `#include` la început: pentru a importa denumiri din alte fișiere ale proiectului de care codul are nevoie.
+
+Încă nu am terminat! Pentru că ați eliminat mai multe elemente din `PluginProcessor.h`, codul din `PluginProcessor.cpp` este acum nefuncțional. Haideți să finalizăm modificările.
+
+Tăiați (_cut_) următoarea linie din `PluginProcessor.h` și lipiți-o (_paste_) în `Parameters.h`, sub linia `#include`:
+
+```cpp
+const juce::ParameterID gainParamID { "gain", 1 };
+
+```
+
+Deschideți `Parameters.cpp` și înlocuiți conținutul acestuia cu următorul cod:
+
+```cpp
+// 1
+#include "Parameters.h"
+// 2
+Parameters::Parameters(juce::AudioProcessorValueTreeState& apvts)
+{
+// 3
+auto* param = apvts.getParameter(gainParamID.getParamID());
+gainParam = dynamic_cast<juce::AudioParameterFloat*>(param);
+}
+
+```
+
+Ce face acest cod:
+
+1. Mai întâi include `Parameters.h`, astfel încât compilatorul C++ să știe despre ce obiect este vorba.
+2. Aici implementați constructorul pentru obiectul `Parameters`.
+3. Constructorul face exact același lucru pe care îl făcea constructorul `DelayAudioProcessor`. De fapt, puteți copia acest cod din `DelayAudioProcessor`.
+
+Înapoi în `PluginProcessor.cpp`, actualizați constructorul după cum urmează:
+
+```cpp
+DelayAudioProcessor::DelayAudioProcessor() :
+AudioProcessor(
+BusesProperties()
+.withInput("Input", juce::AudioChannelSet::stereo(), true)
+.withOutput("Output", juce::AudioChannelSet::stereo(), true)
+), // atenție la virgulă!
+params(apvts) // această linie este nouă
+{
+// do nothing
+}
+
+```
+
+Aici sunt trei modificări de făcut:
+
+- Nu mai există niciun cod între acoladele `{ }`. Codul care se afla aici a fost mutat în constructorul `Parameters`. Când o funcție nu conține cod, îmi place să scriu comentariul `// do nothing` pentru a se înțelege că a fost o decizie intenționată.
+- Ați adăugat `params(apvts)` în lista de inițializare a membrilor (_member initializer list_) a clasei `DelayAudioProcessor`.
+- Asigurați-vă că există o virgulă între `AudioProcessor(...)` și `params(apvts)`.
+
+Scopul unui constructor este de a pregăti obiectul pentru utilizare, ceea ce implică atribuirea unor valori rezonabile variabilelor sale (proces numit **inițializare**). Dacă obiectul se bazează pe un alt obiect (respectiv **moștenește** acel obiect), atunci ar trebui să apeleze și constructorul clasei de bază.
+
+În C++, acest lucru se face folosind lista de inițializare a membrilor, care reprezintă tot ce urmează după caracterul `:` de după numele constructorului, până la acolada de deschidere `{`.
+
+Ați văzut deja că lista de inițializare apelează `AudioProcessor(...)`, adică constructorul obiectului `juce::AudioProcessor` pe care se bazează `DelayAudioProcessor`, și îi transmite un obiect `BusesProperties`.
+
+Noutatea este că trebuie să inițializăm și obiectul `Parameters` tot aici, oferindu-i o referință către APVTS. Acest lucru se face scriind `params(apvts)`.
+
+Aproape am terminat! În `PluginProcessor.cpp`, derulați până la funcția `createParameterLayout`. Tăiați întreaga funcție și lipiți-o în `Parameters.cpp` (la finalul fișierului).
+
+Deoarece această funcție nu mai aparține clasei `DelayAudioProcessor`, ci face parte din clasa `Parameters`, schimbați `DelayAudioProcessor::` în `Parameters::`, astfel:
+
+```cpp
+juce::AudioProcessorValueTreeState::ParameterLayout
+Parameters::createParameterLayout()
+{
+// ...codul existent...
+}
+
+```
+
+Ultima modificare trebuie făcută în `PluginProcessor.cpp`, în cadrul funcției `processBlock`:
+
+```cpp
+float gainInDecibels = params.gainParam->get();
+
+```
+
+Variabila `gainParam` face parte acum din obiectul `Parameters`, așa că va trebui să o accesați prin `params.gainParam`. Deoarece `params` nu este un pointer, folosiți operatorul punct `.` pentru a-i accesa variabila membră. Totuși, `gainParam` rămâne un pointer, motiv pentru care folosim operatorul săgeată `->` pentru a apela `get()`.
+
+Verificați dacă puteți compila și rula pluginul din nou. Excelent, refactorizarea este completă! Ați extras cu succes logica parametrilor din procesorul audio într-o clasă separată.

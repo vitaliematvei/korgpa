@@ -1,0 +1,253 @@
+---
+title: 'Zgomotul de fermoar (zipper noise) și netezirea parametrilor (parameter smoothing)'
+description: 'Zgomotul de fermoar (zipper noise) și netezirea parametrilor (parameter smoothing)'
+order: 14
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Un lucru pe care este posibil să-l fi observat atunci când mișcați potentiometrul de câștig al ieșirii (_Output Gain_) este un mic zgomot de pârâit în sunet, mai ales când îl trageți rapid înainte și înapoi.
+Dacă nu ați auzit încă acest fenomen, încercați să ascultați în căști un fișier audio cu o textură sonoră mai netedă, cum ar fi un _synth lead_.
+Acest pârâit este cunoscut sub numele de **zgomot de fermoar** (_zipper noise_) și este extrem de nedorit.
+
+Aceste artefacte sonore apar din cauză că mișcarea potentiometrului se produce la o viteză relativ mică în comparație cu rata de eșantionare (_sample rate_) a semnalului audio.
+Chiar dacă trageți de potentiometru sus-jos ca un maniac, funcția `processBlock` va reda foarte multe eșantioane (_samples_) între două actualizări succesive ale parametrului.
+
+Dacă am reprezenta grafic evoluția parametrului în timp în raport cu semnalul audio, ar arăta cam așa:
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/vst/juce/68.jpg"
+    alt="Figura 68"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 68: </strong>Parametrul (linia neagră groasă) se deplasează în
+  trepte, ceea ce face ca și semnalul audio să facă salturi bruște modificat
+</p>
+---
+
+Acele trepte sunt cele care creează **zgomotul de fermoar** (_zipper noise_). Nivelul de amplitudine al semnalului audio face același tip de salturi discrete ori de câte ori parametrul este modificat. Aceste salturi introduc conținut frecvențial suplimentar în sunet, care devine audibil sub formă de scurte pocnituri sau clicuri.
+
+Pentru a elimina acest zgomot de fermoar, trebuie să evităm salturile bruște între valorile succesive ale parametrului. De exemplu, dacă câștigul de ieșire (_Output Gain_) se modifică de la 0 dB la –6 dB, nu aplicăm această schimbare instantaneu, ci coborâm nivelul treptat: –0.1 dB, –0.2 dB, –0.3 dB, –0.4 dB și așa mai departe, până când se atinge valoarea țintă de –6 dB.
+
+Acest proces este cunoscut sub numele de **netezire a parametrilor** (_parameter smoothing_), iar cadrul JUCE oferă obiectul `juce::LinearSmoothedValue`, care este ideal pentru această sarcină.
+
+În fișierul `Parameters.h`, adăugați următoarea linie în secțiunea `private:` a clasei:
+
+```cpp
+juce::LinearSmoothedValue<float> gainSmoother;
+
+```
+
+Aceasta creează un nou obiect `juce::LinearSmoothedValue` pentru o valoare de tip `float`, având numele `gainSmoother`.
+
+De asemenea, adăugați trei funcții noi în secțiunea `public:`:
+
+```cpp
+void prepareToPlay(double sampleRate) noexcept;
+void reset() noexcept;
+void smoothen() noexcept;
+
+```
+
+Pentru a fi siguri că suntem pe aceeași pagină, fișierul complet `Parameters.h` ar trebui să arate astfel acum. Ordinea funcțiilor și a variabilelor nu contează, deși, prin tradiție, constructorul este plasat primul, urmat de celelalte funcții și, la final, de variabile:
+
+```cpp
+#pragma once
+#include <JuceHeader.h>
+
+const juce::ParameterID gainParamID { "gain", 1 };
+
+class Parameters
+{
+public:
+    Parameters(juce::AudioProcessorValueTreeState& apvts);
+    static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+
+    void prepareToPlay(double sampleRate) noexcept;
+    void reset() noexcept;
+    void update() noexcept;
+    void smoothen() noexcept;
+
+    float gain = 0.0f;
+
+private:
+    juce::AudioParameterFloat* gainParam;
+    juce::LinearSmoothedValue<float> gainSmoother;
+};
+
+```
+
+În fișierul `Parameters.cpp`, adăugați implementarea funcției `prepareToPlay`:
+
+```cpp
+void Parameters::prepareToPlay(double sampleRate) noexcept
+{
+    double duration = 0.02;
+    gainSmoother.reset(sampleRate, duration);
+}
+
+```
+
+Obiectul `juce::LinearSmoothedValue` trebuie să știe care este rata actuală de eșantionare (_sample rate_) și cât timp ar trebui să dureze tranziția de la valoarea anterioară a parametrului la cea nouă. Această durată este specificată în secunde, unde 0.02 secunde înseamnă 20 de milisecunde.
+
+Timpul de netezire nu trebuie să fie prea scurt, altfel veți auzi în continuare zgomotul de fermoar, dar nici prea lung, altfel veți auzi literalmente cum sunetul face un _fade-in_ sau _fade-out_.
+Netezirea trebuie să fie suficient de lungă pentru a elimina zgomotul de fermoar, dar suficient de scurtă pentru a nu fi percepută conștient.
+20 de milisecunde la o rată de eșantionare de 48 kHz înseamnă 960 de eșantioane (48000 x 0.02 = 960), fiind un compromis excelent.
+
+Adăugați implementarea pentru funcția `reset`:
+
+```cpp
+void Parameters::reset() noexcept
+{
+    gain = 0.0f;
+    gainSmoother.setCurrentAndTargetValue(
+        juce::Decibels::decibelsToGain(gainParam->get()));
+}
+
+```
+
+Aceasta setează valoarea variabilei `gain` la `0.0f`. Dar de ce este necesar acest lucru? Ei bine, atunci când ați declarat variabila `float gain = 0.0f`, această inițializare are loc o singură dată în durata de viață a pluginului, la prima sa încărcare.
+
+Totuși, aplicațiile gazdă (_hosts_) pot porni și opri redarea audio de mai multe ori, iar pentru siguranță ar trebui să resetăm valoarea lui `gain` înapoi la zero de fiecare dată când se întâmplă acest lucru. De aceea folosim această funcție `reset` pentru a reinițializa obiectul `Parameters`. De asemenea, ea încarcă valoarea curentă a parametrului în obiectul `gainSmoother`.
+
+Modificați funcția `update` după cum urmează:
+
+```cpp
+void Parameters::update() noexcept
+{
+    float gainInDecibels = gainParam->get();
+    float newGain = juce::Decibels::decibelsToGain(gainInDecibels);
+    gainSmoother.setTargetValue(newGain);
+}
+
+```
+
+Aceasta nu mai modifică direct variabila `gain`, ci transmite obiectului de netezire (_smoother_) care este noua valoare a parametrului:
+
+1. Mai întâi, `gainParam->get()` citește valoarea curentă din parametru.
+2. Apoi, `juce::Decibels::decibelsToGain` convertește valoarea din decibeli în unități liniare.
+3. În cele din urmă, `gainSmoother.setTargetValue` informează obiectul de netezire despre noua valoare. Dacă aceasta diferă de valoarea anterioară, netezitorul își va începe treaba.
+
+Datorită conversiei decibelice, ceea ce se netezește nu este câștigul în decibeli, ci în unități liniare. Acest lucru este mai eficient, deoarece trebuie să facem conversia `decibelsToGain` o singură dată pe bloc (_block_), nu pentru fiecare eșantion în parte.
+
+Presupunând că codul de mai sus are sens, haideți să-l rescriem combinând aceste trei operațiuni într-o singură linie:
+
+```cpp
+void Parameters::update() noexcept
+{
+    gainSmoother.setTargetValue(juce::Decibels::decibelsToGain(gainParam->get()));
+}
+
+```
+
+Aceasta necesită mai puțin scris și face exact același lucru. O linie ca aceasta se citește de la interior spre exterior: mai întâi se execută `gainParam->get()`, apoi `decibelsToGain`, iar la final `setTargetValue`.
+
+> **Notă:** În funcția `reset` ați folosit `setCurrentAndTargetValue`, dar aici folosiți `setTargetValue`. Diferența este că în `reset` ne dorim ca valoarea de netezire să sară instantaneu la valoarea parametrului, în timp ce în `update` vrem doar să setăm valoarea spre care va rampa treptat.
+
+În final, adăugați ultima funcție nouă, `smoothen()`:
+
+```cpp
+void Parameters::smoothen() noexcept
+{
+    gain = gainSmoother.getNextValue();
+}
+
+```
+
+Aceasta citește valoarea netezită curentă și o salvează în variabila `gain`. Veți apela această funcție la fiecare pas de timp al fiecărui eșantion, astfel încât `gain` să se deplaseze mereu către cea mai recentă setare a parametrului.
+
+Pentru a începe să folosiți acest parametru netezit, mergeți în `PluginProcessor.cpp` și căutați funcția `prepareToPlay()`. Această funcție este apelată chiar înainte ca aplicația gazdă să înceapă redarea audio. Este locul ideal pentru a reseta starea obiectelor noastre.
+
+```cpp
+void DelayAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+{
+    params.prepareToPlay(sampleRate);
+    params.reset();
+}
+
+```
+
+Mai întâi se apelează `params.prepareToPlay()` pentru a transmite rata de eșantionare, apoi se resetează obiectul `Parameters`.
+
+De asemenea, va trebui să rescrieți puțin codul de procesare audio din `processBlock`. Modificați `processBlock` după cum urmează:
+
+```cpp
+void DelayAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
+                                         [[maybe_unused]] juce::MidiBuffer& midiMessages)
+{
+    juce::ScopedNoDenormals noDenormals;
+    auto totalNumInputChannels = getTotalNumInputChannels();
+    auto totalNumOutputChannels = getTotalNumOutputChannels();
+
+    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+        buffer.clear (i, 0, buffer.getNumSamples());
+
+    params.update();
+
+    float* channelDataL = buffer.getWritePointer(0);
+    float* channelDataR = buffer.getWritePointer(1);
+
+    for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
+        params.smoothen();
+        channelDataL[sample] *= params.gain;
+        channelDataR[sample] *= params.gain;
+    }
+}
+
+```
+
+Anterior, acest cod folosea două bucle îmbinate (imbricate): bucla exterioară pentru canale și bucla interioară pentru eșantioane. Acum există o singură buclă care procesează atât canalul stâng, cât și cel drept în același timp.
+
+- `params.update()` este apelat o dată pe bloc pentru a citi cea mai recentă valoare a parametrului, actualizând valoarea țintă a lui `gainSmoother` dacă parametrul s-a modificat de la ultimul bloc.
+- `params.smoothen()` este apelat o dată pentru fiecare eșantion (_sample_). Aceasta înseamnă că `params.gain` poate avea o valoare (ușor) diferită la fiecare pas — se va deplasa treptat către noua valoare a parametrului, eșantion cu eșantion. Această mișcare lină este cea care previne aparitia zgomotului de fermoar.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/vst/juce/69.jpg"
+    alt="Figura 69"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 69: </strong>Netezirea face tranzițiile mai line.
+</p>
+
+Asta este tot pentru netezirea parametrului de câștig (_gain_)!
+Încercați din nou pluginul.
+Zgomotul de fermoar (_zipper noise_) ar trebui să fi dispărut, iar actualizările parametrului sunt acum extrem de line.
+
+De acum înainte, de fiecare dată când adăugăm un parametru nou în plugin, îi vom atribui propriul obiect `juce::LinearSmoothedValue` și îl vom actualiza în funcțiile `update` și `smoothen` ale obiectului `Parameters`.
+
+Poate vă întrebați de ce nu am folosit două bucle îmbinate (imbricate) ca înainte?
+Ceva de genul acesta, probabil:
+
+```cpp
+params.update();
+
+for (int channel = 0; channel < totalNumInputChannels; ++channel) {
+    auto* channelData = buffer.getWritePointer(channel);
+    for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
+        params.smoothen();
+        channelData[sample] *= params.gain;
+    }
+}
+
+```
+
+Această variantă procesează mai întâi toate eșantioanele (_samples_) din canalul stâng și apoi toate eșantioanele din canalul drept.
+Dar observați că `params.smoothen()` este apelat acum de două ori mai des: o dată pentru fiecare eșantion din canalul stâng și încă o dată pentru fiecare eșantion din canalul drept.
+
+Mai rău, procesul de netezire sare de la ultimul eșantion din canalul stâng înapoi la primul eșantion din canalul drept, ceea ce ar putea crea la rândul său un nou zgomot de fermoar.
+
+Pentru a evita această problemă, procesăm canalele stâng și drept în același timp.
+Oricum va trebui să facem acest lucru odată ce introducem reacția (_feedback_) în efectul de delay, dar să nu ne grăbim deocamdată.
+
+Ar putea părea că până acum ați făcut destul de puțină programare audio propriu-zisă și mai multă muncă organizatorică (_housekeeping_), în special cu gestionarea parametrilor.
+Este adevărat, dar acum că noțiunile de bază sunt puse la punct, sunteți într-o poziție excelentă pentru a dezvolta restul pluginului și a trece la adevărata programare audio!
+
+{/* am ramas 9: Adding the delay .180 */}
