@@ -1,0 +1,88 @@
+---
+title: 'Filtre, egalizatoare și benzi'
+description: 'Filtre, egalizatoare și benzi'
+order: 6
+category: 'Egalizarea'
+level: 'Incepator'
+---
+
+Faderele atenuează sau amplifică întregul semnal.
+Cu alte cuvinte, întregul spectru de frecvențe devine mai slab sau mai intens.
+Egalizatoarele atenuează sau amplifică doar un interval specific de frecvențe, modificând astfel tonul semnalului.
+Primele egalizatoare puteau doar să atenueze (filtreze) frecvențele; modelele ulterioare au putut să le și amplifice.
+
+Indiferent de acest lucru, toate egalizatoarele se bazează pe un concept cunoscut sub numele de filtrare; prin urmare, termenii de „egalizator” și „filtru” sunt folosiți interschimbabil.
+În acest text, vom folosi termenul de **filtru** pentru a desemna un circuit care acționează în raport cu o singură frecvență, și **egalizator** pentru un dispozitiv care ar putea fi alcătuit din mai multe filtre.
+
+Un filtru poate gestiona un interval specific de frecvențe, cunoscut sub numele de **bandă**.
+Un egalizator tipic de pe o consolă de format mare are patru benzi: **LF, LMF, HMF și HF** (frecvențe joase, medii-joase, medii-înalte și înalte).
+De asemenea, în mod normal, există și un filtru trece-sus (HPF) și un filtru trece-jos (LPF).
+Un astfel de egalizator este prezentat în Figura 15.5.
+
+Multe pluginuri software și egalizatoare digitale oferă mai mult de patru benzi, unele oferind zece sau chiar mai multe.
+Astfel de egalizatoare sunt cunoscute sub denumirea de **egalizatoare paragrafice** (_paragraphic EQs_), fiind un hibrid între egalizatoarele parametrice și cele grafice (ambele vor fi explicate în curând).
+În multe cazuri, un grafic de pe fereastra pluginului arată răspunsul în frecvență combinat al tuturor benzilor.
+Un plugin de egalizator paragrafic este prezentat în Figura 15.6.
+
+Acesta este probabil momentul potrivit pentru a analiza diferența dintre cele două tipuri de egalizatoare prezentate în Figurile 15.5 și 15.6.
+Se poate argumenta că avem rar nevoie de mai mult decât oferă egalizatorul analogic prezentat în Figura 15.5 — acesta oferă două filtre trece-sus/trece-jos pentru a elimina conținutul nedorit, două filtre _shelving_ pentru a schimba tonalitatea generală a sunetelor și două egalizatoare parametrice pentru un tratament mai concentrat.
+
+În esență, majoritatea producțiilor de dinainte de era DAW au fost mixate cu egalizatoare care nu erau mai complexe decât cel de mai sus.
+Pluginurile software cu o multitudine de benzi, să zicem zece, pot induce în eroare oamenii, făcându-i să creadă că egalizarea standard necesită un număr atât de mare de benzi.
+Este adevărat că uneori multe benzi sunt utile, dar acest lucru se întâmplă mai degrabă în cazul înregistrărilor problematice.
+Pentru modelarea generală a tonului, adesea doar inginerii cu multă experiență au abilitățile auditive suficiente pentru a profita de o asemenea multitudine de benzi.
+Egalizarea nu este cel mai ușor aspect al mixajului, iar introducerea mai multor benzi poate îngreuna și mai mult procesul.
+Este mai bine să nimerești exact punctul potrivit cu o singură bandă decât să îl ratezi cu trei.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-4.jpg"
+    alt="Figura 15-4"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 15-4: </strong>Termeni subiectivi pe care îi asociem cu diferite intervale de frecvență, precum și excesul sau deficiențele din aceste intervale. Termenii nu sunt standardizați, iar intervalele de frecvență sunt orientative.
+
+</p>
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-5.jpg"
+    alt="Figura 15-5"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 15-5: </strong>O diagramă a egalizatorului SSL 4000 G+.
+  Secțiunea de egalizare este alcătuită din patru benzi: benzile LF și HF sunt
+  filtre shelving; LMF și HMF sunt egalizatoare parametrice. În partea
+  superioară se află filtrele trece-sus și trece-jos.
+</p>
+
+O altă problemă potențială cu pluginurile paragrafice este reprezentarea grafică a răspunsului pe care o afișează.
+Aceasta poate abate cu ușurință atenția de la efectul sonic real al egalizării și poate determina oamenii să egalizeze doar după ochi.
+De exemplu, s-ar putea să exagerezi cu o amplificare pe un egalizator pur și simplu pentru că o creștere de 6 dB pe graficul de frecvență pare mică din punct de vedere vizual.
+Dacă ai amplificat vreodată un semnal folosind un plugin paragrafic și apoi te-ai uitat la valoarea câștigului (_gain_) ca să înțelegi de ce efectul este atât de extrem sau de slab, probabil că ai egalizat după ochi.
+
+Inginerii profesioniști care lucrează pe console analogice își folosesc rareori privirea în timp ce egalizează — vei observa că gradațiile de câștig din Figura 15.5 nici măcar nu sunt etichetate.
+
+Compania McDSP le permite utilizatorilor să aleagă dacă doresc sau nu să vadă graficul de răspuns, încurajând astfel egalizarea bazată pe ascultare pentru cei care își doresc acest lucru.
+Ar fi înțelept ca și alți producători să le urmeze exemplul.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-6.jpg"
+    alt="Figura 15-6"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 15-6: </strong>Un plugin de egalizator paragrafic (DigiRack
+  7-band EQ 3 de la Digidesign). Acest plugin oferă șapte benzi. Două sunt
+  filtre pentru frecvențe înalte și joase, iar celelalte cinci sunt filtre
+  parametrice, deși benzile LF și HF pot fi comutate în modul *shelving*.
+</p>

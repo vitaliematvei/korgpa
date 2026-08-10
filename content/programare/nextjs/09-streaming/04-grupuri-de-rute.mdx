@@ -1,0 +1,36 @@
+---
+title: 'Corectarea bug-ului cu loading skeleton folosind grupuri de rute (Route Groups)'
+description: 'Corectarea bug-ului cu loading skeleton folosind grupuri de rute (Route Groups)'
+order: 4
+category: 'NextJS'
+level: 'Incepator'
+---
+
+În acest moment, interfața ta schelet de încărcare (_loading skeleton_) se va aplica și pentru paginile de facturi (_invoices_) și clienți (_customers_).
+
+Deoarece fișierul `loading.tsx` se află cu un nivel mai sus în sistemul de fișiere față de `/invoices/page.tsx` și `/customers/page.tsx`, acesta este aplicat automat și acelor pagini.
+
+Putem schimba acest comportament folosind **Grupuri de Rute** (_Route Groups_). Creează un folder nou numit `/(overview)` în interiorul folderului `dashboard`.
+Apoi, mută fișierele `loading.tsx` și `page.tsx` în interiorul acestui folder:
+
+```text
+app/
+└── dashboard/
+    ├── (overview)/
+    │   ├── loading.tsx
+    │   └── page.tsx
+    ├── customers/
+    │   └── page.tsx
+    └── invoices/
+        └── page.tsx
+
+```
+
+Acum, fișierul `loading.tsx` se va aplica **doar** pentru pagina principală de prezentare generală a dashboard-ului (_overview page_).
+
+Grupurile de rute îți permit să organizezi fișierele în grupuri logice fără a afecta structura căii URL.
+Când creezi un folder nou folosind paranteze rotunde `()`, numele acestuia **nu va fi inclus în calea URL**.
+Astfel, ruta `/dashboard/(overview)/page.tsx` devine accesibilă simplu ca `/dashboard`.
+
+Aici folosești un grup de rute pentru a te asigura că `loading.tsx` se aplică doar paginii principale a dashboard-ului.
+Totuși, poți folosi grupurile de rute și pentru a-ți separa aplicația în secțiuni distincte (de exemplu, rute de `(marketing)` și rute de `(shop)`) sau pe echipe de dezvoltare, în cazul aplicațiilor mai mari.

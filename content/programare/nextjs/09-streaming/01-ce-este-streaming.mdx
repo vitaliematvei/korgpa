@@ -1,0 +1,44 @@
+﻿---
+title: 'Ce este Streaming'
+description: 'Ce este Streaming'
+order: 1
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Streaming-ul este o tehnică de transfer de date care îți permite să împarți o rută în fragmente mai mici („chunks”) și să le transmiți progresiv de pe server către client pe măsură ce devin disponibile.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/nextjs/9.jpg"
+    alt="Figura 9"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 9: </strong> Streaming
+</p>
+Prin intermediul streaming-ului, poți preveni blocarea întregii pagini de către
+cererile lente de date. Astfel, utilizatorul poate vedea și interacționa cu
+anumite părți din pagină fără a fi nevoit să aștepte încărcarea tuturor datelor
+înainte ca interfața (UI) să poată fi afișată.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/nextjs/10.jpg"
+    alt="Figura 10"
+    className="h-auto w-full max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 10: </strong> Streaming - prevenire blocare
+</p>
+Streaming-ul se potrivește excelent cu modelul bazat pe componente din React,
+deoarece fiecare componentă poate fi privită ca un fragment (*chunk*).
+
+Există două modalități prin care poți implementa streaming-ul în Next.js:
+
+- **La nivel de pagină**, prin intermediul fișierului `loading.tsx` (care generează automat un context `<Suspense>` pentru tine).
+- **La nivel de componentă**, folosind direct `<Suspense>` pentru un control mai granular.

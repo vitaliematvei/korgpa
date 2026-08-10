@@ -1,0 +1,31 @@
+---
+title: 'Grafice ale răspunsului în frecvență'
+description: 'Grafice ale răspunsului în frecvență'
+order: 7
+category: 'Egalizarea'
+level: 'Incepator'
+---
+
+**Grafice ale răspunsului în frecvență**
+
+Folosim grafice ale răspunsului în frecvență pentru a arăta cum modifică un dispozitiv diferitele frecvențe ale semnalului care trece prin el (Figura 15.7). Pe aceste grafice de câștig în funcție de frecvență, axa frecvențelor acoperă intervalul de frecvențe audibile între 20 Hz și 20 kHz. Faptul că percepția noastră asupra înălțimii sunetului nu este liniară este evident pe scara de frecvență: intervalul de 100–200 Hz are aceeași lățime grafică ca cel de 1–2 kHz. Spațierea dintre liniile grilei corespunde gamei lor de frecvențe (pași de 10 Hz pentru zecile de hertzi, 100 Hz pentru sutele de hertzi și așa mai departe).
+
+Filtrul din Figura 15.7 este cunoscut sub denumirea de **filtru „perete de cărămidă”** (_brick-wall filter_). Acesta are un răspuns în trepte care împarte spectrul de frecvențe în două benzi distincte, unde toate frecvențele dintr-o parte sunt eliminate, iar toate cele din cealaltă sunt păstrate. Un filtru cu o pantă atât de verticală este ipotetic — nu poate fi construit, iar chiar dacă ar putea fi, ar genera multe efecte secundare nedorite. Totuși, termenul de filtru _brick-wall_ este folosit uneori pentru a descrie un filtru digital cu o pantă foarte abruptă, deși niciodată perfect verticală.
+
+Există atât de mulți termeni și modele de circuite implicate în cazul filtrelor, încât poate fi foarte dificil să le ții minte pe toate. Pentru a generaliza, în mixaj folosim următoarele tipuri principale: de trecere (_pass_), de tip raft (_shelving_) și parametrice. Fiecare tip are o formă recognoscibilă atunci când este reprezentat pe un grafic al răspunsului în frecvență. Indiferent de filtrul pe care îl folosim, există întotdeauna o singură frecvență de referință (de exemplu, 800 Hz în Figura 15.7) și, în cele mai multe cazuri, avem control asupra ei. Această frecvență are o denumire diferită pentru fiecare tip de filtru.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-7.jpg"
+    alt="Figura 15-7"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 15-7: </strong>Un filtru „perete de cărămidă” (*brick-wall
+  filter*) reprezentat pe un grafic al răspunsului în frecvență. Filtrul din
+  acest grafic elimină toate frecvențele de sub 800 Hz, dar le permite să treacă
+  pe toate cele de deasupra. Acest tip de filtru *brick-wall* există doar în
+  teorie.
+</p>

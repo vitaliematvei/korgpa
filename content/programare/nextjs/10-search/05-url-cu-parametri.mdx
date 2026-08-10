@@ -1,0 +1,108 @@
+---
+title: 'Actualizarea URL-ului cu parametrii de căutare (Update the URL with search params)'
+description: 'Actualizarea URL-ului cu parametrii de căutare (Update the URL with search params)'
+order: 5
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Importă hook-ul `useSearchParams` din `next/navigation` și atribuie-l unei variabile:
+
+```tsx
+// /app/ui/search.tsx
+'use client';
+
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { useSearchParams } from 'next/navigation';
+
+export default function Search() {
+  const searchParams = useSearchParams();
+
+  function handleSearch(term: string) {
+    console.log(term);
+  }
+  // ...
+}
+```
+
+În interiorul funcției `handleSearch`, creează o nouă instanță `URLSearchParams` folosind noua ta variabilă `searchParams`:
+
+```tsx
+// /app/ui/search.tsx
+'use client';
+
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { useSearchParams } from 'next/navigation';
+
+export default function Search() {
+  const searchParams = useSearchParams();
+
+  function handleSearch(term: string) {
+    const params = new URLSearchParams(searchParams);
+  }
+  // ...
+}
+```
+
+`URLSearchParams` este un API Web ce oferă metode utilitare pentru manipularea parametrilor din URL (_query parameters_).
+În loc să construiești manual un șir de text complex, îl poți folosi pentru a genera facil formate precum `?page=1&query=a`.
+
+Apoi, setează șirul de parametri în funcție de ce a introdus utilizatorul.
+Dacă câmpul este gol, șterge parametrul:
+
+```tsx
+// /app/ui/search.tsx
+'use client';
+
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { useSearchParams } from 'next/navigation';
+
+export default function Search() {
+  const searchParams = useSearchParams();
+
+  function handleSearch(term: string) {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set('query', term);
+    } else {
+      params.delete('query');
+    }
+  }
+  // ...
+}
+```
+
+Acum că ai șirul de interogare (_query string_), poți folosi hook-urile `useRouter` și `usePathname` din Next.js pentru a actualiza URL-ul.
+
+Importă `useRouter` și `usePathname` din `'next/navigation'` și apelează metoda `replace` oferită de `useRouter()` în interiorul funcției `handleSearch`:
+
+```tsx
+// /app/ui/search.tsx
+'use client';
+
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+
+export default function Search() {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  function handleSearch(term: string) {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set('query', term);
+    } else {
+      params.delete('query');
+    }
+    replace(`${pathname}?${params.toString()}`);
+  }
+}
+```
+
+Iată o detaliere a procesului:
+
+- **`${pathname}`** reprezintă calea curentă (în cazul tău, `"/dashboard/invoices"`).
+- Pe măsură ce utilizatorul tastează în bara de căutare, **`params.toString()`** transformă datele introduse într-un format compatibil cu URL-urile.
+- **`replace(`${pathname}?${params.toString()}`)**`actualizează URL-ul cu noile date de căutare. De exemplu:`/dashboard/invoices?query=lee` dacă utilizatorul caută „Lee”.
+- **URL-ul se actualizează fără reîncărcarea paginii**, mulțumită navigării pe partea de client (_client-side navigation_) din Next.js.

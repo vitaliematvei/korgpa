@@ -1,0 +1,26 @@
+---
+title: 'Adăugarea de interfețe schelet (Loading Skeletons)'
+description: 'Adăugarea de interfețe schelet (Loading Skeletons)'
+order: 3
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Un _loading skeleton_ este o versiune simplificată a interfeței de utilizator (UI).
+Multe site-uri web îl folosesc pe post de substituent (_placeholder_ sau _fallback_) pentru a le indica utilizatorilor că conținutul este în curs de încărcare.
+
+Orice interfață adăugată în `loading.tsx` va fi inclusă ca parte a fișierului static și trimisă prima.
+Ulterior, restul conținutului dinamic va fi transmis prin streaming de pe server către client.
+
+În interiorul fișierului `loading.tsx`, importă o nouă componentă numită `<DashboardSkeleton>`:
+
+```tsx
+// /app/dashboard/loading.tsx
+import DashboardSkeleton from '@/app/ui/skeletons';
+
+export default function Loading() {
+  return <DashboardSkeleton />;
+}
+```
+
+Apoi, reîmprospătează pagina `http://localhost:3000/dashboard`.

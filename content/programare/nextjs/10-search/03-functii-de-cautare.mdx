@@ -1,0 +1,20 @@
+---
+title: 'Adăugarea funcționalității de căutare'
+description: 'Adăugarea funcționalității de căutare'
+order: 3
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Acestea sunt hook-urile de client din Next.js pe care le vei folosi pentru a implementa funcționalitatea de căutare:
+
+- **`useSearchParams`** — Îți permite să accesezi parametrii din URL-ul curent. De exemplu, parametrii de căutare pentru URL-ul `/dashboard/invoices?page=1&query=pending` vor arăta astfel: `{page: '1', query: 'pending'}`.
+- **`usePathname`** — Îți permite să citești calea (_pathname_) URL-ului curent. De exemplu, pentru ruta `/dashboard/invoices`, `usePathname` va returna `'/dashboard/invoices'`.
+- **`useRouter`** — Permite navigarea programatică între rute în cadrul componentelor de client (_client components_). Oferă mai multe metode utile de navigare.
+
+Iată o scurtă prezentare generală a pașilor de implementare:
+
+1. **Preluarea valorii introduse de utilizator** (_Capture user input_).
+2. **Actualizarea URL-ului** cu parametrii de căutare.
+3. **Păstrarea URL-ului în sincronizare** cu câmpul de căutare (_input field_).
+4. **Actualizarea tabelului** pentru a reflecta termenul de căutare (_search query_).

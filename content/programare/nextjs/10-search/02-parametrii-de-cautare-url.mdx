@@ -1,0 +1,16 @@
+---
+title: 'De ce să folosești parametrii de căutare din URL (URL search params)?'
+description: 'De ce să folosești parametrii de căutare din URL (URL search params)?'
+order: 2
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Așa cum am menționat mai sus, vei folosi parametrii de căutare din URL pentru a gestiona starea căutării (_search state_).
+Acest tipar (_pattern_) poate fi nou dacă ești obișnuit să gestionezi starea exclusiv pe partea de client (_client-side state_).
+
+Există mai multe avantaje în implementarea căutării prin parametrii URL:
+
+- **URL-uri ce pot fi salvate la favorite și distribuite** — Deoarece parametrii de căutare se află direct în URL, utilizatorii pot salva starea curentă a aplicației (inclusiv căutările și filtrele aplicate) în marcaje (_bookmarks_) sau le pot trimite altor persoane.
+- **Rendare pe server (_Server-Side Rendering_)** — Parametrii din URL pot fi citiți direct pe server pentru a randa starea inițială, ceea ce simplifică considerabil procesul de rendare pe server.
+- **Analiză și monitorizare (_Analytics & Tracking_)** — Prezența termenilor de căutare și a filtrelor direct în URL facilitează urmărirea comportamentului utilizatorilor, fără a necesita logică suplimentară complexă pe partea de client.

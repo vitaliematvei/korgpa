@@ -1,0 +1,45 @@
+---
+title: 'Preluarea introducerii utilizatorului (Capture the user's input)'
+description: 'Preluarea introducerii utilizatorului (Capture the user's input)'
+order: 4
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Mergi în componenta `<Search>` (`/app/ui/search.tsx`) și vei observa următoarele:
+
+- **`"use client"`** — Aceasta este o componentă de client (_Client Component_), ceea me înseamnă că poți folosi ascultători de evenimente (_event listeners_) și hook-uri.
+- **`<input>`** — Acesta este câmpul de căutare.
+
+Creează o funcție nouă `handleSearch` și adaugă un ascultător `onChange` pe elementul `<input>`. `onChange` va invoca funcția `handleSearch` de fiecare dată când valoarea din input se modifică.
+
+```tsx
+// /app/ui/search.tsx
+'use client';
+
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+
+export default function Search({ placeholder }: { placeholder: string }) {
+  function handleSearch(term: string) {
+    console.log(term);
+  }
+
+  return (
+    <div className="relative flex flex-1 shrink-0">
+      <label htmlFor="search" className="sr-only">
+        Search
+      </label>
+      <input
+        className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+        placeholder={placeholder}
+        onChange={(e) => {
+          handleSearch(e.target.value);
+        }}
+      />
+      <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+    </div>
+  );
+}
+```
+
+Verifică dacă funcționează corect deschizând consola din instrumentele pentru dezvoltatori (_Developer Tools_) ale browserului, apoi tastați în câmpul de căutare. Ar trebui să vezi termenul căutat afișat în consola browserului.

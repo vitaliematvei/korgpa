@@ -1,0 +1,85 @@
+---
+title: 'Gruparea componentelor'
+description: 'Gruparea componentelor'
+order: 6
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Acum trebuie să înfășori componentele `<Card>` în `Suspense`.
+Ai putea prelua datele pentru fiecare card în parte, dar acest lucru ar putea duce la un efect de afișare succesivă bruscă (_popping effect_) pe măsură ce cardurile se încarcă individual, ceea ce poate fi deranjant vizual pentru utilizator.
+
+Cum poți aborda această problemă?
+
+Pentru a evita încărcarea fragmentată, poți grupa cardurile folosind o componentă wrapper.
+Asta înseamnă că meniul lateral static `<SideNav/>` va fi afișat primul, urmat de grupajul de carduri etc.
+
+În fișierul tău `page.tsx`:
+
+1. Șterge componentele `<Card>`.
+2. Șterge apelul funcției `fetchCardData()`.
+3. Importă o nouă componentă wrapper numită `<CardWrapper/>`.
+4. Importă o nouă componentă skeleton numită `<CardsSkeleton/>`.
+5. Înfășoară `<CardWrapper/>` în `Suspense`.
+
+```tsx
+// /app/dashboard/(overview)/page.tsx
+import CardWrapper from '@/app/ui/dashboard/cards';
+// ...
+import {
+  RevenueChartSkeleton,
+  LatestInvoicesSkeleton,
+  CardsSkeleton,
+} from '@/app/ui/skeletons';
+
+export default async function Page() {
+  return (
+    <main>
+      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+        Dashboard
+      </h1>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <Suspense fallback={<CardsSkeleton />}>
+          <CardWrapper />
+        </Suspense>
+      </div>
+      {/* ... */}
+    </main>
+  );
+}
+```
+
+Apoi, mergi în fișierul `/app/ui/dashboard/cards.tsx`, importă funcția `fetchCardData()` și apeleaz-o în interiorul componentei `<CardWrapper/>`. Asigură-te că decomentezi codul necesar din această componentă:
+
+```tsx
+// /app/ui/dashboard/cards.tsx
+// ...
+import { fetchCardData } from '@/app/lib/data';
+
+// ...
+
+export default async function CardWrapper() {
+  const {
+    numberOfInvoices,
+    numberOfCustomers,
+    totalPaidInvoices,
+    totalPendingInvoices,
+  } = await fetchCardData();
+
+  return (
+    <>
+      <Card title="Collected" value={totalPaidInvoices} type="collected" />
+      <Card title="Pending" value={totalPendingInvoices} type="pending" />
+      <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
+      <Card
+        title="Total Customers"
+        value={numberOfCustomers}
+        type="customers"
+      />
+    </>
+  );
+}
+```
+
+Reîmprospătează pagina și ar trebui să vezi toate cardurile încărcându-se în același timp.
+Poți folosi acest tipar (_pattern_) atunci când dorești ca mai multe componente conexe să se încarce simultan.

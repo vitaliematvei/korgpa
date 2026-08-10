@@ -1,0 +1,26 @@
+---
+title: 'Streaming-ul unei pagini întregi cu loading.tsx'
+description: 'Streaming-ul unei pagini întregi cu loading.tsx'
+order: 2
+category: 'NextJS'
+level: 'Incepator'
+---
+
+În folderul `/app/dashboard`, creează un fișier nou numit `loading.tsx`:
+
+```tsx
+// /app/dashboard/loading.tsx
+export default function Loading() {
+  return <div>Loading...</div>;
+}
+```
+
+Reîmprospătează pagina `http://localhost:3000/dashboard`
+
+Iată ce se întâmplă aici:
+
+- **`loading.tsx` este un fișier special în Next.js**, construit pe baza React Suspense.
+  Acesta îți permite să creezi o interfață de rezervă (_fallback UI_) care este afișată ca înlocuitor în timp ce conținutul paginii se încarcă.
+- **Deoarece `<SideNav>` este static**, acesta este afișat imediat.
+  Utilizatorul poate interacționa cu Meniul Lateral (`<SideNav>`) în timp ce conținutul dinamic se încarcă în fundal.
+- **Utilizatorul nu trebuie să aștepte** ca pagina să termine complet de încărcat pentru a putea naviga în altă parte (aceasta se numește navigare întreruptibilă — _interruptible navigation_).

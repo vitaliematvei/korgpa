@@ -1,0 +1,132 @@
+---
+title: 'Filtre de trecere'
+description: 'Filtre de trecere'
+order: 8
+category: 'Egalizarea'
+level: 'Incepator'
+---
+
+### **Filtre de trecere**
+
+Circuitul unui filtru de trecere poate fi la fel de simplu ca o simplă combinație între un condensator și un rezistor. Frecvența de referință a filtrelor de trecere se numește **frecvență de tăiere** (_cut-off frequency_).
+
+Filtrele de trecere permit trecerea frecvențelor de pe o parte a frecvenței de tăiere, atenuând în același timp în mod continuu frecvențele de pe cealaltă parte:
+
+- **Un filtru trece-sus (HPF)** permite trecerea frecvențelor mai mari decât frecvența de tăiere, dar filtrează frecvențele aflate sub aceasta.
+- **Un filtru trece-jos (LPF)** face opusul — lasă să treacă ce se află sub frecvența de tăiere, filtrând în același timp ce se află deasupra acesteia.
+
+Figura 15.8 ilustrează acest lucru.
+
+Un HPF poate fi denumit și **filtru de tăiere a joaselor** (_low-cut filter_), iar un LPF, **filtru de tăiere a înaltelor** (_high-cut filter_). Este mai ușor să vorbim despre filtre de trecere (decât despre filtre de tăiere) și este mai comun să folosim abrevierile HPF și LPF. Abrevierile LCF și HCF sunt neobișnuite în domeniul mixajului.
+
+### **Punctul de tăiere și atenuarea de 3 dB**
+
+Este ușor de observat că punctele de tăiere din Figura 15.8 nu se află acolo unde curba începe să se curbeze (frecvența de tranziție). Într-adevăr, frecvența de tăiere la filtrele de trecere este punctul în care se înregistrează o **atenuare de 3 dB**. De exemplu, aceasta este de 100 Hz pentru HPF-ul din Figura 15.8. În consecință, putem observa că un interval scurt de frecvențe a fost afectat, în ciuda faptului că se află deasupra frecvenței de tăiere (sau dedesubt, în cazul LPF).
+
+Unele filtre au o frecvență de tăiere fixă și oferă doar un comutator de activare/dezactivare (_in/out_). În multe cazuri, frecvența fixă a unui HPF este în jur de **80 Hz**, adică exact sub cea mai joasă notă a unei chitare obișnuite (Mi, 82 Hz) și a doua armonică a celei mai joase note de pe o chitară bas (Mi, 41 Hz). Cu toate acestea, majoritatea filtrelor de trecere pe care le folosim în mixaj ne permit să măturăm sau să ajustăm dinamic (_sweep_) frecvența de tăiere.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-8.jpg"
+    alt="Figura 15-8"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 15-8: </strong>Un filtru trece-sus și un filtru trece-jos.
+</p>
+
+O altă caracteristică a unui filtru de trecere este **panta** (_slope_).
+Aceasta determină gradul de înclinație (abruptul) al curbei filtrului.
+Panta este exprimată în dB pe octavă (dB/oct sau dB/8ve), valorile comune fiind multipli de șase.
+
+O pantă lină de 6 dB/oct înseamnă că, sub frecvența de tăiere, fiecare octavă consecutivă suferă o pierdere suplimentară de câștig de 6 dB.
+Cu o pantă agresivă de 30 dB/oct, va fi nevoie de doar două octave înainte ca frecvențele să fie atenuate cu mai mult de 60 dB (un punct care poate fi perceput ca o mutizare efectivă).
+În general, cu cât panta este mai abrupă, cu atât filtrul produce mai multe efecte secundare nedorite.
+Figura 15.9 prezintă diferite pante.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-9.jpg"
+    alt="Figura 15-9"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 15-9: </strong>Diferite pante pe un HPF. Aceste patru instanțe
+  ale pluginului Digidesign DigiRack EQ 3 ilustrează fiecare câte o pantă
+  diferită. De sus în jos: 6, 12, 18 și 24 dB/oct. Frecvența de tăiere este
+  setată la 1 kHz și este indicată clar printr-un cerc alb.
+</p>
+
+---
+
+Multiplicatorii de 6 dB sunt standard în egalizatoarele analogice și rareori putem modifica panta unui astfel de filtru.
+Un filtru de trecere analogic are adesea o pantă fixă de 6, 12 sau 18 dB/oct (în ordinea popularității).
+O pantă de 36 dB/oct este considerată foarte abrupă.
+În designul digital este mai ușor să se ofere o varietate de pante, acestea nefiind obligatoriu limitate la pași de 6 dB/oct.
+
+### **Combinarea filtrelor pentru obținerea pantei dorite**
+
+De menționat este că, dacă nu avem control direct asupra pantei, o putem obține prin combinarea a două filtre.
+De exemplu, putem obține un răspuns de 12 dB/oct combinând două filtre de 6 dB/oct cu aceeași frecvență de tăiere:
+
+- Pe măsură ce semnalul trece prin **primul filtru**, prima octavă suferă o atenuare maximă de 6 dB.
+- Pe măsură ce trece prin **al doilea filtru**, aceeași octavă suferă o atenuare suplimentară de 6 dB, rezultând un răspuns însumat de 12 dB/oct.
+
+În domeniul analogic, acest lucru presupune conectarea a două filtre de trecere în serie.
+Cu un plugin paragrafic, presupune setarea a două benzi la același răspuns de trecere.
+În toate cazurile, frecvențele de tăiere ale celor două filtre **trebuie să fie identice**.
+
+Deși poate părea evident, unii oameni presupun în mod eronat că, odată ce un semnal trece printr-un filtru, o a doua trecere prin același filtru nu va mai avea niciun efect.
+Filtrele **atenuează întotdeauna și nu elimină niciodată complet**.
+În cazul unui filtru de trecere, de exemplu, în timpul primei treceri frecvența de tăiere va fi atenuată cu 3 dB, iar în timpul celei de-a doua va fi atenuată cu încă 3 dB suplimentari.
+
+---
+
+Mulți dintre noi sunt familiarizați cu filtrele de trecere de pe sintetizatoare, care au atât control pentru frecvența de tăiere (_cut-off_), cât și pentru rezonanță.
+**Rezonanța** oferă o amplificare în jurul frecvenței de tăiere și aduce un plus de caracter (_edge_) intervalului de tranziție.
+Rezonanța este extrem de sesizabilă atunci când frecvența de tăiere este măturată (_swept_), iar majoritatea mixerelor pentru DJ includ filtre rezonante.
+
+Rezonanța nu este o caracteristică extrem de comună în egalizatoarele pentru mixaj, deși unele, cum ar fi PSP MasterQ din Figura 15.10, o oferă.
+Cu toate acestea, s-ar putea să fie inclusă „pe ascuns” în unele modele, de obicei în cele care oferă foarte puține controale și nu afișează graficul răspunsului în frecvență (de regulă, dispozitive analogice sau pluginuri digitale care le emită).
+Un astfel de exemplu este egalizatorul Universal Audio NEVE 1073, prezentat în Figura 15.11.
+În general, egalizatoarele de acest tip au un răspuns în frecvență departe de a fi perfect ca la carte (cum este cel din Figura 15.8), un aspect care contribuie adesea la sunetul lor atractiv.
+
+Chiar dacă un egalizator nu oferă un control dedicat pentru rezonanță, putem obține această caracteristică adăugând un filtru parametric în jurul frecvenței de tăiere.
+Figura 15.12 ilustrează cum se realizează acest lucru.
+Singura limitare a unei astfel de setări este că ambele frecvențe de referință trebuie ajustate dacă dorim să măturăm răspunsul rezultant.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-10.jpg"
+    alt="Figura 15-10"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 15-10: </strong>Figura 15.10 Rezonanța filtrului de trecere
+  (pluginul PSP MasterQ). Controlul Q de pe secțiunea HPF acționează ca un
+  control de rezonanță. Rezonanța se vede sub forma unei ridicături (*bump*) în
+  jurul frecvenței de tăiere.
+</p>
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-11.jpg"
+    alt="Figura 15-11"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 15-11: </strong>Combinarea a două benzi pentru a crea un filtru
+  rezonant (pluginul Digidesign DigiRack 7-band EQ 3). Un filtru parametric
+  (banda LF) este utilizat pentru a crea o ridicătură (*bump*) în jurul
+  frecvenței de tăiere a unui HPF, rezultând un răspuns tipic unui filtru
+  rezonant.
+</p>
+
+{/* am ramas Shelving filters .241 */}
