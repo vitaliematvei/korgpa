@@ -1,0 +1,39 @@
+---
+title: 'Pregătirea mediului de lucru'
+description: 'Pregătirea mediului de lucru'
+order: 5
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Așadar, de ce instrumente avem nevoie pentru proiectul nostru?
+În capul listei se află, bineînțeles, Next.js, dar asta nu e tot – mai există câteva unelte de care vom avea nevoie pe lângă editorul nostru obișnuit de text.
+
+Sunt un mare adept al simplității atunci când este posibil (da, cred în principiul KISS – _Keep It Simple, Stupid_ – pentru cei care îl cunosc): de ce să scriem zece linii de cod dacă avem nevoie doar de cinci?
+
+Lăsând asta la o parte, hai să analizăm în detaliu lista completă a instrumentelor de care vom avea nevoie:
+
+- **Editorul de text:** Există o mulțime de opțiuni pe care le-am putea folosi. Preferința mea este Visual Studio Code, dar simte-te liber să folosești orice editor ai deja instalat și funcționează bine pentru tine.
+- **Gestionarea datelor:** Vom folosi **Sanity** – un sistem Headless CMS cu un API similar cu GraphQL, care se potrivește de minune cu Stripe și Next.js.
+- **Mediul de rulare:** Next.js este creat pentru Node.js, așa că va trebui să instalăm Node.js și NPM într-o versiune potrivită pentru platforma ta. Pentru a crea site-ul propriu-zis, vom folosi utilitarul `create-next-app`, care va pune la punct structura de bază.
+- **Găzduirea (Hosting):** Vom folosi **Netlify**. Preferința mea este să conectăm site-ul dintr-un depozit GitHub, în loc să folosim opțiunea de a trage și plasa (_drag and drop_) codul direct în Netlify. În ambele cazuri, vom avea nevoie de conturi gratuite pe ambele platforme.
+- **Instrumentul cheie:** Avem nevoie de **Stripe** – acesta va găzdui toate produsele noastre și se va ocupa de finalizarea comenzilor (_checkout_) și procesarea acestora. Există totuși unele limitări, cum ar fi imposibilitatea de a gestiona stocurile; voi reveni asupra acestui aspect mai târziu în carte.
+- **Domeniul personalizat:** Ca parte din procesul de găzduire, voi atașa un nume de domeniu personalizat site-ului pentru a-i oferi un plus de realism. Acest lucru nu este obligatoriu, dar îți va arăta cum funcționează ca o soluție cap-la-cap (_end-to-end_).
+- **Imagini:** Nu în ultimul rând, vom avea nevoie de câteva fotografii cu prăjituri pentru magazinul nostru – pe acestea le vom lua de pe Unsplash.
+
+Toate demonstrațiile din această carte au fost scrise pentru Windows, fiind platforma de dezvoltare a autorului.
+Te rog să adaptezi comenzile dacă folosești macOS sau Linux.
+
+În plus, am făcut câteva presupuneri pentru acest proiect:
+
+- Am ales să **nu folosim TypeScript** pentru a păstra lucrurile cât mai simple; ești liber să adaptezi codul dacă preferi să ai verificare de tipuri (_type-checking_).
+- Pentru această carte, voi presupune că folderul proiectului nostru se numește `macaronmagic` și este localizat în rădăcina partiției `C:`. Este doar o alegere practică; dacă vrei să-l redenumesti sau să-l salvezi în altă parte, adaptează căile din cod în mod corespunzător.
+- Pe parcursul cărții mă voi concentra pe menținerea simplității și pe părțile esențiale ale construirii unui site de e-commerce cu Next.js.
+  Asta înseamnă că vom sacrifica câteva funcționalități secundare, cum ar fi controlul stocurilor.
+  Nu va fi o problemă pentru site-ul nostru, iar accentul pe simplitate ne permite să înțelegem cum funcționează Next.js și să folosim această bază pentru extinderi sau actualizări viitoare.
+
+În regulă – destul cu arhitectura tehnică: e timpul să ne suflecăm mânecile și să construim site-ul!
+Așa cum am menționat anterior, vom folosi `create-next-app` pentru a crea structura inițială, pregătită pentru dezvoltare din capitolul următor.
+Hai să trecem la treabă și să vedem pașii necesari în detaliu.
+
+{/* am ramas Creating the Base Site .8 */}
