@@ -1,0 +1,108 @@
+---
+title: 'Crearea site-ului de bază'
+description: 'Crearea site-ului de bază'
+order: 6
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Prima noastră sarcină este simplă, dar probabil cea mai importantă: avem nevoie de o bază pe care să ne construim site-ul! Din fericire, Next.js face acest lucru extrem de ușor. Primul pas este să instalăm framework-ul și să folosim un șablon (_template_) pentru a crea site-ul de pornire. Apoi vom reveni pentru a explora arhitectura propusă pentru proiectul nostru și vom adăuga ultimele instrumente necesare pentru a finaliza dezvoltarea.
+
+### Instalarea Next.js și crearea site-ului
+
+Pentru a configura site-ul inițial, urmează acești pași:
+
+1. Mai întâi, deschide o sesiune de terminal Node.js și navighează în rădăcina partiției `C:`.
+2. În linia de comandă, introdu `npx create-next-app macaronmagic`, apoi apasă Enter.
+3. Când ți se solicită, alege opțiunile din lista de mai jos:
+
+```text
+Need to install the following packages:
+create-next-app
+Ok to proceed? (y) y
+√ Would you like to use TypeScript with this project? ... No
+√ Would you like to use ESLint with this project? ... Yes
+√ Would you like to use `src/` directory with this project? ... Yes
+√ Would you like to use experimental `app/` directory with this project? ... No
+√ What import alias would you like configured? ... @/*
+Creating a new Next.js app in C:\macaronmagic.
+
+```
+
+> **Notă:** Am parcurs procesul pas cu pas pentru a vedea cum funcționează. Totuși, poți rula direct comanda echivalentă de mai jos, care va realiza aceeași sarcină:
+> `npx create-next-app --js --eslint --src-dir`
+
+4. Node.js va continua procesul de instalare și va afișa mesajul de confirmare `Success...!` la finalizare.
+5. Pentru a fi pregătiți pentru etapele ulterioare din carte, trebuie să instalăm o serie de dependențe.
+   Pentru asta, deschide fișierul `package.json` din folderul proiectului în editorul tău de text și modifică secțiunea `"dependencies"` astfel:
+
+```json
+"dependencies": {
+  "@sanity/client": "^3.4.1",
+  "@sanity/image-url": "^1.0.1",
+  "@stripe/stripe-js": "^1.25.0",
+  "canvas-confetti": "^1.5.1",
+  "next": "13.2.4",
+  "next-sanity-image": "^3.2.1",
+  "react": "18.2.0",
+  "react-dom": "18.2.0",
+  "react-hot-toast": "^2.2.0",
+  "react-icons": "^4.7.1",
+  "react-tabs": "^4.2.1",
+  "stripe": "^8.209.0"
+}
+
+```
+
+6. Avem și câteva dependențe de dezvoltare (`devDependencies`) de configurat – acest pas include mutarea a două dintre dependențele ESLint originale (`eslint` și `eslint-config-next`), care erau prezente în secțiunea `dependencies`, în secțiunea `devDependencies`. Asigură-te că blocul `devDependencies` arată așa:
+
+```json
+"devDependencies": {
+  "eslint": "^8.36.0",
+  "eslint-config-airbnb": "^19.0.4",
+  "eslint-config-next": "^13.2.4",
+  "eslint-plugin-import": "^2.25.4",
+  "eslint-plugin-jsx-a11y": "^6.5.1",
+  "eslint-plugin-react": "^7.29.3",
+  "eslint-plugin-react-hooks": "^4.3.0",
+  "sass": "^1.57.0"
+}
+
+```
+
+De obicei am instala aceste pachete manual, dar acest lucru ar putea crea probleme – voi reveni asupra acestui detaliu în curând, când vom analiza modificările mai pe îndelete.
+
+7. Salvează și închide fișierul. Revino în terminal, introdu comanda `npm install` și apasă Enter.
+8. Node.js va instala pachetele adăugate în `package.json`. Când procesul se încheie, introdu `npm run dev` și apasă Enter pentru a porni serverul de dezvoltare.
+9. Serverul de dezvoltare va porni și va afișa următorul mesaj când este gata, alături de confirmarea că a compilat site-ul:
+
+```text
+ready - started server on 0.0.0.0:3000, url: http://localhost:3000
+event - compiled client and server successfully in 490 ms (166 modules)
+
+```
+
+> **Notă:** Timpul de compilare de 490 ms va fi probabil diferit în cazul tău, în funcție de performanțele hardware și de procesele care rulează în fundal.
+> Urmărește acești timpi: ar trebui să rămână la valori similare până când vom face modificări ulterioare.
+> Dacă cresc brusc și semnificativ fără un motiv evident, acest lucru ar putea indica o problemă ce necesită investigată!
+
+10. Acum deschide browserul web și accesează `http://localhost:3000` – ar trebui să vezi noul site de pornire rulând, așa cum se arată în Figura 1-1.
+    <div
+      style={{ display: 'flex', justifyContent: 'center', margin: '1.5rem 0' }}
+    >
+      <img
+        src="/images/nextjs/1-1.jpg"
+        alt="Pauza întreagă în partitură"
+        style={{ maxWidth: '100%', height: 'auto' }}
+      />
+    </div>
+
+<div className="my-4 rounded-lg border-l-4 border-blue-400 bg-blue-50 p-4 text-blue-900 shadow">
+  <strong>Notă:</strong>In brower se va afisa ceva asemanator
+</div>
+Excelent – avem site-ul de bază pregătit pentru dezvoltare! Echipa din spatele
+utilitarului `create-next-app` de la Next.js a făcut crearea unui proiect
+inițial extrem de simplă; noi l-am extins adăugând câteva pachete suplimentare
+pe care le vom folosi mai târziu în carte. Înainte de a intra în detaliile
+configurării mediului de lucru, hai să analizăm rapid și în detaliu modificările
+pe care tocmai le-am făcut.

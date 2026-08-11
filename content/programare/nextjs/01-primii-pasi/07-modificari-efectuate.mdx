@@ -1,0 +1,29 @@
+---
+title: 'Înțelegerea modificărilor efectuate'
+description: 'Înțelegerea modificărilor efectuate'
+order: 7
+category: 'NextJS'
+level: 'Incepator'
+---
+
+## Înțelegerea modificărilor efectuate
+
+Așadar, ce am realizat în ultima demonstrație?
+
+Ca întotdeauna, trebuia să începem de undeva și nu există un punct de pornire mai bun decât punerea la punct a site-ului de bază!
+Am fi putut să-l creăm manual de la zero, dar nu are niciun rost când ai la îndemână un utilitar grozav precum `create-next-app`, care poate face cea mai mare parte din munca grea pentru noi.
+
+Pentru a începe, am rulat instrumentul `create-next-app` într-o sesiune de terminal Node.js pentru a crea proiectul numit `macaronmagic`.
+Ca parte din acest proces, am parcurs trei întrebări: prima a fost confirmarea instalării utilitarului `create-next-app`.
+Folosirea `npx` îi permite sistemului să caute prin pachetele deja existente; dacă nu le găsește local, le va descărca automat înainte de instalare.
+
+Apoi a trebuit să răspundem la două întrebări despre configurarea proiectului – prima a fost dacă dorim suport pentru TypeScript, iar a doua dacă dorim să integrăm ESLint.
+Am răspuns „Nu” la prima opțiune (pentru a păstra lucrurile simple) și „Da” la a doua, după care utilitarul a creat noua aplicație cu setările predefinite.
+
+Odată procesul încheiat, am actualizat dependențele din fișierul `package.json` – acestea sunt pachetele pe care le vom folosi pe parcursul cărții.
+De asemenea, am reorganizat secțiunea `devDependencies`, mutând acolo o parte din pachetele care inițial se aflau în blocul de dependențe principale, unde le este de fapt locul.
+
+După ce am salvat fișierul, am rulat comanda de instalare, iar pentru a încheia într-o notă completă, am pornit serverul de dezvoltare Next.js și am previzualizat rezultatul în browser.
+
+În regulă – să mergem mai departe!
+Acum că avem site-ul inițial pregătit, va trebui să explorăm și celelalte instrumente pe care le vom folosi, dar mai întâi să facem o scurtă pauză pentru a analiza în detaliu structura inițială a aplicației noastre.

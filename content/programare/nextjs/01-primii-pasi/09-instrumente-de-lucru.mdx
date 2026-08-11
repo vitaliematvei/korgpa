@@ -1,0 +1,46 @@
+---
+title: 'Înțelegerea instrumentelor de care avem nevoie'
+description: 'Înțelegerea instrumentelor de care avem nevoie'
+order: 9
+category: 'NextJS'
+level: 'Incepator'
+---
+
+## Înțelegerea instrumentelor de care avem nevoie
+
+Deși este posibil să creăm o mulțime de funcționalități diferite pentru un site de e-commerce, am ales să păstrez lucrurile simple pentru această carte; acest lucru ne oferă suficient spațiu pentru a explora noi direcții mai târziu.
+
+Având în vedere acest lucru, avem nevoie de doar trei servicii pentru moment – vom folosi alte instrumente mai târziu pentru găzduire (_hosting_), dar vom ajunge la ele la momentul potrivit.
+Hai să analizăm în detaliu de ce avem nevoie în cadrul următoarei demonstrații pas cu pas.
+
+### Înregistrarea pentru servicii
+
+Avem câteva instrumente pe care le vom folosi pe parcursul acestei cărți – am menționat deja o parte dintre ele când am configurat site-ul inițial; hai să le parcurgem pe cele rămase:
+
+1. Primul cont de care avem nevoie este, în mod ironic, nu un instrument în sine, ci o adresă de e-mail validă!
+   Asigură-te că ai una pe care ești dispus să o folosești pentru înregistrare, deoarece va trebui să creăm câteva conturi pentru acest proiect.
+2. În continuare, să ne ocupăm de cel mai important serviciu: **Stripe**.
+   Pentru acesta, accesează [https://dashboard.stripe.com/register](https://dashboard.stripe.com/register) și introdu date valide pentru câmpurile _Email_, _Full Name_ (Nume complet), _Country_ (Țară) și _Password_ (Parolă).
+   Lasă nebifată opțiunea „Email me about…” dacă nu dorești să te abonezi la newsletter-ul lor.
+   Când ai terminat, apasă _Create account_, apoi urmează instrucțiunile de pe ecran.
+
+> **Atenție:** Vei observa că am inclus câmpul _Country_, deoarece Stripe se așteaptă să îți alegi țara de origine.
+> Asta înseamnă că, deși prețurile pe care le vei vedea mai târziu pot fi în USD, valorile din panoul de control (_dashboard_) Stripe pentru site-ul tău s-ar putea să apară într-o altă monedă.
+> Vom reveni asupra acestui aspect mai târziu pentru a vedea ce înseamnă asta atunci când configurăm Stripe pentru site-ul nostru.
+
+3. Următorul cont de care avem nevoie este pentru CMS-ul din back-end, **Sanity**.
+   Accesează [www.sanity.io/login/sign-up](https://www.sanity.io/login/sign-up), apoi alege una dintre opțiuni pentru a-ți crea un cont.
+   Pentru a păstra lucrurile simple, îți recomand opțiunea prin e-mail sau autentificarea cu contul Google; asigură-te doar că ții minte opțiunea de autentificare pe care ai ales-o.
+
+Aceste trei servicii sunt tot ce avem nevoie pentru moment – vom folosi GitHub și Netlify pentru a ne găzdui site-ul, dar vom acoperi crearea conturilor și autentificarea mai târziu în carte.
+
+---
+
+Super – ne-am înregistrat pentru serviciile de care avem nevoie (cel puțin pentru moment) și suntem gata să începem construirea site-ului!
+Deși am parcurs câțiva pași de rutină în acest prim exercițiu, aceștia evidențiază o tendință crucială care devine din ce în ce mai populară în rândul dezvoltatorilor din întreaga lume.
+
+Nu ar trebui să fie o surpriză, dar tot mai mulți dezvoltatori folosesc principiile **Jamstack** atunci când creează site-uri web – iar asta înseamnă utilizarea unor servicii terțe și API-uri pentru a aduce și afișa datele către client.
+
+În acest exercițiu am configurat două conturi: unul pentru stocarea conținutului din back-end într-un CMS și celălalt pentru procesarea plăților pe site.
+Totodată, ne-am asigurat că avem o adresă de e-mail validă.
+Vom adăuga mai multe servicii și funcționalități mai târziu în carte, dar acestea sunt suficiente pentru a crea o bază de la care să pornim site-ul nostru.
