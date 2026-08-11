@@ -1,9 +1,9 @@
 ---
-title: 'Adaugare Search si Paginare'
-description: 'Adaugare Search si Paginare'
+title: 'Adăugare Search și Paginare'
+description: 'Adăugare Search și Paginare'
 order: 6
 category: 'NextJS'
-level: 'Incepator'
+level: 'Începător'
 ---
 
 ## Codul de pornire
@@ -30,7 +30,7 @@ export default async function Page() {
         <Search placeholder="Search invoices..." />
         <CreateInvoice />
       </div>
-      {/*  <Suspense + currentPage} fallback="{<InvoicesTableSkeleton" key="{query"/>}>
+      {/* <Suspense + currentPage} fallback="{<InvoicesTableSkeleton" key="{query"/>}>
         <Table currentPage="{currentPage}" query="{query}"/>
       </Suspense> */}
       <div className="mt-5 flex w-full justify-center">
@@ -41,7 +41,7 @@ export default async function Page() {
 }
 ```
 
-Acordă-ți puțin timp pentru a te familiariza cu pagina și cu componentele cu care vei lurca:
+Acordă-ți puțin timp pentru a te familiariza cu pagina și cu componentele cu care vei lucra:
 
     <Search /> — le permite utilizatorilor să caute anumite facturi.
 
@@ -49,5 +49,4 @@ Acordă-ți puțin timp pentru a te familiariza cu pagina și cu componentele cu
 
     <Table /> — afișează lista de facturi.
 
-Funcționalitatea de căutare va acoperi atât clientul, cât și serverul.
-Când un utilizator caută o factură din interfața de client, parametrii URL (URL params) se vor actualiza, datele vor fi preluate direct pe server, iar tabelul va fi re-randat pe server cu noile date filtrate.
+Funcționalitatea de căutare va acoperi atât clientul, cât și serverul. Când un utilizator caută o factură din interfața de client, parametrii URL (URL params) se vor actualiza, datele vor fi preluate direct pe server, iar tabelul va fi re-randat pe server cu noile date filtrate.
