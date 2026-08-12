@@ -1,0 +1,42 @@
+---
+title: 'Analizarea în detaliu a modificărilor de cod'
+description: 'Analizarea în detaliu a modificărilor de cod'
+order: 5
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Această ultimă demonstrație a fost esențială, dar dacă ați pornit site-ul, ați fi iertați dacă ați crede că nu s-a schimbat nimic!
+Această lipsă aparentă de schimbări vizibile era totuși de așteptat – majoritatea modificărilor au loc în culise, singura schimbare vizibilă fiind favicon-ul.
+
+Pentru a realiza acest lucru, am actualizat mai întâi fișierul `_app.jsx`, care acționează ca un container pentru site-urile Next.js, tot ceea ce vedem pe ecran fiind randat din interiorul acestui fișier.
+Am adăugat importurile necesare și o legătură către fișierul de stiluri, urmate de un import pentru componenta `StateContext`, pe care o vom folosi mai târziu când vom integra Stripe.
+
+Este interesant de observat că, deși apelăm `Component` și îi pasăm prop-ul `pageProps`, această componentă nu există ca fișier fizic creat de noi!
+Este o componentă specială din Next.js; gândiți-vă la ea ca la un spațiu rezervat (_placeholder_) care face referire la pagina activă afișată în browser.
+Folosim valoarea prop-ului `pageProps` pentru a-i transmite toate datele necesare paginii curente, iar acestea sunt actualizate de fiecare dată când navigăm către o pagină nouă.
+
+Mergând mai departe, am modificat apoi componenta `Layout.jsx` – pentru aceasta, a trebuit să înlocuim importurile și să restructurăm layout-ul pentru a se potrivi nevoilor noastre.
+Cea mai mare parte din cod este o serie de linkuri pentru favicon; am folosit generatorul de cod pentru favicon de la [realfavicongenerator.net](https://realfavicongenerator.net/) pentru a crea acest bloc de legături.
+Am împachetat totul într-un set de elemente `<div>` care conțin tag-urile `<head>` și `<title>` ale site-ului (primul folosind componenta `<Head>` din Next.js).
+Există, de asemenea, un al doilea set de tag-uri de antet, `<header>` – v-ați putea întreba de ce avem două?
+Lăsați-mă să vă explic:
+
+Componenta `<Head>` din Next.js nu afișează conținut vizibil în pagină – o folosim doar pentru a introduce elementele care trebuie să ajungă în secțiunea `<head>` a documentului HTML.
+Pe de altă parte, tag-ul `<header>` este practic începutul zonei în care este randat conținutul vizual – deocamdată, acesta conține cele două componente pe care le vom crea până la sfârșitul acestui capitol, `NavBar` și `DemoBanner`.
+Avem, de asemenea, un spațiu dedicat (_slot_) pentru componentele copil, cum ar fi paginile individuale (care merg în slotul `{children}`), urmat de componenta de subsol (_footer_), pe care o vom construi mai târziu.
+
+Toate aceste structurări pe care le facem în jurul integrării Stripe (din Capitolul 4) ne vor face viața mult mai ușoară atunci când va trebui să adăugăm mai mult conținut pe site.
+Odată modificările finalizate, am pornit site-ul pentru a verifica dacă a preluat corect componenta de layout în structura HTML (**Figura 2-4**) și dacă linkurile pentru favicon apar așa cum ne așteptam în browser (**Figura 2-5**).
+
+<div style={{ display: 'flex', justifyContent: 'center', margin: '1.5rem 0' }}>
+  <img
+    src="/images/nextjs/2-5.jpg"
+    alt="Figura 2-5"
+    style={{ maxWidth: '100%', height: 'auto' }}
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 2-5: </strong>
+</p>

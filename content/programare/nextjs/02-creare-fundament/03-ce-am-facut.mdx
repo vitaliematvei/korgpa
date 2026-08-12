@@ -1,0 +1,36 @@
+---
+title: 'Să înțelegem ce am făcut'
+description: 'Să înțelegem ce am făcut'
+order: 3
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Iată adaptarea textului în limba română, într-un stil didactic, natural și potrivit pentru un manual sau ghid de dezvoltare web:
+
+---
+
+Așadar – ce am obținut în prima demonstrație din acest capitol?
+Am început cu câteva actualizări semnificative ale fișierului principal `index.js`, stocat în folderul `pages`; acestea au înlocuit practic aproape tot codul original.
+
+Am adăugat câteva importuri pentru React, `Next/Link` și două componente – `PerfectBanner` și `Newsletter`, pe care le vom dezvolta mai târziu în acest capitol.
+Apoi, am creat partea principală a componentei numite `Home`; pe aceasta o vom folosi în interiorul unei componente `Layout` pe care o vom crea în curând.
+În interiorul componentei `Home`, am adăugat linkuri pentru imaginea principală (cu macarons), un slogan (_tagline_) și un link către pagina Magazin (_Shop_), pe care o vom construi mai târziu în această carte.
+
+Pentru a finaliza componenta `Home`, am adăugat textul introductiv, urmat de apelurile către cele două componente: `PerfectBanner` și `Newsletter`.
+Cu aceste apeluri pregătite, a trebuit apoi să creăm cele două componente; am început cu `Newsletter` și am adăugat codul aferent.
+Merită menționat că formularul din `Newsletter` nu este funcțional în acest moment; acest lucru nu contează acum, deoarece creăm doar o demonstrație.
+Funcționalitatea formularului este un aspect pe care va trebui să îl rezolvăm dacă vom dezvolta site-ul pentru a fi pregătit de producție.
+
+Mai aveam un ultim pas: crearea componentei `PerfectBanner`. În mod similar cu ce am făcut pentru `Newsletter`, am adăugat textul și imaginile relevante într-o componentă nouă, salvând-o ca `PerfectBanner.jsx`.
+Ultimul pas a fost procurarea și adăugarea celor două imagini apelate în componente, astfel încât componenta `Home` să nu genereze o eroare din cauza fișierelor media lipsă.
+Apoi am previzualizat rezultatul în browser pentru a ne asigura că avem cel puțin o pagină funcțională, chiar dacă nu arată încă impecabil!
+
+Există totuși un punct crucial pe care vreau să îl scot în evidență: veți observa că avem mai multe linii de cod comentate.
+Nu vă faceți griji; acestea sunt doar spații rezervate (_placeholders_) pentru funcționalități pe care le vom dezvolta pe parcursul cărții.
+Deocamdată, trebuie să comentăm aceste apeluri sau secțiuni de cod pentru a ne asigura că site-ul continuă să funcționeze – le vom reactiva la momentul potrivit!
+
+În regulă – să mergem mai departe: am actualizat fișierul `index.js` (componenta paginii principale), iar acum acesta începe să afișeze conținut pe site.
+Totuși, pentru ca lucrurile să funcționeze corect, trebuie să facem câteva modificări la structura (_layout-ul_) site-ului; acest pas ne va ajuta și la integrarea platformei Stripe mai târziu în carte.
+Vom face acest lucru printr-un exercițiu în două părți, în care vom modifica codul din `_app.jsx` și vom crea o componentă de layout actualizată.
+Să trecem la treabă și să vedem în detaliu ce avem de făcut.

@@ -1,0 +1,169 @@
+---
+title: 'Actualizarea paginii principale Index'
+description: 'Actualizarea paginii principale Index'
+order: 2
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Pentru prima sarcină, trebuie să înlocuim codul din pagina principală `index`, aflată în folderul `\src\pages` – acest lucru ne va oferi bazele site-ului nostru.
+Avem multe de parcurs, așa că, fără alte introduceri, să trecem la treabă și să începem următorul exercițiu.
+
+Prima pagină pe care o vom actualiza este pagina noastră principală `index` – pentru a face acest lucru, urmați acești pași:
+
+1. Mai întâi, deschideți fișierul `index.js` stocat în folderul `\src\pages`, apoi ștergeți tot conținutul din el.
+2. În continuare, adăugați următorul cod – avem câteva linii de adăugat, începând cu importurile necesare:
+
+```javascript
+import React from 'react';
+import Link from 'next/link';
+// import { client } from "../lib/client";
+import PerfectBanner from '../components/PerfectBanner';
+import Newsletter from '../components/Newsletter';
+```
+
+3. Lăsați o linie goală, apoi adăugați această secțiune:
+
+```jsx
+const Home = () => (
+<div>
+<div className="frontlogo">
+<div className="banner">
+<span className="tagline">Luxury macarons made by hand</span>
+<span>
+<Link className="shop-now" href="/shop">
+Shop Now
+</Link>
+</span>
+</div>
+</div>
+
+```
+
+4. Lăsați o linie goală după prima jumătate a componentei noastre `Home`, apoi adăugați codul de mai jos – acesta se ocupă de textul principal și apelează două componente suplimentare:
+
+```jsx
+<div className="intro">
+<p>
+Welcome to Macaron Magic - the home of great-tasting, luxurious macarons, made by hand here in our workshop in the Peak District.
+</p>
+<p>
+We have carefully chosen a select range of flavors for your delight, ready for you to enjoy - just imagine...biting into each one, where it
+practically melts in your mouth...yum!
+</p>
+<p>
+To start, browse over to our shop where you will see the full range available - we'll be adding more over time. If you have any questions, please do let us know - our contact details are at the bottom of this page.
+</p>
+</div>
+<PerfectBanner />
+<Newsletter />
+</div>
+);
+/* ADD SERVERSIDE PROPS HERE */
+export default Home;
+
+```
+
+5. Salvați și închideți fișierul. Veți observa că am apelat două componente (`PerfectBanner` și `Newsletter`).
+   Haideți să le adăugăm acum – pentru a face asta, creați un folder nou numit `\components` în rădăcina folderului `src`.
+6. Într-un fișier nou, adăugați următorul cod – vom începe cu importurile pentru prima noastră componentă, care este `Newsletter`:
+
+```javascript
+import React from 'react';
+import Image from 'next/image';
+import newsletter from '../../public/images/newsletter.jpg';
+```
+
+7. Lăsați o linie goală, apoi adăugați prima jumătate a componentei noastre:
+
+```jsx
+const Newsletter = () => (
+<div className="newsletter">
+<form action="/send-data-here" method="post" className="email-signup">
+<span>Join our Newsletter</span>
+<input type="text" id="first" name="first" placeholder="First name" />
+<input type="text" id="last" name="last" placeholder="Last name" />
+<input type="email" id="email" name="email" placeholder="Email address" />
+
+```
+
+8. Imediat după, lăsați o linie goală și adăugați a doua jumătate a componentei:
+
+```jsx
+<button type="submit">Submit</button>
+</form>
+<span className="newsletter-image">
+<Image src={newsletter} alt="newsletter" width={500} height={500} />
+</span>
+</div>
+);
+
+```
+
+9. Trebuie să încheiem cu exportul tipic, așa că săriți o linie și adăugați:
+
+```javascript
+export default Newsletter;
+```
+
+10. Salvați fișierul cu numele `Newsletter.jsx` în folderul `components` creat la pasul 5.
+    Acum, deschideți un fișier nou și adăugați codul pentru următoarea componentă – mai întâi importurile:
+
+```javascript
+import React from 'react';
+import Image from 'next/image';
+import perfect from '../../public/images/perfect.jpg';
+```
+
+11. În continuare, lăsați o linie goală, apoi adăugați prima jumătate a acestei componente:
+
+```jsx
+const PerfectBanner = () => (
+<div className="perfect-occasions">
+<div>
+<Image src={perfect} alt="perfect occasion" width="442" height="532" />
+</div>
+<div className="perfect-message">
+<p>Perfect for </p>
+<p>special occasions</p>
+
+```
+
+12. Așa cum am făcut și mai devreme, lăsați următoarea linie goală, apoi adăugați acest cod:
+
+```jsx
+<p>
+Share the love and give every guest a little explosion of sweetness with our show-stopping macaron towers. Perfect for weddings, anniversaries and parties. You could even add a touch of luxury to party bags and wedding favors with these perfect bite-sized treats.
+</p>
+</div>
+</div>
+);
+export default PerfectBanner;
+
+```
+
+13. Salvați fișierul sub numele `PerfectBanner.jsx`, apoi închideți-l.
+14. Mai există un ultim pas de făcut înainte de a putea testa această demonstrație – avem nevoie de două imagini pentru componentele noastre.
+    Generari cu aI fișierele `perfect.jpg` și `newsletter.jpg` din fișierele de cod descărcate, apoi puneți-le pe ambele într-un folder nou numit `images` din `\public`.
+15. Comutați la un terminal Node.js, iar la linia de comandă, schimbați directorul de lucru către cel al proiectului nostru.
+16. Introduceți `npm run dev` și apăsați Enter pentru a porni serverul de dezvoltare Next.js.
+    Dacă totul este în regulă, ar trebui să vedem site-ul așa cum este prezentat în extrasul din **Figura 2-3** atunci când navigăm la `http://localhost:3000`.
+
+    <div
+      style={{ display: 'flex', justifyContent: 'center', margin: '1.5rem 0' }}
+    >
+      <img
+        src="/images/nextjs/2-3.jpg"
+        alt="Figura 2-3"
+        style={{ maxWidth: '100%', height: 'auto' }}
+      />
+    </div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 2-3: </strong> Pagina index cu update
+</p>
+
+Știu că nu arată prea bine – de fapt, amintește aproape de primele zile ale internetului!
+Vă mai amintiți – pagini gri, formatare slabă și cam atât? Da, ce vremuri…
+
+Dar să revenim: am finalizat câteva modificări esențiale în această demonstrație și avem acum bazele unui site. Pentru a înțelege ce am făcut, să ne luăm un moment pentru a analiza în detaliu exercițiul destul de lung pe care tocmai l-am încheiat, ca să vedem cum se integrează în ansamblu.

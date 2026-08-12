@@ -1,0 +1,124 @@
+---
+title: 'Modificarea structurii (Layout-ului) site-ului'
+description: 'Modificarea structurii (Layout-ului) site-ului'
+order: 4
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Pentru a actualiza fișierul `_app.jsx`, trebuie să facem câteva modificări, dar nimic la fel de detaliat ca în exercițiul anterior!
+
+Următoarea demonstrație va fi împărțită în două părți, deoarece, pe lângă actualizarea fișierului `_app.jsx`, va trebui să modificăm și fișierul principal de structură, adică `Layout.jsx`.
+Să începem mai întâi cu modificarea fișierului `_app.jsx`.
+
+Pentru a actualiza `_app.jsx`, urmați acești pași:
+
+1. Deschideți fișierul `_app.jsx` în editorul de cod, apoi adăugați două linii goale înainte de importul pentru `globals.css`.
+2. În acele linii goale, adăugați următoarele importuri, astfel încât să obțineți ceva de acest gen:
+
+```jsx
+import React from 'react';
+import { Toaster } from 'react-hot-toast';
+import { Layout } from '../components';
+import '../styles/globals.css';
+```
+
+3. În continuare, lăsați o linie goală și adăugați acest import – nu îl vom folosi chiar acum, dar o vom face odată ce vom integra Stripe:
+
+```jsx
+// import { StateContext } from "../../context/StateContext";
+```
+
+4. Acum trebuie să modificăm componenta principală – avem deja o inițializare exportată implicit pentru `MyApp`, așa că modificați-o pentru a arăta astfel:
+
+```jsx
+function MyApp({ Component, pageProps }) {
+  return (
+    // <StateContext>
+    <Layout>
+      <Toaster />
+      <Component {...pageProps} />
+    </Layout>
+    // </StateContext>
+  );
+}
+
+export default MyApp;
+```
+
+5. Mai avem de adăugat un fișier, mai exact un fișier de index – creați un fișier nou numit `index.js` și salvați-l în rădăcina folderului `\src\components`.
+6. În interiorul acelui fișier, adăugați următorul cod, apoi salvați-l și închideți-l:
+
+```javascript
+export { default as Layout } from './Layout';
+```
+
+7. Salvați fișierul și închideți-l.
+
+Să ne îndreptăm atenția către a doua componentă din acest exercițiu:
+
+1. Pentru această parte, deschideți un fișier nou și salvați-l sub numele `Layout.jsx` în folderul `\src\components`.
+2. În interiorul fișierului, adăugați codul de mai jos – îl vom împărți în blocuri, deoarece avem destul de mult de parcurs, începând cu cele două importuri:
+
+```jsx
+import React from 'react';
+import Head from 'next/head';
+```
+
+3. Urmează inițializarea componentei și tag-urile deschise `<Head>` și `<title>`:
+
+```jsx
+const Layout = ({ children }) => {
+  return (
+    <>
+      <Head>
+        <title>Macaron Magic | great tasting home-made macarons</title>
+
+```
+
+4. Această parte următoare ar putea părea puțin mai complexă, dar este un bloc standard pentru adăugarea unei pictograme (_favicon_) pe orice site.
+   Adăugați următorul cod – voi reveni asupra acestui subiect în curând:
+
+```jsx
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#5bbad5" />
+        <meta name="msapplication-TileColor" content="#da532c" />
+        <meta name="theme-color" content="#ffffff" />
+
+```
+
+5. Trebuie să încheiem componenta, lucru pe care îl vom face cu următorul cod:
+
+```jsx
+      </Head>
+      <header>
+        <NavBar />
+        <DemoBanner />
+      </header>
+      <div className="layout">
+        <main className="main-container">
+          {children}
+        </main>
+        <footer>
+          {/* <Footer /> */}
+        </footer>
+      </div>
+    </>
+  );
+};
+
+export default Layout;
+
+```
+
+6. În acest punct, salvați și închideți fișierul. Comutați la un terminal Node.js, iar la linia de comandă, schimbați directorul de lucru către cel al proiectului nostru.
+7. Introduceți `npm run dev` și apăsați Enter pentru a porni serverul de dezvoltare Next.js.
+8. În browser nu veți observa mari schimbări vizuale directe.
+   Nu vă faceți griji, este ceva normal – în schimb, aruncați o privire în consola browserului (DevTools): ar trebui să vedeți modificări acolo unde am introdus containerul `<main>...</main>` (**Figura 2-4**).
+9. Dacă vă uitați mai sus în blocul `<head>`, veți vedea că apar acum și intrările pentru _favicon_ (**Figura 2-5**).
+
+Puf – am terminat două demonstrații lungi una după alta!
+Poate a părut mult de muncă, dar merită din plin, așa că felicitări dacă ați ajuns până în acest punct fără prea mari bătăi de cap. Am acoperit câteva modificări importante în această ultimă demonstrație, așa că să facem o scurtă pauză pentru a le analiza în detaliu.

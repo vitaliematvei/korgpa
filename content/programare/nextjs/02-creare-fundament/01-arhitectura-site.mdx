@@ -1,0 +1,58 @@
+﻿---
+title: 'Afișarea arhitecturii site-ului'
+description: 'Afișarea arhitecturii site-ului'
+order: 1
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Deși ar putea părea că vom scrie destul de mult cod pe parcursul acestui capitol, site-ul nostru nu este atât de mare.
+
+În esență, acesta este alcătuit din șase pagini, plus pagina principală `index.js` – suficient pentru a crea ceva realist pentru un site mic, dar și o bază pe care o putem extinde în proiecte viitoare.
+Există totuși un punct crucial – vom include o serie de produse în această demonstrație, așa că de ce nu avem pagini individuale pentru fiecare produs în parte?
+Există un motiv întemeiat pentru asta, așa că lăsați-mă să vă explic.
+
+Crearea de pagini dedicate pentru toate cele șase produse este fezabilă din punct de vedere tehnic, dar nu este o abordare practică.
+Am putea folosi această metodă dacă am vinde doar două sau trei produse, dar ea complică lucrurile atunci când vrem să facem modificări.
+Ar trebui să actualizăm fiecare pagină în parte și să ne asigurăm că modificările sunt identice peste tot.
+Aveți timp să editați X pagini manual? Nu prea cred!
+
+În schimb, vom folosi un fișier de tip șablon (reprezentat aici de fișierul `[slug].js` din folderul `product`).
+React ne permite să generăm pagina dinamic, folosind informațiile preluate din Sanity.
+Această abordare elimină necesitatea de a crea pagini scrise direct în cod (_hardcoded_) pentru fiecare produs și înseamnă că orice modificare aplicată șablonului se va reflecta instantaneu pentru toate produsele.
+
+<div style={{ display: 'flex', justifyContent: 'center', margin: '1.5rem 0' }}>
+  <img
+    src="/images/nextjs/2-1.jpg"
+    alt="Figura 2-1"
+    style={{ maxWidth: '100%', height: 'auto' }}
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 2-1: </strong> Arhitectura site
+</p>
+
+Deși am inclus majoritatea paginilor importante în această schemă, există una care nu apare, dar merită o mențiune specială.
+Vom crea un șablon numit `Layout.js`, pe care îl vom folosi pentru a controla structura și poziționarea conținutului pe site.
+Acest component va conține referințe către componentele `NavBar`, `DemoBanner` și `Footer`; acesta din urmă va include coșul de cumpărături rapid (_minicart_), pictogramele de plată, linkurile către rețelele sociale și legături către diverse pagini din site.
+
+Deși nu va trebui să creăm pagini de produs de la zero, va fi totuși necesar să construim paginile secundare, cum ar fi `delivery.js`, `contact.js` și `about.js`.
+În total, vom avea în jur de șapte-opt pagini în procesul de achiziție.
+Le-am adăugat pentru a oferi un aspect mai complet site-ului – aceste pagini secundare vor conține un text temporar (_dummy text_), pe care îl putem actualiza ulterior.
+Puteți vedea o avanpremieră a modului în care va arăta site-ul la final în **Figura 2-2**.
+
+<div style={{ display: 'flex', justifyContent: 'center', margin: '1.5rem 0' }}>
+  <img
+    src="/images/nextjs/2-2.jpg"
+    alt="Figura 2-2"
+    style={{ maxWidth: '100%', height: 'auto' }}
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 2-2: </strong> Vizualizare site
+</p>
+
+Acum că am explorat modul în care vom asambla site-ul, să trecem la cod.
+Am putea începe de oriunde, dar din motive de comoditate voi începe cu pagina principală `index.js`, de unde putem adăuga treptat alte pagini pe măsură ce ne construim aplicația.
