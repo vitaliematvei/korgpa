@@ -1,0 +1,41 @@
+---
+title: 'Gestionarea aspectelor de securitate și autentificare'
+description: 'Gestionarea aspectelor de securitate și autentificarev'
+order: 2
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Pe parcursul ultimelor pagini am discutat despre utilizarea serviciilor externe, în special Sanity, pentru găzduirea datelor.
+Utilizarea acestor servicii este strâns legată de faptul că Next.js compilează conținutul în HTML static, recunoscând astfel unele dintre elementele cheie ale ceea ce se numește astăzi paradigma **Jamstack**!
+
+Unul dintre principiile fundamentale ale arhitecturii Jamstack este decuplarea stratului de prezentare (interfața web) de cel de back-end; acest lucru înseamnă că putem folosi orice furnizor pentru logica de business fără a afecta structura generală a aplicației.
+
+Deși acest lucru facilitează înlocuirea sau adăugarea serviciilor, poate introduce și un plus de complexitate – trebuie să avem mereu în vedere securitatea și autentificarea, mai ales când depindem de servicii externe!
+Analiza completă a acestui subiect constituie un domeniu separat, însă pentru moment există câteva aspecte esențiale pe care trebuie să le reținem:
+
+- **Separarea datelor:** Datele legate de produse, plăți și finalizarea comenzilor (_checkout_) vor fi împărțite între două sisteme distincte – detaliile financiare sunt gestionate direct de Stripe, fără a trece prin aplicația noastră; singurele date stocate în Sanity sunt cele legate de produse, care nu includ informații cu caracter personal (PII - _Personally Identifiable Information_) ale clienților.
+- **Variabilele de mediu:** Principala preocupare este că va trebui să folosim un fișier de mediu (`.env`) pentru a stoca cheile de API atât pentru Sanity, cât și pentru Stripe (subiect pe care îl vom aborda în capitolul următor).
+  Deși acest fișier păstrează cheile departe de codul public al site-ului, fără eforturi suplimentare nu există o metodă absolută de a le securiza complet în browser.
+  Am putea folosi separarea codului (_code splitting_) pentru a izola API-urile și cheile, reasamblându-le în timpul procesului de build.
+  Totuși, acest lucru ar putea fi exagerat (_overkill_) – utilizarea fișierelor de mediu este o practică standard, deși nu permite ascunderea totală a oricărei urme a variabilelor de mediu.
+  Alternativ, poți lua în considerare un pachet precum `secure-env` (`[www.npmjs.com/package/secure-env](https://www.npmjs.com/package/secure-env)`) – acesta va necesita câteva linii de cod în plus, dar reprezintă un compromis acceptabil.
+
+> **O notă de atenție:** Pachetul `secure-env` nu a mai primit actualizări de mai mulți ani, deci este puțin probabil să fie aliniat la standardele actuale de securitate sau să fie întreținut activ.
+> L-am inclus aici ca un exemplu de soluție posibilă, însă recomand cu tărie analizarea altor opțiuni moderne înainte de utilizare!
+
+- **Infrastructura de găzduire:** Sanity.io este găzduit pe Google Cloud Platform, o infrastructură ce aplică unele dintre cele mai riguroase practici de securitate din industrie, făcând ca datele stocate să fie foarte sigure.
+- **Autentificare bazată pe tokeni:** Îți amintești că putem folosi autentificarea prin e-mail, Google sau GitHub – pentru ultimele două, datele de acces nu sunt transmise către Sanity; în schimb, Sanity primește doar un token care confirmă că accesul a fost autorizat.
+- **Criptarea conexiunilor:** Orice transmisie de date către Sanity se face securizat prin protocolul TLS, iar protocolele învechite (cum ar fi SSLv2 sau SSLv3) sunt dezactivate implicit.
+- **Izolarea la build:** Este important de menționat că adăugăm întotdeauna datele pentru site la nivel local (în cazul nostru, de pe laptop sau PC, dar la fel de bine ar putea fi pe un server intern). Informațiile despre contul nostru, cum ar fi consumul de lățime de bandă sau autentificările, sunt gestionate de Sanity, fără ca aceștia să aibă acces direct la conținutul propriu-zis. La momentul compilării (_build_), datele sunt transformate în fișiere HTML statice, ceea ce înseamnă că conexiunile directe la baza de date sunt eliminate din aplicația finală, sporind și mai mult securitatea.
+
+Deși securitatea rămâne un aspect de care trebuie să ținem cont permanent într-un mediu Jamstack, putem observa că furnizorii își iau toate măsurile de precauție pentru a proteja datele, reducând semnificativ riscurile utilizării serviciilor externe.
+
+De asemenea, nu trebuie să uităm că și datele sensibile au nevoie de protecție – Next.js face acest lucru simplu de implementat prin intermediul diferitelor module (_plug-in-uri_).
+Voi detalia mai multe despre autentificare în Capitolul 12, odată ce avem site-ul funcțional și putem începe securizarea zonelor corespunzătoare.
+
+Acum că înțelegem implicațiile utilizării unui serviciu extern pentru găzduirea datelor, este timpul să creăm stocul de date și să adăugăm produsele!
+Sanity este creat pentru Node/NPM, deci este destul de simplu și intuitiv de utilizat.
+Configurarea Sanity presupune câțiva pași, așa că hai să trecem la treabă, începând cu instalarea locală a CMS-ului.
+
+{/* am ramas Getting Started with Sanity .55 */}

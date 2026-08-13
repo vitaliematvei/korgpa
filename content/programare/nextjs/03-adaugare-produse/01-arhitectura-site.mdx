@@ -1,0 +1,84 @@
+﻿---
+title: 'Arhitectura datelor'
+description: 'Arhitectura datelor'
+order: 1
+category: 'NextJS'
+level: 'Incepator'
+---
+
+În această etapă avem o structură primară a site-ului pregătită, însă lipsește un element cheie: **datele**!
+
+Într-adevăr, un magazin nu valorează nimic fără produse (adică fără date), așa că pe parcursul acestui capitol vom parcurge toți pașii necesari pentru a ne configura datele și a le conecta la magazinul nostru.
+Vom analiza opțiunile disponibile pentru implementarea procesului de finalizare a comenzii (checkout) și de plată, astfel încât să ne asigurăm că cerințele noastre de date sunt îndeplinite încă de la început.
+
+Înainte de a ne arunca în procesul de creare a stocului de date (data store), trebuie mai întâi să înțelegem cum trebuie structurate acestea.
+Să aruncăm o privire rapidă asupra câmpurilor pe care trebuie să le creăm în magazinul nostru și asupra modului în care acestea se conectează cu ceea ce va fi inclus în procesul de checkout din Stripe, pe care îl vom construi în capitolul următor.
+
+## Arhitectura datelor
+
+Să ne amintim puțin de Capitolul 1, unde menționam că vom folosi **Sanity** pentru gestionarea datelor din back-end – am fi putut alege oricare alta dintre opțiunile disponibile, dar am vrut să încercăm ceva diferit!
+
+În multe cazuri similare, bănuiesc că majoritatea oamenilor ar alege probabil un sistem back-end bazat pe GraphQL, SWR sau chiar React-Redux (oare este acesta din urmă compatibil cu Next.js?).
+Nu este nimic greșit în a alege o tehnologie pe care o cunoști deja: ești obișnuit să lucrezi cu ea în timpul dezvoltării proiectelor și nu ai întotdeauna timp să înveți ceva nou.
+Totuși, având în vedere că construim un demo și că accentul cade pe proces, nu pe specificul unei anumite tehnologii, GraphQL pare puțin cam mult pentru ceea ce avem nevoie.
+
+În schimb, am decis să optez pentru o soluție de **Headless CMS găzduit**, astfel încât tot ce trebuie să facem este să instalăm conexiunea către acesta și să furnizăm datele.
+Sanity se potrivește perfect acestui scop – funcționează excelent cu Next.js, oferă un API similar cu GraphQL și nu necesită o configurare complexă pentru a găzdui o cantitate mică de date!
+
+Dacă privim în perspectivă, Stripe are nevoie de doar trei informații ca cerință minimă – **numele (name)**, **descrierea (description)** și **prețul (price)**.
+Acestea sunt câmpuri deja disponibile implicit în Stripe și arată cam așa (Figura 3-1) – am adăugat deja câteva detalii.
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '1.5rem auto',
+    width: '100%',
+  }}
+>
+  <img
+    src="/images/nextjs/3-1.jpg"
+    alt="Figura 3-1"
+    style={{
+      maxWidth: '100%',
+      height: 'auto',
+      display: 'block',
+      margin: '0 auto',
+    }}
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 3-1: </strong>
+</p>
+
+Lăsând la o parte lipsa fișierelor media, ar fi logic să replicăm aceste câmpuri în configurația noastră din Sanity și să adăugăm câteva în plus de care vom avea nevoie pentru magazin.
+Având în vedere acest lucru, hai să vedem ce presupune această structură în lista din Tabelul 3-1.
+
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '1.5rem auto',
+    width: '100%',
+  }}
+>
+  <img
+    src="/images/nextjs/3-1-tabel.jpg"
+    alt="Figura 3-1-tabel"
+    style={{
+      maxWidth: '100%',
+      height: 'auto',
+      display: 'block',
+      margin: '0 auto',
+    }}
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 3-1: </strong>
+</p>
+
+Tipurile de date ale câmpurilor sunt destul de standard – avem valori de tip `string` pentru cele în care ne așteptăm să folosim caractere alfanumerice și `number` pentru câmpul de preț. Singura particularitate este **Slug-ul**, dar acesta folosește valoarea din câmpul _name_ și o limitează la maximum 90 de caractere.
+
+Ne-am aștepta să creăm aceste câmpuri manual folosind interogări specifice, nu-i așa? Ei bine, în acest caz răspunsul este nu – și aici schimbăm complet abordarea! Ce face ca Sanity să fie atât de atractiv este faptul că poți crea toate aceste câmpuri dintr-o singură mișcare folosind un fișier de schemă bazat pe JavaScript! Curios? Voi dezvălui totul în curând, dar mai întâi – să facem o scurtă pauză pentru a explora un punct esențial legat de securitate atunci când folosim un serviciu extern pentru găzduirea datelor.

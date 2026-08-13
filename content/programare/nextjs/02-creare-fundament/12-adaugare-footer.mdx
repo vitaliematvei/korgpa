@@ -1,0 +1,89 @@
+---
+title: 'Adăugarea subsolului (Footer)'
+description: 'Adăugarea subsolului (Footer)'
+order: 12
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Suntem aproape de finalizarea structurii de bază (skeleton) pentru site-ul nostru, dar mai există o componentă pe care trebuie să o adăugăm – subsolul (_footer_).
+Am făcut deja referire la acesta în componenta `Layout`, dar l-am lăsat comentat pentru a permite aplicației să se compileze momentan – hai să rezolvăm acest lucru adăugând componenta în următorul exercițiu.
+
+### CONSTRUIREA SUBSOLULUI
+
+Pentru a crea componenta `Footer`, urmează acești pași:
+
+1. **Crearea fișierului Footer:**
+   Deschide un fișier nou și salvează-l cu numele `Footer.jsx` (sau `Footer.js`) în directorul `\src\components`.
+
+2. **Adăugarea importurilor:**
+   Avem de adăugat destul de mult cod, așa că o vom face pe blocuri – începe prin adăugarea importurilor:
+
+```javascript
+import React from 'react';
+import Link from 'next/link';
+import PaymentIcons from '../PaymentIcons';
+// import MiniCart from "../MiniCart";
+// import { useStateContext } from "../../../context/StateContext";
+import { AiFillInstagram, AiOutlineTwitter } from 'react-icons/ai';
+```
+
+3. **Scrierea primei părți din Footer:**
+   Lasă o linie liberă, apoi adaugă prima parte a componentei:
+
+```jsx
+const Footer = () => {
+// const { showCart } = useStateContext();
+return (
+<>
+<div className="footer-container">
+<div className="footer-content">
+<div>
+<Link href="/delivery">Delivery</Link>
+<Link href="/privacy">Privacy</Link>
+<Link href="/terms">Terms and Conditions of Sale</Link>
+<Link href="/contact">Contact Us</Link>
+</div>
+<div>Contact: hello@macaronmagic.com</div>
+{/* <MiniCart /> */}
+</div>
+
+```
+
+4. **Finalizarea structurii componentei Footer:**
+   Adaugă a doua parte a codului pentru a completa componenta `Footer`:
+
+```jsx
+<div className="icon-container">
+<PaymentIcons />
+<div className="icons">
+<AiFillInstagram />
+<AiOutlineTwitter />
+</div>
+</div>
+</div>
+<p className="copyright">2022 Macaron Magic All rights reserved</p>
+</>
+);
+};
+export default Footer;
+
+```
+
+5. **Salvarea fișierului și actualizarea Layout-ului:**
+   Salvează și închide fișierul. Deschide `Layout.jsx` și adaugă importul pentru `Footer` (sau decomentează-l) în partea de sus a fișierului, alături de celelalte importuri.
+
+6. **Adăugarea componentei pentru pictogramele de plată:**
+   Mai avem nevoie de un fișier – componenta pentru pictogramele de plată (`PaymentIcons`). Pentru aceasta, descarcă o copie a fișierului `PaymentIcons.jsx` din arhiva de cod a cărții și salvează-l în folderul `\src\components`, alături de celelalte componente.
+
+7. **Pornirea serverului de dezvoltare:**
+   Revino la terminalul Node.js și schimbă directorul dacă nu te afli deja în folderul proiectului. Introdu `npm run dev` și așteaptă ca serverul să pornească.
+
+8. **Verificarea în browser:**
+   Când este gata, deschide în browser `http://localhost:3000` – dacă totul este în regulă, dă click pe linkul **About** din navigație (Figura 2-10).
+
+---
+
+Excelent – acum avem structura de bază pregătită! Este adevărat că nu arată încă spectaculos din punct de vedere vizual, dar scopul acestui capitol (și al celui următor) este punerea în funcțiune a structurii primare și adăugarea datelor.
+
+Am finalizat prima parte, așa că felicitări dacă ai ajuns până aici – totuși, mai avem destul de lucru! Înainte de a introduce datele în site, să aruncăm o privire rapidă și mai detaliată asupra modificărilor făcute în ultimul exercițiu.
