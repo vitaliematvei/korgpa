@@ -1,0 +1,78 @@
+---
+title: 'Actualizarea Antetului (Header)'
+description: 'Actualizarea Antetului (Header)'
+order: 8
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Cu meniul de navigare deja configurat, ai putea crede că asta este tot ce avem de făcut – din păcate, nu este cazul!
+Mai avem un element de adăugat, deși este specific acestui proiect.
+
+Ar trebui să configurăm un banner prin care să le comunicăm vizitatorilor că acesta este un site demonstrativ și să nu se aștepte ca comenzile să fie livrate (sau plățile să fie procesate, în acest caz).
+Este o modificare simplă, așa că hai să trecem la treabă și să adăugăm rapid componenta care va afișa această notificare pe site.
+
+### CREAREA BANNERULUI DEMONSTRATIV
+
+Pentru a configura componenta `DemoBanner`, urmează acești pași:
+
+1. **Crearea fișierului DemoBanner:**
+   Deschide un fișier nou în editorul tău de cod și salvează-l cu numele `DemoBanner.jsx` în directorul `\src\components`.
+
+2. **Adăugarea codului componentei:**
+   Adaugă următorul cod:
+
+```jsx
+import React from 'react';
+
+const DemoBanner = () => {
+  return (
+    <div className="demo-banner-container">
+      <span>
+        Acesta este un magazin demonstrativ - nicio comandă nu va fi acceptată
+        sau livrată.
+      </span>
+    </div>
+  );
+};
+
+export default DemoBanner;
+```
+
+3. **Salvarea și conectarea în Layout:**
+   Salvează fișierul și închide-l. Deschide fișierul `Layout.jsx`, apoi adaugă acest import imediat sub importul pentru `NavBar`:
+
+```javascript
+import DemoBanner from './DemoBanner';
+```
+
+4. **Decomentarea componentei:**
+   Ceva mai jos, decomentează apelul către `<DemoBanner/>`, care se află în interiorul tagului `<header>`.
+
+5. **Pornirea serverului:**
+   Salvează acest fișier și închide-l. Comută la terminalul Node.js și schimbă directorul de lucru dacă nu ești deja în folderul proiectului. Introdu `npm run dev` la linia de comandă și așteaptă să pornească serverul de dezvoltare.
+
+6. **Verificarea în browser:**
+   Verifică rezultatul afișat în Figura 2-7.
+
+---
+
+<div style={{ display: 'flex', justifyContent: 'center', margin: '1.5rem 0' }}>
+  <img
+    src="/images/nextjs/2-7.jpg"
+    alt="Figura 2-7"
+    style={{ maxWidth: '100%', height: 'auto' }}
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 2-7: </strong>Bannerul demonstrativ proaspăt adăugat
+</p>
+
+Știu că acesta a fost un element specific pentru site-ul nostru și nu ceva ce am include de obicei într-un proiect de producție, dar este o măsură necesară!
+Până la urmă, nu vrem ca oamenii să încerce să cumpere de pe un site publicat online care (deocamdată) nu este altceva decât o versiune demonstrativă!
+
+Partea bună este că reprezintă o bază excelentă pentru dezvoltarea unui banner mai detaliat.
+Mă gândesc la ceva ce am putea folosi pentru gestionarea confidențialității cookie-urilor; se potrivește foarte bine cu site-ul și ar trebui să fie destul de ușor să adăugăm un handler de evenimente (`click handler`) care să închidă bannerul odată ce utilizatorul confirmă că este de acord cu folosirea cookie-urilor.
+
+Regulile fiind stabilite, aș dori să trecem în revistă câteva lucruri mai detaliat: hai să aruncăm o privire rapidă asupra codului și a câtorva îmbunătățiri pe care am dori să le facem mai târziu...

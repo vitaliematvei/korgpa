@@ -1,0 +1,20 @@
+---
+title: 'Analiza detaliată a codului'
+description: 'Analiza detaliată a codului'
+order: 7
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Această ultimă demonstrație a acoperit adăugarea unei funcționalități esențiale pentru site-ul nostru – nu ne putem aștepta ca clienții să navigheze pe el fără o formă de legătură (link) între pagini, nu-i așa?
+Lipsa acestora ar fi un dezavantaj major de la bun început, dar să revenim...
+
+Pentru a adăuga bara de navigare, am folosit componenta `Link` din Next.js (`next/link`) – aceasta constituie baza componentei noastre `NavBar`.
+Ca și până acum, am început cu importurile necesare înainte de a deschide componenta.
+
+Am configurat starea cu `useStateContext` în interiorul componentei, dar am lăsat-o comentată pentru moment, deoarece o vom folosi abia mai târziu în carte.
+Apoi am adăugat structura de marcaj (markup) – cea mai mare parte folosește componenta `Link`, căreia îi transmitem valoarea `href` ce reprezintă fie pagina principală (homepage), fie o pagină specifică, cum ar fi _About_.
+
+Spre final, lucrurile devin puțin mai interesante – am adăugat un buton care, la click, setează `showCart` pe `true`.
+Când această stare devine `true`, se afișează coșul de cumpărături și numărul de produse adăugate.
+În acest moment, am lăsat comentat acest bloc de cod deoarece nu am creat încă componenta pentru coș; o vom activa mai târziu, în Capitolul 4. Pentru a finaliza componenta, am actualizat fișierul index al componentelor pentru a exporta `NavBar`, după care am adăugat o referință către aceasta în `Layout.jsx`, astfel încât să putem vedea elementele de navigare în browser.

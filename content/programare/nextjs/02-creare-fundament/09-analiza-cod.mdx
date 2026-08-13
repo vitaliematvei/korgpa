@@ -1,0 +1,18 @@
+---
+title: 'Analiza codului în detaliu'
+description: 'Analiza codului în detaliu'
+order: 9
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Deși această secțiune a fost intitulată „Actualizarea Antetului”, în realitate, cea mai mare parte a acestei modificări își va arăta efectul abia mai târziu în carte, când vom stiliza conținutul.
+În schimb, ne-am concentrat pe adăugarea unui element care lipsea, dar care era necesar având în vedere că site-ul nostru nu este încă în producție: un banner demonstrativ.
+Rolul bannerului este de a-i informa pe clienți că testează un site demonstrativ și să nu se aștepte la onorarea vreunei comenzi.
+Nu se știe niciodată – cineva ar putea crede sau aștepta altceva!
+
+Lăsând la o parte riscurile ignorării notificărilor, să ne concentrăm pe ceea ce am realizat: am creat o componentă nouă numită `DemoBanner.jsx` ce conține un element `<span>` cu un mesaj simplu.
+Apoi am importat această componentă în `Layout.jsx` pentru a o putea reda (render) – o verificare rapidă prin pornirea serverului de dezvoltare a confirmat că noul mesaj este afișat corect în browser.
+
+Ca o paranteză, ar trebui să luăm în considerare separarea unora dintre modificările făcute în `Layout.jsx` într-o componentă distinctă.
+Vom crea o componentă `Footer` mai târziu, dar până acum nu am creat un echivalent pentru `Header`. Într-un fel, acest lucru ar putea părea excesiv având în vedere ce urmează, dar este mult mai curat și mai consecvent să avem o abordare structurată cu ambele componente: `<Header>` și `<Footer>`.

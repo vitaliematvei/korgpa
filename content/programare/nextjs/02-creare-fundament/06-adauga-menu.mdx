@@ -1,0 +1,113 @@
+---
+title: 'Adăugarea unui Meniu de Navigare'
+description: 'Adăugarea unui Meniu de Navigare'
+order: 6
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Acum că avem structura de bază (skeleton) a paginii principale, este esențial să configurăm navigarea, astfel încât să putem naviga prin site fără a introduce manual adresa fiecărei pagini.
+Până la urmă, noi s-ar putea să știm cum să ajungem la o anumită pagină, dar clienții noștri nu vor ști fără un link!
+
+Din fericire, Next.js face adăugarea unei navigări de bază extrem de simplă – pentru aceasta trebuie să folosim componenta `Link` din `next/link`, lucru pe care îl vom face în exercițiul următor.
+
+### ADĂUGAREA NAVIGĂRII
+
+Pentru următoarea noastră componentă, vom crea o bară de navigare simplă.
+Pentru a face acest lucru, urmează acești pași:
+
+1. **Crearea fișierului NavBar:**
+   Deschide un fișier nou și salvează-l cu numele `NavBar.jsx` în directorul `\src\components`.
+
+2. **Adăugarea importurilor:**
+   Adaugă următorul cod – ca și până acum, îl vom împărți în secțiuni, începând cu importurile:
+
+```javascript
+import React from 'react';
+import Link from 'next/link';
+import { AiOutlineShopping } from 'react-icons/ai';
+import { Cart } from './';
+// import { useStateContext } from "../../context/StateContext";
+```
+
+3. **Scrierea primei părți a componentei:**
+   Lasă o linie liberă, apoi adaugă prima jumătate a componentei `NavBar`:
+
+```jsx
+const NavBar = () => {
+// const { showCart, setShowCart, totalQuantities } = useStateContext();
+return (
+<div className="navbar-container">
+<div className="company-name">
+<Link href="/">Mangez Macaron</Link>
+<div className="navbar" logo="true">
+<Link href="/">Home</Link>
+<Link href="/about">About</Link>
+<Link href="/shop">Shop</Link>
+<Link href="/contact">Contact</Link>
+
+```
+
+4. **Finalizarea structurii JSX și exportul:**
+   Imediat mai jos, completează componenta cu acest bloc de cod:
+
+```jsx
+{/* <button
+type="button"
+className="cart-icon"
+onClick={() => setShowCart(true)}
+>
+<AiOutlineShopping />
+<span className="cart-item-qty">{totalQuantities}</span>
+</button>
+{showCart && <Cart />} */}
+</div>
+</div>
+</div>
+);
+};
+export default NavBar;
+
+```
+
+5. **Salvarea fișierului:**
+   Salvează fișierul ca `NavBar.jsx` în directorul `\src\components`, apoi închide-l.
+
+6. **Exportul componentei din index:**
+   Trebuie să mai facem câteva modificări – deschide fișierul `index.jsx` din directorul `\src\components` și adaugă această linie de cod la final:
+
+```javascript
+export { default as NavBar } from './NavBar';
+```
+
+7. **Importul în Layout:**
+   De asemenea, trebuie să importăm componenta în fișierul `Layout.jsx`. Deschide acel fișier și adaugă următorul import înainte de linia ce începe cu `const Layout = ({children})…`:
+
+```javascript
+import NavBar from './NavBar';
+```
+
+8. **Deschiderea terminalului:**
+   Comută la terminalul Node.js și schimbă directorul de lucru dacă nu ești deja în folderul proiectului.
+
+9. **Pornirea serverului de dezvoltare:**
+   La linia de comandă, introdu `npm run dev` și așteaptă să pornească serverul de dezvoltare.
+
+10. **Verificarea rezultatului:**
+    Verifică textul meniului de navigare afișat în Figura 2-6, evidențiat cu roșu.
+
+---
+
+<div style={{ display: 'flex', justifyContent: 'center', margin: '1.5rem 0' }}>
+  <img
+    src="/images/nextjs/2-6.jpg"
+    alt="Figura 2-6"
+    style={{ maxWidth: '100%', height: 'auto' }}
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 2-6: </strong>Navigarea proaspăt adăugatăv
+</p>
+
+Excelent – acum putem naviga pe site-ul nostru! Deși aspectul vizual s-ar putea să nu arate grozav în starea sa neformatată (fără stiluri), este totuși un pas mare înainte în dezvoltarea site-ului. Vom rezolva problemele legate de stilizare mai târziu, în Capitolul 5, dar mai întâi să trecem în revistă modificările făcute înainte de a continua cu următoarea etapă de dezvoltare.

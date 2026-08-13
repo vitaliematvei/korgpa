@@ -1,0 +1,158 @@
+---
+title: 'Crearea paginilor rămase'
+description: 'Crearea paginilor rămase'
+order: 10
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Facem un progres semnificativ în completarea structurii de bază (skeleton) a site-ului nostru – avem versiunea de bază funcțională și pagina principală (`index`) la locul ei.
+Este timpul să o extindem cu pagini suplimentare pe care le întâlnim de obicei pe site-urile de e-commerce.
+
+Mă refer, desigur, la pagini precum _Despre noi (About)_, _Contact_, _Termeni și condiții (Terms)_ și _Confidențialitate (Privacy)_.
+Având în vedere că construim o aplicație demonstrativă simplă, nu trebuie să ne concentrăm prea mult pe conținutul lor text, însă este la fel de important să reținem că acestea vor trebui actualizate cu texte finale înainte de lansarea în producție.
+Deocamdată, să ne concentrăm pe crearea paginilor de bază, pregătite pentru utilizare în demo-ul nostru.
+
+### ADĂUGAREA PAGINILOR SECUNDARE
+
+Pentru a adăuga paginile auxiliare rămase pentru site-ul nostru, urmează acești pași:
+
+1. **Crearea paginii Despre noi (About):**
+   Deschide un fișier nou și salvează-l ca `about.jsx` (sau `about.js`) în directorul `\src\pages`.
+
+2. **Scrierea primei părți din pagină:**
+   Adaugă următorul cod – este o bucată destul de mare, așa că o vom împărți în două jumătăți, începând cu acest bloc:
+
+```jsx
+const About = () => (
+  <div className="about-us">
+    <p>Despre Macaron Magic</p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vulputate
+      justo ac tellus egestas dictum. Aenean vestibulum diam eu risus cursus
+      mollis. Nulla dapibus ante in felis vulputate mattis. Mauris sed lacus
+      eget sapien rutrum interdum. Proin a semper magna. Aliquam eget purus
+      fringilla, rutrum augue at, porta sem.
+    </p>
+
+```
+
+3. **Completarea codului pentru Despre noi:**
+   Lasă o linie liberă, apoi adaugă a doua jumătate a codului pentru această pagină:
+
+```jsx
+    <p>
+      Aenean aliquam lectus tellus, sed venenatis nulla pretium ac. Vivamus cursus purus quam, eu placerat est rutrum quis. Nunc sit amet urna sed libero auctor imperdiet nec consequat sem. Quisque mauris est, fermentum in tristique quis, tincidunt a odio. Fusce porttitor eu est interdum consectetur. Ut aliquam semper dui, vulputate hendrerit sapien interdum sit amet. Nam vitae nulla et lorem ornare auctor. Nulla facilisi. Nam sed sollicitudin leo.
+    </p>
+  </div>
+);
+
+export default About;
+
+```
+
+4. **Salvarea fișierului:**
+   Salvează fișierul și închide-l.
+
+5. **Adăugarea paginilor auxiliare din codul sursă:**
+   Există trei alte fișiere foarte similare, așa că le vom lua din arhiva de cod care însoțește această carte. Extrage copii ale fișierelor `delivery.js`, `privacy.js` și `terms.js`, apoi salvează-le pe toate trei în directorul `\src\pages` al proiectului.
+
+6. **Inițializarea paginii de Contact:**
+   Mai avem un fișier de adăugat în acest demo – `contact.js`. Pentru acesta, deschide un fișier nou și adaugă următorul cod pe bucăți, începând cu tagurile de deschidere, titlul și introducerea:
+
+```jsx
+const Contact = () => (
+  <div className="contact-us">
+    <p>Contactează-ne</p>
+    <p>
+      Dacă ai întrebări despre produsele noastre, ne-ar plăcea să auzim de la tine.
+    </p>
+
+```
+
+7. **Construirea primei părți a formularului:**
+   Acest bloc se ocupă de prima parte a formularului de contact:
+
+```jsx
+    <form action="/send-data-here" method="post" className="contact-us-form">
+      <p>Câmpurile marcate cu * sunt obligatorii</p>
+      <label htmlFor="fullname">Numele complet:</label>
+      <div className="contact-field">
+        <input
+          type="text"
+          id="fullname"
+          name="fullname"
+          placeholder="Numele tău complet"
+          required
+        />
+        <span>*</span>
+      </div>
+
+```
+
+8. **Adăugarea câmpului pentru e-mail:**
+   Lasă o linie liberă, apoi adaugă a doua parte din codul formularului:
+
+```jsx
+      <label htmlFor="email">Adresa de e-mail:</label>
+      <div className="contact-field">
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Adresa de e-mail"
+          required
+        />
+        <span>*</span>
+      </div>
+
+```
+
+9. **Finalizarea formularului de contact:**
+   Lasă din nou o linie liberă și adaugă a treia și ultima parte din cod:
+
+```jsx
+      <label htmlFor="enquiry">Mesajul tău:</label>
+      <div className="contact-field">
+        <textarea
+          rows="5"
+          cols="60"
+          name="enquiry"
+          placeholder="Scrie mesajul tău aici..."
+        >
+        </textarea>
+      </div>
+      <button type="submit" className="contact-submit">
+        Trimite
+      </button>
+    </form>
+  </div>
+);
+
+export default Contact;
+
+```
+
+10. **Deschiderea terminalului:**
+    Comută la terminalul Node.js și schimbă directorul de lucru dacă nu te afli deja în folderul proiectului.
+
+11. **Pornirea serverului de dezvoltare:**
+    La linia de comandă, introdu `npm run dev` și așteaptă ca serverul de dezvoltare să pornească.
+
+12. **Verificarea rezultatului:**
+    Testează funcționalitatea dând click pe linkul **About** din meniul de navigare (Figura 2-8).
+    <div style={{ display: 'flex', justifyContent: 'center', margin: '1.5rem 0' }}>
+    <img
+    src="/images/nextjs/2-8.jpg"
+    alt="Figura 2-8"
+    style={{ maxWidth: '100%', height: 'auto' }}
+    />
+    </div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 2-8: </strong>**About** din meniul de navigare
+</p>
+
+---
+
+Ne apropiem din ce în ce mai mult de finalizarea structurii de bază – într-adevăr, mai avem un singur element de adăugat: subsolul (footer-ul). Vom ajunge la acesta în curând, dar mai întâi să trecem în revistă rapid și mai în detaliu modificările făcute în ultimul exercițiu.
