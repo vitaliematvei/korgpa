@@ -1,0 +1,45 @@
+---
+title: 'Rezumat al filtrelor de trecere, shelving și parametrice'
+description: 'Rezumat al filtrelor de trecere, shelving și parametrice'
+order: 11
+category: 'Egalizarea'
+level: 'Incepator'
+---
+
+Este util în această etapă să sintetizăm diferitele tipuri de filtre pe care le-am analizat până acum.
+Plug-in-ul McDSP din Figura 15.20 ne va ajuta în acest recapitulativ:
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-20.jpg"
+    alt="Figura 15-20"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 15-16: </strong>
+</p>
+
+- **Un filtru de trecere (_pass filter_)** elimină în mod continuu frecvențele aflate de o parte a frecvenței de tăiere (_cut-off frequency_). În mod normal, avem control asupra frecvenței de tăiere și, uneori, putem controla și panta (_slope_).
+  Filtrele HPF (trece-sus) și LPF (trece-jos) corespund benzilor 1, respectiv 6 în Figura 15.20.
+- **Un filtru shelving** amplifică (_boost_) sau atenuează (_attenuate_) frecvențele aflate de o parte a frecvenței de colț (_corner frequency_).
+  În mod normal, putem controla frecvența de colț (sau altă frecvență de referință, dacă difera) și câștigul (_gain_).
+  Benzile shelving din Figura 15.20 sunt 2 și 5.
+  Modelul FilterBank E6 oferă, de asemenea, control asupra rezonanței de tip vârf/adâncitură (_peak and dip resonance_) și asupra pantei.
+- **Un filtru parametric** oferă în mod obișnuit control asupra câștigului (_gain_), frecvenței și factorului Q.
+  Câștigul setat este atins la frecvența centrală, iar Q-ul (sau lățimea de bandă exprimată în octave) determină lățimea clopotului între cele două puncte de tăiere.
+  Benzile 3 și 4 din Figura 15.20 sunt filtre parametrice.
+
+---
+
+### Clasificare și caracteristici de sunet
+
+> **Note privind clasificarea egalizatoarelor:**
+>
+> - Un filtru parametric ce oferă control variabil asupra câștigului, frecvenței și factorului Q este cunoscut sub numele de **egalizator (complet) parametric**.
+> - Un filtru parametric ce oferă doar control variabil asupra câștigului și frecvenței (fără control direct pe Q) se numește **semiparametric** sau **sweep EQ**.
+
+Caracteristicile de răspuns ale diferitelor variante de filtre îi conferă fiecărui egalizator un sunet unic.
+Abaterile de la formele teoretice ideale, alături de alți factori, au fost cele care au oferit multor echipamente analogice celebre sunetul lor distinctiv și apreciat.
+Spre bucuria noastră, în prezent este un lucru obișnuit să întâlnim plug-in-uri profesionale care pun la dispoziție opțiuni variate de caracteristici și un control mai detaliat asupra răspunsului egalizatorului.

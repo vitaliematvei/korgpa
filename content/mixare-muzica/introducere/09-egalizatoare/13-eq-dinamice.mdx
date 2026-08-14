@@ -1,0 +1,88 @@
+---
+title: 'Egalizatoarele dinamice (Dynamic Equalizers)'
+description: 'Egalizatoarele dinamice (Dynamic Equalizers)'
+order: 13
+category: 'Egalizarea'
+level: 'Incepator'
+---
+
+Egalizatoarele dinamice nu sunt la fel de populare în prezent și sunt adesea asociate cu aplicațiile de mastering.
+Cu toate acestea, revoluția plug-in-urilor înseamnă că ar trebui să ne așteptăm să le vedem tot mai des în viitor, ele fiind la fel de utile în mixaj pe cât sunt în mastering.
+
+Spre deosebire de un egalizator standard (static), unde valoarea de atenuare sau amplificare (_cut/boost_) pe fiecare bandă este constantă, la un egalizator dinamic această valoare depinde de intensitatea semnalului pe banda respectivă.
+Cu alte cuvinte, cu cât o anumită bandă devine mai tare sau mai înceată, cu atât se aplică o atenuare sau o amplificare mai mică sau mai mare.
+
+Egalizatoarele dinamice reprezintă o combinație între un egalizator multibandă și un compresor multibandă.
+Pentru fiecare bandă avem la dispoziție controalele familiare ale unui compresor:
+
+- **Prag (_threshold_)**
+- **Raport de compresie (_ratio_)**
+- **Timp de atac (_attack_)**
+- **Timp de eliberare (_release_)**
+
+Spre deosebire de compresoarele multibandă, aceste controale nu ajustează volumul general aplicat pe banda de frecvență, ci **nivelul de amplificare sau atenuare (_boost/cut_) al egalizatorului** pe acea bandă.
+
+Figura 15.22 prezintă schema unui egalizator dinamic cu o singură bandă, în timp ce Figura 15.23 prezintă un egalizator dinamic multibandă.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-22.jpg"
+    alt="Figura 15-22"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="font-semibold mb-1">
+    Figura 15.22: Diagrama de bază a unui egalizator dinamic cu o singură bandă.
+  </p>
+  <p>
+    Setările pentru frecvență și factorul Q determină atât parametrii
+    egalizatorului, cât și benzile de frecvență care alimentează modulul de
+    calcul al câștigului (<em>gain computer</em>). Controalele de bază ale
+    compresorului, conectate la acest modul, dictează valoarea de atenuare sau
+    amplificare (<em>cut/boost</em>) aplicată pe egalizator.
+  </p>
+</div>
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-23.jpg"
+    alt="Figura 15-23"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700">
+  <p className="font-semibold text-center mb-2">
+    Figura 15.23: Egalizator dinamic sub formă de plug-in (t.c. electronic
+    Dynamic EQ).
+  </p>
+  <p className="mb-2">
+    În această captură de ecran sunt active atât banda 1, cât și banda 4:
+  </p>
+  <ul className="list-disc pl-5 space-y-1 text-left">
+    <li>
+      <strong>Zona cea mai întunecată</strong> (cea mai din interior) indică
+      egalizarea statică.
+    </li>
+    <li>
+      <strong>Zona luminoasă</strong> indică egalizarea dinamică.
+    </li>
+    <li>
+      <strong>Zona gri</strong> (cea mai din exterior) arată curba de răspuns a
+      filtrului trece-bandă (<em>band-pass</em>).
+    </li>
+  </ul>
+</div>
+
+### Aplicații practice
+
+Egalizatoarele dinamice sunt extrem de utile atunci când vrem să corectăm dezechilibre frecvențiale variabile, cum sunt cele cauzate de **efectul de proximitate** (_proximity effect_):
+
+- Putem seta egalizatorul să atenueze frecvențele joase doar atunci când nivelul acestora crește (de exemplu, când solistul se apropie prea mult de microfon).
+- Putem reduce zgomotele produse de frecarea degetelor pe corzile chitarei doar în momentele în care acestea apar.
+
+Există multe alte aplicații fascinante, însă acestea sunt explorate în Capitolul 17 (dedicat compresoarelor), deoarece compresoarele sunt mai răspândite în prezent decât egalizatoarele dinamice.
+
+{/* am ramas In practice .250 */}
