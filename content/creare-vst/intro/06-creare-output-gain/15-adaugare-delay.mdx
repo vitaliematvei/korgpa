@@ -1,0 +1,109 @@
+---
+title: 'Adaugare delay'
+description: 'Adaugare delay'
+order: 15
+category: 'JUCE'
+level: 'Incepator'
+---
+
+## Pregătirea procesării digitale a semnalului (DSP)
+
+Gata, e timpul să intrăm în detaliile de DSP (_Digital Signal Processing_).
+În acest capitol vei adăuga un efect de bază de **delay**, care reprezintă fundația plug-in-ului nostru.
+
+Iată partea din plug-in pe care o vei construi în acest capitol:
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/vst/juce/70.jpg"
+    alt="Figura 70"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 70: </strong>
+</p>
+
+> **Notă:** Nu construim încă interfața grafică (UI) – de asta ne vom ocupa în capitolul următor.
+> Acest capitol este dedicat exclusiv procesării audio.
+
+---
+
+### Linia de întârziere (_Delay line_)
+
+Pentru a întârzia un sunet cu o anumită durată de timp, trebuie să îi păstrăm eșantioanele (_samples_) într-o structură de date.
+
+Să presupunem că timpul de delay este de o jumătate de secundă:
+
+- La o rată de eșantionare de **48kHz**, o jumătate de secundă înseamnă **24.000 de eșantioane**.
+- Dacă dimensiunea blocului (_block size_) este de **128 de eșantioane**, vor fi necesare **187 de apeluri** ale funcției `processBlock` înainte de a începe să redăm sunetul întârziat.
+
+În tot acest timp, trebuie să stocăm eșantioanele semnalului întârziat în memoria computerului și să așteptăm momentul potrivit pentru a le reda la ieșire.
+Instrumentul folosit pentru această sarcină este **linia de întârziere (_delay line_)**.
+
+O linie de întârziere nu este altceva decât un bloc de memorie destinat stocării datelor audio.
+În acest sens, îndeplinește același rol ca `juce::AudioBuffer`.
+În terminologia generală din programare, aceasta se numește un **tablou (_array_)**.
+
+```
+Timpul curge de la stânga la dreapta:
+[ 0.614 ]  ...  [ -0.371 ]
+  ^                 ^
+Read Index       Write Index
+(cel mai vechi)  (cel mai recent)
+
+```
+
+La fiecare pas de timp (_timestep_):
+
+1. Introducem următoarea valoare de eșantion din semnalul de intrare în linia de întârziere, la poziția indicată de **indicele de scriere (_write index_)**.
+2. Avansăm acest indice cu o poziție.
+3. În ilustrație, timpul curge de la stânga la dreapta, ceea ce înseamnă că `0.614` este cel mai vechi eșantion, iar `-0.371` este cel mai recent eșantion primit.
+
+Pentru a obține semnalul întârziat, citim valoarea eșantionului de la o poziție anterioară, indicată de **indicele de citire (_read index_)**.
+În exemplul simplificat din imagine, poziția de citire se află cu 8 eșantioane în urmă.
+Pentru un timp de delay de o jumătate de secundă, poziția de citire din tablou ar fi cu **24.000 de eșantioane în urma** poziției de scriere.
+
+---
+
+### Dimensiunea liniei de întârziere și rata de eșantionare
+
+În plug-in-ul nostru, timpul maxim de delay va fi de **5 secunde**:
+
+- La o rată de eșantionare de 48kHz, tabloul va trebui să aibă o lungime de:
+
+  48.000 x 5 = 240.000 de elemente
+
+- La 44,1kHz, tabloul va fi mai mic.
+- La 96kHz, tabloul va trebui să fie mult mai lung.
+
+Această dependență apare des în codul audio: dimensiunea obiectelor de care ai nevoie depinde direct de rata de eșantionare curentă.
+Tocmai de aceea clasa `DelayAudioProcessor` conține funcția `prepareToPlay`, care primește doi parametri:
+
+- **Rata de eșantionare** (_sample rate_)
+- **Dimensiunea maximă estimată a blocului** (_maximum expected block size_)
+
+De cele mai multe ori vei avea nevoie de ambii parametri pentru a-ți pregăti obiectele de DSP înainte de procesarea propriu-zisă.
+
+---
+
+### De ce folosim `juce::dsp::DelayLine`?
+
+În capitolul 16 vei învăța cum să îți scrii propria linie de întârziere de la zero, dar pentru început vom folosi clasa nativă furnizată de JUCE: `juce::dsp::DelayLine`.
+
+Poate te întrebi de ce nu folosim pur și simplu un `juce::AudioBuffer` (care conține tot un tablou de eșantioane) sau o clasă standard din C++ precum `std::vector`?
+Există două motive principale:
+
+1. **Eficiența bufferului circular:** Pentru ca o linie de întârziere să fie eficientă, ea trebuie să funcționeze ca un **buffer circular** (_circular buffer_) la stocarea eșantioanelor.
+   Nici `juce::AudioBuffer` și nici `std::vector` nu oferă din start acest comportament.
+2. **Întârzieri fracționare (_fractional delay_):** Utilizatorul va seta timpul de delay în secunde sau milisecunde, iar aceste valori nu corespund întotdeauna unui număr întreg de eșantioane.
+
+- _Exemplu:_ La o rată de eșantionare de 44,1kHz și un timp de delay de 25 ms, lungimea întreruperii este de **1102,5 eșantioane**.
+- Aceasta înseamnă că trebuie să citim o valoare aflată „între” eșantioanele 1102 și 1103.
+
+Soluția standard pentru lungimile de delay fracționare este **interpolarea** valorilor celor două eșantioane vecine pentru a estima valoarea intermediară.
+Clasa `juce::dsp::DelayLine` oferă diverse metode de interpolare pregătite pentru acest scop.
+
+Vom aprofunda aceste concepte când vom implementa propria linie de întârziere.
+Pentru moment, este important de reținut că `juce::dsp::DelayLine` este o alegere mult mai potrivită decât un `AudioBuffer` sau un `std::vector` obișnuit.

@@ -1,0 +1,95 @@
+---
+title: 'Punerea în funcțiune a liniei de întârziere'
+description: 'Punerea în funcțiune a liniei de întârziere'
+order: 17
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Linia de întârziere nu face nimic deocamdată, deoarece nu am inclus-o încă în codul de procesare audio.
+Mergi în metoda `processBlock` și modifică bucla de procesare audio după cum urmează:
+
+```cpp
+void DelayAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
+                                        [[maybe_unused]] juce::MidiBuffer& midiMessages)
+{
+    juce::ScopedNoDenormals noDenormals;
+    auto totalNumInputChannels = getTotalNumInputChannels();
+    auto totalNumOutputChannels = getTotalNumOutputChannels();
+
+    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+        buffer.clear (i, 0, buffer.getNumSamples());
+
+    params.update();
+
+    // 1
+    delayLine.setDelay(48000.0f);
+
+    float* channelDataL = buffer.getWritePointer(0);
+    float* channelDataR = buffer.getWritePointer(1);
+
+    for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
+        params.smoothen();
+
+        // 2
+        float dryL = channelDataL[sample];
+        float dryR = channelDataR[sample];
+
+        // 3
+        delayLine.pushSample(0, dryL);
+        delayLine.pushSample(1, dryR);
+
+        // 4
+        float wetL = delayLine.popSample(0);
+        float wetR = delayLine.popSample(1);
+
+        // 5
+        channelDataL[sample] = wetL * params.gain;
+        channelDataR[sample] = wetR * params.gain;
+    }
+}
+
+```
+
+Cea mai mare parte din buclă rămâne neschimbată. Modificările sunt marcate prin comentarii numerotate:
+
+1. **Setarea duratei curente de delay:** În `prepareToPlay` i-ai specificat liniei de întârziere doar lungimea maximă permisă. Aici setăm lungimea efectivă a delay-ului, măsurată tot în eșantioane. De data aceasta valoarea este de tip `float` în loc de `int`, deoarece sunt posibile lungimi fracționare de delay.
+2. **Citirea eșantioanelor de intrare:** Citim eșantioanele audio primite în două variabile noi, `dryL` și `dryR`, pentru canalul stâng, respectiv drept.
+   Semnalul **dry** este denumirea folosită pentru audio-ul neprocesat.
+3. **Scrierea în linia de întârziere:** Apelăm `delayLine.pushSample` pentru a introduce valorile `dryL` și `dryR` în linia de întârziere: o dată pentru canalul stâng (index 0) și o dată pentru canalul drept (index 1).
+4. **Citirea semnalului întârziat:** Apelăm `delayLine.popSample` pentru a citi audio-ul întârziat pentru fiecare canal. Acestea sunt valorile eșantioanelor **wet**, denumire oferită semnalului procesat.
+5. **Scrierea înapoi în `AudioBuffer`:** Trecem eșantioanele _wet_ înapoi în `AudioBuffer`, înmulțite cu valoarea curentă a câștigului (_gain_).
+
+Pentru moment, linia de întârziere folosește o durată fixă de **48.000 de eșantioane**, adică exact o secundă de delay la o rată de 48kHz(sau puțin mai mult la 44,1kHz.
+În secțiunea următoare vom folosi un parametru propriu-zis de plug-in pentru această valoare.
+
+---
+
+### Testarea procesării
+
+Compilează plug-in-ul și rulează-l! Când apeși pe _Play_ în playerul audio, va exista o întârziere de o secundă înainte de a auzi vreun sunet.
+De asemenea, după ce apeși _Stop_, sunetul va continua să se audă încă o secundă. Asta înseamnă că linia de întârziere funcționează corect: totul este întârziat cu o secundă.
+
+---
+
+### Micsorarea semnalului Dry și Wet (Dry/Wet Mix)
+
+De obicei, vrei să mixezi semnalul întârziat cu cel original (_dry_).
+Aceasta este combinația **dry/wet mix**. Pentru moment, modifică ultimele două linii din bucla de procesare audio astfel:
+
+```cpp
+channelDataL[sample] = (dryL + wetL) * params.gain;
+channelDataR[sample] = (dryR + wetR) * params.gain;
+
+```
+
+Acest cod execută un mixaj de bază: mai întâi adună semnalele _dry_ și _wet_, iar apoi aplică câștigul de ieșire (_output gain_).
+
+Compilează și rulează din nou plug-in-ul.
+Vei auzi acum sunetul original plus versiunea sa întârziată o secundă mai târziu, ambele sunând simultan.
+
+> **Atenție la nivelul de ieșire:**
+> Prin adunarea semnalului cu el însuși, amplitudinea se dublează, ceea ce corespunde unei creșteri în nivel de **+6 dB**.
+> Este recomandat să reduci parametrul **Output Gain** cu aproximativ 6 dB pentru a compensa și a evita distorsiunea digitală (_clipping_).
+
+{/* am ramas Setting the delay time with a parameter .189 */}

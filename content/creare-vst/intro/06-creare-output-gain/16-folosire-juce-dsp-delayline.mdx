@@ -1,0 +1,141 @@
+---
+title: 'Utilizarea modulului juce::dsp::DelayLine'
+description: 'Utilizarea modulului juce::dsp::DelayLine'
+order: 16
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Modulul `juce::dsp` este o colecție extrem de utilă de obiecte DSP, conținând filtre, convoluție, supraeșantionare (_oversampling_), linii de întârziere și multe altele, precum și efecte complete de tip chorus, compresor sau reverb.
+Acesta oferă numeroase blocuri de construcție DSP gata pregătite pe care le poți folosi în propriile plug-in-uri.
+
+Modulul `juce_dsp` nu a fost adăugat automat când ai creat proiectul în Projucer, așa că va trebui să îl adaugi manual:
+
+1. Deschide proiectul `Delay.jucer` în Projucer.
+2. Dă clic pe **Modules** în panoul din stânga.
+3. Apasă butonul rotund **+**, apoi selectează **Add a module > Global JUCE modules path > juce_dsp**.
+4. Salvează proiectul (`Ctrl+S` / `Cmd+S`) și redeschide-l în mediul tău de dezvoltare (IDE).
+
+---
+
+### Declarația variabilei în C++
+
+Mergi în fișierul `PluginProcessor.h` și adaugă următoarea linie în secțiunea `private:`, sub celelalte variabile:
+
+```cpp
+juce::dsp::DelayLine<float, juce::dsp::DelayLineInterpolationTypes::Linear> delayLine;
+
+```
+
+Sintaxa aceasta necesită câteva explicații. Codul declară o variabilă nouă numită `delayLine` de tipul `juce::dsp::DelayLine`.
+Nu putem scrie pur și simplu:
+
+```cpp
+juce::dsp::DelayLine delayLine; // EROARE DE COMPILARE!
+
+```
+
+Aceasta ar genera o eroare de compilare, deoarece `juce::dsp::DelayLine` este un **șablon de clasă (_class template_)**.
+Clasa este incompletă până când nu îi specifici proprietățile adecvate.
+În cazul `juce::dsp::DelayLine`, compilatorul trebuie să știe două lucruri:
+
+1. **Tipul de date al eșantioanelor:** Folosim `float`.
+2. **Tipul de interpolare:** Utilizat pentru duratele de delay care cad între eșantioane.
+   Pentru început vom folosi `juce::dsp::DelayLineInterpolationTypes::Linear` pentru interpolare liniară.
+
+Aceste două specificații sunt **argumente de șablon (_template arguments_)** și se plasează între parantezele unghiulare `<` și `>`.
+Ele funcționează similar cu argumentele unei funcții, dar sunt evaluate la momentul compilării (_compile-time_), nu în timpul rulării programului.
+
+Ai mai întâlnit această notație `<float>` și la `juce::LinearSmoothedValue`, `juce::AudioBuffer` sau `juce::NormalisableRange`.
+
+---
+
+### Definirea constantelor de timp
+
+Înainte de a pune la treabă obiectul `juce::dsp::DelayLine`, trebuie să definim constantele pentru intervalul de timp.
+Deschide `Parameters.h` și adaugă următoarele linii în secțiunea `public:` a clasei:
+
+```cpp
+static constexpr float minDelayTime = 5.0f;
+static constexpr float maxDelayTime = 5000.0f;
+
+```
+
+Această secvență definește două constante: `minDelayTime` (5,0ms) și `maxDelayTime` (5000,0ms).
+Deoarece o secundă are 1000 de milisecunde, timpul maxim de delay este de **5 secunde**.
+
+Utilizăm o constantă astfel încât oriunde avem nevoie să facem referire la timpul maxim, vom scrie `Parameters::maxDelayTime` în loc de o valoare hardcodată.
+Dacă ulterior modificăm valoarea, o vom schimba într-un singur loc.
+
+> **De ce `Parameters::maxDelayTime` și nu `params.maxDelayTime`?**
+> Deoarece `maxDelayTime` este declarată ca fiind `static` în `Parameters.h`.
+> Aceasta înseamnă că nu aparține unei instanțe specifice, ci clasei în sine.
+> Vom avea nevoie de ea și în funcția statică `createParameterLayout()`.
+
+---
+
+### Inițializarea în `prepareToPlay`
+
+Aflând timpul maxim de delay, putem calcula numărul de eșantioane pe care `juce::dsp::DelayLine` trebuie să le stocheze pentru o anumită rată de eșantionare.
+Acest proces se realizează în metoda `prepareToPlay` din `PluginProcessor.cpp`.
+
+Adaugă mai întâi următoarele linii în `prepareToPlay`:
+
+```cpp
+juce::dsp::ProcessSpec spec;
+spec.sampleRate = sampleRate;
+spec.maximumBlockSize = juce::uint32(samplesPerBlock);
+spec.numChannels = 2;
+
+delayLine.prepare(spec);
+
+```
+
+Obiectul `juce::dsp::DelayLine` are nevoie de rata de eșantionare curentă, dimensiunea maximă a blocului și numărul de canale audio (2 pentru stereo).
+Toate acestea sunt împachetate într-o structură `juce::dsp::ProcessSpec`.
+
+> **Notă despre Type Cast:** Expresia `juce::uint32(samplesPerBlock)` este o conversie explicită de tip (_type cast_) de la `int` la `juce::uint32` (întreg fără semn), tip cerut de `spec.maximumBlockSize`. Fără această conversie, compilatorul va afișa un avertisment (_warning_).
+
+Adaugă apoi configurarea dimensiunii maxime a liniei de întârziere:
+
+```cpp
+double numSamples = Parameters::maxDelayTime / 1000.0 * sampleRate;
+int maxDelayInSamples = int(std::ceil(numSamples));
+
+delayLine.setMaximumDelayInSamples(maxDelayInSamples);
+delayLine.reset();
+
+```
+
+---
+
+### Logica formulei de calcul
+
+Pentru a converti un timp exprimat în milisecunde în număr de eșantioane:
+
+1. Împărțim milisecundele la `1000.0` pentru a le transforma în secunde.
+2. Înmulțim rezultatul cu rata de eșantionare (`sampleRate`).
+
+maxDelayInSamples = maxDelayTime\1000.0 x sampleRate
+
+- **Verificare la 48kHz:** Pentru 5000ms(5 secunde), obținem (5000 / 1000.0) x 48000 = 240.000 eșantioane.
+- **Verificare la 44,1kHz:** (5000 / 1000.0) x 44100 = 220.500 eșantioane.
+
+Deoarece rezultatul înmulțirii poate conține zecimale (de exemplu 170,2), folosim `std::ceil()` pentru a rotunji întotdeauna prin adaos la următorul număr întreg (171). `delayLine.reset()` golește bufferul și îl pregătește de procesare.
+
+---
+
+### Testarea configurării
+
+Pentru a verifica dacă algoritmul funcționează corect, adaugă temporar la finalul metodei `prepareToPlay`:
+
+```cpp
+DBG(maxDelayInSamples);
+
+```
+
+Compilează plug-in-ul și rulează-l în **AudioPluginHost**:
+
+- În consola de debug a IDE-ului vei vedea afișat `220500` pentru o rată de 44,1kHz și `240000` pentru 48kHz.
+- Când schimbi rata de eșantionare din AudioPluginHost, `prepareToPlay` este apelat din nou, reinițializând linia de întârziere.
+- După verificare, poți șterge linia cu `DBG` sau o poți comenta folosind `//`.
