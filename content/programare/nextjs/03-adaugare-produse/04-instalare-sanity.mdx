@@ -1,0 +1,49 @@
+---
+title: 'Instalarea Sanity'
+description: 'Instalarea Sanity'
+order: 4
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Instalarea Sanity este extrem de simplă – fiind dezvoltat pentru mediul Node/NPM, folosește un proces familiar pentru oricine lucrează cu Node.js.
+Totul se realizează prin linia de comandă, deci va trebui să ai deja instalate **Node.js** și **NPM**.
+Presupunând că le ai instalate, putem continua cu procesul de configurare.
+
+---
+
+### Configurarea Sanity și autentificarea
+
+Pentru a instala Sanity și a te autentifica, urmează acești pași:
+
+1. Navighează în folderul proiectului tău, apoi creează un director nou numit `sanity` în rădăcina (_root_) proiectului.
+2. Deschide o sesiune de terminal și schimbă directorul curent către folderul `sanity` creat la pasul anterior (`cd sanity`).
+3. În terminal, introdu comanda de instalare globală a CLI-ului Sanity și apasă **Enter**:
+
+```bash
+npm i -g @sanity/cli
+
+```
+
+4. După finalizarea instalării, inițializează proiectul executând comanda:
+
+```bash
+sanity init
+
+```
+
+5. Se va deschide automat o fereastră în browser cu o solicitare de autentificare sau creare de cont – selectează opțiunea **Email/password** și introdu datele solicitate.
+
+   > _Notă:_ Poți folosi ca opțiuni alternative autentificarea prin Google sau GitHub. Oricare variantă este potrivită, însă este important să reții metoda aleasă pentru conectările viitoare.
+
+6. După introducerea datelor și confirmare, browserul va afișa mesajul de succes: **Login successful**.
+
+In acest moment, **nu închide fereastra de browser** – vom continua în scurt timp.
+
+---
+
+### Ce am realizat până acum?
+
+Avem Sanity instalat și (aproape) pregătit pentru adăugarea datelor. Pentru a ajunge aici, am urmat procesul standard de instalare din ecosistemul NPM folosind comanda `npm i`. Odată instalat pachetul CLI, am rulat `sanity init` pentru a crea un cont și a ne conecta la platformă.
+
+Dacă pe viitor vei alege să lucrezi cu Sanity în proiecte de amploare la nivel de echipă sau companie, merită analizate și funcționalitățile avansate din planurile _Business_ ale platformei, cum ar fi autentificarea unică de tip **SSO (Single Sign-On)**.

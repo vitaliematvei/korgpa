@@ -1,0 +1,20 @@
+---
+title: 'Analiza în detaliu a codului modificat'
+description: 'Analiza în detaliu a codului modificat'
+order: 8
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Am început prin lansarea serverului de dezvoltare pentru Sanity – de reținut că acesta este diferit de cel pe care îl folosim pentru dezvoltarea aplicației front-end (de unde și numărul diferit al portului utilizat, de exemplu `http://localhost:3333`).
+Odată ce am accesat acea adresă URL în browser, am fost invitați să ne autentificăm – folosind aceleași date de acces ca în demonstrația anterioară.
+
+Odată conectați, interfața ne-a confirmat că nu exista încă niciun tip de document definit și că era necesar să creăm o schemă de date.
+Pentru a face acest lucru, am extras o copie a fișierului `product.js` din resursele proiectului (codul furnizat) – fișier care definește structura schemei în Sanity de îndată ce serverul este repornit.
+
+Pentru a lega această schemă de aplicație și pentru a determina proiectul să o recunoască, am efectuat două modificări în fișierul `sanity.config.js`:
+
+1. Am adăugat o linie de cod pentru a **importa fișierul de schemă** (`product.js`).
+2. Am modificat proprietatea `schemaTypes` pentru a **include noua schemă** în lista de tipuri de date folosite.
+
+Ca pas final, serverul Sanity s-a reîncărcat automat, iar noi am confirmat că interfața afișează acum o bază de date structurată dar goală, pregătită pentru introducerea produselor pentru site-ul nostru.

@@ -1,0 +1,84 @@
+---
+title: 'Crearea bazei noastre de date (Data Store)'
+description: 'Crearea bazei noastre de date (Data Store)'
+order: 5
+category: 'NextJS'
+level: 'Incepator'
+---
+
+## Crearea bazei noastre de date (_Data Store_)
+
+Am instalat cu succes Sanity și ne-am autentificat în instanță; următorul pas este crearea bazei de date și configurarea schemei. Sunt câțiva pași de parcurs, așa că să trecem direct la treabă.
+
+---
+
+### Configurarea bazei de date
+
+Pentru a configura baza de date pentru proiectul nostru, urmează acești pași în terminal:
+
+1. **Numele proiectului:** Întoarce-te în terminalul Node.js – vei vedea mesajul _Login successful_ și o solicitare de a introduce numele proiectului (**Project name**). Tastează `macaron` și apasă **Enter**.
+2. **Configurația implicită:** Când ești întrebat dacă vrei să folosești configurația implicită (**Default dataset configuration**), tastează `y` sau selectează **Yes**.
+3. **Calea de ieșire:** Sanity va crea un dataset – apasă **Enter** la pasul **Project output path** pentru a accepta valoarea implicită (care este folderul curent selectat).
+4. **Șablonul proiectului:** Folosește tastele direcționale (săgețile) pentru a selecta opțiunea **Clean project with no predefined schemas**, apoi apasă **Enter**.
+
+---
+
+### Solicitări suplimentare (în funcție de versiune)
+
+În acest moment, CLI-ul ți-ar putea cere câteva detalii de configurare:
+
+- **TypeScript:** Dacă ești întrebat dacă vrei să folosești TypeScript, selectează **No**. Nu este esențial pentru acest pas; îl putem integra mai târziu.
+- **Package Manager:** Dacă ești întrebat ce administrator de pachete dorești să folosești pentru instalarea dependențelor, selectează **npm**.
+- **Instalarea dependențelor:** Node va descărca și va rezolva toate pachetele necesare. Vei primi un mesaj de confirmare când procesul este finalizat.
+
+---
+
+### Pasul final: Ignorarea fișierelor și accesarea Panoului de Control
+
+Odată ce dependențele au fost instalate, parcurge acești ultimi pași:
+
+1. Deschide editorul de cod (ex: VS Code) și deschide fișierul `.gitignore` aflat în rădăcina proiectului `sanity`.
+2. Asigură-te că linia `node_modules` nu are un `/` la început care ar putea bloca ignorarea corectă a folderului – nu ne dorim să salvăm pe Git mii de fișiere din dependențe! Salvează și închide fișierul.
+3. Revenind în terminal, introdu comanda:
+
+```bash
+sanity manage
+
+```
+
+4. Această comandă va deschide automat în browser panoul de administrare **Sanity Dashboard** dedicat proiectului tău (asemeni exemplului din Figura 3-2),
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/nextjs/3-2.jpg"
+    alt="Figura 3-2"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 3-2: </strong>Sanity Dashboard
+</p>
+
+de unde poți gestiona setările, membrii echipei și dataset-urile bazei de date.
+Un folder pe care l-am creat mai devreme, așa cum este ilustrat în Figura 3-3.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/nextjs/3-3.jpg"
+    alt="Figura 3-3"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 3-3: </strong>Sanity FolderDashboard
+</p>
+Vom folosi această aplicație pentru a introduce datele site-ului tău în
+exercițiul următor. În acest moment, poți închide panoul de administrare Sanity
+(*dashboard-ul*), deoarece nu vom avea nevoie de el pentru următoarea
+demonstrație – totuși, păstrează deschis terminalul Node.js!
+
+Dacă vrei să afli mai multe despre diferitele comenzi și funcționalități disponibile în Sanity, introdu comanda `sanity docs` în terminal pentru a deschide documentația oficială.
+
+Baza de date începe să prindă contur, deși mai avem de lucru până la introducerea produselor! În acest punct aș vrea să menționez că, în mod obișnuit, ar fi trebuit să creăm manual fiecare tip de câmp (_field type_), însă nu a fost cazul aici – configurarea Sanity a scos în evidență câteva aspecte esențiale, așa că haide să analizăm mai în detaliu modificările pe care le-am făcut în ultima demonstrație.

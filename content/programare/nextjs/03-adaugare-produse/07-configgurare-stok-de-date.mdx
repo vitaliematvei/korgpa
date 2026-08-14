@@ -1,0 +1,82 @@
+---
+title: 'Configurarea stocului de date (Data Store)'
+description: 'Configurarea stocului de date (Data Store)'
+order: 7
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Pentru cei dintre voi familiarizați cu configurarea bazelor de date clasice, v-ați aștepta (pe bună dreptate) să folosiți interogări de tip **CRUD** pentru a adăuga câmpuri.
+Nu este și cazul Sanity – în schimb, folosim un fișier JavaScript pentru a crea ceea ce seamănă cu un obiect JSON (doar că scris în cod JavaScript) pentru a ne defini schema.
+Haide să trecem la următorul exercițiu pentru a vedea cum se face acest lucru și ce înseamnă în practică.
+
+---
+
+### CONFIGURAREA SANITY
+
+Pentru a configura Sanity la prima utilizare, urmează acești pași:
+
+1. **Pornirea serverului de dezvoltare:** Deschide terminalul Node.js, introdu comanda `sanity dev` și apasă **Enter** pentru a porni serverul local.
+   Dacă totul este în regulă, vei vedea în terminal un mesaj similar cu acesta:
+
+```text
+✔ Checking configuration files...
+Sanity Studio using vite@4.0.4 ready in 1900ms and running at http://localhost:3333/
+
+```
+
+2. **Accesarea interfeței:** Deschide browserul și accesează adresa `http://localhost:3333/`. Dacă ți se cere, autentifică-te în contul tău.
+3. **Vizualizarea interfeței Studio:** Odată autentificat, vei vedea o fereastră similară cu cea din Figura 3-5.
+   <div className="my-4 flex justify-center">
+     <img
+       src="/images/nextjs/3-5.jpg"
+       alt="Figura 3-5"
+       className="h-auto w-9/10 max-w-xs"
+     />
+   </div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 3-5: </strong>Sanity
+</p>
+
+> 💡 _Notă:_ Dimensiunea ferestrei poate fi adaptată; pe un ecran mai mare (de desktop) vor apărea mai multe opțiuni și panouri de navigare.
+
+4. **Adăugarea schemei pentru produse:** La început, interfața Studio va fi goală deoarece nu are nicio schemă definită.
+   Pentru a rezolva acest lucru, extrage o copie a fișierului `product.js` din resursele proiectului (codul furnizat) și plasează-l în folderul `\sanity\schemas\` (sau direct în `\schemas\` în versiunile noi).
+5. **Importarea schemei în fișierul de configurare:** Deschide fișierul `sanity.config.js` (sau `sanity.config.ts`) în editorul tău de cod și adaugă următoarea linie de cod imediat sub importul existent pentru `schemaTypes`:
+
+```javascript
+import product from './schemas/product';
+```
+
+6. **Actualizarea proprietății `schema`:** Derulează până găsești secțiunea `schema` și modifică codul astfel încât să adaugi noua schemă de produs (_modificările sunt marcate cu îngroșat_):
+
+```javascript
+schema: {
+  types: schemaTypes.concat([product]),
+},
+
+```
+
+7. **Salvarea fișierului:** Salvează și închide fișierul `sanity.config.js`.
+8. **Verificarea rezultatului:** Reîntoarce-te în browser. Serverul de dezvoltare (_Vite_) va reîncărca automat pagina (**Hot Reload**).
+   Dacă totul a fost configurat corect, vei vedea că interfața **Sanity Studio** s-a actualizat și afișează secțiunea inițială de **Content / Product**, ca în Figura 3-6.
+   <div className="my-4 flex justify-center">
+     <img
+       src="/images/nextjs/3-6.jpg"
+       alt="Figura 3-6"
+       className="h-auto w-9/10 max-w-xs"
+     />
+   </div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 3-6: </strong>
+</p>
+
+Păstrează fereastra din browser deschisă – acum suntem gata să adăugăm primele produse în baza noastre de date în următorul exercițiu.
+
+---
+
+Da – ne apropiem din ce în ce mai mult de o bază de date pe deplin funcțională!
+Deși nu am adăugat încă produse (nu-ți face griji, urmează imediat), avem cel puțin o schemă funcțională și pregătită.
+Am acoperit câteva puncte extrem de importante despre crearea bazelor de date în Sanity, așa că să ne oprim un moment pentru a analiza în detaliu modificările pe care tocmai le-am făcut.

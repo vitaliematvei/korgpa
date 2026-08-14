@@ -1,0 +1,79 @@
+---
+title: 'Afișarea listei de produse în magazin'
+description: 'Afișarea listei de produse în magazin'
+order: 12
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Avem baza de date pregătită, împreună cu produsele noastre. Următoarea etapă este să ne facem site-ul dinamic; trebuie să preluăm acele produse din Sanity și să le afișăm în paginile aplicației.
+
+Acesta este un proces în patru pași, pe care îl vom parcurge de-a lungul a două exerciții: mai întâi trebuie să construim pagina principală a magazinului, înainte de a crea componenta care va afișa fiecare produs în parte. Crearea paginii inițiale cu lista de produse este destul de simplă, însă lucrurile devin puțin mai complexe când ajungem la afișarea produselor individuale! Vom ajunge și acolo în curând, dar mai întâi să începem cu afișarea paginii principale a magazinului.
+
+---
+
+### CONSTRUIREA PAGINII MAGAZINULUI
+
+Pentru a crea pagina de magazin pentru site-ul nostru, urmează acești pași:
+
+1. **Crearea fișierului:** Deschide editorul de cod și creează un fișier nou – salvează-l ca `shop.js` în folderul `\src\pages` (sau `\pages` în funcție de structura proiectului).
+2. **Importurile inițiale:** Adaugă următorul cod – îl vom scrie pe secțiuni, începând cu cele trei importuri principale:
+
+```javascript
+import React from 'react';
+import { client } from '../../lib/client';
+import { Product } from '../components';
+```
+
+3. **Structura componentei (Prima parte):** Lasă o linie liberă, apoi adaugă acest bloc – este prima jumătate a componentei noastre `Shop`:
+
+```jsx
+const Shop = ({ products }) => (
+  <div>
+    <div className="products-heading">
+      <h2>Shop</h2>
+      <p>Browse for products</p>
+    </div>
+
+```
+
+4. **Iterarea prin produse:** Imediat sub acel cod, adaugă următoarele linii – acestea vor completa partea de interfață a componentei:
+
+```jsx
+    <div className="products-container">
+      {products?.map((product) => (
+        <Product key={product._id} product={product} />
+      ))}
+    </div>
+  </div>
+);
+
+```
+
+5. **Preluarea datelor prin SSR (getServerSideProps):** Pentru ca această componentă să funcționeze corect, în următorul bloc de cod se întâmplă toată „magia” – este interogarea de care avem nevoie pentru a prelua produsele din baza de date. Lasă o linie liberă și adaugă:
+
+```javascript
+export const getServerSideProps = async ({ req, res }) => {
+  const query = '*[_type == "product"]';
+  const products = await client.fetch(query);
+
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59',
+  );
+
+  return {
+    props: { products },
+  };
+};
+
+export default Shop;
+```
+
+6. **Salvarea fișierului:** Salvează fișierul și închide-l.
+
+---
+
+În mod normal ți-aș cere să încerci să deschizi pagina în browser, dar așa cum probabil ai observat deja din cod, aplicația va da o eroare: ne lipsește cel puțin o componentă (`Product`) pentru ca totul să funcționeze! Pentru a rezolva acest lucru, vom scrie codul necesar în demonstrația următoare, însă pentru moment să ne oprim puțin și să analizăm codul pe care tocmai l-am scris.
+
+{/* am ramas Breaking Apart the Code .74 */}

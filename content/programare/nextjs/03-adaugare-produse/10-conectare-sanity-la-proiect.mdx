@@ -1,0 +1,73 @@
+---
+title: 'Conectarea Sanity la proiectul nostru'
+description: 'Conectarea Sanity la proiectul nostru'
+order: 10
+category: 'NextJS'
+level: 'Incepator'
+---
+
+## Conectarea Sanity la proiectul nostru
+
+Perfect – avem acum sursele de date pregătite, una pentru produse și cealaltă… ei bine, tot pentru produse! Bine, când spun produse, mă refer de fapt la datele de care vom avea nevoie în Stripe pentru a identifica produsele în comenzi, dar am divagat puțin.
+
+Am ajuns într-o etapă cheie: conectarea sursei de date Sanity la proiectul nostru – astfel încât să putem afișa produsele direct din baza de date. Vom face acest lucru pe parcursul următoarelor exerciții: pe scurt, prima parte va consta în conectarea Sanity la site, iar a doua parte va acoperi codul și pașii necesari pentru a afișa produsele în magazin.
+
+Haide să începem prin legarea bazei de date Sanity la proiect, astfel încât magazinul să îi recunoască existența.
+
+---
+
+### CONECTAREA SANITY LA PROIECT
+
+Pentru a conecta Sanity la proiectul nostru, urmează acești pași:
+
+1. **Crearea folderului `lib`:** Mai întâi, creează un folder nou în rădăcina proiectului (proiectul Next.js, nu în folderul `sanity`) și numește-l `lib`.
+2. **Crearea clientului Sanity:** În interiorul acestui folder, creează un fișier nou numit `client.js` și adaugă următorul cod:
+
+```javascript
+import sanityClient from '@sanity/client';
+import imageUrlBuilder from '@sanity/image-url';
+
+export const client = sanityClient({
+  projectId: '<INTRODU_PROJECT_ID_AICI>',
+  dataset: '<INTRODU_VALOAREA_DATASET_AICI>',
+  apiVersion: '2022-11-27',
+  useCdn: true,
+  token: process.env.NEXT_PUBLIC_SANITY_TOKEN,
+});
+
+const builder = imageUrlBuilder(client);
+
+export const urlFor = (source) => builder.image(source);
+```
+
+3. **Obținerea ID-ului de proiect:** În codul de mai sus avem nevoie de un ID de proiect (`projectId`) și de numele dataset-ului (`dataset`). Pentru a le obține, deschide un terminal Node.js, mergi în folderul `sanity`, introdu comanda `sanity manage` și apasă **Enter**.
+4. **Preluarea `projectId`:** În fereastra Sanity Manager deschisă în browser, caută **Project ID** în fila **Overview**.
+5. **Preluarea `dataset`:** Comută pe fila **Datasets** – numele dataset-ului se află în coloana marcată **Title** (va exista un singur nume, cel mai probabil `production`).
+6. **Actualizarea `client.js`:** Deschid fișierul `client.js` creat anterior, înlocuiește _placeholder-ele_ cu propriile tale valori, apoi salvează și închide fișierul.
+7. **Generarea token-ului API:** Avem nevoie de un token pentru ca site-ul nostru să poată comunica securizat cu baza de date Sanity. Mergi în tab-ul **API**, apoi la secțiunea **Tokens**.
+8. Apasă pe **Add API Token** în partea dreaptă, iar în câmpul **Name** introdu `BookProject`.
+9. Selectează dreptul de acces **Editor**, apoi apasă pe **Save**.
+
+> ⚠️ **IMPORTANT:** Pe ecranul următor vei vedea o copie a token-ului creat. **Trebuie să îl salvezi într-un loc sigur**, deoarece nu îl vei mai putea vedea ulterior. Dacă îl pierzi, va trebui să creezi altul!
+
+10. **Configurarea variabilelor de mediu:** Deschide editorul de cod și creează un fișier numit `.env` în rădăcina proiectului principal.
+11. În acest fișier, adaugă următoarea linie, înlocuind `<XXXXX>` cu token-ul generat la pașii 7-9:
+
+```env
+NEXT_PUBLIC_SANITY_TOKEN = <XXXXX>
+
+```
+
+Salvează și închide fișierul. 12. **Activarea importului:** Deschide fișierul `index.js` din folderul `\pages` (sau din App Router, după caz) și decomentează linia:
+
+```javascript
+import { client } from '../lib/client';
+```
+
+13. Salvează toate fișierele deschise și închide-le.
+
+---
+
+Am ajuns cât de departe se putea pentru moment – vom testa această conexiune în exercițiul următor, când vom începe să generăm interogări (_queries_) din baza de date Sanity.
+
+Între timp, am parcurs câțiva pași utili pe care probabil va trebui să îi refaci dacă vei crea și alte surse de date folosind această aplicație; să ne oprim puțin pentru a analiza în detaliu modificările efectuate.

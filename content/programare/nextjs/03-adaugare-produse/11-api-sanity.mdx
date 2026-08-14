@@ -1,0 +1,43 @@
+---
+title: 'Familiarizarea cu API-ul Sanity'
+description: 'Familiarizarea cu API-ul Sanity'
+order: 11
+category: 'NextJS'
+level: 'Incepator'
+---
+
+GROQ. Ce naiba este GROQ, te auz de departe întrebând?
+
+Nu – nu este vreo băutură alcoolică din vremea corăbierilor de la începutul secolului al XVI-lea (vezi _Grog_ pe Wikipedia dacă vrei să vezi la ce mă refer), ci **limba oficială a celor de la Sanity pentru interogarea bazei lor de date**.
+
+La început ar putea părea un pic ciudat sau chiar nefiresc, dar este mult mai ușor de înțeles decât pare!
+Să luăm unul dintre exemplele pe care le vom folosi mai târziu în această carte:
+
+```javascript
+const query = '*[_type == "product"]';
+const products = await client.fetch(query);
+```
+
+Cheia întregului mecanism este simbolul steluță (`*`) de la început – acesta înseamnă: _„Adu-mi absolut tot ce găsești – nu mă interesează ce este!”_.
+Bine, poate am fost puțin cam direct cu formularea, dar da, steluța reprezintă tot conținutul.
+
+Totuși, dacă nu vrem chiar totul, folosim un filtru pe care îl închidem între paranteze drepte `[...]`.
+În exemplul nostru, îi spunem bazei de date: _„Adu totul, dar **doar dacă** are proprietatea `_type` egală cu `product`”_.
+
+Am fi putut scrie la fel de ușor ceva de genul:
+
+```javascript
+'*[_type == "product" && name != "Quince Cobnut – per box of 12"]';
+```
+
+În acest caz, i-am cerut sistemului Sanity să ne returneze totul ca mai devreme, dar de data aceasta **doar dacă** `_type` este `product` și numele **nu** este _"Quince Cobnut – per box of 12"_.
+Ca rezultat, am primi 5 produse din cele 6 existente în baza noastră de date.
+
+Am putea duce lucrurile mult mai departe, deoarece **GROQ** este un limbaj extrem de puternic.
+Pentru moment însă, site-ul nostru se va concentra pe preluarea înregistrărilor din baza de date pentru a le afișa în magazin.
+Sunt multe alte lucruri pe care le-am putea face, cum ar fi verificarea stocului disponibil, actualizarea acestuia în timp real când clienții cumpără produse și așa mai departe.
+
+Voi reveni asupra acestor aspecte mai târziu în carte, când vom analiza câteva idei pentru dezvoltarea magazinului.
+Dacă vrei să vezi mai multe exemple de interogări pe care le poți scrie în GROQ, consultă ghidul rapid de la [sanity.io/docs/query-cheat-sheet](https://www.sanity.io/docs/query-cheat-sheet).
+
+Pentru moment, haide să ne concentrăm pe utilizarea GROQ pentru a prelua produsele din baza de date și a le afișa în magazinul nostru!

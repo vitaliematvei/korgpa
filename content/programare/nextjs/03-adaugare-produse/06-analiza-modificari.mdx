@@ -1,0 +1,30 @@
+---
+title: 'Analiza în detaliu a modificărilor'
+description: 'Analiza în detaliu a modificărilor'
+order: 6
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Am început exact de unde am rămas în exercițiul anterior, Sanity confirmând că ne-am autentificat cu succes în cont și că totul este pregătit.
+
+Apoi am parcurs o serie de pași – primul a fost introducerea numelui proiectului, urmat de alegerea opțiunii de a folosi configurația implicită pentru dataset (_default dataset configuration_). Am fi putut opta pentru o configurare personalizată (_custom_) în acest punct, însă, fiind vorba doar despre un proiect demonstrativ, setările implicite sunt perfect adecvate.
+
+În continuare, am avut de luat o decizie crucială: **tipul de proiect pe care îl creăm**. Sanity oferă o serie de opțiuni prestabilite, cum ar fi crearea unui site e-commerce utilizând Shopify. Deși construim o platformă comercială, nu folosim Shopify; în plus, alegerea unui șablon gata făcut ne-ar fi privat de posibilitatea de a alege singuri setările, deoarece Sanity le-ar fi aplicat automat. Această metodă nu este întotdeauna cea mai bună opțiune – ar putea instala configurări suplimentare de care nu avem nevoie sau ar putea face alegeri care nu se potrivesc cerințelor noastre. De aceea, am ales opțiunea **„Clean project with no predefined schemas”**, obținând astfel un proiect complet curat, pe care îl putem adapta exact după nevoile noastre.
+
+Odată selectată această opțiune, ni s-au solicitat încă câteva setări (unele dintre ele pot varia în cazul tău):
+
+- **Suport TypeScript:** Am decis să nu folosim TypeScript, neexistând un beneficiu real pentru acest proiect demonstrativ.
+- **Package Manager:** Am optat pentru **npm**, fiind instrumentul pe care îl folosim deja în acest exemplu.
+
+Cu aceste opțiuni bifate, Node a instalat dependențele rămase pentru proiect, confirmând finalizarea procesului.
+
+Am trecut apoi la o ultimă ajustare înainte de a porni Sanity – în funcție de editorul de cod pe care îl folosești, este posibil să fi observat o alertă cu peste 10.000 de fișiere modificate! În realitate, această alertă apărea din cauză că fișierul `.gitignore` nu excludea corect folderul `node_modules`. Am eliminat rapid slash-ul (`/`) din fața intrării din `.gitignore` pentru a aduce numărul de fișiere din Git la o valoare normală.
+
+Pentru a încheia această etapă, am rulat comanda `sanity manage`; aceasta a deschis panoul de administrare (_admin dashboard_) pentru site-ul nostru, permițându-ne să confirmăm că baza de date a fost configurată corect.
+
+---
+
+### Ce urmează?
+
+Mergem mai departe: avem creată structura de bază (_shell-ul_) a bazei de date în Sanity, așa că trebuie să o configurăm cu o **schemă de date (_schema_)**, astfel încât sistemul să știe ce tipuri de câmpuri va conține. Am menționat mai devreme că, într-un sistem clasic, ar fi trebuit să facem acest lucru prin interogări SQL sau configurări complexe, însă în cazul Sanity vom folosi o metodă mult mai simplă și declarativă pentru a obține același rezultat.
