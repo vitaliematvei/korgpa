@@ -1,0 +1,139 @@
+---
+title: 'Filtrele parametrice (Parametric Filters)'
+description: 'Filtrele parametrice (Parametric Filters)'
+order: 10
+category: 'Egalizarea'
+level: 'Incepator'
+---
+
+În anul 1972, în cadrul convenției AES, George Massenburg a prezentat egalizatorul parametric — un circuit revoluționar pe care l-a proiectat cu ajutorul altor ingineri.
+Deși conceptul de filtre trece-bandă (_band-pass_) și oprește-bandă (_band-reject_) — forme primitive ale filtrelor parametrice — era deja bine stabilit, egalizatoarele parametrice au devenit, și rămân până astăzi, standardul _de facto_ în mixaj.
+
+Filtrele parametrice pot atenua (_cut_) sau amplifica (_boost_).
+Curba lor de răspuns amintește de forma unui clopot, așa cum se poate observa în Figura 15.16.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-16.jpg"
+    alt="Figura 15-16"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 15-16: </strong>Un filtru parametric. Ambele grafice de răspuns
+  implică un câștig (*gain*) de 9 dB (amplificare sau atenuare) și o frecvență
+  centrală la 400 Hz. Cele două frecvențe de tăiere (*cut-off frequencies*) se
+  află la 3 dB sub nivelul frecvenței centrale, la 200 Hz și 800 Hz. Lățimea de
+  bandă de două octave (200–800 Hz) este măsurată între aceste două puncte de
+  tăiere.
+</p>
+
+Frecvența de referință este numită **frecvență centrală** (_center frequency_), iar noi o putem deplașa (_sweep_) mai sus sau mai jos.
+Câștigul (_gain_) determină valoarea maximă de amplificare sau atenuare atinsă la frecvența centrală.
+Cele două puncte de tăiere (_cut-off points_) se află la **3 dB** distanță față de câștigul maxim al frecvenței centrale (cu 3 dB mai jos pentru amplificare, respectiv cu 3 dB mai sus pentru atenuare).
+Latimea de bandă (_bandwidth_) se măsoară între aceste două puncte de tăiere și se exprimă în **octave**.
+
+---
+
+### Măsurarea lățimii de bandă: Octave vs. Factorul Q
+
+Dacă am fi exprimat lățimea de bandă în hertzi (de exemplu, 600 Hz pentru graficele din Figura 15.16), efectul filtrului s-ar fi modificat pe măsură ce frecvența centrală era deplasată: cu cât frecvența este mai ridicată, cu atât efectul perceput ar fi fost mai redus.
+Prin urmare, forma de clopot s-ar fi îngustat odată cu mutarea frecvenței centrale spre înalte.
+
+Motivul are legătură cu **percepția noastră non-liniară asupra înălțimii sunetului** (_pitch_):
+
+- Un interval de 600 Hz între 200 Hz și 800 Hz înseamnă **două octave** (24 de semitonuri);
+- Aceeași diferență de 600 Hz între 10.000 Hz și 10.600 Hz reprezintă doar **un singur semiton**.
+  Impactul sonor asupra a două octave nu se poate compara sub nicio formă cu cel asupra unui singur semiton.
+
+Deși pe unele egalizatoare lățimea de bandă este exprimată în octave, este mult mai răspândită utilizarea unui parametru numit **Q** (_factorul de calitate_ / _quality factor_).
+Valoarea lui Q se calculează prin formula matematică:
+
+Q = (F_c)\(F_h - F_l)
+
+unde F_c este frecvența centrală, iar F_h și F_l reprezintă frecvențele de tăiere superioară și inferioară.
+
+Cu cât valoarea lui **Q este mai mare**, cu atât clopotul este **mai îngust**.
+În general, valorile Q variază între **0.1** (foarte larg) și **16** (foarte îngust).
+Trei setări diferite pentru factorul Q sunt ilustrate în Figura 15.17.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-17.jpg"
+    alt="Figura 15-17"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 15-17: </strong>Diferite setări ale factorului Q (pe egalizatorul Cubase StudioEQ). 
+  În această captură de ecran sunt active trei benzi, toate având o amplificare (*boost*) de 15 dB:
+
+- **Banda inferioară** (cea din stânga) prezintă un răspuns cu un Q îngust (**10**).
+- **Banda din mijloc** obține acest răspuns cu un Q moderat (**2.5**).
+- **Banda superioară** are aplicat cel mai larg Q (**0.5**).
+
+Lățimile de bandă diferite pot fi vizualizate urmărind linia de grilă de la **+12 dB** dintre punctele de tăiere.
+
+</p>
+
+### Tipuri de răspuns și comportamentul filtrului
+
+Forma clopotului îi conferă filtrului o mare parte din caracterul său sonor, motiv pentru care există numeroase variante constructive.
+
+#### 1. Q Proporțional vs. Q Constant
+
+Un aspect important este existența unei dependențe între câștig (_gain_) și factorul Q (Figura 15.18):
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-18.jpg"
+    alt="Figura 15-18"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 15-18: </strong>**Q proporțional versus Q constant.** În cazul
+  opțiunii *proportional Q*, lățimea de bandă variază în funcție de câștig
+  (*gain*); în cazul *constant Q*, aceasta rămâne aceeași.
+</p>
+
+- **Q Proporțional (_Proportional Q_):** Clopotul se îngustează automat pe măsură ce crește câștigul. Drept urmare, modificarea nivelului poate necesita și ajustarea manuală a factorului Q. Egalizatoarele de acest tip tind să sune mai incisiv/agresiv, devenind tot mai chirurgicale la amplificări mari.
+- **Q Constant (_Constant Q_):** Lățimea de bandă rămâne (aproape) constantă indiferent de nivelul de câștig setat. Această abordare oferă un efect mai suav și conduce adesea la rezultate mai muzicale.
+
+#### 2. Asimetria Boost/Cut
+
+Majoritatea sunetelor pe care le mixăm au un conținut frecvențial bogat și complex, extins de la frecvența fundamentală până la 20 kHz și peste.
+Timbrul instrumentelor nu există pe o singură frecvență izolată, ci se întinde pe o bandă întreagă.
+
+O regulă larg acceptată în egalizare este că sunetul concentrat pe o bandă foarte îngustă reprezintă, de regulă, o rezonanță deranjantă pe care vrem să o eliminăm.
+Pentru a facilita acest lucru, multe egalizatoare moderne oferă o proprietate numită **asimetrie boost/cut** (care a devenit tot mai populară în ultimii ani):
+
+- Filtrul folosește un clopot **mai larg pentru amplificare** (_boost_);
+- Folosește un clopot **mai îngust pentru atenuare** (_cut_).
+
+Utilizatorul nu vede nicio modificare a valorii Q afișate pe ecran.
+Acest tip de răspuns asimetric este ilustrat în Figura 15.19.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-19.jpg"
+    alt="Figura 15-19"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 15-19: </strong>**Asimetria cut/boost** (pe plug-in-ul *Sonnox Oxford Equalizer and Filters*). Atât banda LMF (*Low-Mid Frequency*), cât și banda HMF (*High-Mid Frequency*) sunt setate cu valori extreme de câștig, de –20 dB, respectiv +20 dB. Factorul Q pe ambele benzi este identic (**2.83**).
+
+Asimetria este evidentă, deoarece răspunsul pentru atenuare (_cut_) este mult mai îngust decât răspunsul pentru amplificare (_boost_). Această caracteristică este atribuită stilului de egalizator selectat, vizibil ca **Type-2** în centru, sub grafic. Celelalte stiluri disponibile pe acest egalizator sunt simetrice.
+
+</p>
+#### 3. Filtrele Notch
+
+O variație a filtrului parametric este așa-numitul **filtru notch** (filtru de crestătură/reproș).
+Folosim acest termen pentru a descrie o atenuare extrem de îngustă și adâncă (cum este cea din Figura 15.19).
+
+Acest tip de răspuns este utilizat frecvent pentru eliminarea frecvențelor nedorite, cum ar fi brumul de rețea (_mains hum_ la 50/60 Hz) sau rezonanțele acustice puternice.

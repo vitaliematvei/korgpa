@@ -1,0 +1,121 @@
+---
+title: 'Filtrele de tip Shelving (Shelving Filters)'
+description: 'Filtrele de tip Shelving (Shelving Filters)'
+order: 9
+category: 'Egalizarea'
+level: 'Incepator'
+---
+
+Majoritatea oamenilor au folosit deja filtre de tip shelving — acestea sunt pur și simplu controalele de bași (_bass_) și înalte (_treble_) prezente pe sistemele audio hi-fi de casă, cunoscute și sub denumirea de controale de ton (_tone controls_).
+Filtrele shelving, așa cum le numim astăzi, au fost concepute de Peter Baxandall la sfârșitul anilor 1940.
+Denumirea lor vine de la faptul că profilul curbei lor de răspuns poate aminti, cu puțină imaginație, de forma unor rafturi (_shelves_).
+
+Spre deosebire de filtrele de trecere (_pass filters_), care pot doar să atenueze frecvențele, filtrele shelving pot oferi și amplificare (_boost_).
+Frecvența de referință a unui filtru shelving împarte spectrul audio în două benzi:
+
+- Pe o parte, frecvențele rămân nealterate;
+- Pe cealaltă parte, frecvențele sunt fie atenuate, fie amplificate cu o valoare constantă.
+
+Această valoare este determinată de un control de câștig (_gain_).
+Conform principiului enunțat anterior — că o pantă de răspuns perfect verticală este imposibil de realizat în practică —, există întotdeauna o **bandă de tranziție** între frecvențele neafectate și cele modificate de câștigul setat.
+Figura 15.13 prezintă cele patru variante posibile ale filtrelor shelving.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-13.jpg"
+    alt="Figura 15-13"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 15-13: </strong>Cele patru variante de filtre shelving. Pentru
+  amplificare (boost), se aplică un câștig de +9 dB; pentru atenuare
+  (attenuation), –9 dB.
+</div>
+
+---
+
+### Definirea frecvenței de referință
+
+Atunci când vine vorba despre definirea frecvenței de referință a filtrelor shelving, întâlnim o anumită ambiguitate.
+Proiectanții pot alege una dintre cele trei posibilități principale (ilustrate în Figura 15.14):
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-14.jpg"
+    alt="Figura 15-14"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 15-14: </strong>Cele trei opțiuni posibile pentru frecvența de referință a filtrelor shelving:
+
+<ul>
+  <li>
+    <strong>
+      Frecvența de colț (<em>corner frequency</em>):
+    </strong>{' '}
+    Punctul în care se atinge nivelul de câștig (<em>gain</em>) setat.
+  </li>
+  <li>
+    <strong>
+      Frecvența centrală (<em>center frequency</em>):
+    </strong>{' '}
+    Punctul aflat la jumătatea benzii de tranziție.
+  </li>
+  <li>
+    <strong>
+      Frecvența de tăiere (<em>cut-off frequency</em>):
+    </strong>{' '}
+    Punctul tradițional ingineresc de <strong>3 dB</strong>.
+  </li>
+</ul>
+
+  </div>
+
+1. **Frecvența de tăiere (_cut-off frequency_):** Definită în sens ingineresc tradițional ca fiind punctul în care se atinge o variație de **3 dB** față de nivelul nealterat.
+   Totuși, această valoare oferă puține informații despre efectul auditiv real al filtrului, care devine evident abia în momentul în care se atinge nivelul maxim de câștig setat.
+2. **Frecvența de colț (_corner frequency_):** Punctul în care curba atinge (sau se apropie cel mai mult de) amplificarea sau atenuarea stabilită.
+   Deoarece acesta este adesea parametrul care ne interesează în practică, mulți proiectanți îl folosesc ca referință.
+   Dintre toate cele trei opțiuni, se poate argumenta că frecvența de colț este cea mai intuitivă în utilizare.
+3. **Frecvența centrală (_center frequency_):** Plasată exact la jumătatea intervalului de tranziție.
+
+---
+
+### Parametri și particularități de răspuns
+
+Toate filtrele shelving oferă control asupra nivelului de câștig (_gain_), variind de obicei între **–12 dB și +12 dB**.
+În mixaj, majoritatea filtrelor permit de asemenea ajustarea frecvenței shelving.
+Unele modele avansate includ și un control al pantei (_slope control_), care determină gradul de înclinare a curbei în banda de tranziție.
+
+La fel ca la filtrele de trecere, răspunsul real al filtrelor shelving poate devia de la curbele teoretice ideale prezentate în Figura 15.13 — de fapt, este foarte probabil să o facă.
+Un comportament extrem de întâlnit este apariția unei **rezonanțe de contrast** în jurul frecvenței de tranziție: o porțiune a curbei care se curbează în direcția opusă răspunsului normal (creând o ușoară depășire/overshoot sau sub-tăiere).
+Un astfel de răspuns este exemplificat în Figura 15.15.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-15.jpg"
+    alt="Figura 15-15"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 15-15: </strong>O rezonanță de contrast tipică pe un filtru shelving (de pe egalizatorul Universal Audio Cambridge EQ). 
+  În această captură de ecran sunt active atât filtrul low-shelf, cât și cel high-shelf; ar fi mai ușor să le deosebim dacă ne imaginăm o linie de demarcare la 700 Hz:
+
+<ul>
+  <li>
+    <strong>Filtrul low-shelf</strong> (setat pe Tipul A) prezintă o singură
+    curbură de contrast în jurul frecvenței de tranziție.
+  </li>
+  <li>
+    <strong>Filtrul high-shelf</strong> (setat pe Tipul C) are două astfel de
+    curburi — una în jurul frecvenței de tranziție, iar cealaltă în jurul
+    frecvenței de colț (<em>corner frequency</em>).
+  </li>
+</ul>
+
+  </div>
