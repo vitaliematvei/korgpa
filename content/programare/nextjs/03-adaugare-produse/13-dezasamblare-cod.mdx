@@ -1,0 +1,51 @@
+---
+title: 'Dezasamblarea codului'
+description: 'Dezasamblarea codului'
+order: 13
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Magazinul nostru nu ar fi complet fără o vitrină — în ultima demonstrație am început deja procesul de construcție, creând un component pentru a ne afișa produsele.
+De obicei, aș parcurge modificările de sus în jos, dar de data aceasta vom face un salt înainte și vom explora mai întâi comanda `getServerSideProps`.
+Există un motiv bine întemeiat pentru asta, la care voi ajunge imediat.
+
+Această comandă face exact ce promite: rulează exclusiv pe server (niciodată pe client) și returnează datele ce trebuie preluate în momentul cererii (_request time_).
+Deși am putea prelua aceste date la prima lansare a site-ului, nu ar avea sens: le folosim doar pe pagina magazinului și există posibilitatea ca utilizatorul să nici nu viziteze magazinul în sesiunea respectivă!
+Folosind `getServerSideProps` în acest punct, datele ne vor fi returnate automat în format JSON; tot ce trebuie să facem este să definim funcția, fiind alegerea noastră cum le randăm apoi pe ecran.
+La o primă vedere, secțiunea `getServerSideProps` (așa cum este ilustrată în Figura 3-8) ar putea părea o limbă străină pentru unii, dar dacă o luăm bucată cu bucată, promit că va avea sens!
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/nextjs/3-8.jpg"
+    alt="Figura 3-8"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 3-8: </strong>GROQ Query
+</p>
+
+Punctul critic de reținut este că am făcut apelul către `getServerSideProps` asincron, tocmai pentru a suspenda execuția până când primim datele înapoi de la Sanity și le putem atribui variabilei `query`.
+
+Practic, îi cerem celor de la Sanity „să ne aducă tot”; apoi adăugăm un filtru între paranteze drepte pentru a specifica: „...unde `type` (o etichetă de sistem) este egal cu `product` (numele grupării noastre din baza de date)”.
+Dacă vă amintiți momentul în care am adăugat produsele, veți observa că cuvântul _Product_ este evidențiat în Figura 3-8 — țintim tot ce aparține acestui grup.
+Ironia face că am fi putut folosi pur și simplu `*` fără filtru, din moment ce oricum preluăm tot ce există în baza de date la acest moment!
+Însă dacă am fi avut o altă grupare, cum ar fi _Banner_, acest filtru ar fi fost obligatoriu și am fi scris interogări dedicate folosind ceva de genul: `*[_type=="banner"]`.
+
+Odată ce am extras produsele folosind `client.fetch` (din fișierul `client.js` creat anterior), le-am atribuit variabilei `products`.
+Pe aceasta o returnăm ulterior în proprietatea `props`, făcând produsele accesibile în întreaga pagină.
+
+Cu interogarea pregătită, putem adăuga structura HTML/JSX pentru afișare.
+Prima jumătate din markup conține un titlu și o scurtă introducere în antetul paginii.
+Apoi, am folosit o funcție standard `map` din React pentru a parcurge tabloul (_array_) de produse returnat de interogare, afișând fiecare element pe ecran prin intermediul componentului `Product`.
+
+Veți observa în acest punct că nu am creat încă acel component `Product` — nu vă faceți griji, urmează imediat!
+Acesta este și motivul pentru care nu v-am cerut încă să porniți serverul de dezvoltare; ar arunca o eroare din cauza componentului lipsă.
+Adăugarea lui este destul de simplă, așa că să mergem mai departe și să creăm componentul care va afișa fiecare produs în parte.
+
+În mare parte, procesul va fi destul de direct — doar structură de marcaj și puțină formatare pentru afișarea corectă a textului.
+Totuși, trebuie să fim atenți la un element cheie: utilizarea unui **slug**.
+Nu, nu mă refer la melcul acela minuscul și lipicios, ci la un identificator unic (_placeholder_) pentru fiecare produs pe care vrem să-l afișăm.
+Lăsați-mă să vă explic ce înseamnă asta — veți vedea rapid de ce este atât de util!

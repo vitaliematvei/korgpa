@@ -1,0 +1,82 @@
+---
+title: 'Crearea paginii individuale pentru produs'
+description: 'Crearea paginii individuale pentru produs'
+order: 14
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Imaginează-ți un magazin cu vreo jumătate de duzină de produse, fiecare cu propria pagină de descriere.
+Dacă trebuie să facem o modificare, devine destul de neplăcut – ar trebui să o facem potențial de șase ori, în funcție de natura modificării.
+Cu siguranță vei fi de acord că nu este cea mai bună utilizare a timpului nostru!
+
+Aici intervin paginile bazate pe slug (_slug pages_) – pentru cei neinițiați, creăm un șablon (template) care randază toate informațiile despre acel produs ca și cum ar fi o pagină proprie codată manual, în loc să folosim pagini individuale separate.
+
+Aceasta este partea importantă: nu creăm pagini individuale, ci o singură pagină care acoperă toate produsele.
+Asta înseamnă că, dacă trebuie să facem vreo modificare, o facem o singură dată și se aplică tuturor produselor afectate simultan.
+Crearea acestei pagini necesită într-adevăr ceva mai multă muncă inițială, dar este un preț mic de plătit – hai să-ți arăt ce vreau să spun în cadrul următorului exercițiu.
+
+---
+
+Pentru a crea componenta noastră pentru produs, urmează acești pași:
+
+1. Mai întâi, deschide un fișier nou și salvează-l ca `Product.jsx` în folderul `\src\components`.
+2. Avem câteva linii de cod de adăugat, așa că le vom introduce pe blocuri – adaugă primul bloc, care se ocupă de importurile necesare componentei:
+
+```jsx
+import React from 'react';
+import Link from 'next/link';
+import { urlFor } from '../../lib/client';
+```
+
+3. Lasă o linie liberă, apoi adaugă prima parte a componentei:
+
+```jsx
+const Product = ({ product: { image, name, slug, price } }) => {
+  return (
+    <div>
+      <Link href={`/product/${slug.current}`}>
+        <div className="product-card">
+          <img
+            src={urlFor(image && image[0])}
+            width={250}
+            height={250}
+            className="product-image"
+          />
+
+```
+
+4. Imediat sub codul anterior, adaugă și partea de închidere a componentei:
+
+```jsx
+          <p className="product-name">{name}</p>
+          <p className="product-price">
+            $
+            {price.toLocaleString("en-US", {
+              maximumFractionDigits: 2,
+              minimumFractionDigits: 2,
+            })}
+          </p>
+        </div>
+      </Link>
+    </div>
+  );
+};
+
+export default Product;
+
+```
+
+5. Salvează și închide fișierul.
+6. Mai avem de făcut o ultimă modificare, și anume să adăugăm un export în indexul componentelor – deschide fișierul `index.js` din folderul `\components` și adaugă această linie la final:
+
+```javascript
+export { default as Product } from './Product';
+```
+
+7. Acum putem previzualiza rezultatele – comută la terminalul Node.js și asigură-te că te afli în folderul rădăcină al proiectului.
+8. În linia de comandă, introdu `npm run dev` și apasă Enter pentru a porni serverul de dezvoltare Next.js.
+9. Vei vedea produsele listate în pagină.
+
+Excelent – acum avem baza magazinului nostru!
+Ce-i drept, dacă am da click pe un produs individual, am primi o eroare, dar vom remedia acest lucru imediat. Punctul esențial aici este că putem afișa în magazin produse preluate direct din baza de date din backend. Înainte de a trece la crearea șablonului pentru afișarea produselor individuale, să ne oprim un moment pentru a analiza mai în detaliu modificările de cod pe care tocmai le-am făcut.
