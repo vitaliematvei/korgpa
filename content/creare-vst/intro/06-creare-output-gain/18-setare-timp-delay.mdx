@@ -1,0 +1,123 @@
+---
+title: 'Setarea timpului de delay folosind un parametru'
+description: 'Setarea timpului de delay folosind un parametru'
+order: 18
+category: 'JUCE'
+level: 'Incepator'
+---
+
+**Setarea timpului de delay folosind un parametru**
+
+Să folosești mereu un delay fix de o secundă nu face ca un plug-in să fie prea interesant, așa că haideți să adăugăm un parametru nou de plug-in.
+Acest lucru se face, bineînțeles, în clasa noastră `Parameters`.
+
+Deschide `Parameters.h` și adaugă următoarea variabilă în secțiunea `public:` a clasei:
+
+```cpp
+float delayTime = 0.0f;
+
+```
+
+Adaugă următoarea variabilă în secțiunea `private:`:
+
+```cpp
+juce::AudioParameterFloat* delayTimeParam;
+
+```
+
+Nu vom adăuga un _smoother_ pentru acest parametru deocamdată, așa că nu avem o variabilă pentru asta.
+
+De asemenea, adaugă o nouă constantă sub cea existentă la începutul fișierului.
+Aceasta declară `delayTimeParamID` ca fiind reprezentarea `juce::ParameterID` pentru noul nostru parametru:
+
+```cpp
+const juce::ParameterID delayTimeParamID { "delayTime", 1 };
+
+```
+
+Mergi în `Parameters.cpp`.
+În constructor, adaugă o linie pentru a stoca un pointer către acest parametru în noua variabilă `delayTimeParam`:
+
+```cpp
+castParameter(apvts, delayTimeParamID, delayTimeParam);
+
+```
+
+În funcția `createParameterLayout`, chiar înainte de linia cu `return layout;`, creează noul obiect parametru al plug-in-ului:
+
+```cpp
+layout.add(std::make_unique<juce::AudioParameterFloat>(
+    delayTimeParamID,
+    "Delay Time",
+    juce::NormalisableRange<float> { minDelayTime, maxDelayTime },
+    100.0f));
+
+```
+
+Acest cod este foarte similar cu definirea parametrului de _Output Gain_.
+Intervalul de valori este de la `minDelayTime` până la `maxDelayTime`, adică de la 5 milisecunde la 5 secunde.
+Valoarea implicită (_default_) este `100.0f` sau 100 ms.
+
+În funcția `reset()`, adaugă următoarea linie pentru a reinițializa variabila:
+
+```cpp
+delayTime = 0.0f;
+
+```
+
+Ultima modificare din clasa `Parameters` este adăugarea unei linii noi în `update()`. Aceasta va citi valoarea din parametru și o va stoca în variabila `delayTime`:
+
+```cpp
+void Parameters::update() noexcept
+{
+    gainSmoother.setTargetValue(juce::Decibels::decibelsToGain(gainParam->get()));
+    delayTime = delayTimeParam->get(); // adaugă această linie
+}
+
+```
+
+Reține că variabila `delayTime` păstrează timpul în milisecunde, deoarece aceasta este unitatea de măsură pe care o folosim pentru acest parametru.
+
+Acum să folosim acest `delayTime` în codul de procesare audio.
+Deschide `PluginProcessor.cpp` și, în cadrul metodei `processBlock`, schimbă linia `delayLine.setDelay(48000.0f);` cu următorul cod:
+
+```cpp
+float sampleRate = float(getSampleRate());
+float delayInSamples = params.delayTime / 1000.0f * sampleRate;
+delayLine.setDelay(delayInSamples);
+
+```
+
+Această bucată de cod folosește aceeași formulă ca mai înainte pentru a converti timpul exprimat în milisecunde într-un număr de sample-uri: `delayTime / 1000.0f * sampleRate`.
+
+Aici, totuși, nu mai folosim `std::ceil()` pentru a rotunji numărul de sample-uri la un număr întreg.
+Este perfect în regulă să setezi o durată de delay care are un număr fracționar de sample-uri.
+Obiectul `juce::dsp::DelayLine` va realiza interpolarea între sample-uri dacă este necesar.
+
+Testează codul.
+Poți schimba timpul de delay trăgând de slider-ul _Delay Time_. Excelent!
+
+> **Notă:** Deoarece `params.update()` se execută pe fiecare bloc audio, te-ai putea întreba ce se întâmplă dacă parametrul nu s-a schimbat de la ultimul `processBlock`?
+> În acest caz, vom apela `delayLine.setDelay(...)` cu exact aceeași valoare ca în blocul anterior.
+> Acest lucru este complet în regulă: obiectul `juce::dsp::DelayLine` este suficient de inteligent încât să detecteze că durata delay-ului nu s-a modificat, astfel încât apelul `setDelay` va fi pur și simplu ignorat.
+
+---
+
+> **Explicații tehnice cheie:**
+>
+> - **Sample rate conversion:** Calculul `(ms / 1000.0f) * sampleRate` convertește timpul din milisecunde în eșantioane audio (_samples_).
+> - **Fractional Delay / Interpolare:** `juce::dsp::DelayLine` suportă valori de tip `float` pentru numărul de sample-uri datorită algoritmilor interni de interpolare (ex. _Linear_, _Lagrange_, _Thiran_).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/vst/juce/72.jpg"
+    alt="Figura 72"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 72: </strong> PLuginul cu parametrul DelayTime
+</p>
+
+{/* am ramas Improving the parameter .191 */}
