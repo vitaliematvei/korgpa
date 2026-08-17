@@ -1,0 +1,73 @@
+---
+title: 'Yin-Yang-ul frecvențelor'
+description: 'Yin-Yang-ul frecvențelor'
+order: 17
+category: 'Egalizarea'
+level: 'Incepator'
+---
+
+Figura 15.28 arată ceea ce eu numesc „Yin-Yang-ul frecvențelor”.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-28.jpg"
+    alt="Figura 15-28"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 15.28:</p>Yin-Yang-ul frecvențelor
+</div>
+Provoc cititorul să identifice tipul de filtru: este vorba despre un filtru
+_high-shelving_ de +12 dB redus cu 6 dB din volumul general? Sau este un filtru
+_low-shelving_ de –12 dB crescut cu 6 dB? Răspunsul este că poate fi ambele
+variante și, urmând discuția noastră despre cum defazajul nu variază între
+atenuație (_cut_) și amplificare (_boost_), cele două opțiuni ar trebui să sune
+identic.
+
+Indiferent de calea prin care este obținut Yin-Yang-ul frecvențelor, acest lucru ne învață ceva extrem de important despre modul în care percepem frecvențele: atâta timp cât semnalul final este la același nivel de volum, **amplificarea înaltelor sau reducerea joaselor are exact același efect**.
+Pentru a face un sunet mai strălucitor (_brighter_), putem fie să amplificăm înaltele, fie să atenuăm joasele.
+Pentru a face un sunet mai cald (_warmer_), putem amplifica mediile-joase (_low-mids_) sau putem atenua de la mediile-înalte (_high-mids_) în sus.
+
+Deși acest concept este ușor de demonstrat cu filtre _shelving_, el funcționează la fel de bine și cu alte tipuri de filtre.
+De exemplu, pentru a da mai multă strălucire unei voci, aplicăm adesea un filtru HPF (_high-pass_); deși eliminăm o energie predominantă din frecvențele joase, vocea poate ieși mult mai ușor în evidență în mix.
+Un plus de joase și înalte se poate obține simplu, prin atenuarea frecvențelor medii.
+Sigur, în multe cazuri avem o plajă de frecvențe foarte specifică pe care vrem să o procesăm, dar merită să ținem minte că uneori există mai multe drumuri către aceeași destinație.
+
+Este necesar încă un exemplu aici.
+Dacă nu ne mai gândim doar la procesarea individuală a pieselor, putem aplica Yin-Yang-ul frecvențelor și la nivel de mixaj general.
+Să presupunem că vrem să adăugăm mai mult _attack_ unei tobe mari (kick).
+În loc să amplificăm frecvența de _attack_ direct pe toba mare, putem atenua exact aceeași frecvență pe instrumentele care o maschează.
+
+De fapt, o tehnică populară bazată pe acest concept se numește **egalizare în oglindă** (_mirrored equalization_).
+Aceasta presupune aplicarea unei curbe de boost pe un instrument și a unei curbe simetrice, în oglindă (cut), pe un alt instrument.
+Acest lucru ajută la reducerea suprapunerilor de frecvență, obținând același efect de claritate cu mai puțin gain aplicat pe fiecare filtru în parte.
+Figura 15.29 ilustrează acest proces.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-29.jpg"
+    alt="Figura 15-29"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 15.29:</p>Egalizarea în oglindă. O amplificare (boost) pe un instrument este susținută de o curbă simetrică (în oglindă) aplicată pe instrumentul care îl maschează.
+
+    Egalizare în oglindă este termenul consacrat pentru mirrored equalization.
+
+    Boost se folosește direct ca termen tehnic sau se traduce prin amplificare.
+
+    Masking instrument se traduce prin instrumentul care maschează (cel care acoperă sau intră în conflict de frecvențe cu primul).
+
+</div>
+
+---
+
+> **Idee cheie:**
+>
+> - **Pentru strălucire:** Boost pe înalte **SAU** Cut pe joase.
+> - **Pentru căldură:** Boost pe medii-joase **SAU** Cut pe medii-înalte/înalte.
+> - **Egalizare în oglindă:** Dacă faci boost la o frecvență pe un instrument (ex: kick), fă cut la aceeași frecvență pe instrumentul concurent (ex: bas).

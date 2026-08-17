@@ -1,0 +1,97 @@
+---
+title: 'Egalizatoarele și faza'
+description: 'Egalizatoarele și faza'
+order: 16
+category: 'Egalizarea'
+level: 'Incepator'
+---
+
+Funcționarea unui egalizator implică un anumit mecanism de întârziere (_delay_).
+Aceste întârzieri sunt extrem de scurte, mult sub 1 ms.
+Termenul de _group delay_ (întârziere de grup) este adesea folosit pentru a sugera că doar anumite frecvențe sunt întârziate — deși nu este un termen absolut precis, el reflectă fidel faptul că unele frecvențe sunt afectate mai mult decât altele.
+
+Indiferent de situație, acest mecanism de întârziere din egalizatoare duce la interacțiuni de fază nedorite.
+La fel cum două semnale identice scoase din fază produc efectul de _comb filtering_ (filtrare în pieptene), putem simplifica spunând că un egalizator scoate unele frecvențe din fază în raport cu altele, rezultând artefacte de fază (_phasing artifacts_).
+
+Vedem mereu graficul răspunsului în frecvență al egalizatoarelor, dar rareori vedem graficul frecvență vs. fază, care este o parte inseparabilă din funcționarea unui EQ.
+Figura 15.25 prezintă un astfel de grafic pentru un egalizator parametric.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-25.jpg"
+    alt="Figura 15-25"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 15.25:</p>
+  Răspunsul în fază al unui boost pe un egalizator parametric. Frecvența
+  centrală a egalizatorului este de 100 Hz. Linia continuă arată o amplificare
+  (boost) de 12 dB, iar linia punctată arată o amplificare a gain-ului de 6 dB.
+</div>
+
+Din Figura 15.25 putem desprinde două concluzii importante.
+În primul rând, cu cât gain-ul este mai mare, cu atât defazajul (_phase shift_) este mai puternic.
+În al doilea rând, putem observa că frecvențele din apropierea frecvenței centrale suferă cele mai mari defazaje.
+Acest comportament, deși este demonstrat pe un EQ parametric, poate fi generalizat pentru toate celelalte tipuri de EQ: cu cât avem mai mult gain, cu atât artefactele de fază devin mai severe, efectul cel mai pronunțat având loc în jurul frecvenței setate.
+
+> **Cu cât este mai mare gain-ul, cu atât artefactele de fază devin mai severe.**
+
+O întrebare interesantă este: ce se întâmplă cu faza atunci când tăiem (_cut_), în loc să amplificăm (_boost_)?
+
+## Figura 15.26 arată aceleași setări ca în Figura 15.25, dar de data aceasta pentru atenuație (cut).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-26.jpg"
+    alt="Figura 15-26"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 15.26:</p>Răspunsul în fază al unei atenuații (cut)
+  pe un egalizator parametric. Acesta este același egalizator ca în Figura
+  15.25, doar că de această dată cu atenuație de gain (gain cut) în loc de
+  amplificare (boost).
+</div>
+
+Putem vedea că singura diferență este că cele două grafice de răspuns sunt în oglindă, însă amploarea defazajului rămâne exact aceeași.
+Este un mit faptul că egalizatoarele produc mai mult defazaj atunci când facem boost — nu există nimic în fizica filtrelor analogice sau digitale care să susțină o astfel de afirmație.
+Totuși, este adevărat că observăm mai ușor defazajul atunci când amplificăm, din simplul motiv că facem și artefactele de fază mai audibile (mai tari ca volum).
+De aceea, nu este surprinzător că mulți ingineri de mixaj preferă să atenueze în loc să amplifice atunci când egalizează, o recomandare întâlnită în numeroase resurse.
+În plus, la boost există mereu riscul de _clipping_.
+
+> **Când este posibil, este mai bine să atenuezi decât să amplifici.**
+
+Există un tip de egalizator digital care are un răspuns în fază plat (_flat phase response_): **egalizatorul cu fază liniară** (_linear phase equalizer_, Figura 15.27).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-27.jpg"
+    alt="Figura 15-27"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 15.27:</p>Un egalizator cu fază liniară (PSP Neon).
+  Acest plugin oferă opt benzi cu tip de filtru selectabil pentru fiecare bandă
+  în parte. Merită remarcat butonul LP (linear phase), care permite comutarea
+  între modul cu fază liniară și modul standard.
+</div>
+
+---
+
+Filtrele digitale se bazează pe formule matematice. Aceste formule au mai multe etape, iar semnalul audio trece prin ele. Făcând formula unui filtru simetrică, pe măsură ce semnalul parcurge o jumătate a formulei faza sa este rotită, dar odată ce trece de jumătatea în oglindă, faza este adusă înapoi în poziția sa inițială.
+
+O problemă a egalizatoarelor cu fază liniară este că necesită o putere de procesare mare și un buffer audio substanțial (mai mare decât cei 1.024 de sample-uri oferiți de obicei de un DAW/seventer). Prin urmare, consumă mult CPU și introduc latență (_plugin delay_). Dezvoltatorii trebuie să facă un compromis între precizia fazei, puterea de procesare și latența generată de plugin.
+
+Deși egalizatoarele cu fază liniară corectează un anumit artefact al egalizării, ele nu le rezolvă pe toate. La fel ca egalizatoarele standard, cele cu fază liniară au multe alte efecte secundare nedorite, cum ar fi _ringing_ (oscilații parazite / pre-ringing), _lobes_ (lobi de frecvență) și _ripples_ (ondulații ale răspunsului).
+
+Egalizatoarele cu fază liniară pot sună mai „scump”. Se spune despre ele că excelează în păstrarea detaliilor, a adâncimii și a clarității (_focus_). În general, sunt mai puțin stridente și tind să fie mai transparente. Însă multe dintre artefactele nedorite pe care le întâlnim la egalizatoarele standard (inclusiv cele pe care le asociem cu faza) sunt generate și de egalizatoarele cu fază liniară. În plus, tranzienții s-ar putea să nu fie gestionați foarte bine de procesarea cu fază liniară. De fapt, există situații în care egalizatoarele standard oferă clar rezultate mai bune.
+
+Prin urmare, egalizatoarele cu fază liniară reprezintă o **alternativă**, nu o înlocuire superioară.
+
+> **Egalizatoarele cu fază liniară păstrează mai bine detaliile, adâncimea și claritatea, dar cu costul puterii de procesare și al latenței. La fel ca egalizatoarele standard, și ele pot produce artefacte (cum ar fi pre-ringing-ul pe tranzienți), fiind o alternativă de lucru, nu o alegere categoric mai bună.**

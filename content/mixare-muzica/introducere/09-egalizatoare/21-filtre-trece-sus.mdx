@@ -1,0 +1,93 @@
+---
+title: 'Filtrele HPF (High-Pass Filters / Trece-Sus)'
+description: 'Filtrele HPF (High-Pass Filters / Trece-Sus)'
+order: 21
+category: 'Egalizarea'
+level: 'Incepator'
+---
+
+**Filtrele HPF (High-Pass Filters / Trece-Sus)**
+
+Filtrele HPF sunt omniprezente în mixajul muzicii înregistrate.
+În primul rând, ele elimină "gremlinii" de joasă frecvență, cum ar fi zgomotul de fond (_rumble_) sau bârâitul de la rețeaua electrică (_mains hum_).
+Apoi, piesele înregistrate conțin adesea o cantitate de frecvențe joase mai mare decât este necesar în majoritatea mixurilor (uneori din cauza efectului de proximitate, alteori din cauza acusticii camerei).
+Când diferitele instrumente sunt mixate împreună, acumularea masei de energie din joase duce la un sunet muntos, încărcat (_muddiness_), lipsit de claritate și definiție.
+
+Filtrele HPF curăță zona de joase prin eliminarea frecvențelor joase sau medii-joase (_low-mids_) dispensabile.
+Facem astfel loc pentru bas și toba mare (_kick_), dar cel mai important este că adăugăm claritate și definiție instrumentului procesat.
+Merită subliniat acest lucru:
+
+> **Deși elimină conținut spectral, filtrele HPF cresc claritatea și definiția și pot face ca instrumentul procesat să iasă mai bine în evidență în mix.**
+
+Un filtru HPF poate fi aplicat pe aproape fiecare instrument în parte.
+Vocea, chitarele și cinelele sunt ținte comune. Vocea, aproape prin convenție, se taie prin HPF la 80 Hz — o frecvență sub care nu există conținut vocal util.
+Frecvențe de tăiere (_cut-off_) mai ridicate sunt folosite pentru a elimina efectele secundare ale efectului de proximitate sau un anumit „corp” al sunetului care nu își găsește locul în mix.
+
+Multe chitare, în special cele acustice, ocupă spațiu inutil în joase și medii-joase, spațiu pe care multe alte instrumente l-ar putea folosi în schimb.
+Când chitarele acustice au un rol ritmic, ele sunt adesea filtrate destul de radical, eliminându-se aproape tot corpul (_body-ul_) instrumentului.
+
+Înregistrările de cinele implică adesea un anumit nivel de scurgere a sunetului de la celelalte tobe (_drum bleed/spill_) care nu poate fi eliminat cu un gate (de exemplu, eliminarea tobei mici de sub cinelele ride); astfel, filtrul acționează și ca un eliminator de _spill_.
+Pianele, clapele, toba mică (_snare_) și orice alt instrument pot beneficia în egală măsură de filtrarea frecvențelor joase.
+Uneori filtrăm chiar și toba mare și basul pentru a le stabili limita inferioară de frecvență și, implicit, pe cea a întregului mix.
+
+Frecvențele implicate în acest proces de curățare nu se limitează strict la zona de joase.
+La cinele, de exemplu, tăierea poate urca bine în zona de medii-joase.
+O abordare practică este pur și simplu urcarea treptată a frecvenței de tăiere (_sweep_) până când timbrul instrumentului procesat începe să aibă de suferit (_breaks_), iar apoi darea înapoi cu puțin.
+De regulă, cu cât mixul este mai aglomerat, cu atât frecvențele filtrelor HPF urcă mai sus.
+Filtrarea excesivă poate crea o gaură în spectrul de frecvențe sau poate reduce căldura sunetului.
+Pentru a remedia acest lucru, putem trage înapoi frecvența de tăiere pe unele instrumente.
+
+O caracteristică interesantă a filtrelor HPF este că pot fi împinse destul de sus înainte de a observa o deteriorare gravă a instrumentului procesat.
+Motivul are de-a face cu capacitatea creierului nostru de a **reconstrui fundamentala lipsă** (_missing fundamentals_).
+Ce elimină un filtru HPF, creierul reconstruiește — eliberăm spațiu în mix fără a pierde informație valoroasă.
+
+> **Datorită capacității creierului de a reconstrui fundamentala lipsă, filtrele HPF pot fi folosite destul de generos.**
+
+Filtrele HPF pot manipula și caracteristicile reverb-ului.
+În general, dimensiunea, adâncimea și senzația spațială a unui reverb se concentrează în jumătatea inferioară a spectrului (joase și medii-joase).
+Înaltele contribuie în special la definiție și strălucire (_spark_).
+Filtrând joasele, putem reduce dimensiunea reverb-ului și adâncimea rezultată.
+Cu cât frecvența de tăiere este mai ridicată, cu atât dimensiunea reverb-ului devine mai mică.
+Deși avem control complet asupra dimensiunii și adâncimii atunci când folosim un emulor/plugin de reverb, acești factori sunt imprimat definitiv într-un reverb captat direct în înregistrările acustice.
+
+> **Un filtru HPF poate reduce dimensiunea și adâncimea reverb-ului.**
+
+Filtrele HPF sunt folosite și pentru eliminarea pop-urilor — explozii de aer de joasă frecvență cauzate de consoanele oclusive P, B sau orice alte sunete explozive (cum ar fi un „who” accentuat).
+Cu cât frecvența de tăiere este mai mare, cu atât pop-ul este mai atenuat, dar crește și riscul ca timbrul să aibă de suferit.
+
+În era benzilor magnetice, eliminarea acestor pop-uri necesita filtrarea întregii piese de voce și trebuiau făcute compromisuri.
+Sequencerele audio (DAW-urile) oferă o soluție mult mai elegantă: **filtrarea izolată doar a pop-ului**.
+Acest lucru se realizează prin procesare offline (sau editare direct pe clip), selectând fiecare pop în parte, aplicând filtrarea HPF și apoi un _crossfade_ pentru a preveni pocnetele (_clicks_).
+Figura 15.30 ilustrează acest proces.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-30.jpg"
+    alt="Figura 15-30"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 15.30:</p>liminarea pop-urilor prin procesare offline. Piesa de sus, înainte de procesare, prezintă un pop evident. Un filtru HPF offline este setat la o frecvență de tăiere de 368 Hz. Dacă filtrul ar fi fost aplicat în timp real pe întreaga piesă, s-ar fi pierdut o mare parte din grosimea (thickness-ul) vocii. 
+  Procesarea offline a fost aplicată doar pe o selecție limitată, care a inclus pop-ul și o mică margine pentru crossfade-uri. 
+  Apoi s-au aplicat crossfade-urile pentru a preveni pocnetele (clicks). 
+  Piesa rezultată de jos arată pierderea evidentă de energie cauzată de eliminarea pop-ului.
+
+    Pop / Plosive = explozie de aer pe frecvențe joase cauzată de consoane precum P sau B.
+
+    Offline processing = procesare offline / pe clip (aplicată direct pe fișierul audio/regiune, nu ca inserție pe întregul canal).
+
+    Crossfade = trecere lină între două clipuri audio pentru a evita întreruperile bruște de semnal.
+
+</div>
+
+---
+
+> **Idei cheie de reținut:**
+>
+> - **Efectul de Proximitate & Mud:** HPF curăță acumularea nedorită de joase care face mixul să sune murdar.
+> - **Fundamentala Lipsă:** Puteți tăia mai sus în frecvență decât credeți; creierul tinde să completeze nota fundamentală din armonice.
+> - **Pop-uri pe voce:** Pentru a nu subția toată vocea, aplicați HPF doar pe regiunea precisă a consoanei explozive (_offline processing_ / automatizare).
+
+{/* am ramas LPFs .263 */}

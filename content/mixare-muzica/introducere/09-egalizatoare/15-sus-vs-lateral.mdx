@@ -1,0 +1,75 @@
+---
+title: 'În sus vs. în lateral'
+description: 'În sus vs. în lateral'
+order: 15
+category: 'Egalizarea'
+level: 'Incepator'
+---
+
+O veche zicală din ingineria de sunet spune că, dacă un proiect a fost înregistrat corect — având deja mixul în minte —, va fi nevoie de foarte puțină egalizare sau chiar deloc.
+Pentru unii ingineri de sunet, aceasta este o adevărată provocare.
+Se spune că, odată ce sunetele au fost înregistrate, ele există în forma lor cea mai pură, iar orice egalizare este o intervenție asupra acestei purități.
+Aplicată în cantități subtile, egalizarea este ca un machiaj.
+Dar în cantități radicale, este ca o chirurgie plastică drastică — poate duce la rezultate dezastruoase.
+
+Îmi place să compar egalizatoarele cu oglinzile deformante din parcurile de distracții: oglinzile ușor curbate te pot face mai slab, mai lat, mai înalt sau mai scund, ceea ce uneori te face să arăți mai bine.
+Însă oglinzile accentuat curbate te fac doar să arăți ridicol și disproporționat.
+Acestea fiind spuse, ca parte din iluzia sonoră pe care o creăm în anumite mixuri, egalizatoarele sunt folosite generos pentru manipulări extreme ale sunetului.
+Conceptul de _natural versus artificial_ este extrem de relevant când vine vorba de egalizare.
+
+Nu există nicio îndoială că unele egalizatoare se pliază mai bine pe intențiile noastre artistice decât altele, dar toate împart aceleași probleme comune.
+Cu cât le folosim mai drastic, cu atât riscăm să pierdem mai mult în schimb.
+În acest sens, un EQ perfect este cel care are un răspuns în frecvență plat, adică niciun efect.
+În această stare ideală, este mult mai probabil să afectăm negativ sunetul prin:
+
+- un gain mai mare;
+- setări mai înguste ale factorului Q;
+- pante mai abrupte (_steeper slopes_);
+- curbe de tranziție mai accentuate.
+
+Totuși, egalizatoarele nu sunt chiar atât de dăunătoare — sunt folosite la scară largă în mixaj și oferă rezultate magnifice.
+Ideea este că, uneori, putem obține rezultate mai bune printr-o simplă schimbare de tactică: folosind setări mai puțin drastice.
+
+Să presupunem, de exemplu, că Sid vrea să adauge _attack_ unei tobe mari (kick).
+Sid a citit într-o carte că _attack-ul_ tobei mari se află la 6 kHz.
+Așa că potrivește un EQ parametric pe acea frecvență, iar cu cât vrea mai mult _attack_, cu atât mărește gain-ul.
+Sid egalizează **în sus** (_upward_). Ajunge astfel la un Q îngust și un boost de +12 dB.
+
+Nancy știe că foarte puține sunete specifice se concentrează pe un domeniu de frecvență atât de îngust, iar acestea sunt adesea "gremlini" (frecvențe parazite) pe care vrem să îi eliminăm, nu să îi accentuăm.
+Așa că setează și ea frecvența la 6 kHz, dar cu un Q mai larg și un gain mai mic.
+Nancy lucrează **în lateral** (_sideways_).
+Nancy amplifică mai puțin, dar pe o plajă mai largă din zona de _attack_ a tobei, astfel încât impactul general este aproximativ același, însă cu mai puține artefacte.
+Acest exemplu este ilustrat în Figura 15.24a.
+
+Putem folosi același exemplu și pentru alte tipuri de filtre.
+Putem seta un filtru _high-shelving_ la o anumită frecvență cu un gain mai mare, sau îl putem seta la o frecvență mai joasă, dar cu un gain mai mic (Figura 15.24b).
+În mod similar, putem seta un filtru HPF (_high-pass_) cu o pantă abruptă la o anumită frecvență, sau putem folosi o pantă mai lină la o frecvență mai înaltă (Figura 15.24c).
+Performanța unui filtru _pass_ este adesea evaluată după modul în care gestionează zona de tranziție, în special la pante mai abrupte.
+Filtrele mai ieftine pot produce efecte secundare foarte deranjante în jurul frecvenței de tăiere (_cutoff frequency_).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-24.jpg"
+    alt="Figura 15-24"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">
+    Figura 15.24: Alternative la egalizare. În toate aceste grafice, curbele
+    punctate implică setări mai drastice decât curbele continue. Curbele
+    punctate și cele continue pot duce la rezultate similare, deși este mai
+    probabil ca cele punctate să genereze mai multe artefacte. Acest lucru este
+    demonstrat pe un (a) filtru parametric, (b) filtru shelving și (c) filtru
+    pass. Notă de terminologie: dashed curves = curbe punctate / întrerupte
+    solid curves = curbe continue / pline artifacts = artefacte (distorsiuni,
+    rotații de fază neplăcute sau "ringing" produse de EQ)
+  </p>
+</div>
+
+Cele trei exemple din Figura 15.24 pot fi rezumate astfel:
+
+> **Q-ul** (pentru filtre parametrice) și **frecvența** (pentru filtre pass sau shelving) pot fi compensate prin ajustarea **gain-ului** sau a **pantei**, obținând o egalizare mai curată.
+
+Nu trebuie să uităm că, la fel ca în cazul multor altor instrumente de mixaj, uneori suntem interesați tocmai de acea agresivitate sonoră (_edge_) — subtilitatea și transparența nu sunt întotdeauna ceea ce căutăm. De exemplu, în genuri precum _death metal_, egalizatoarele sunt adesea folosite într-un mod considerat radical, cu boost-uri foarte generoase. Artefactele egalizatorului sunt folosite intenționat pentru a crea acea duritate care funcționează excelent în contextul acelui stil muzical. Unele egalizatoare au un sunet extrem de caracteristic, ce devine și mai accentuat pe măsură ce împingi setările spre extrem.

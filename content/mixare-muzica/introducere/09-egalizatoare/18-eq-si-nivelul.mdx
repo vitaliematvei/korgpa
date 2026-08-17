@@ -1,0 +1,35 @@
+---
+title: 'Egalizarea și nivelurile de semnal'
+description: 'Egalizarea și nivelurile de semnal'
+order: 18
+category: 'Egalizarea'
+level: 'Incepator'
+---
+
+Modificând nivelul unei anumite plaje de frecvențe, modificăm totodată și nivelul general al semnalului.
+Conform axiomei noastre — _ce e mai tare este perceput ca fiind mai bun_ (_louder-perceived-better_) —, comparațiile A/B pot fi înșelătoare: am putea crede că sunetul este mai bun atunci când facem _boost_ pe egalizator și mai slab când facem atenuație (_cut_).
+
+Pentru a permite comparații A/B corecte, unele egalizatoare oferă un control pentru nivelul de ieșire (_output level control_ / _gain compensation_).
+După ce egalizăm, egalăm nivelul semnalului procesat cu cel al semnalului neprocesat (_gain staging_), astfel încât evaluarea noastră critică să se bazeze strict pe schimbările tonale, nu pe variațiile de volum.
+Deși este de înțeles de ce controlul de nivel de ieșire nu se găsește pe secțiunile mici de EQ ale celor mai mari console analogice, rămâne neclar de ce mulți dezvoltatori de pluginuri omit această funcție extrem de importantă.
+
+> **Egalizarea modifică nivelul general al semnalului și ne poate păcăli, făcându-ne să credem că boost-urile sună mai bine doar pentru că sunt mai tari.**
+
+Lăsând la o parte comparațiile A/B, principiul _mai tare = perceput ca fiind mai bun_ poate duce la decizii greșite chiar în timpul egalizării, înainte de a compensa modificarea de gain.
+Riscul este același: am putea crede că un boost îmbunătățește sunetul doar datorită creșterii volumului general.
+
+Conceptul „Yin-Yang-ului frecvențelor” poate minimiza acest risc: alegând calea atenuației, este mult mai puțin probabil să ne bazăm evaluarea pe factorul de volum general.
+Așa cum am menționat anterior, tăierea joaselor la o voce îi poate crește prezența. Atunci când atenuăm o anumită plajă de frecvențe, reducem mascarea pe acea zonă specifică.
+De exemplu, reducerea frecvențelor joase din voce va crește claritatea și definirea basului/joaselor la celelalte instrumente.
+Dacă, din întâmplare, pierderea de volum general ne deranjează, o putem compensa oricând din _output gain_.
+
+În schimb, atunci când amplificăm (_boost_) o anumită plajă de frecvențe, creștem efectul de mascare.
+Instrumentul egalizat devine mai definit, dar pe acea zonă amplificată va masca mai mult din restul instrumentelor.
+De aceea se recomandă să luăm în considerare atenuația înainte de a apela la boost.
+
+---
+
+> **Idei cheie de reținut:**
+>
+> - **A/B corect:** Potrivește întotdeauna volumul la ieșire (_output level_) după ce aplici un EQ, pentru a nu fi păcălit de creșterea de nivel.
+> - **Cut înainte de Boost:** Atenuația eliberează spațiu în mix și reduce mascarea; boost-ul ocupă spațiu și maschează alte instrumente.
