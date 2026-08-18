@@ -1,0 +1,63 @@
+---
+title: 'Filtrele parametrice'
+description: 'Filtrele parametrice'
+order: 24
+category: 'Egalizarea'
+level: 'Incepator'
+---
+
+Filtrele parametrice sunt folosite atunci când dorim să intervenim asupra unei zone specifice de frecvențe.
+Deseori, aceste zone sunt asociate cu o anumită componentă spectrală a instrumentului procesat (de exemplu, corpul sunetului) sau cu o calitate sonoră generală (de exemplu, un sunet „nazal”).
+Deși utilizarea lor nu se limitează doar la frecvențele medii, aceasta este zona în care filtrele parametrice sunt cel mai des aplicate.
+
+Recunoașterea și înțelegerea esenței diferitelor plaje de frecvență necesită o viață întreagă de experiență.
+Totuși, un truc popular ne poate ajuta să localizăm frecvența potrivită atunci când folosim filtre parametrice.
+Să presupunem că încercăm să găsim atacul unei tobe mari (kick).
+Tehnica presupune o amplificare (_boost_) generoasă, cu un factor Q foarte îngust, urmată de baleierea (_sweep_) frecvenței centrale de-a lungul spectrului.
+Frecvența la care atacul tobei devine cel mai pronunțat este chiar cea pe care o căutăm.
+Apoi, ajustăm nivelul de câștig (_gain_) și valoarea Q.
+Deși multe resurse de mixaj menționează această tehnică, ea întâmpină și o opoziție fermă.
+În primul rând, poate frâna dezvoltarea abilităților de evaluare critică — abilități bazate pe procesul de ascultare, analiză și abia apoi acțiune.
+Situația poate fi comparată cu un chitarist mai puțin experimentat care încearcă toate acordurile posibile pentru a-l găsi pe cel corect.
+În plus, există riscul de a te obișnui și de a-ți plăcea prea mult acel _boost_ masiv, ajungând în final la un nivel de câștig mai mare decât ar fi cazul.
+Acestea fiind spuse, tehnica rămâne totuși utilă pentru inginerii de sunet aflați la început de drum sau în cazul materialelor audio mai dificile.
+
+Deși setările de _gain_ par adesea directe, lucrurile sunt mai nuanțate.
+Am discutat deja principiul vertical versus orizontal (upward vs. sideways), unde am demonstrat că uneori câștigul poate fi compensat prin lărgimea de bandă (Q).
+Cât de puternic este efectul unui egalizator depinde de combinația dintre setările de _gain_ și cele de Q.
+Poate părea surprinzător, dar setări identice și curbe de răspuns identice pe două egalizatoare diferite pot produce rezultate distincte.
+În timp ce la unele egalizatoare o amplificare de doar 0,5 dB are deja un efect sesizabil, anumite modele oferă o plajă de câștig de până la 18 dB.
+O amplificare de 15 dB poate fi stridentă, dar pe un alt echipament poate suna extrem de muzical.
+Din aceste motive, este greu de generalizat ce înseamnă valori „tipice” de _gain_ — totul depinde de frecvență, Q, sursa audio și egalizatorul folosit.
+În mod uzual, o ajustare de 1 dB este considerată subtilă, 3 dB moderat-conservatoare, 6 dB moderată, 9 dB serioasă, iar 12 dB extremă.
+
+O tehnică utilă de egalizare presupune distribuirea efortului de egalizare pe frecvențe diferite.
+Mai exact, în loc să egalizăm doar în jurul unei singure frecvențe, intervazăm și pe armonica acesteia (la o octavă mai sus).
+Acest lucru ne permite să reducem _gain_-ul pe prima frecvență și să mutăm o parte din amplificare pe armonică.
+Comparativ cu folosirea unei singure benzi, fiecare dintre cele două benzi va avea un răspuns mai puțin drastic și va genera mai puține artefacte de fază.
+De asemenea, egalizarea aplicată în două puncte diferite ajută adesea la depășirea efectului de mascare.
+
+> **Egalizarea harmonică** poate reduce artefactele sonore și este mai puțin predispusă la efectul de mascare.
+
+Setările factorului Q sunt, de asemenea, un element vital în egalizare.
+Un Q prea larg poate include frecvențe neînrudite, pe când un Q prea îngust s-ar putea să nu fie suficient de eficient.
+
+- **Factorul Q îngust** este folosit în general când vrem să tratăm o bandă foarte restrânsă de frecvențe — de regulă un zgomot nedorit sau o frecvență rezonantă.
+- **Factorul Q larg** tinde să sune mai natural și este folosit în special pentru a accentua părțile dorite din spectru sau pentru ajustări tonale fine.
+
+Prin urmare, un Q larg este mai frecvent întâlnit la amplificări (_boost_), în timp ce un Q îngust este mai potrivit pentru tăieri (_cut_).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/15-33.jpg"
+    alt="Figura 15-33"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 15.33:</p>Egalizarea armonicilor. (a) Egalizare
+  standard, unde este egalizată o singură zonă de frecvențe. (b) Egalizare pe
+  armonici, unde aceeași zonă este egalizată cu un răspuns mai blând, dar este
+  egalizată și armonica acesteia.
+</div>
