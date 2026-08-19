@@ -1,0 +1,24 @@
+---
+title: 'Gestionarea securității'
+description: 'Gestionarea securității'
+order: 2
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Am vorbit despre ce furnizor vom folosi, dar există un subiect esențial care se află în fruntea listei oricărui dezvoltator: securitatea.
+Securitatea este un domeniu vast — atât de mare încât o tratare aprofundată ar depăși scopul acestei cărți.
+Totuși, vreau să abordez un aspect important: utilizarea Stripe.
+Fiind un serviciu extern, este crucial să nu prezinte un risc de securitate și să nu compromită site-ul nostru.
+
+Din fericire, Stripe tratează securitatea cu o extremă seriozitate.
+Aceștia folosesc cele mai bune instrumente și practici din industrie, obținând certificarea **PCI Service Provider Level 1** (cel mai înalt nivel de securitate existent în industria plăților).
+Printre aceste practici se numără:
+
+- **3D Secure:** Utilizarea autentificării 3D Secure pentru plățile online în cadrul CEE/SEE, conform reglementărilor de Autentificare Strictă a Clienților (_Strong Customer Authentication_ - SCA).
+- **HTTPS/TLS pe întregul site:** HTTPS este activat peste tot folosind protocoale TLS, inclusiv în panoul de administrare (_dashboard_). Nimic nu este servit prin HTTP necriptat, iar consola browserului va afișa un avertisment dacă nu folosești HTTPS chiar și în mediul local de dezvoltare.
+- **Librării securizate:** Librăriile din proiect, inclusiv `Stripe.js`, sunt livrate exclusiv prin conexiuni securizate TLS și folosesc certificate pentru a valida fiecare conexiune.
+- **Criptare de nivel militar (AES-256):** Criptarea folosește algoritmul AES-256, iar cheile sunt păstrate pe servere dintr-un mediu de găzduire separat. Infrastructura utilizată pentru criptarea, stocarea sau decriptarea numerelor de card este izolată de serviciile principale și nu partajează credențiale de acces.
+
+Acestea sunt doar câteva dintre măsurile aplicate de Stripe — putem fi liniștiți că nu vom întâmpina probleme de securitate din perspectiva procesării plăților.
+Desigur, trebuie să reținem că procesatorul reprezintă doar o piesă din întregul sistem de securitate al unei aplicații web, însă restul măsurilor de protecție depășesc cadrul acestui ghid.

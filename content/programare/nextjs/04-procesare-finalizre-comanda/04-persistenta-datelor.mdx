@@ -1,0 +1,225 @@
+---
+title: 'Persistența datelor pe parcursul procesului'
+description: 'Persistența datelor pe parcursul procesului'
+order: 4
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Acum că avem butoanele pregătite, trebuie să ne concentrăm pe adăugarea unei componente critice: **contextul**.
+Acesta va gestiona numărul de produse selectate, prețul total, cantitatea din coș și stările de adăugare sau eliminare ale articolelor.
+
+_(Notă: Fiind o componentă extinsă, nu îți face griji dacă nu o tastezi manual — tot codul este disponibil în resursele cărții)._
+
+**ADĂUGAREA COMPONENTEI DE CONTEXT**
+
+Pentru a adăuga componenta de context, urmează acești pași:
+
+1. Creează un dosar nou numit `context` în rădăcina proiectului.
+2. Deschide un fișier nou în editor și salvează-l sub numele `StateContext.js` în folderul creat la pasul 1.
+3. Adaugă importurile de bază la începutul fișierului:
+
+```jsx
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { toast } from 'react-hot-toast';
+```
+
+4. Lasă o linie liberă și adaugă declarația pentru `Context`, alături de stările (_state_) componentei:
+
+```jsx
+const Context = createContext();
+
+export const StateContext = ({ children }) => {
+  const [showCart, setShowCart] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalQuantities, setTotalQuantities] = useState(0);
+  const [qty, setQty] = useState(1);
+
+  let foundProduct;
+  let index;
+
+```
+
+5. Adaugă funcția `onAdd` pentru introducerea produselor în coș. Aceasta verifică dacă articolul există deja, actualizând cantitatea și prețul total sau adăugându-l ca produs nou:
+
+```jsx
+const onAdd = (product, quantity) => {
+  const checkProductInCart = cartItems.find((item) => item._id === product._id);
+
+  setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity);
+  setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
+
+  if (checkProductInCart) {
+    const updatedCartItems = cartItems.map((cartProduct) => {
+      if (cartProduct._id === product._id)
+        return {
+          ...cartProduct,
+          quantity: cartProduct.quantity + quantity,
+        };
+    });
+
+    setCartItems(updatedCartItems);
+  } else {
+    product.quantity = quantity;
+    setCartItems([...cartItems, { ...product }]);
+  }
+
+  toast.success(`${qty} ${product.name} added to the cart.`);
+};
+```
+
+6. Adaugă funcția `onRemove` pentru ștergerea produselor din coș și recalcularea totalurilor:
+
+```jsx
+const onRemove = (product) => {
+  foundProduct = cartItems.find((item) => item._id === product._id);
+  const newCartItems = cartItems.filter((item) => item._id !== product._id);
+
+  setTotalPrice(
+    (prevTotalPrice) =>
+      prevTotalPrice - foundProduct.price * foundProduct.quantity,
+  );
+  setTotalQuantities(
+    (prevTotalQuantities) => prevTotalQuantities - foundProduct.quantity,
+  );
+  setCartItems(newCartItems);
+};
+```
+
+7. Adaugă funcția `toggleCartItemQuantity` pentru ajustarea cantităților articolelor existente deja în coș:
+
+```jsx
+const toggleCartItemQuantity = (id, value) => {
+  foundProduct = cartItems.find((item) => item._id === id);
+  index = cartItems.findIndex((product) => product._id === id);
+  const newCartItems = cartItems.filter((item) => item._id !== id);
+
+  if (value === 'inc') {
+    setCartItems([
+      ...newCartItems,
+      { ...foundProduct, quantity: foundProduct.quantity + 1 },
+    ]);
+    setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price);
+    setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + 1);
+  } else if (value === 'dec') {
+    if (foundProduct.quantity > 1) {
+      setCartItems([
+        ...newCartItems,
+        { ...foundProduct, quantity: foundProduct.quantity - 1 },
+      ]);
+      setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price);
+      setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - 1);
+    }
+  }
+};
+```
+
+8. Adaugă funcțiile ajutătoare `incQty` și `decQty` pentru modificarea cantității de pe pagina de produs:
+
+```jsx
+const incQty = () => {
+  setQty((prevQty) => prevQty + 1);
+};
+
+const decQty = () => {
+  setQty((prevQty) => {
+    if (prevQty - 1 < 1) return 1;
+    return prevQty - 1;
+  });
+};
+```
+
+9. Încheie componenta returnând `Context.Provider` cu toate valorile și funcțiile expuse, alături de custom hook-ul `useStateContext`:
+
+```jsx
+  return (
+    <Context.Provider
+      value={{
+        showCart,
+        setShowCart,
+        cartItems,
+        totalPrice,
+        totalQuantities,
+        qty,
+        incQty,
+        decQty,
+        onAdd,
+        toggleCartItemQuantity,
+        onRemove,
+        setCartItems,
+        setTotalPrice,
+        setTotalQuantities,
+      }}
+    >
+      {children}
+    </Context.Provider>
+  );
+};
+
+export const useStateContext = () => useContext(Context);
+
+```
+
+10. Salvează și închide fișierul.
+11. Deschide fișierul `Footer.jsx` din `\src\components` și adaugă importul:
+
+```jsx
+import { useStateContext } from '../../../context/StateContext';
+```
+
+12. Extrage starea necesară în componentă:
+
+```jsx
+const Footer = () => {
+  const { showCart } = useStateContext();
+
+```
+
+13. Salvează, deschide `NavBar.jsx` din același folder și adaugă importul:
+
+```jsx
+import { useStateContext } from '../../context/StateContext';
+```
+
+14. Extrage valorile din context la începutul componentei `NavBar`:
+
+```jsx
+const NavBar = () => {
+  const { showCart, setShowCart, totalQuantities } = useStateContext();
+
+```
+
+15. Actualizează afișarea coșului după eticheta de închidere `</button>`:
+
+```jsx
+{
+  showCart && <Cart />;
+}
+```
+
+16. Deschide fișierul `_app.js` și adaugă importul pentru `StateContext`:
+
+```jsx
+import { StateContext } from '../../context/StateContext';
+```
+
+17. Împachetează întreaga aplicație cu furnizorul de context:
+
+```jsx
+<StateContext>
+  <Layout>
+    <Toaster />
+    <Component {...pageProps} />
+  </Layout>
+</StateContext>
+```
+
+18. Salvează și închide fișierul.
+19. Deschide terminalul Node.js și asigură-te că ești în folderul proiectului.
+20. Execută `npm run dev` și accesează `http://localhost:3000/shop`.
+    Navighează pe o pagină de produs și apasă pe _Add to Cart_: vei observa apariția notificării de confirmare (_toast_) furnizată de `react-hot-toast` (Figura 4-1).
+
+Contextul este o piesă arhitecturală centrală: fără el, pasarea stărilor ar fi necesitat un lanț lung și greoi de prop-uri (_prop drilling_). Acum că starea globală este configurată, putem trece la crearea interfeței pentru coșul de cumpărături.
+
+{/* am ramas Exploring What Happened .102 */}

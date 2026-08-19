@@ -1,0 +1,90 @@
+---
+title: 'Finalizarea butoanelor'
+description: 'Finalizarea butoanelor'
+order: 3
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Gata cu teoria: e timpul să trecem la cod!
+Avem ceva de lucrat, dar există un set de modificări pe care trebuie să le finalizăm mai întâi.
+După cum îți amintești din capitolul anterior, nu am adăugat încă butoanele _Buy Now_ sau _Add to Cart_ pe pagina de produs — și a existat un motiv bine întemeiat.
+Adăugarea lor necesită o componentă complexă de context; făcusem deja multe modificări, așa că a fost mai înțelept să ajungem mai întâi într-un punct în care site-ul să încarce și să afișeze produsele fără probleme.
+A fost mai practic să lăsăm partea de context pentru acest capitol, deoarece se conectează direct cu Stripe (vom aborda ambele aspecte mai târziu).
+
+Înainte de asta, trebuie să adăugăm codul lipsă care va consuma acest context.
+Să vedem în detaliu ce avem de făcut.
+
+**FINALIZAREA BUTOANELOR**
+
+Pentru a finaliza pagina de produs, urmează acești pași:
+
+1. În primul rând, deschide fișierul `[slug].js` din dosarul `\pages\product` și adaugă această linie imediat după importurile din partea de sus:
+
+```jsx
+import { useStateContext } from '../../../context/StateContext';
+```
+
+2. Caută linia care începe cu `const [index, setIndex...]` și adaugă imediat după ea următoarea instrucțiune:
+
+```jsx
+const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
+```
+
+3. Lasă o linie liberă și adaugă funcția de mai jos — aceasta se va ocupa de click-urile pe butonul _Buy Now_ pe care îl vom adăuga în curând:
+
+```jsx
+const handleBuyNow = () => {
+  onAdd(product, qty);
+  setShowCart(true);
+};
+```
+
+4. Cu aceste definiții pregătite, putem adăuga markup-ul suplimentar pentru selectarea cantității dorite în coș.
+   Caută mai întâi linia de cod: `<h3>Quantity:</h3>`.
+5. Modifică următoarele nouă linii de cod pentru a atașa handlerii de evenimente `onClick`:
+
+```jsx
+<p className="quantity-desc">
+  <span className="minus" onClick={decQty}>
+    <AiOutlineMinus />
+  </span>
+  <span className="num">{qty}</span>
+  <span className="plus" onClick={incQty}>
+    <AiOutlinePlus />
+  </span>
+</p>
+```
+
+6. Mai avem o funcționalitate de adăugat: butoanele _Add to Cart_ și _Buy Now_.
+   Derulează până când găsești linia:
+
+```jsx
+<div className="sku">SKU: {sku}</div>
+```
+
+7. Adaugă următorul bloc de cod imediat după ea:
+
+```jsx
+<div className="buttons">
+  <button
+    type="button"
+    className="add-to-cart"
+    onClick={() => onAdd(product, qty)}
+  >
+    Add to Cart
+  </button>
+  <button type="button" className="buy-now" onClick={handleBuyNow}>
+    Buy Now
+  </button>
+</div>
+```
+
+8. Salvează și închide fișierul.
+
+Ai observat că în această demonstrație nu ți-am cerut să rulezi aplicația în browser.
+Nu-ți face griji, există un motiv întemeiat pentru asta.
+
+Deși am adăugat butoanele necesare pentru a introduce produse în coș, aplicația ar returna o eroare — coșul nostru nu există încă!
+Pentru ca totul să funcționeze, trebuie să adăugăm contextul de stare (_state context_) despre care vorbeam la început.
+Aceasta presupune crearea unei componente mai extinse pe care o vom construi în curând, dar înainte de asta, să analizăm în detaliu modificările efectuate.

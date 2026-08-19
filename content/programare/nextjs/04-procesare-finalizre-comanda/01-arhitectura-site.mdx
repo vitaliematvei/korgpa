@@ -1,0 +1,35 @@
+﻿---
+title: 'Detalierea procesului'
+description: 'Detalierea procesului'
+order: 1
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Pentru orice proces de finalizare a comenzii (_checkout_), clienții vor urma o serie stabilită de pași — aceștia vor diferi în funcție de opțiunea aleasă: găzduirea procesului pe propriul site sau utilizarea unui serviciu găzduit direct de furnizorul de plăți.
+
+În cazul nostru, am ales să folosim Stripe, fiind un instrument ușor de implementat, chiar dacă necesită parcurgerea mai multor pași, așa cum vei vedea mai târziu în acest capitol.
+Fiecare client care finalizează o comandă pe site-ul nostru va parcurge următorii pași:
+
+- **Crearea sesiunii:** Când clienții sunt pregătiți să își finalizeze achiziția, aplicația ta creează o nouă sesiune de checkout (_Checkout Session_).
+- **Redirecționarea:** Sesiunea de checkout oferă un URL care redirecționează clientul către o pagină de plată găzduită de Stripe.
+- **Procesarea plății:** Clienții își introduc datele de plată pe pagina respectivă și finalizează tranzacția.
+- **Confirmarea prin Webhook:** După finalizarea tranzacției, un _webhook_ procesează și livrează comanda folosind evenimentul `checkout.session.completed`.
+
+Pare destul de simplu, însă aceasta este doar o privire de ansamblu — procesul implică mai mulți pași detaliați.
+
+Un punct esențial de reținut este că fluxul descris este specific pentru Stripe — alți furnizori folosesc metode similare, dar cu funcții și apeluri API proprii.
+
+Dacă nu aș fi ales Stripe și aș fi optat pentru un alt furnizor, aș fi putut alege din zeci de alte companii — de la opțiuni locale precum PaySimple ([www.paysimple.com](https://www.google.com/search?q=https%3A%2F%2Fwww.paysimple.com)), până la platforme globale precum Shopify.
+Dacă nu ai deja un serviciu preferat, iată câteva opțiuni populare de la care poți începe:
+
+- **Shopify:** [www.shopify.com](https://www.google.com/search?q=https%3A%2F%2Fwww.shopify.com)
+- **PayPal:** [www.paypal.com/](https://www.google.com/search?q=https%3A%2F%2Fwww.paypal.com%2F)
+- **AmazonPay:** [https://pay.amazon.co.uk/](https://pay.amazon.co.uk/)
+- **GooglePay:** [https://pay.google.com/about/](https://pay.google.com/about/)
+- **Square:** [www.squareup.com](https://www.google.com/search?q=https%3A%2F%2Fwww.squareup.com)
+- **Adyen:** [www.adyen.com/](https://www.google.com/search?q=https%3A%2F%2Fwww.adyen.com%2F)
+
+Bineînțeles, disponibilitatea acestor servicii poate varia în funcție de țară.
+Alegerea unui furnizor necesită documentare atentă.
+În plus, dacă lucrezi pentru un client, este foarte posibil ca acesta să fi ales deja o soluție de plată, ceea ce îți va simplifica munca — decizia fiind deja luată!
