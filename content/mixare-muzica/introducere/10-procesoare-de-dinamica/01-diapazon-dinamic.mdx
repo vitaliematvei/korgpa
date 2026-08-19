@@ -1,0 +1,175 @@
+﻿---
+title: 'Diapazonul dinamic (_dynamic range_)'
+description: 'Diapazonul dinamic (_dynamic range_)'
+order: 1
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Gama dinamică (_dynamic range_) este definită ca diferența dintre cele mai slabe și cele mai puternice sunete pe care le poate procesa un sistem.
+Sistemul nostru auditiv, sistemele digitale (cum ar fi un software de producție muzicală/DAW) și cele analogice (cum ar fi un difuzor) au fiecare propria gamă dinamică.
+Măsurătorile de nivel absolut sunt exprimate folosind diverse scări dB (dBSPL, dBu, dBFS etc.).
+Gama dinamică, fiind o diferență între două măsurători de nivel, se exprimă în **dB simpli**.
+
+<div className="my-6 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+  <div className="overflow-x-auto">
+    <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
+      <thead className="bg-slate-100 dark:bg-slate-800/80 text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
+        <tr>
+          <th scope="col" className="px-6 py-4 font-semibold">
+            Sistem
+          </th>
+          <th scope="col" className="px-6 py-4 font-semibold text-right">
+            Gamă dinamică (dB)
+          </th>
+        </tr>
+      </thead>
+      <tbody className="divide-y divide-slate-200 dark:divide-slate-800 bg-white dark:bg-slate-900">
+        <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+          <td className="px-6 py-3.5 font-medium text-slate-900 dark:text-slate-100">
+            Mixer software{' '}
+            <span className="text-xs text-slate-500 font-normal">
+              (32-bit float)
+            </span>
+          </td>
+          <td className="px-6 py-3.5 text-right font-mono font-semibold text-indigo-600 dark:text-indigo-400">
+            144
+          </td>
+        </tr>
+        <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+          <td className="px-6 py-3.5 font-medium text-slate-900 dark:text-slate-100">
+            Cele mai bune convertoare A/D
+          </td>
+          <td className="px-6 py-3.5 text-right font-mono font-semibold text-indigo-600 dark:text-indigo-400">
+            122
+          </td>
+        </tr>
+        <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+          <td className="px-6 py-3.5 font-medium text-slate-900 dark:text-slate-100">
+            Auzul uman
+          </td>
+          <td className="px-6 py-3.5 text-right font-mono font-semibold text-indigo-600 dark:text-indigo-400">
+            120
+          </td>
+        </tr>
+        <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+          <td className="px-6 py-3.5 font-medium text-slate-900 dark:text-slate-100">
+            Monitoare active Dynaudio Air 25
+          </td>
+          <td className="px-6 py-3.5 text-right font-mono font-semibold text-indigo-600 dark:text-indigo-400">
+            113
+          </td>
+        </tr>
+        <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+          <td className="px-6 py-3.5 font-medium text-slate-900 dark:text-slate-100">
+            Microfon cu condensator Neumann U87
+          </td>
+          <td className="px-6 py-3.5 text-right font-mono font-semibold text-indigo-600 dark:text-indigo-400">
+            110
+          </td>
+        </tr>
+        <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+          <td className="px-6 py-3.5 font-medium text-slate-900 dark:text-slate-100">
+            CD sau fișier audio{' '}
+            <span className="text-xs text-slate-500 font-normal">
+              (16-bit integer)
+            </span>
+          </td>
+          <td className="px-6 py-3.5 text-right font-mono font-semibold text-indigo-600 dark:text-indigo-400">
+            96
+          </td>
+        </tr>
+        <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+          <td className="px-6 py-3.5 font-medium text-slate-900 dark:text-slate-100">
+            Bandă magnetică cu reducere de zgomot
+          </td>
+          <td className="px-6 py-3.5 text-right font-mono font-semibold text-indigo-600 dark:text-indigo-400">
+            75
+          </td>
+        </tr>
+        <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+          <td className="px-6 py-3.5 font-medium text-slate-900 dark:text-slate-100">
+            Radio FM
+          </td>
+          <td className="px-6 py-3.5 text-right font-mono font-semibold text-indigo-600 dark:text-indigo-400">
+            65
+          </td>
+        </tr>
+        <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+          <td className="px-6 py-3.5 font-medium text-slate-900 dark:text-slate-100">
+            Disc de vinil
+          </td>
+          <td className="px-6 py-3.5 text-right font-mono font-semibold text-indigo-600 dark:text-indigo-400">
+            60
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+Să presupunem că cel mai silențios moment al unei piese orchestrale implică o lovitură ușoară cu degetul pe timpan, care generează **10 dBSPL**.
+Apoi, în cel mai puternic moment, orchestra emite **100 dBSPL**.
+Aceasta este o piesă muzicală cu o gamă dinamică de **90 dB**.
+
+Un microfon U87 plasat în sală ar fi capabil, teoretic, să capteze întreaga gamă dinamică a interpretării, inclusiv cele mai slabe și cele mai puternice momente (deși în momentele foarte silențioase zgomotul propriu al microfonului ar putea deveni sesizabil, iar în pasajele de climax microfonul ar putea distorsiona).
+Aproape orice convertor A/D decent poate gestiona o gamă dinamică de 90 dB, așa că atunci când semnalul de la microfon este convertit în digital și înregistrat pe calculator, gama dinamică a interpretării se păstrează integral.
+
+Gama dinamică completă se va păstra și dacă interpretarea este salvată într-un fișier pe 16 biți sau redată prin monitoare de studio bune.
+Totuși, ne lovim de o problemă când vrem să imprimăm această interpretare pe vinil: trebuie să introducem o gamă dinamică de **90 dB** pe un mediu care poate acomoda doar **60 dB**.
+
+Avem câteva opțiuni:
+
+- **Tăierea celor 30 dB superiori:** De fiecare dată când orchestra cântă tare, sunetul este oprit complet — o idee atât de absurdă încât niciun procesor nu este conceput astfel.
+- **Tăierea celor 30 dB inferiori:** De fiecare dată când orchestra cântă foarte încet, nu se mai aude nimic. Nici aceasta nu este o idee prea înțeleaptă, deși facem ceva similar de fiecare dată când exportăm din software-ul audio (32-bit float) într-un fișier pe 16 biți — tăiem ultimii 9 biți (reducând gama de la 144 la 96 dB).
+
+### Cât înseamnă, de fapt, 60 dB?
+
+Puteți face un experiment: folosiți zgomot roz (_pink noise_) dintr-un generator de semnal și coborâți-l cu 60 dB folosind un fader.
+Sunt șanse mari ca la –60 dB să nu mai auziți nimic.
+Acum măriți ușor nivelul monitoarelor pentru a auzi acel zgomot slab, iar apoi ridicați încet faderul înapoi la 0 dB.
+Veți constata că zgomotul este destul de puternic; s-ar putea nici să nu vă doriți să duceți faderul până sus.
+În acustică, **60 dB este considerată diferența dintre un sunet puternic și unul inaudibil**.
+Experimentul poate fi dezamăgitor pentru unii — vă puteți întreba unde a dispărut jumătate din capacitatea noastra auditivă de 120 dB.
+
+Cifra de 120 dB a fost stabilită pornind de la cel mai slab nivel pe care îl putem auzi (**0 dBSPL**) și pragul durerii, care este în jur de **120 dBSPL**.
+În practică:
+
+- Cele mai multe camere de locuit au un zgomot ambiental de aproximativ **30 dBSPL**.
+- **120 dBSPL** este nivelul la care sunteți expus când stați la un metru de difuzor la un concert rock extrem de zgomotos sau într-un club.
+  În astfel de condiții, s-ar putea să nu auziți pe cineva care țipă lângă voi.
+- O voce care țipă are aproximativ **80 dBSPL**. Percepem **90 dBSPL** ca fiind de două ori mai puternic, ceea ce este deja considerat foarte tare.
+
+Dacă există o „gamă dinamică a vieții de zi cu zi”, aceasta se situează undeva între **30 și 70 dBSPL** (o gamă dinamică de **40 dB**).
+Totuși, o cameră de control dintr-un studio poate avea o gamă dinamică de la **20 la 110 dBSPL**.
+
+---
+
+### Compresia și expansiunea dinamicii
+
+Dacă vrem ca vinilul nostru să păstreze atât momentele cele mai puternice, cât și pe cele mai slabe, tăierea semnalului nu ajută.
+Ce putem face este să **comprimăm gama dinamică**:
+
+- Putem face nivelurile puternice mai încet — **compresie descendenta** (_downward compression_).
+- Putem face nivelurile slabe mai tare — **compresie ascendenta** (_upward compression_).
+
+Prin analogie, este ca și cum am strânge un dop de urechi din spumă înainte de a-l introduce în ureche — tot materialul este acolo, dar comprimat în dimensiuni mai mici.
+
+Dacă avem problema opusă — un vinil vechi pe care vrem să-l transferăm într-un fișier audio pe 16 biți — s-ar putea să vrem să convertim o gamă dinamică de 60 dB în 90 dB.
+Procedeul numit **expansiune** (_expansion_) face posibil acest lucru:
+
+- Putem face sunetele slabe și mai slabe — **expansiune descendentă** (_downward expansion_).
+- Putem face sunetele puternice și mai puternice — **expansiune ascendentă** (_upward expansion_).
+  _(Este similar cu scoaterea dopului din ureche — revine la dimensiunea inițială)._
+
+Prin convenție, **compresia descendentă** este cel mai des întâlnit tip de compresie în mixaj, așa că termenul „descendentă” se omite — un „compresor” desemnează un compresor descendent.
+La fel și în cazul expansiunii: expansiunea descendentă este mai comună, deci termenul este omis.
+
+### Cum se aplică toate acestea în mixaj?
+
+Păi, foarte puțin… dar în același timp, destul de mult.
+Este responsabilitatea inginerului de mastering să încadreze gama dinamică a unui mix pe diferite medii de stocare (iar aceștia comprimă semnalul destinat vinilului).
+În prezent, odată cu scăderea popularității magnetofoanelor, rareori mai schimbăm mediile între ele — în timpul mixajului ne pasă destul de puțin de gama dinamică generală a pisei.
+
+Totuși, foarte des în timpul mixajului vrem să facem sunetele puternice sau slabe mai tari sau mai încet.
+Rareori ne gândim la gama dinamică globală — ce vrem cu adevărat să controlăm este **dinamica individuală a instrumentelor**.

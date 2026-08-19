@@ -1,0 +1,63 @@
+---
+title: 'Funcția diferitelor procesoare'
+description: 'Funcția diferitelor procesoare'
+order: 4
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Figura 16.5 arată funcția de transfer a diferitelor procesoare de dinamică și modul în care nivelurile sunt modificate între intrare și ieșire.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/16-5.jpg"
+    alt="Figura 16-5"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 16.5:</p>**Exemple de funcții de transfer ale compresoarelor, limitatoarelor și expandoarelor, precum și efectul acestora asupra semnalelor de intrare.**
+
+Graficele din partea de jos arată funcția de transfer a fiecărui procesor, toate având pragul (_threshold_) setat la 0 dB. Rândul de sus ilustrează relația dintre nivelurile de intrare și cele de ieșire.
+
+</div>
+Iată un scurt rezumat al rolului fiecărui procesor:
+
+- **Compresor** (_Compressor_) — reduce nivelul semnalelor deasupra pragului (_threshold_), făcând sunetele puternice mai încet.
+- **Limitator** (_Limiter_) — se asigură că niciun semnal nu depășește pragul, reducând orice semnal deasupra pragului exact la nivelul acestuia.
+- **Compresor ascendent** (_Upward compressor_) — amplifică nivelul semnalelor sub prag, făcând sunetele slabe mai tare.
+- **Expandor** (_Expander_) — reduce nivelul semnalelor sub prag, făcând sunetele slabe și mai încet.
+- **Expandor ascendent** (_Upward expander_) — amplifică nivelul semnalelor deasupra pragului, făcând sunetele puternice și mai tare.
+
+Toate procesoarele de mai sus aplică un anumit raport (_ratio_) în timpul transformării nivelurilor, ceea ce face ca modificarea de nivel să depindă de nivelul de intrare.
+De exemplu, compresorul descris mai sus are un raport de **2:1** deasupra pragului: un semnal de **+40 dB** la intrare este redus la **+20 dB** (o modificare de nivel de 20 dB), în timp ce un semnal de **+20 dB** este redus la **+10 dB** (o modificare de nivel de 10 dB).
+Raportul de reducere este identic, dar modificarea efectivă a volumului diferă.
+
+---
+
+**Funcționarea procesoarelor de tip Gate și Ducker**
+
+Porțile de zgomot (_Gates_) funcționează după un principiu ușor diferit — toate semnalele aflate sub prag sunt reduse cu o valoare fixă, numită **plajă de atenuare** (_range_).
+În cazul unor setări mari ale plajei (de exemplu, –80 dB), semnalele sub prag devin complet inaudibile.
+
+Un _ducker_ reduce, de asemenea, nivelul semnalului cu o valoare fixă (_range_), dar face acest lucru **doar pentru semnalele deasupra pragului** (folosit adesea la radio pentru a reduce automat muzica atunci când vorbește DJ-ul).
+
+Figura 16.6 arată funcția unui _gate_ și a unui _ducker_, care poate fi rezumată astfel:
+
+- **Gate** — atenuează toate semnalele sub prag cu o valoare fixă (_range_). O atenuare drastică face ca tot ce se află sub prag să devină inaudibil.
+- **Ducker** — atenuează toate semnalele deasupra pragului cu o valoare fixă (_range_).
+  <div className="my-4 flex justify-center">
+    <img
+      src="/images/mixing/16-6.jpg"
+      alt="Figura 16-6"
+      className="h-auto w-9/10 max-w-xs"
+    />
+  </div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 16.6:</p>Funcția de transfer a unui gate cu diferite setări ale plajei de atenuare (range) și a unui ducker.
+
+La valori mici ale plajei (range), gate-ul doar atenuează tot ce se află sub prag (threshold). La valori mari ale plajei, se spune că gate-ul taie complet (mute) semnalele de sub prag. Un ducker atenuează semnalele deasupra pragului cu o valoare stabilită (range).
+
+</div>

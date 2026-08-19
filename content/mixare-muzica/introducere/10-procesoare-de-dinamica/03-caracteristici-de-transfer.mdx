@@ -1,0 +1,80 @@
+---
+title: 'Caracteristicile de transfer'
+description: 'Caracteristicile de transfer'
+order: 3
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Să presupunem că privim un fir electric ca pe un procesor, iar capetele sale ca pe intrare și ieșire.
+În practică, semnalele care intră în fir trec prin el neafectate.
+Pentru orice nivel de intrare dat, obținem același nivel la ieșire.
+Putem spune că raportul de nivel dintre intrare și ieșire este de 1:1.
+Un astfel de raport este cunoscut sub numele de **câștig unitar** (_unity gain_).
+
+Putem desena un grafic care arată relația dintre nivelurile de intrare și ieșire.
+Un astfel de grafic se numește **graficul caracteristicilor de transfer** (sau grafic intrare-ieșire) și indică **funcția de transfer** a unui procesor.
+Acesta afișează nivelul de intrare pe axa orizontală și nivelul de ieșire pe axa verticală.
+Scara este exprimată în decibeli; **0 dB** reprezintă nivelul de referință al sistemului — cel mai înalt nivel posibil al unui sistem digital (care nu poate fi depășit) sau nivelul standard de operare al unui sistem analogic (care poate fi depășit).
+Figura 16.2 arată funcția de transfer a unui fir electric.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/16-2.jpg"
+    alt="Figura 16-2"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 16.2:</p>**Funcția de transfer a unui fir
+  electric.** Nu există nicio modificare de nivel între intrare și ieșire — cu
+  alte cuvinte, avem câștig unitar (*unity gain*) pe tot parcursul.
+</div>
+
+Spre deosebire de fire, procesoarele de dinamică modifică nivelul semnalelor care trec prin ele — nivelurile de intrare și ieșire pot fi diferite.
+Știm deja că un compresor reduce gama dinamică, așa că ne putem aștepta ca nivelurile de intrare să fie reduse.
+Figura 16.3 arată funcția de transfer a unui compresor; se poate observa că gama dinamică a ieșirii este la jumătatea celei de intrare.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/16-3.jpg"
+    alt="Figura 16-3"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 16.3:</p>**Funcția de transfer a unui compresor.**
+  Gama dinamică de ieșire este la jumătatea gamei dinamice de intrare.
+</div>
+
+Dacă toate procesoarele de dinamică s-ar comporta ca cel din Figura 16.3, ar fi destul de limitate (de altfel, primele procesoarele de dinamică erau foarte limitate în acest fel).
+Procesarea tuturor nivelurilor în mod uniform este rareori ceea ce ne dorim, chiar și atunci când procesăm întregul mix.
+De cele mai multe ori, vrem să procesăm doar o anumită gamă de niveluri — de obicei fie semnalele puternice, fie cele slabe.
+Pentru a ne permite o procesare selectivă, toate procesoarele de dinamică ne dau posibilitatea de a separa nivelurile procesate de cele neprocesate prin intermediul unui parametru numit **prag** (_threshold_).
+
+Pragul împarte întreaga gamă a nivelului de intrare în două secțiuni.
+În funcție de procesor, gama de niveluri procesată poate fi deasupra sau sub prag:
+
+- **Figura 16.4** arată un compresor cu pragul setat la **–40 dB**. Fiind un compresor descendent, nivelurile puternice sunt reduse, dar **doar cele deasupra pragului** — nivelurile sub prag rămân neafectate.
+  Observați că gama dinamică de ieșire a fost redusă.
+  <div className="my-4 flex justify-center">
+    <img
+      src="/images/mixing/16-4.jpg"
+      alt="Figura 16-4"
+      className="h-auto w-9/10 max-w-xs"
+    />
+  </div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 16.4:</p>**Un compresor cu prag (*threshold*).**
+  Pragul este setat la –40 dB. Nivelurile sub prag nu sunt procesate, iar
+  raportul intrare-ieșire este de 1:1. Deasupra pragului, nivelul semnalelor de
+  intrare este redus. În această ilustrație specifică, raportul intrare-ieșire
+  deasupra pragului este de 2:1.
+</div>
+- De asemenea, merită menționat că raportul intrare-ieșire deasupra pragului
+este de **2:1**, ceea ce face ca primii 40 dB ai gamei de intrare (de la –40 la
+0 dB) să se transforme în 20 dB la ieșire (de la –40 la –20 dB). Vom discuta
+rapoartele (_ratios_) în detaliu în capitolele următoare.
