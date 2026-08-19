@@ -1,0 +1,24 @@
+---
+title: 'Să înțelegem ce s-a schimbat'
+description: 'Să înțelegem ce s-a schimbat'
+order: 15
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Una dintre cele mai utile funcționalități din Next.js este capacitatea de a crea pagini de tip șablon (_template_ sau _slug_), pe care le putem reutiliza de oricâte ori avem nevoie — în cazul nostru, pentru a genera paginile de produs.
+Este însă un proces în mai mulți pași: am acoperit prima parte în demonstrația anterioară, unde am configurat interogarea pentru a prelua produsele, înainte de a apela componenta `Product` pentru fiecare dintre ele într-o buclă (_loop_).
+
+În această demonstrație pe care tocmai am creat-o, am folosit acele informații pentru a afișa imaginea produsului, numele, slug-ul și prețul sub formă de componentă.
+Cea mai mare parte din codul acestei componente este destul de intuitivă: afișăm o imagine și textul asociat folosind spații de rezervă (_placeholders_), după care împachetăm totul într-o componentă `Link` din Next, ce folosește valoarea slug-ului pentru a crea o legătură către pagina individuală a produsului.
+
+Există totuși o funcționalitate utilă pe care vreau să o evidențiez: dacă te uiți la linia ce începe cu `const Product = ...`, s-ar putea să te întrebi ce facem mai exact acolo.
+Aceasta este modalitatea din Next (și React) de a **destructura** proprietățile (_props_) transmise componentei în momentul apelării.
+Astfel, în acest caz, extragem `image`, `name`, `slug` și `price` direct din obiectul `product`.
+Ca și în React, acest lucru funcționează doar dacă apelăm fiecare proprietate folosind exact același nume — dacă am vrea să folosim nume diferite, ar trebui să abordăm lucrurile altfel!
+
+În regulă — să mergem mai departe: am configurat magazinul principal și putem afișa un card de produs cu detaliile corespunzătoare. Am menționat că acesta este un pas intermediar înainte de a afișa pagina completă cu informațiile produsului — a sosit timpul să configurăm și acest ultim pas. Deși vom avea nevoie de mai mult cod pentru a realiza acest lucru, vei observa destule asemănări între acesta și codul pe care tocmai l-am scris. Pentru a înțelege mai bine, să trecem la treabă și să vedem cum putem afișa eficient detaliile produsului folosind un șablon pentru pagina de produs.
+
+Așa cum am menționat mai devreme, nu vom crea manual câte o pagină separat pentru fiecare componentă, ci vom folosi o funcționalitate specială din Next.js: **rutarea dinamică** (_dynamic routing_). Aceasta ne permite să creăm un singur șablon, încadrând numele fișierului între paranteze pătrate, obținând ceva de genul `[slug].js`. Da, știu că arată puțin neobișnuit, dar funcționează perfect!
+
+Aceasta înseamnă că putem construi ceea ce eu am numit „pagina de slug”, deoarece folosim slug-ul creat la începutul capitolului pentru fiecare produs pentru a identifica, prelua și afișa detaliile acelui produs în pagină. Sună complicat? Este nevoie de o cantitate considerabilă de cod pentru a realiza acest lucru, așa că haide să parcurgem tot ce avem de făcut în cadrul următorului exercițiu.

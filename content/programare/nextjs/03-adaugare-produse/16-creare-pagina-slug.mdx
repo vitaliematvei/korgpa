@@ -1,0 +1,186 @@
+---
+title: 'CREAREA PAGINII DE SLUG'
+description: 'CREAREA PAGINII DE SLUG'
+order: 16
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Pentru a crea pagina de slug, urmează acești pași:
+
+1. Deschide un fișier nou în editor și salvează-l cu numele `[slug].js` într-un dosar numit `product`, aflat în interiorul directorului `\pages`.
+2. Avem o cantitate mare de cod de parcurs, așa că îl vom lua bloc cu bloc, începând cu importurile:
+
+```jsx
+import React, { useState } from 'react';
+import {
+  AiOutlineMinus,
+  AiOutlinePlus,
+  AiFillStar,
+  AiOutlineStar,
+} from 'react-icons/ai';
+import { client, urlFor } from '../../lib/client';
+import { Product } from '../../components';
+```
+
+3. Lasă o linie liberă, apoi adaugă următorul cod — acesta se ocupă de liniile de deschidere ale componentei și definește câteva constante:
+
+```jsx
+const ProductDetails = ({ product, products }) => {
+  const { image, name, details, price, sku, ingredients, weight, delivery } =
+    product;
+  const [index, setIndex] = useState(0);
+
+```
+
+4. Lasă o linie liberă și adaugă prima jumătate a blocului `return` pentru componentă:
+
+```jsx
+  return (
+    <div>
+      <div className="product-detail-container">
+        <div>
+          <div className="image-container">
+            <img
+              src={urlFor(image && image[index])}
+            />
+          </div>
+
+```
+
+5. Următorul bloc gestionează galeria de imagini miniatură (_thumbnails_) afișate sub imaginea principală:
+
+```jsx
+          <div className="small-images-container">
+            {image?.map((item, i) => (
+              <img
+                key={i}
+                src={urlFor(item)}
+                className={
+                  i === index ? "small-image selected-image" : "small-image"
+                }
+                onMouseEnter={() => setIndex(i)}
+              />
+            ))}
+          </div>
+        </div>
+
+```
+
+6. Acest bloc mai mare se ocupă de randarea detaliilor produsului pe ecran:
+
+```jsx
+        <div className="product-detail-desc">
+          <h1>{name}</h1>
+          <div className="reviews">
+            <div>
+              <AiFillStar />
+              <AiFillStar />
+              <AiFillStar />
+              <AiFillStar />
+              <AiOutlineStar />
+            </div>
+            <p>(20)</p>
+          </div>
+          <h4>Details: </h4>
+          <p>{details}</p>
+          <p className="price">
+            ${price.toLocaleString("en-US", {
+              maximumFractionDigits: 2,
+              minimumFractionDigits: 2,
+            })}
+          </p>
+          per box of 12
+          <div className="quantity">
+            <h3>Quantity:</h3>
+            <p className="quantity-desc">
+              <span className="minus">
+                <AiOutlineMinus />
+              </span>
+              <span className="num">1</span>
+              <span className="plus">
+                <AiOutlinePlus />
+              </span>
+            </p>
+          </div>
+          <div className="sku">SKU: {sku}</div>
+        </div>
+      </div>
+
+```
+
+7. Ultima parte afișează un carusel de tip „S-ar putea să-ți placă” (_You may also like_), alături de etichetele JSX de închidere:
+
+```jsx
+      <div className="maylike-products-wrapper">
+        <h2>You may also like</h2>
+        <div className="marquee">
+          <div className="maylike-products-container track">
+            {products.map((item) => (
+              <Product key={item._id} product={item} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+```
+
+8. Nimic din toate acestea nu funcționează fără să preluăm datele specifice ale produsului dorit.
+   Pentru asta, facem o interogare către Sanity folosind slug-ul pentru a identifica produsul și pentru a genera căile/URL-urile statice pentru fiecare pagină de produs:
+
+```jsx
+export const getStaticPaths = async () => {
+  const query = `*[_type == "product"] {
+    slug {
+      current
+    }
+  }
+  `;
+  const products = await client.fetch(query);
+  const paths = products.map((product) => ({
+    params: {
+      slug: product.slug.current,
+    },
+  }));
+  return {
+    paths,
+    fallback: 'blocking',
+  };
+};
+
+export const getStaticProps = async ({ params: { slug } }) => {
+  const query = `*[_type == "product" && slug.current == '${slug}'][0]`;
+  const productsQuery = '*[_type == "product"]';
+  const product = await client.fetch(query);
+  const products = await client.fetch(productsQuery);
+  return {
+    props: { products, product },
+  };
+};
+
+export default ProductDetails;
+```
+
+9. Salvează fișierul și închide-l.
+10. Deschide o sesiune de terminal Node.js și asigură-te că te afli în dosarul proiectului.
+11. Run `npm run dev` în terminal și apasă Enter pentru a porni serverul de dezvoltare Next.js.
+12. Dacă totul a mers bine, la derularea paginii ar trebui să vezi o interfață similară cu exemplul din Figura 3-10 (folosind ca exemplu produsul _Cranberry Clementine macaron_).
+    <div className="my-4 flex justify-center">
+      <img
+        src="/images/nextjs/3-10.jpg"
+        alt="Figura 301"
+        className="h-auto w-9/10 max-w-xs"
+      />
+    </div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 3-10: Exmplu de pagina individuala</p>
+</div>
+Felicitări dacă ai ajuns până aici! Chiar dacă site-ul nu arată încă
+spectaculos, îi vom îmbunătăți aspectul mai târziu. Am acoperit concepte
+esențiale în această demonstrație, în special privind preluarea datelor (_data
+fetching_), așa că fă o scurtă pauză pentru a recapitula modificările înainte de
+a trece la sarcinile următoare.

@@ -1,0 +1,102 @@
+---
+title: 'Adăugarea detaliilor suplimentare despre produs'
+description: 'Adăugarea detaliilor suplimentare despre produs'
+order: 17
+category: 'NextJS'
+level: 'Incepator'
+---
+
+De fiecare dată când te uiți pe o pagină de produs, găsești informații suplimentare.
+În funcție de tipul produsului, acestea sunt adesea organizate sub formă de tab-uri (_tabs_), fiind o metodă excelentă de a economisi spațiu.
+În cazul nostru, vom afișa ingredientele, greutatea și metoda de livrare.
+
+Nu are rost să construim o componentă de tab-uri de la zero, deoarece există deja soluții excelente disponibile.
+Pentru această ultimă demonstrație din capitol, vom folosi pachetul `react-tabs` (disponibil pe `[www.npmjs.com/package/react-tabs](https://www.npmjs.com/package/react-tabs)`).
+
+**CREAREA TAB-URILOR**
+
+Pentru a adăuga tab-urile cu informații, urmează acești pași:
+
+1. Deschide o sesiune nouă de terminal Node.js și asigură-te că te afli în dosarul proiectului.
+2. Tastează `npm install react-tabs --save` și apasă Enter pentru a instala pachetul `react-tabs`.
+3. Creează un fișier nou în editor și salvează-l cu numele `Info.jsx` în folderul `\components`.
+4. În interiorul fișierului, adaugă importurile necesare la început:
+
+```jsx
+import React from 'react';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+```
+
+5. Lasă o linie liberă, adaugă eticheta de deschidere pentru componenta `Tabs`, urmată de antetele tab-urilor:
+
+```jsx
+const Info = ({ ingredients, weight, delivery }) => (
+  <Tabs>
+    <TabList>
+      <Tab>Description</Tab>
+      <Tab>Additional Information</Tab>
+    </TabList>
+
+```
+
+6. Imediat dedesubt, adaugă codul pentru panourile de conținut (_tab panels_):
+
+```jsx
+    <TabPanel>
+      <h2>Ingredients</h2>
+      <p>{ingredients}</p>
+    </TabPanel>
+    <TabPanel>
+      <h2>Additional Information</h2>
+      <table className="additional-info">
+        <tbody>
+          <tr>
+            <th>Weight:</th>
+            <td>{weight}</td>
+          </tr>
+          <tr>
+            <th>Delivery:</th>
+            <td>
+              <p>{delivery}</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </TabPanel>
+
+```
+
+7. Închide componenta și adaugă exportul implicit:
+
+```jsx
+  </Tabs>
+);
+
+export default Info;
+
+```
+
+8. Salvează fișierul și închide-l. Deschide fișierul `index.js` din folderul `\components` și adaugă această linie la final pentru reexportare:
+
+```javascript
+export { default as Info } from './Info';
+```
+
+9. Salvează și închide fișierul. Deschide fișierul `[slug].js` din exercițiul anterior și adaugă importul componentei `Info` înainte de definirea `ProductDetails`:
+
+```jsx
+import { Info } from '../../components';
+```
+
+10. Derulează până la linia `<div className="maylike-products-wrapper">` și adaugă apelul componentei direct deasupra ei:
+
+```jsx
+<Info ingredients={ingredients} weight={weight} delivery={delivery} />
+```
+
+11. Deschide o sesiune de terminal și asigură-te că te afli în folderul proiectului.
+12. Rulează `npm run dev` pentru a porni serverul de dezvoltare Next.js.
+13. Navighează pe o pagină de produs (de exemplu, _Cranberry Clementine macaron_).
+    Dacă totul a mers bine, vei vedea tab-urile cu informații suplimentare afișate în pagină.
+
+În starea sa curentă, fără stilizare CSS, s-ar putea să fie mai greu de observat schimbarea la o primă vedere. Tab-urile sunt acolo, dar nefiind încă stilizate, se pierd în pagină. Aspectul se va schimba radical odată ce vom adăuga stilurile CSS.
