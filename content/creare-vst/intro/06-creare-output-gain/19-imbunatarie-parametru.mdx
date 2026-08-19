@@ -1,0 +1,141 @@
+---
+title: 'Îmbunătățirea parametrului'
+description: 'Îmbunătățirea parametrului'
+order: 19
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Parametrul _Delay Time_ (Timpul de întârziere) funcționează, dar ar putea arăta și mai bine.
+În primul rând, este foarte greu să setezi valori scurte de delay.
+
+În _AudioPluginHost_, observă că setarea implicită de 100 ms este poziționată aproape complet în stânga pe potentiometrul glisant (_slider_) — dă dublu-clic sau Alt-clic pentru a reseta parametrul la valoarea implicită.
+Este aproape imposibil să alegi un timp de delay mai scurt!
+
+Acest lucru se întâmplă deoarece JUCE împarte gama parametrului — de la 5 ms la 5000 ms — în mod egal pe toată lungimea slider-ului.
+Nu este o abordare ideală.
+În schimb, ne dorim mai multă precizie atunci când setăm timpi scurți.
+Un delay de 20 ms va suna foarte diferit față de unul de 30 ms, în timp ce diferența dintre 1020 ms și 1030 ms este aproape insesizabilă pentru ureche.
+
+Din fericire, JUCE simplifică acest lucru.
+Putem adăuga un factor de înclinare (_skew factor_) în definiția parametrului, oferind mai mult spațiu pe slider valorilor mici.
+
+În fișierul `Parameters.cpp`, în cadrul funcției `createParameterLayout()`, modifică linia care definește intervalul parametrului _Delay Time_ astfel:
+
+```cpp
+juce::NormalisableRange<float> { minDelayTime, maxDelayTime, 0.001f, 0.25f },
+
+```
+
+Această modificare adaugă două argumente noi: `0.001f` reprezintă pasul (_step size_), adică slider-ul se va deplasa în pași de 0.001 ms.
+Ultimul argument, `0.25f`, este factorul de înclinare (_skew factor_).
+Poți experimenta cu această valoare.
+Cu cât numărul este mai mic, cu atât valorile reduse vor primi mai mult spațiu pe slider.
+
+Pornește plugin-ul și testează-l: slider-ul oferă acum un control mult mai fin asupra timpilor scurți de delay.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/vst/juce/73.jpg"
+    alt="Figura 73"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<p className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <strong>Figura 73: </strong>Skew factor face mai usor selectarea intre timpi
+  de delay scurti
+</p>
+
+Un alt lucru pe care îl putem îmbunătăți este modul în care valoarea parametrului este afișată în interfață (_editor_).
+În prezent, timpul de delay afișează mereu trei zecimale.
+Acest lucru este util pentru timpi scurți, dar inutil pentru timpi mai mari.
+JUCE rezolvă ușor și această problemă.
+
+Mai întâi, adaugă o funcție nouă în partea de sus a fișierului `Parameters.cpp`, sub funcția `castParameter`:
+
+```cpp
+static juce::String stringFromMilliseconds(float value, int)
+{
+    if (value < 10.0f) {
+        return juce::String(value, 2) + " ms";
+    } else if (value < 100.0f) {
+        return juce::String(value, 1) + " ms";
+    } else if (value < 1000.0f) {
+        return juce::String(int(value)) + " ms";
+    } else {
+        return juce::String(value * 0.001f, 2) + " s";
+    }
+}
+
+```
+
+Funcția `stringFromMilliseconds` primește două argumente. Primul, `value`, este un număr cu virgulă mobilă ce conține valoarea parametrului — timpul în milisecunde.
+Al doilea argument este un `int` care specifică lungimea maximă permisă a textului, dar pe care îl vom ignora (motiv pentru care nu are un nume asignat).
+
+`stringFromMilliseconds` convertește valoarea de timp a parametrului în text, o stochează într-un obiect `juce::String` și o returnează.
+
+În interiorul funcției există o serie de instrucțiuni `if` care verifică mărimea parametrului și construiesc textul pe baza acesteia:
+
+- `if (value < 10.0f)`: Dacă valoarea este mai mică de 10 milisecunde, returnează un text rotunjit la două zecimale (ex: `7.1234` devine `"7.12 ms"`).
+- `else if (value < 100.0f)`: Altfel, dacă valoarea este mai mică de 100 milisecunde, returnează un text cu o singură zecimală (ex: `56.83` devine `"56.8 ms"`).
+- `else if (value < 1000.0f)`: Altfel, dacă valoarea este mai mică de 1000 milisecunde (1 secundă), returnează un text fără zecimale. `int(value)` taie tot ce urmează după virgulă (ex: `819.25` devine `"819 ms"`).
+- `else`: În final, dacă niciuna dintre condițiile de mai sus nu este îndeplinită, parametrul este setat la 1000 milisecunde sau mai mult, iar valoarea va fi afișată în secunde.
+  De notat că `value * 0.001f` este echivalent cu `value / 1000.0f`, iar rezultatul este rotunjit la două zecimale (ex: `3154.7` devine `"3.15 s"`).
+
+Instrucțiunile `if` sunt ordonate intenționat de la cel mai mic la cel mai mare.
+Verificând mai întâi dacă valoarea este sub 10, captăm tot ce este între 5 ms și 10 ms (deoarece 5 ms este valoarea minimă).
+Dacă nu este cazul, verificăm valorile sub 100 ms (captând intervalul 10 ms - 100 ms) și așa mai departe.
+
+Pentru a folosi funcția `stringFromMilliseconds`, trebuie să adăugăm o linie în definiția parametrului din `createParameterLayout`.
+Modifică codul care creează parametrul _Delay Time_ astfel:
+
+```cpp
+layout.add(std::make_unique<juce::AudioParameterFloat>(
+    delayTimeParamID,
+    "Delay Time",
+    juce::NormalisableRange<float> { minDelayTime, maxDelayTime, 0.001f, 0.25f },
+    100.0f,
+    juce::AudioParameterFloatAttributes()
+        .withStringFromValueFunction(stringFromMilliseconds)
+));
+
+```
+
+Apelearea `juce::AudioParameterFloatAttributes().withStringFromValueFunction()` îi indică cadrului JUCE să folosească noua funcție `stringFromMilliseconds` atunci când aplicația gazdă (_host_) solicită reprezentarea text a parametrului (procedeu numit _string-from-value function_).
+
+_(Notă: La finalul instrucțiunii există două paranteze de închidere: prima aparține apelului `std::make_unique<...>( ... )`, iar a doua aparține metodei `layout.add(...)`.
+De asemenea, nu uita să pui o virgulă după `100.0f`)._
+
+Putem aplica aceeași tehnică și pentru parametrul de amplificare (_gain_). Adaugă următoarea funcție sub `stringFromMilliseconds`:
+
+```cpp
+static juce::String stringFromDecibels(float value, int)
+{
+    return juce::String(value, 1) + " dB";
+}
+
+```
+
+Aceasta rotunjește valoarea în decibeli la o singură zecimală și adaugă sufizul „dB”.
+
+Modifică definiția parametrului _Output Gain_ în `createParameterLayout` pentru a folosi `stringFromDecibels`:
+
+```cpp
+layout.add(std::make_unique<juce::AudioParameterFloat>(
+    gainParamID,
+    "Output Gain",
+    juce::NormalisableRange<float> { -12.0f, 12.0f },
+    0.0f,
+    juce::AudioParameterFloatAttributes()
+        .withStringFromValueFunction(stringFromDecibels)
+));
+
+```
+
+Testează modificările. Editorul afișează acum ambii parametri într-un mod mult mai clar și lizibil.
+
+**Notă:** Funcțiile `stringFromMilliseconds` și `stringFromDecibels` nu fac parte din obiectul `Parameters`, ci sunt funcții libere (_free functions_).
+Cuvântul cheie `static` indică faptul că acestea pot fi utilizate doar în interiorul fișierului `Parameters.cpp`.
+Similar membrilor de tip `private` dintr-o clasă, funcțiile statice nu sunt vizibile pentru celelalte fișiere din proiect. (Cuvântul cheie `static` a fost folosit anterior și pentru `minDelayTime` sau `maxDelayTime`, însă cu un alt rol.
+În C++, același cuvânt cheie are semnificații diferite în funcție de contextul în care este aplicat).

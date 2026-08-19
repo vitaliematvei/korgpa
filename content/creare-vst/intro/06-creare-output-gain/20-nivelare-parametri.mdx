@@ -1,0 +1,194 @@
+---
+title: 'Netezirea parametrilor (Parameter smoothing, redux)'
+description: 'Netezirea parametrilor (Parameter smoothing, redux)'
+order: 20
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Probabil ai observat că modificarea parametrului **Delay Time** în timp ce sunetul rulează generează din nou acel pârâit deranjant pe care l-am întâlnit și la parametrul _Output Gain_ — temutul **zipper noise** (zgomotul de tip „fermoar”).
+
+Poate te așteptai să rezolvăm această problemă folosind un obiect `juce::LinearSmoothedValue`, așa cum am făcut pentru _Output Gain_.
+Acest lucru este cu siguranță posibil, dar pentru parametrul _Delay Time_ vreau să-ți arăt o altă metodă de netezire a valorilor în timp.
+
+Vom folosi un așa-numit **filtru cu un singur pol (one-pole filter)** pentru a realiza netezirea.
+Este unul dintre cele mai simple tipuri de filtre și este extrem de util pentru crearea tranzițiilor exponențiale între semnale.
+
+### Liniar vs. Exponențial
+
+Cu `juce::LinearSmoothedValue`, atunci când parametrul se modifică, are loc o tranziție liniară (fade liniar) între valoarea veche și cea nouă.
+Liniar înseamnă că evoluția are loc într-o linie dreaptă.
+Tranzițiile liniare sunt foarte utile și adecvate pentru netezirea parametrilor, însă uneori ne dorim tranziții exponențiale.
+O curbă exponențială începe rapid și apoi încetinește treptat.
+Astfel de tranziții sună de multe ori mai natural pentru auzul uman.
+
+Amintește-ți că _zipper noise_ apare deoarece semnalul de comandă pentru parametri este actualizat la o rată mult mai mică decât rata la care este randat semnalul audio.
+Filtru _one-pole_ este un filtru trece-jos (_low-pass filter_) care, în esență, realizează o supraeșantionare (_upsampling_) a semnalului de comandă, astfel încât acesta să devină neted și la rata de eșantionare audio.
+
+Pentru majoritatea parametrilor, îți sugerez să folosești `juce::LinearSmoothedValue`, dar pentru _Delay Time_ curbele exponențiale ale unui filtru _one-pole_ sună mai bine.
+Rezultatul seamănă mult mai mult cu ce se întâmplă la un delay analogic clasic pe bandă (_tape delay_).
+În plus, este un pretext excelent pentru a discuta despre acest filtru super accesibil pe care îl vei întâlni peste tot în codul audio, nu doar la netezirea parametrilor.
+
+---
+
+## Implementare pas cu pas
+
+Conceptul este următorul: vom seta un timp de delay țintă (_target_) citit din parametru.
+La fiecare pas de timp (fiecărui eșantion), filtrul va muta timpul real de delay puțin mai aproape de valoarea țintă.
+
+### 1. Modificări în `Parameters.h`
+
+Adaugă două variabile noi în secțiunea `private:` a clasei:
+
+```cpp
+float targetDelayTime = 0.0f;
+float coeff = 0.0f; // netezire one-pole
+
+```
+
+- Variabila `targetDelayTime` reprezintă valoarea pe care filtrul încearcă să o atingă.
+- Variabila `coeff` (coeficientul) determină viteza cu care are loc netezirea.
+
+### 2. Modificări în `Parameters.cpp`
+
+În funcția `update`, înlocuiește linia:
+
+```cpp
+delayTime = delayTimeParam->get();
+
+```
+
+cu următorul bloc:
+
+```cpp
+targetDelayTime = delayTimeParam->get();
+if (delayTime == 0.0f) {
+    delayTime = targetDelayTime;
+}
+
+```
+
+În loc să introducem valoarea parametrului direct în `delayTime`, o plasăm mai întâi în `targetDelayTime`. În loc să comutăm instantaneu la noua setare, vom trata _Delay Time_ ca pe o țintă către care ne deplasăm treptat.
+
+### 3. Calcularea coeficientului în `prepareToPlay`
+
+Avem nevoie să calculăm coeficientul pentru variabila `coeff`.
+Un filtru are de obicei unul sau mai mulți coeficienți care determină exact ce este filtrat.
+Deoarece filtrul nostru are un singur pol, el are un singur coeficient.
+
+Coeficientul depinde de rata de eșantionare (_sample rate_), așa că un loc potrivit pentru a-l calcula este în metoda `prepareToPlay` din `Parameters`:
+
+```cpp
+coeff = 1.0f - std::exp(-1.0f / (0.2f * float(sampleRate)));
+
+```
+
+Fără a intra prea adânc în matematică, valoarea `0.2f` din această formulă înseamnă **200 de milisecunde**.
+După 200 ms, filtrul va fi ajuns la 63.2% din valoarea țintă.
+De ce tocmai acest procentaj?
+Această formulă descrie timpul de încărcare al unui condensator analogic, iar în DSP este foarte comun să folosim aceleași curbe de încărcare ca în circuitele electronice analogice.
+
+### 4. Aplicarea formulei în `smoothen()`
+
+În final, adaugă următoarea linie în funcția `smoothen()` pentru a executa procesarea propriu-zisă.
+Aceasta este celebra formulă pentru filtrul _one-pole_:
+
+```cpp
+delayTime += (targetDelayTime - delayTime) * coeff;
+
+```
+
+---
+
+## Cum funcționează matematica din spate
+
+Variabila `coeff` are o valoare cuprinsă între 0 și 1.
+Ori de câte ori înmulțești o valoare succesiv cu un număr precum 0.9, ea va deveni din ce în ce mai mică, într-un mod exponențial:
+
+- $1.0 \times 0.9 = 0.9$
+- $0.9 \times 0.9 = 0.81$
+- $0.81 \times 0.9 = 0.729$
+- $0.729 \times 0.9 = 0.656$
+- $0.656 \times 0.9 = 0.591$
+- ...și așa mai departe.
+
+Dacă am reprezenta acest lucru într-un grafic, am vedea o curbă exponențială tipică.
+Inițial, pasul dintre valorile succesive este mare, dar devine din ce în ce mai mic în timp, fără să atingă niciodată complet zero.
+
+Formula generală pentru un filtru _one-pole_ este:
+
+currentValue += (targetValue - currentValue) x coeff
+
+Dacă rescriem formula folosind regulile algebrice de bază:
+
+Dacă presupunem o rată de eșantionare de **48 kHz**, `coeff` va fi aproximativ `0.0001041612`.
+Este un număr foarte mic, dar reține că executăm această înmulțire de 48.000 de ori pe secundă.
+Cu cât coeficientul este mai mic, cu atât filtrul are nevoie de mai mult timp pentru a atinge valoarea țintă (ceea ce înseamnă o netezire mai puternică și o frecvență de tăiere mai joasă).
+
+Avantajul filtrului _one-pole_ este că `targetValue` se poate schimba în orice moment fără a provoca erori: dacă utilizatorul mișcă slider-ul în timp ce parametrul încă se netezește, filtrul își ajustează pur și simplu traiectoria către noua țintă.
+
+---
+
+## Actualizarea buclei audio în `PluginProcessor.cpp`
+
+În `processBlock`, lungimea delay-ului era setată o singură dată per bloc.
+Acum că netezim timpul de delay la nivel de eșantion, trebuie să mutăm apelul `delayLine.setDelay()` **în interiorul buclei audio**, imediat după `params.smoothen()`.
+
+În `PluginProcessor.cpp`, mută aceste două linii în interiorul buclei:
+
+```cpp
+// În interiorul buclei for/while per sample:
+params.smoothen();
+
+float delayInSamples = params.delayTime / 1000.0f * sampleRate;
+delayLine.setDelay(delayInSamples);
+
+```
+
+> **Notă:** Linia `float sampleRate = ...` poate rămâne în afara buclei, deoarece rata de eșantionare nu se schimbă pe parcursul unui bloc audio.
+
+---
+
+## Ce auzim și cum experimentăm
+
+Când vei mișca slider-ul _Delay Time_, vei observa că pârâitul (_zipper noise_) a dispărut complet.
+În schimb, apare un efect de tip „whoosh” sau _pitch shifting_, similar cu sunetul obținut când faci scratching pe un disc de vinil sau când modifici viteza benzii la un tape delay analogic.
+
+Acest efect apare deoarece schimbarea lungimii liniei de delay în timp ce redă sunet comprimă sau dilată forma de undă (modificând pitch-ul).
+
+### Experimentează cu timpul de netezire:
+
+Poți schimba valoarea `0.2f` din calculul `coeff` din `prepareToPlay`:
+
+- Încearcă **`0.01f`** pentru o netezire foarte rapidă (sună aproape ca un efect de laser).
+- Încearcă **`1.0f`** pentru o tranziție foarte lentă.
+
+Dacă folosești o netezire lungă (`1.0f`), poți dezactiva temporar semnalul direct (_dry_) la finalul `processBlock` pentru a auzi doar semnalul procesat (_wet_):
+
+```cpp
+channelDataL[sample] = wetL * params.gain;
+channelDataR[sample] = wetR * params.gain;
+
+```
+
+---
+
+## Tip: Vizualizarea filtrului pe un osciloscop
+
+O tehnică utilă de debug în DSP este trimiterea valorilor de control către ieșirea audio pentru a le vizualiza pe un osciloscop.
+
+La finalul buclei audio din `processBlock`, poți scrie temporar:
+
+```cpp
+channelDataL[sample] = params.delayTime / 5000.0f;
+channelDataR[sample] = params.delayTime / 5000.0f;
+
+```
+
+_Împărțim la `5000.0f` deoarece semnalele audio trebuie să fie în intervalul $[-1.0, 1.0]$, iar timpul de delay este exprimat în milisecunde (între 5 și 5000 ms)._
+
+> **Atenție:** Oprește volumul difuzoarelor/căștilor sau deconectează blocul de Delay de la ieșirea audio (_Audio Output_) în AudioPluginHost înainte de a rula această verificare, pentru a evita eventuale pocneste în difuzoare.
+
+Conectează plug-in-ul la un plug-in de osciloscop. Mișcă slider-ul de _Delay Time_ și vei putea observa clar curba exponențială generată de filtrul _one-pole_ pe măsură ce valoarea tranziționează între setări. După ce ai verificat, nu uita să refaci codul din `processBlock` la starea sa inițială.
+
+{/* am ramas Dry/wet mix .202 */}
