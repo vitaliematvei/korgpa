@@ -1,0 +1,134 @@
+---
+title: 'Atacul și eliberarea (Attack și Release)'
+description: 'Atacul și eliberarea (Attack și Release)'
+order: 14
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Compresoarele moderne pot reacționa instantaneu la modificările bruște de nivel, însă un răspuns atât de rapid nu este întotdeauna de dorit.
+De exemplu, pentru a păstra atacul natural al unui instrument, dorim adesea să lăsăm o porțiune din explozia inițială de semnal (_transient_) să treacă neafectată (sau puțin afectată) prin compresor.
+Pentru a realiza acest lucru, trebuie să putem încetini timpii de răspuns ai compresorului.
+În mod similar, dacă o cantitate considerabilă de reducere a volumului (_gain reduction_) dispare prea repede, semnalul își revine brusc, ceea ce poate duce la efectul de „pompaj” (_pumping_).
+Pentru a preveni acest lucru, avem nevoie de o modalitate de a controla viteza cu care scade reducerea de volum.
+
+_Attack_-ul și _release_-ul sunt cunoscuți și sub denumirea de constante de timp sau timpi de răspuns.
+**Attack-ul** determină cât de rapid crește reducerea de volum, în timp ce **release-ul** determină cât de rapid scade aceasta.
+În esență, o setare mai lungă pentru oricare dintre aceștia va încetini rata cu care reducerea de volum crește (_attack_) sau scade (_release_).
+De exemplu, în Figura 17.5d, reducerea de volum crește instantaneu de la 0 la 2 dB și apoi scade instantaneu înapoi la 0 dB.
+O setare de 1 ms atât pentru _attack_, cât și pentru _release_ înseamnă că este nevoie de 1 ms pentru ca reducerea de volum să urce și să coboare (Figura 17.5e).
+
+Ambele intervale sunt setate de obicei în milisecunde.
+Timpii de _attack_ variază în general între **0,010 ms (10 μs) și 250 ms**, în timp ce timpii de _release_ se încadrează frecvent în intervalul **5–3.000 ms (3 secunde)**.
+
+Este important de înțeles că ambii timpi determină **cât de rapid se poate schimba** reducerea de volum, și nu timpul fix necesar pentru întreaga modificare.
+În practică, ambii definesc timpul necesar pentru ca reducerea de volum să varieze cu un număr stabilit de dB.
+De exemplu, un timp de _release_ de 1 secundă poate indica faptul că este nevoie de 1 secundă pentru ca reducerea de volum să scadă cu 10 dB.
+În consecință, va fi nevoie de jumătate de secundă pentru a scădea cu 5 dB.
+
+Acest comportament poate fi comparat cu balistica unui VU-metru.
+O scădere rapidă a unui vârf de semnal va apărea treptat pe un VU-metru.
+Când vârfurile scad lent, indicația VU-metrului va fi foarte similară cu cea a unui indicator de vârf (_peak meter_).
+_Attack_-ul și _release_-ul au un efect foarte similar asupra reducerii de volum.
+
+Figura 17.11 arată efectul diferitelor setări de _attack_ și _release_ asupra unei forme de undă.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-11.jpg"
+    alt="Figura 17-11"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.11:</p>Efectul diferitelor setări de attack și
+  release asupra unei forme de undă. (a) Nivelurile originale înainte de
+  compresie. (b–e) Nivelurile rezultate după compresie.
+</div>
+
+Pe toate graficele, raportul (_ratio_) este de 2:1, iar pragul (_threshold_) este setat la 6 dB.
+Semnalul original de intrare (a) crește instantaneu de la 6 la 12 dB, iar apoi scade instantaneu înapoi la 6 dB.
+În toate cazurile, valoarea depășirii (_overshoot amount_) este de 6 dB, deci cu raportul de 2:1, valoarea totală a reducerii de volum este de 3 dB.
+
+- Se poate observa în (b) că dacă nu există _attack_ și nici _release_, semnalul care depășește pragul este redus constant cu 3 dB.
+- Când există un anumit nivel de _attack_ și _release_ (c–e), durează ceva timp până când se atinge reducerea maximă de volum și apoi durează ceva timp până când reducerea de volum încetează.
+
+Este demn de remarcat ce se întâmplă când _release_-ul este activat, iar semnalul original scade de la 12 dB înapoi la 6 dB: inițial, există încă o reducere de volum de 3 dB, astfel încât semnalul original este atenuat la 3 dB sub nivelul său inițial.
+Treptat, reducerea de volum scade, și doar după ce perioada de _release_ a trecut, semnalul original revine la 6 dB.
+Aceasta este prima excepție în care semnalele aflate sub prag sunt totuși reduse ca nivel.
+Graficul de reducere a volumului de sub (d) ne ajută să înțelegem de ce se întâmplă acest lucru.
+
+Unele compresoare oferă funcții de **Auto Attack** sau **Auto Release**.
+Când oricare dintre acestea este activată, compresorul determină automat timpii de răspuns.
+În cele mai multe cazuri, acest lucru se realizează prin analizarea diferenței dintre nivelul de vârf (_peak_) și nivelul mediu (_RMS_) al semnalului din circuitul secundar (_side-chain_).
+Este util de știut că în modul auto, nici _attack_-ul și nici _release_-ul nu sunt constante (așa cum sunt atunci când le setăm manual).
+În schimb, ambele se modifică în raport cu nivelul de moment al semnalului de intrare.
+De exemplu, o lovitură de tobă mică (_snare_) poate genera un _release_ mai rapid decât o notă de xilofon.
+Astfel, modul auto nu oferă mai puțin control — ci pur și simplu un alt tip de control.
+Funcția _auto release_, cel puțin pe compresoarele consacrate, se bucură de o reputație foarte bună.
+
+O mare parte din caracterul unui compresor (sau al oricărui alt procesor de dinamică) este determinată de funcțiile de _attack_ și _release_; în special de **legile lor de temporizare** (_timing laws_).
+Legile de temporizare determină rata de schimbare pe care _attack_-ul și _release_-ul o aplică asupra reducerii de volum, iar în cea mai simplă formă a lor, acestea pot fi **exponențiale** sau **liniare**.
+Există o oarecare similitudine cu trecerile (_fades_) exponențiale și liniare, cu excepția faptului că _fade_-urile sunt aplicate asupra semnalului în sine, în timp ce _attack_-ul și _release_-ul sunt aplicate asupra reducerii de volum.
+În general, legile de temporizare exponențiale tind să sune mai natural.
+Legile liniare tind să aducă mai multă culoare și un efect mai pronunțat, adesea asociat cu sunetul unor echipamente analogice favorite.
+Foarte puține compresoare ne oferă control direct asupra acestei legi de temporizare; compresorul din Sonnox Oxford Dynamics (Figura 17.13) este unul dintre puținele care o fac (câmpul „NORMAL” de deasupra graficului indică o lege exponențială).
+
+Așa cum se vede în Figura 17.5, atât _attack_-ul, cât și _release_-ul sunt controale legate de etajul de timp (_time stage_).
+Intrarea în etajul de timp este valoarea provizorie a reducerii de volum.
+Etajul de timp încetinește modificările bruște ale acestei reduceri.
+Atât timp cât intrarea în etajul de timp este mai mare decât ieșirea sa, reducerea de volum va continua să crească cu rata setată de _attack_.
+În momentul în care intrarea devine mai mică decât ieșirea, reducerea de volum începe să scadă cu rata setată de _release_.
+Figura 17.12 ilustrează acest proces.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-12.jpg"
+    alt="Figura 17-12"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.12:</p>Etajul de timp (Time Stage)
+
+Intrarea în etajul de timp provine de la etajul de scalare (scale stage) și reprezintă valoarea provizorie a reducerii de volum (gain reduction). Parametrul attack din cadrul etajului de timp încetinește creșterea reducerii de volum.
+
+De reținut că, chiar și atunci când valoarea de intrare în funcția de timp începe să scadă (la 2,5 ms), valoarea de ieșire continuă să crească, deoarece cantitatea provizorie de reducere a volumului este încă mai mare decât cea aplicată în acel moment. Abia când valoarea provizorie scade sub valoarea aplicată (la 4 ms), aceasta din urmă începe să coboare. În acest punct, faza de attack se încheie și începe faza de release.
+
+</div>
+
+Un lucru crucial de înțeles este că **atacul și eliberarea se aplică asupra reducerii de volum**, iar etajul de timp în care sunt aplicate acestea **nu are cunoștință de setarea pragului (_threshold_)**.
+Multe surse afirmă incorect că _release_-ul are loc doar atunci când nivelul semnalului scade sub prag.
+În realitate, atât _attack_-ul, cât și _release_-ul afectează reducerea de volum (și, implicit, nivelul semnalului), chiar și atunci când nivelul semnalului se modifică exclusiv **peste** prag.
+Figura 17.13 demonstrează acest lucru.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-13.jpg"
+    alt="Figura 17-13"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.13:</p>**Acțiunea timpilor de *attack* și
+  *release* peste pragul de declanșare (*threshold*).** Forma de undă de sus
+  crește de la –6 la 0 dB, iar apoi scade înapoi la –6 dB. Această formă de undă
+  trece prin pluginul Oxford Dynamics având setările afișate, iar rezultatul
+  obținut după compresie este reprezentat de forma de undă de jos. Pragul
+  compresorului este setat la –12 dB (liniile punctate), astfel încât toate
+  variațiile de nivel din forma de undă de sus au loc **exclusiv peste prag**.
+  Pe forma de undă de jos, care arată semnalul la ieșirea din compresor, se
+  poate observa clar acțiunea ambilor parametri (_attack_ și _release_).
+  Compresoarele analogice se comportă exact în același mod.
+</div>
+
+Forma de undă din partea de sus a Figurii 17.13 este cunoscută sub numele de _noise burst_ (rafală de zgomot) și este utilizată frecvent pentru a demonstra funcția de timp a procesoarelor de dinamică.
+Cu toate acestea, ar putea fi la fel de ușor demonstrată folosind o voce care crește de la niveluri deja aflate peste prag și apoi scade înapoi la niveluri aflate tot peste prag (Ceva de genul _ah-Ah-AH-Ah-ah_, unde doar primul și ultimul _ah_ sunt sub prag).
+
+Faptul că _attack_-ul și _release_-ul afectează modificările de nivel chiar și atunci când acestea au loc peste prag înseamnă că dinamica este controlată într-o măsură mult mai mare decât ar fi dacă compresoarele ar acționa doar când semnalele depășesc sau cad sub prag.
+_Attack_-ul și _release_-ul vor fi aplicate pe _AH_ la fel ca pe _Ah_.
+Destul de des, vocile fluctuează ca nivel după ce au depășit pragul, iar _release_-ul și _attack_-ul ne influențează în continuare capacitatea de a le echilibra.
+De asemenea, _attack_-ul și _release_-ul vor acționa pe semnalele care fluctuează peste prag chiar și atunci când acesta este setat foarte jos.

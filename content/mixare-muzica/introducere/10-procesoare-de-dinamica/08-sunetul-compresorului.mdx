@@ -1,0 +1,53 @@
+---
+title: 'Sunetul compresoarelor'
+description: 'Sunetul compresoarelor'
+order: 8
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Nu există două modele de compresoare care să suna identic, și cu siguranță nu două compresoare analogice.
+Unele funcționează mai bine pe tobe, altele pe voce; unele adaugă căldură, altele un plus de impact (_punch_); unele pot fi transparente, în timp ce altele produc un efect extrem de evident.
+Fiecare compresor are o personalitate proprie, iar pentru a avea un caracter distinct, trebuie să difere prin ceva față de celelalte.
+
+Putem generaliza ce ne dorim de la un compresor precis; iată doar câteva aspecte:
+
+- **Pornirea compresiei:** Să înceapă la un punct constant în raport cu pragul (_threshold_).
+- **Comportament uniform:** Etajul de amplificare (_gain stage_) să acționeze uniform la toate nivelurile de semnal și cu timpi de răspuns constanți.
+- **Precizie pe raport:** O performanță exactă din partea funcției de raport (_ratio_).
+- **Control complet:** Posibilitatea de a seta timpii de atac (_attack_) și eliberare (_release_) după bunul plac, chiar dacă aceștia sunt foarte scurți.
+- **Consistență pe anvelopă:** Anvelopele de atac și eliberare să fie precise și constante.
+
+În practică, construirea unui compresor digital precis nu mai reprezintă o provocare.
+O căutare rapidă pe internet oferă imediat un algoritm gratuit pentru un astfel de compresor, însă acesta nu va avea caracter.
+Modelele analogice au personalitate tocmai din cauza lipsei lor de precizie — fiecare este inexact în propriul său mod unic.
+Modul în care se comportă raportul de compresie (_ratio_) sau natura funcțiilor de _attack_ și _release_ definesc în mare măsură sunetul unui compresor.
+Aceste aspecte sunt cele care au adus modelelor _vintage_ o bună parte din gloria lor.
+Pentru a adăuga caracter compresoarelor digitale, dezvoltatorii trebuie să aleagă unde și cum să introducă abateri de la designul matematic ideal.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-3.jpg"
+    alt="Figura 17-3"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.3:</p>De sus în jos: Chandler Limited RS124;
+  Empirical Labs Distressor; Focusrite Blue 330. Cele trei au amprente sonore
+  net diferite. Imagine oferită prin amabilitatea Abbey Road Institute, Londra.
+</div>
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-4.jpg"
+    alt="Figura 17-4"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.4:</p>Un plugin de compresie: Digidesign
+  DigiRack Compressor/Limiter Dyn 3.
+</div>

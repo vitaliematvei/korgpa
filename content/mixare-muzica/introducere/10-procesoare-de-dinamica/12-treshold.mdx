@@ -1,0 +1,57 @@
+---
+title: 'Pragul de declanșare (Threshold)'
+description: 'Pragul de declanșare (Threshold)'
+order: 12
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Pragul (_threshold_) este nivelul peste care începe reducerea volumului (_gain reduction_).
+Orice semnal care depășește acest prag este considerat semnal de depășire (_overshooting signal_) și, în mod normal, îi va fi redus nivelul.
+Cu cât un semnal depășește mai mult pragul, cu atât se aplică o reducere mai mare a volumului.
+Semnalele care se află sub prag rămân, în general, neafectate (vom analiza două excepții de la această regulă mai târziu).
+Pragul este cel mai adesea calibrat în decibeli (dB).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-6.jpg"
+    alt="Figura 17-6"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.6:</p>**Setarea pragului (*Threshold*).**
+  **(a)** Un prag mai ridicat (*higher threshold*) înseamnă că o porțiune mai
+  mică din semnal este procesată. **(b)** Un prag mai scăzut (*lower threshold*)
+  are ca rezultat procesarea unei porțiuni mai mari din semnal.
+</div>
+
+Funcția de prag de pe un compresor se prezintă sub două forme: prag variabil sau prag fix.
+Un compresor cu prag variabil oferă un control dedicat prin care se setează nivelul pragului.
+Un compresor cu prag fix (Figura 17.7) oferă în schimb un control al volumului de intrare (_input gain_) — cu cât amplificăm mai mult semnalul de intrare, cu atât acesta va depăși mai mult pragul fix.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-7.jpg"
+    alt="Figura 17-7"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.7:</p>**Universal Audio 1176SE.** Acest plugin
+  pentru platforma UAD emulează legendarul Urei 1176LN. Dispune de un prag fix
+  (*fixed threshold*), iar gradul de compresie este determinat parțial de
+  nivelul volumului de intrare (*input gain*).
+</div>
+
+Acest lucru este similar cu modul în care se obține compresia la suprasolicitarea benzilor magnetice.
+Pentru a compensa amplificarea semnalului de intrare, este prevăzut și un control al volumului de ieșire (_output gain_).
+Un avantaj al designului cu prag fix (în cazul unităților analogice, cel puțin) este că zgomotul introdus de etajul de amplificare este adesea atenuat de volumul de ieșire.
+La designurile cu prag variabil, același zgomot este de obicei amplificat de volumul de ieșire.
+
+După cum se poate observa în Figura 17.5c, etajul de prag este alimentat cu nivelul semnalului din _side-chain_.
+Rezultatul (_output-ul_) acestui etaj este valoarea depășirii (_overshoot amount_), care indică cu cât se află un semnal peste pragul stabilit.
+De exemplu, dacă pragul este setat la 2 dB, iar nivelul semnalului este de 6 dB, valoarea depășirii este de 4 dB.
+Dacă nivelul semnalului este sub prag, valoarea depășirii este de 0 dB.

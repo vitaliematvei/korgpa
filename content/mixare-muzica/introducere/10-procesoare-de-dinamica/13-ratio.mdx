@@ -1,0 +1,93 @@
+---
+title: 'Raportul de compresie (Ratio)'
+description: 'Raportul de compresie (Ratio)'
+order: 13
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Raportul de compresie poate fi comparat cu forța gravitațională, care determină măsura în care obiectele sunt trase spre pământ.
+Pe Lună gravitația este mai mică, așa că astronauții pot săiasă mai sus.
+_Ratio_ determină măsura în care semnalele care depășesc pragul sunt trase în jos, înapoi spre nivelul pragului (_threshold_).
+Cu cât raportul este mai mic, cu atât îi este mai ușor semnalului să urce deasupra pragului.
+Figura 17.8 arată efectul diferitelor raporturi de compresie asupra unui semnal de intrare.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-8.jpg"
+    alt="Figura 17-8"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.8:</p>**Efectul diferitelor raporturi de
+  compresie (*ratios*) asupra anvelopei de nivel a unei forme de undă.**
+</div>
+
+Lăsând fizica newtoniană deoparte, odată ce semnalul depășește pragul, controlul _Ratio_ determină raportul dintre variația nivelului de intrare și cea a nivelului de ieșire (așa cum sugerează și notația intrare-ieșire).
+De exemplu, cu un raport de **2:1**, o creștere de 2 dB peste prag la intrare va avea ca rezultat o creștere de doar 1 dB peste prag la ieșire.
+
+Raportul determină modul în care semnalele ce depășesc pragul sunt reduse la scară:
+
+- **1:1 (câștig unitar):** Înseamnă că nu are loc nicio reducere — un semnal care depășește pragul cu 6 dB va părăsi compresorul tot cu 6 dB peste prag.
+- **2:1:** Înseamnă că un semnal ce depășește pragul cu 6 dB este redus la jumătatea valorii sale de depășire și părăsește compresorul la 3 dB peste prag.
+- **6:1:** Înseamnă că un semnal ce depășește pragul cu 6 dB este redus la o șesime și părăsește compresorul la doar 1 dB peste prag.
+- **∞:1 (infinit la unu):** Reprezintă cel mai mare raport posibil, unde orice semnal ce depășește pragul este tăiat exact la nivelul pragului.
+  Adesea, un raport de ∞:1 este obținut prin utilizarea unui raport extrem de mare, cum ar fi 1.000:1.
+
+Figura 17.9 ilustrează aceste patru scenarii.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-9.jpg"
+    alt="Figura 17-9"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.9:</p>**Diferite raporturi de compresie
+  (*ratios*) pe graficele caracteristicilor de transfer.** În toate aceste
+  grafice, pragul (*threshold*) este setat la –12 dB, iar semnalul de intrare
+  este de –6 dB (cu 6 dB peste prag). Cu un raport de **1:1**, semnalul de
+  ieșire părăsește compresorul la același nivel de –6 dB (6 dB peste prag); cu
+  un raport de **2:1**, semnalul iese la –9 dB (3 dB peste prag); cu un raport
+  de **6:1**, semnalul iese la –11 dB (1 dB peste prag); iar cu un raport de
+  **∞:1**, semnalul părăsește compresorul exact la nivelul pragului.
+</div>
+
+O caracteristică a compresoarelor vintage — în special a designurilor _vari-mu_ și _FET_ — este că curba de _ratio_ își păstrează forma intenționată, dar revine treptat spre câștigul unitar (1:1) în cazul semnalelor foarte puternice.
+Acest tip de curbă tinde să avantajeze tranzienții, deoarece vârfurile extrem de puternice nu sunt strivite — compresia este aplicată, dar se pierde mai puțină dinamică.
+Raiul tobelor.
+Multe compresoare digitale imită acest comportament caracteristic prin utilizarea unor curbe de _ratio_ similare.
+Pluginul McDSP CB1 din Figura 17.10 este unul dintre ele.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-10.jpg"
+    alt="Figura 17-10"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.10:</p>**Pluginul McDSP CB1.** Graficul
+  intrare-ieșire arată că procesul de compresie începe în jurul pragului
+  (*threshold*) și apoi evoluează într-o limitare accentuată (*heavy limiting*).
+  Cu toate acestea, în jurul valorii de –12 dB, curba raportului de compresie
+  (*ratio*) își schimbă direcția și începe să revină treptat spre câștigul
+  unitar (*unity gain*). Pantele de *ratio* de această natură, care se abat de
+  la forma perfectă din manuale, pot oferi un sunet caracteristic, o trăsătură
+  tipică a designurilor analogice *vintage*.
+</div>
+Raportul de compresie este realizat în interiorul unui compresor prin etajul de
+scalare (_scale stage_, Figura 17.5). Etajul de scalare este inima operațională
+a procesului de compresie — aici valoarea depășirii (_overshoot amount_) este
+convertită în reducerea provizorie de volum. Rezultatul etajului de scalare este
+aproape pregătit pentru a fi trimis către etajul de amplificare (_gain stage_).
+_Ratio_ determină practic procentul cu care valoarea depășirii este redusă spre
+0 dB. Un raport de 1:1 înseamnă că valoarea depășirii este redusă la 0 dB în
+totalitate (în sens de atenuare zero), adică nu are loc nicio reducere de volum.
+La un raport de 2:1, valoarea depășirii este redusă la jumătate. De exemplu, o
+depășire de 4 dB devine 2 dB.

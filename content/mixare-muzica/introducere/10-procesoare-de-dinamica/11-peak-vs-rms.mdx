@@ -1,0 +1,19 @@
+---
+title: 'Detectarea nivelului: Peak vs. RMS'
+description: 'Detectarea nivelului: Peak vs. RMS'
+order: 11
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Pe măsură ce semnalul intră în circuitul secundar (_side-chain_), acesta întâlnește mai întâi etajul de detectare a nivelului.
+Aici, amplitudinea sa bipolară (Figura 17.5a) este convertită într-o reprezentare unipolară a nivelului (Figura 17.5b).
+În acest punct, nivelul semnalului este determinat de valoarea sa de vârf (_peak_).
+
+În loc de o detectare bazată pe vârfuri (_peak-sensing_), ar putea fi în interesul nostru să folosim o detectare bazată pe valoarea medie pătratică (_RMS-sensing_), astfel încât compresorul să reacționeze la senzația de volum (_loudness_) a semnalelor de intrare, mai degrabă decât la vârfurile de scurtă durată ale acestora (vocea, de exemplu, este adesea comprimată mai bine în acest mod).
+O funcție RMS (sau o altă funcție de mediere) poate acționa în acest etaj.
+Ca analogie, este ca și cum am înlocui un indicator de vârf (_peak meter_) din interiorul etajului de detectare cu un indicator de volum mediu (_VU meter_).
+
+Un compresor poate oferi doar detectare de tip _peak_, doar de tip _RMS_, sau poate include un comutator pentru a alterna între cele două.
+Unele compresoare permit chiar reglarea progresivă a unghiului dintre cele două moduri.
+Dacă nu este specificată nicio opțiune, cel mai probabil compresorul funcționează în modul RMS.

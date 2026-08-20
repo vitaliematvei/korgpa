@@ -1,0 +1,30 @@
+---
+title: 'Etajul de amplificare (Gain Stage)'
+description: 'Etajul de amplificare (Gain Stage)'
+order: 10
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Etajul de amplificare este responsabil pentru atenuarea (și, în unele cazuri, amplificarea) semnalului de intrare cu un număr stabilit de dB (valoare determinată de circuitul _side-chain_).
+Etajul de amplificare din Figura 17.5 se bazează pe un VCA, însă pot fi folosite și alte tipuri de circuite.
+Este util să înțelegi diferențele dintre ele, fie și doar pentru faptul că multe dintre compresoarele digitale de astăzi încearcă să imite sunetul celor analogice clasice:
+
+- **Vari-mu:** Primele modele de compresoare se bazau pe lămpi (tuburi) cu amplificare variabilă (_variable-mu_); practic, amplificatoare cu câștig variabil. Designurile vari-mu nu au un control dedicat pentru raportul de compresie (_ratio_); ele aplică o reducere progresivă a volumului în funcție de nivelul de intrare (un comportament similar cu opțiunea _soft-knee_, explicată mai târziu).
+  Însă acest lucru se întâmplă doar până la un anumit punct, moment în care compresorul revine la un răspuns liniar.
+  Această caracteristică funcționează excelent pe instrumentele de percuție, deoarece tranzienții puternici nu sunt striviți.
+  Modelele vari-mu au timpi de _attack_ și _release_ mai rapizi decât cele optice, dar nu la fel de rapizi ca designurile VCA sau FET.
+- **FET:** Pe măsură ce tranzistoarele de dimensiuni mici au început să înlocuiască lămpile masive, generațiile ulterioare de compresoare s-au bazat pe tranzistoare cu efect de câmp (FET).
+  Acestea ofereau timpi de _attack_ și _release_ considerabil mai rapizi decât modelele vari-mu și introduceau o funcție nouă: raportul de compresie (_ratio_).
+  La fel ca la designurile vari-mu, raportul de compresie tinde să revină la un răspuns liniar în cazul unui semnal de intrare foarte puternic.
+- **Opto:** Circuitul _side-chain_ al unui compresor optic controlează luminozitatea unui bec sau a unui LED.
+  În etajul de amplificare există un material fotorezistiv care determină cantitatea de atenuare aplicată.
+  Așa cum pupilele noastre au nevoie de puțin timp pentru a se contracta și dilata în reacție la schimbarea intensității luminii, materialul fotorezistiv are un răspuns lent în raport cu dinamica muzicală; prin urmare, compresoarele optice prezintă cei mai lenți timpi de reacție dintre toate compresoarele.
+  Mai mult, curbele lor de _attack_ și _release_ sunt departe de a fi precise (mai ales la modelele vechi), oferindu-le un caracter extrem de unic.
+  Designurile optice sunt cunoscute pentru amprenta lor sonoră foarte vizibilă, pe care mulți o găsesc extrem de muzicală și plăcută.
+- **VCA:** Dintre toate echivalentele analogice, amplificatoarele semiconductoare comandate în tensiune (VCA) oferă cea mai precisă și controlabilă manipulare a volumului.
+  Precizia lor nativă a extins posibilitățile proiectanților de compresoare și a făcut din VCA alegerea favorită în majoritatea arhitecturilor moderne.
+- **Digital:** Compresoarele digitale funcționează pe baza unui set de operații matematice.
+  Când vine vorba de precizie, un compresor digital poate fi pe atât de exact pe cât se poate.
+  Timpul său de răspuns poate fi instantaneu, ceea ce înseamnă că nu există limitări pentru timpii de _attack_ și _release_.
+  De asemenea, compresoarele digitale pot oferi curbe perfect exacte pentru _ratio_, _attack_ și _release_.
