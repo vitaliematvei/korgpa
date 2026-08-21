@@ -1,0 +1,236 @@
+---
+title: 'Construirea coșului de cumpărături'
+description: 'Construirea coșului de cumpărături'
+order: 5
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Stai așa – ai spus „coșuri”. Cu siguranță site-urile au un singur coș, nu?
+
+Așa este, însă în cazul nostru avem două componente pentru coș: una pentru coșul principal și a doua pentru un mini-coș – cel puțin pentru moment.
+Ele sunt în mare parte identice, așa că există loc de îmbunătățire; totuși, pentru moment, haideți să le instalăm și să le facem să funcționeze ca parte a următoarei demonstrații.
+
+Deoarece această demonstrație este destul de amplă, o vom face ca pe un exercițiu în două părți – prima parte va consta în construirea componentei principale a coșului.
+O vom integra în site în a doua parte a acestui exercițiu, mai târziu în acest capitol.
+
+**ADĂUGAREA COȘULUI PRINCIPAL – PARTEA 1: COMPONENTA**
+
+Pentru a configura coșul principal, urmați acești pași:
+
+1. Mai întâi, deschideți un fișier nou în editorul vostru și salvați-l ca `Cart.jsx` în folderul `src\components`.
+2. Avem mult cod de adăugat, așa că, la fel ca înainte, îl vom adăuga pe secțiuni – să începem cu importurile:
+
+```javascript
+import React, { useRef } from 'react';
+import Link from 'next/link';
+import {
+  AiOutlineMinus,
+  AiOutlinePlus,
+  AiOutlineLeft,
+  AiOutlineShopping,
+} from 'react-icons/ai';
+import { TiDeleteOutline } from 'react-icons/ti';
+import toast from 'react-hot-toast';
+import { useStateContext } from '../../context/StateContext';
+import { urlFor } from '../../lib/client';
+```
+
+3. În continuare, trebuie să adăugăm un set de declarații `const` – una dintre acestea va fi sub formă de obiect, în timp ce pe celelalte le vom deconstrui din `StateContext`:
+
+```javascript
+const Cart = () => {
+  const cartRef = useRef();
+  const {
+    totalPrice,
+    totalQuantities,
+    cartItems,
+    setShowCart,
+    toggleCartItemQuantity,
+    onRemove,
+  } = useStateContext();
+
+  const eUSLocale = (x) => {
+    return x.toLocaleString("en-US", {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2,
+    });
+  };
+
+```
+
+4. Următoarea secțiune este cheia – acesta este nucleul componentei. Lăsați o linie goală după secțiunea anterioară, apoi adăugați următoarele linii:
+
+```javascript
+  return (
+    <div className="cart-wrapper" ref={cartRef}>
+      <div className="cart-container">
+        <button
+          type="button"
+          className="cart-heading"
+          onClick={() => setShowCart(false)}
+        >
+          <AiOutlineLeft />
+          <span className="heading">Your Cart</span>
+          <span className="cart-num-items">({totalQuantities} items)</span>
+        </button>
+
+```
+
+5. Acest bloc următor se ocupă de afișarea unui mesaj corespunzător dacă coșul este gol:
+
+```javascript
+{
+  cartItems.length < 1 && (
+    <div className="empty-cart">
+      <AiOutlineShopping size={150} />
+      <h3>Your shopping bag is empty</h3>
+      <Link href="/">
+        <button
+          type="button"
+          onClick={() => setShowCart(false)}
+          className="btn"
+        >
+          Continue Shopping
+        </button>
+      </Link>
+    </div>
+  );
+}
+```
+
+6. Prima jumătate a acestui bloc următor, ceva mai lung, se ocupă de afișarea produselor alese în coș, împreună cu o imagine miniatură (_thumbnail_):
+
+```javascript
+        <div className="product-container">
+          {cartItems.length >= 1 &&
+            cartItems.map((item) => (
+              <>
+                <div className="product" key={item._id}>
+                  <button
+                    type="button"
+                    className="remove-item"
+                    onClick={() => onRemove(item)}
+                  >
+                    <TiDeleteOutline />
+                  </button>
+                  <img
+                    src={urlFor(item?.image[0])}
+                    className="cart-product-image"
+                  />
+                  <div className="item-desc">
+                    <div>
+                      <span>{item.name}</span>
+                      <span>
+                        {item.quantity} @ ${eUSLocale(item.price)}
+                      </span>
+                    </div>
+
+```
+
+7. Vom încheia acel bloc cu acest cod, care conține butoanele pentru mărirea sau micșorarea cantităților din coș:
+
+```javascript
+                    <p className="quantity-desc">
+                      <span
+                        className="minus"
+                        onClick={() => toggleCartItemQuantity(item._id, "dec")}
+                      >
+                        <AiOutlineMinus />
+                      </span>
+                      <span
+                        className="plus"
+                        onClick={() => toggleCartItemQuantity(item._id, "inc")}
+                      >
+                        <AiOutlinePlus />
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </>
+            ))}
+        </div>
+
+```
+
+8. În continuare, adăugați acest ultim bloc imediat sub codul de la pasul anterior – acesta va afișa prețul total, cu condiția ca în coș să existe unul sau mai multe articole, și va adăuga etichetele de încheiere pentru componenta noastră:
+
+```javascript
+        {cartItems.length >= 1 && (
+          <div className="cart-bottom">
+            <div className="total">
+              <h3>Subtotal:</h3>
+              <h3>${eUSLocale(totalPrice)}</h3>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Cart;
+
+```
+
+9. Salvați și închideți fișierul.
+
+Excelent – componenta principală a coșului este gata! Desigur, nu ne va fi de mare folos decât dacă o putem referenția pe site-ul nostru; vom face acest lucru în a doua parte a acestei demonstrații.
+Mergeți să luați o băutură, luați o pauză de un moment să vă trageți sufletul, iar când sunteți gata să continuați, să vedem ce avem de făcut.
+
+**ADĂUGAREA COȘULUI PRINCIPAL – PARTEA 2: REFERENȚIEREA COMPONENTEI**
+
+Pentru a conecta componenta coșului la site-ul nostru, urmați acești pași:
+
+1. Odată creată componenta coșului, trebuie acum să adăugăm o referință în fișierul index al componentelor, facilitând apelarea acesteia atunci când este nevoie.
+   Deschideți fișierul `index.js` din folderul `\src\components`, apoi adăugați această linie la sfârșitul listei:
+
+```javascript
+export { default as Cart } from './Cart';
+```
+
+2. Avem două modificări de făcut într-un alt fișier – salvați fișierul index al componentelor, apoi închideți-l; după aceea, mergeți și deschideți `NavBar.jsx` în editorul vostru.
+3. Mai întâi, adăugați un import pentru componenta `Cart` la sfârșitul listei de importuri:
+
+```javascript
+import { Cart } from './';
+```
+
+4. În continuare, imediat după eticheta de deschidere a componentei noastre, adăugați această linie, așa cum este evidențiat:
+
+```javascript
+const NavBar = () => {
+  const { showCart, setShowCart, totalQuantities } = useStateContext();
+
+```
+
+5. Derulați în josul paginii până când vedeți această linie:
+
+```javascript
+<Link href="/contact">Contact</Link>
+```
+
+6. Imediat dedesubt, adăugați acest bloc:
+
+```javascript
+<button type="button" className="cart-icon" onClick={() => setShowCart(true)}>
+  <AiOutlineShopping />
+  <span className="cart-item-qty">{totalQuantities}</span>
+</button>;
+{
+  showCart && <Cart />;
+}
+```
+
+7. Salvați și închideți toate fișierele pe care le aveți deschise în editor.
+8. Treceți la linia de comandă din zona proiectului vostru. La prompt, introduceți `npm run dev` și apăsați Enter, apoi navigați către un produs:
+   eu am ales `http://localhost:3000/product/quince-cobnut` ca exemplu.
+   Faceți clic pe butonul _Add to Cart_ dinspre partea de jos a paginii – dacă totul este în regulă, ar trebui să vedeți că cantitatea se schimbă în 1 în dreptul linkului _Contact_,.
+
+9. Accesând vizualizarea coșului, vom vedea că articolul nostru a fost adăugat, împreună cu valorile cantității și ale subtotalului afișate.
+
+Dacă derulați în josul paginii, s-ar putea să vă întrebați de ce vedem încă două imagini de produs care arată la fel. Nu vă faceți griji – acest lucru este intenționat: se va schimba când vom stila pagina în Capitolul 5. Vizualizarea pare ciudată, deoarece vom afișa coșul ca un panou glisant deasupra imaginii principale (a doua din listă) și a ceea ce va fi o imagine miniatură (a treia imagine din listă).
+
+Uf – a fost o demonstrație lungă, dar cu toate acestea una importantă!
+Putem vedea cum site-ul începe să se comporte așa cum ar trebui – desigur, mai avem de adăugat o metodă de finalizare a comenzii, dar cel puțin putem adăuga produse în coș.
+Am parcurs o mulțime de sfaturi și cod util în ambele demonstrații, așa că haideți să luăm un moment pentru a explora mai în detaliu modificările de cod din ambele demonstrații.

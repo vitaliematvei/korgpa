@@ -1,0 +1,143 @@
+---
+title: 'Adăugarea unui Mini-coș (Minicart)'
+description: 'Adăugarea unui Mini-coș (Minicart)'
+order: 6
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Vă amintiți cum, cu câteva pagini în urmă, spuneam că vom avea nu unul, ci două coșuri de cumpărături în demonstrația noastră?
+
+Multe site-uri funcționează cu un singur coș – nu este nimic greșit din punct de vedere tehnic cu această abordare, dar trebuie să verifici mereu pagina coșului pentru a vedea ce ai comandat.
+Această verificare continuă nu este întotdeauna un lucru bun – clienții nu au timp și (îndrăznesc să o spun) sunt adesea leneși; cu cât facem mai mult pentru a le simplifica experiența, cu atât mai bine!
+
+Una dintre modalitățile prin care putem ajuta este afișarea unui mini-coș în subsol (_footer_) – s-ar putea să nu aibă toate detaliile și opțiunile fratelui său mai mare, dar va indica cel puțin numărul de articole selectate, alături de un total curent.
+Există câteva dezavantaje ale acestei abordări pe care le voi acoperi mai târziu, dar pentru moment, să vedem ce putem face pentru a implementa un punct de plecare pentru clienții noștri.
+
+**DEMO – ADĂUGAREA MINI-COȘULUI**
+
+Pentru a adăuga componenta mini-coș pe site-ul nostru, urmați acești pași:
+
+1. Mai întâi, deschideți un fișier nou în editorul vostru și salvați-l ca `MiniCart.jsx` în folderul `\src\components`.
+2. Avem mult cod de adăugat, așa că, la fel ca înainte, îl vom adăuga pe secțiuni – să începem cu importurile:
+
+```javascript
+import React from 'react';
+import { AiOutlineShopping } from 'react-icons/ai';
+import toast from 'react-hot-toast';
+import { useStateContext } from '../context/StateContext';
+import { urlFor } from '../../lib/client';
+import getStripe from '../../lib/getStripe';
+```
+
+3. În continuare, lăsați o linie goală, apoi adăugați eticheta de deschidere a componentei noastre, alături de câteva constante deconstruite:
+
+```javascript
+const Cart = () => {
+  const { totalPrice, totalQuantities, cartItems } = useStateContext();
+
+```
+
+4. Această parte următoare se va ocupa de afișarea unui mesaj implicit și a unei imagini dacă coșul este gol:
+
+```javascript
+  return (
+    <div className="mini-cart-container">
+      <span className="heading">
+        Your Cart contains {totalQuantities} item
+        {totalQuantities > 1 || totalQuantities === 0 ? "s" : ""}
+      </span>
+      {cartItems.length < 1 && (
+        <div className="empty-cart">
+          <AiOutlineShopping size={150} />
+          <p>Your shopping bag is empty</p>
+        </div>
+      )}
+
+```
+
+5. Pentru orice produse pe care le adăugăm, trebuie să le afișăm detaliile – de acest lucru se ocupă acest bloc de cod mai lung:
+
+```javascript
+<div className="product-container">
+  {cartItems.length >= 1 &&
+    cartItems.map((item) => (
+      <div className="product" key={item._id}>
+        <span>
+          <img src={urlFor(item?.image[0])} className="mini-cart-image" />
+        </span>
+        <span className="item-desc">
+          <span>{item.name}</span>
+          <span className="totals">
+            <span>{item.quantity}</span>
+            <span className="multiply">x</span>
+            <span>
+              $
+              {item.price.toLocaleString('en-US', {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2,
+              })}
+            </span>
+          </span>
+        </span>
+      </div>
+    ))}
+</div>
+```
+
+6. Pentru ultima parte a acestei componente, trebuie să afișăm o valoare de subtotal formatată cu două zecimale. De acest lucru se ocupă următorul bloc de cod:
+
+```javascript
+      {cartItems.length >= 1 && (
+        <div className="mini-cart-bottom">
+          <div className="total">
+            <h3>
+              Subtotal: $
+              {totalPrice.toLocaleString("en-US", {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2,
+              })}
+            </h3>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Cart;
+
+```
+
+7. Salvați și închideți fișierul.
+   Trebuie să mai facem o singură modificare în subsol (_footer_) – deschideți `Footer.jsx` din folderul `\src\components`, apoi adăugați acest import:
+
+```javascript
+import MiniCart from './MiniCart';
+```
+
+8. Derulați puțin în jos până când vedeți lista de intrări `Link`, urmată de o etichetă de închidere `</div>`.
+9. Imediat după acea etichetă de închidere `</div>`, modificați codul astfel încât să arate așa:
+
+```javascript
+      <Link href="/contact">Contact Us</Link>
+    </div>
+    <div>Contact: hello@macaronmagic.com</div>
+    <MiniCart />
+  </div>
+
+```
+
+10. Salvați și închideți toate fișierele deschise în editor.
+    Treceți la o sesiune de terminal Node.js și asigurați-vă că folderul de lucru indică spre zona proiectului nostru.
+    La prompt, introduceți `npm run dev` și apăsați Enter, apoi navigați către un produs: eu am ales `http://localhost:3000/product/quince-cobnut` ca exemplu.
+11. Derulați până în josul paginii – veți vedea mini-coșul gol afișat în subsol.
+
+12. Faceți clic pe butonul _Add to Cart_ – veți vedea cum se modifică coșul pentru a afișa detaliile enumerate în Figura 4-6, unde arată o imagine parțială alături de cantitatea selectată.
+
+> Mini-coșul actualizat, arătând o imagine (parțială) și cantitatea.
+
+13. Derulând mai jos, veți vedea subtotalul actualizat și descrierea produsului care a fost adăugat.
+    Perfect – acum avem un coș pregătit, așa că magazinul nostru funcționează exact așa cum ar trebui! Bine, este adevărat că nu putem face clienții să plătească pentru produse, cel puțin nu încă; vom schimba asta în curând. Pentru moment, totuși, să analizăm mai în detaliu modificările de cod pe care le-am făcut și să discutăm de ce mini-coșul s-ar putea să nu fie cea mai bună abordare pentru site-ul nostru.
+
+{/* am ramas Refactoring the Cart .116 */}
