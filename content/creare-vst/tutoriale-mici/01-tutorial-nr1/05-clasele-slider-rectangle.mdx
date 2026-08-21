@@ -1,0 +1,110 @@
+---
+title: 'Clasa Slider & Rectangle'
+description: 'Clasa Graphics Class, Parent & Child Components'
+order: 5
+category: 'JUCE'
+level: 'Incepator'
+---
+
+## Tutorialul explică cum să creezi elemente de interfață grafică (GUI) de tip **Slider** (potențiometre/butoane rotative) în cadrul framework-ului C++ **JUCE** și cum să folosești clasa **`juce::Rectangle`** pentru a organiza elementele pe ecran de mod scalabil și curat.
+
+### **Cerințe prealabile**
+
+- **Projucer** (generatorul de proiecte JUCE) instalat și un IDE (Xcode, Visual Studio sau CLion).
+- Cunoștințe de bază în C++.
+
+---
+
+1. **Pasul 1: Declararea componentelor în Header (.h):** MainComponent.h.
+   Pentru a adăuga două potențiometre rotative (dials) și un slider orizontal, trebuie mai întâi să le declarăm ca membrii ai clasei `MainComponent`.
+
+În fișierul `MainComponent.h`, adaugă membrii privați:
+
+```cpp
+private:
+    // Declararea celor două controale rotative și a slider-ului orizontal
+    juce::Slider dial1;
+    juce::Slider dial2;
+    juce::Slider slider1;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
+};
+
+```
+
+2. **Pasul 2: Configurarea și adăugarea pe ecran (.cpp):** MainComponent.cpp (Constructor).
+   În constructorul clasei `MainComponent()`, configurăm stilul fiecărui slider, caseta de text (numărul afișat) și facem elementele vizibile pe interfață apelând `addAndMakeVisible()`.
+
+```cpp
+MainComponent::MainComponent()
+{
+    // --- Configurare Dial 1 (Rotativ) ---
+    dial1.setSliderStyle(juce::Slider::SliderStyle::Rotary);
+    dial1.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
+    addAndMakeVisible(dial1);
+
+    // --- Configurare Dial 2 (Rotativ) ---
+    dial2.setSliderStyle(juce::Slider::SliderStyle::Rotary);
+    dial2.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
+    addAndMakeVisible(dial2);
+
+    // --- Configurare Slider 1 (Orizontal) ---
+    slider1.setSliderStyle(juce::Slider::SliderStyle::LinearHorizontal);
+    slider1.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
+    addAndMakeVisible(slider1);
+
+    // Setăm dimensiunea ferestrei principale
+    setSize (600, 400);
+}
+
+```
+
+3. **Pasul 3: Aranjarea elementelor folosind clasa Rectangle:** MainComponent.cpp (metoda resized).
+   În loc să setezi pozițiile fixe pe ecran cu coordonate hardcodate (`setBounds(x, y, w, h)`), JUCE recomandă împărțirea spațiului dinamic cu metoda `removeFrom...()` din clasa `juce::Rectangle`.
+   Aceasta asigură un GUI scalabil când utilizatorul redimensionează fereastra.
+
+În metoda `resized()`, împărțim ecranul astfel:
+
+1. Preluăm zona totală (`getLocalBounds()`).
+2. Împărțim fereastra în jumătatea superioară și cea inferioară.
+3. Jumătatea de sus o împărțim din nou în două pentru cele două _dials_.
+4. Jumătatea de jos o atribuim slider-ului orizontal.
+
+```cpp
+void MainComponent::resized()
+{
+    // Obținem întreaga zonă a componentei principale
+    auto area = getLocalBounds();
+
+    // 1. Tăiem jumătatea superioară pentru dial-uri
+    auto topArea = area.removeFromTop(getHeight() / 2);
+
+    // 2. Împărțim zona de sus în stânga și dreapta
+    dial1.setBounds(topArea.removeFromLeft(getWidth() / 2));
+    dial2.setBounds(topArea); // Ce a rămas în topArea reprezintă jumătatea din dreapta
+
+    // 3. Zona rămasă în 'area' este jumătatea inferioară, dedicată slider-ului orizontal
+    slider1.setBounds(area);
+}
+
+```
+
+4. **Pasul 4: Compilarea și testarea proiectului:**
+   Rulează aplicația din IDE-ul tău.
+
+Vei observa:
+
+- Două butoane rotative (rotary dials) plasate perfect unul lângă altul în jumătatea de sus.
+- Un slider orizontal pe toată lungimea jumătății de jos.
+- Când redimensionezi fereastra, toate controalele își păstrează proporțiile datorită împărțirii dinamice prin `juce::Rectangle`.
+
+---
+
+### **Rezumat al conceptelor cheie din video**
+
+- **`juce::Slider::setSliderStyle`**: Schimbă aspectul slider-ului (`Rotary`, `LinearHorizontal`, `LinearVertical` etc.).
+- **`juce::Slider::setTextBoxStyle`**: Definește unde și cum apare caseta de valoare numérică (`TextBoxBelow`, `TextBoxLeft` etc.).
+- **`addAndMakeVisible(&componenta)`**: Înregistrează componenta child în părinte și o face vizibilă.
+- **`juce::Rectangle::removeFromTop()` / `removeFromLeft()**`: Modifică dreptunghiul sursă prin eliminarea unei porțiuni și returnează bucata tăiată — cea mai eficientă metodă din JUCE pentru un layout responsiv.
+
+{/* am ramas https://www.youtube.com/watch?v=pTJYowGub6o&list=PLLgJJsrdwhPxa6-02-CeHW8ocwSwl2jnu&index=6 */}

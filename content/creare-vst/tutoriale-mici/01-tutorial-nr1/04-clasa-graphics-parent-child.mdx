@@ -1,0 +1,172 @@
+---
+title: 'Clasa Graphics Class, Parent & Child Components'
+description: 'Clasa Graphics Class, Parent & Child Components'
+order: 4
+category: 'JUCE'
+level: 'Incepator'
+---
+
+În acest tutorial vei învăța cum funcționează desenarea grafică în JUCE și cum să organizezi elementele dintr-o interfață (GUI) folosind o ierarhie de componente Părinte și Copil (_Parent & Child Components_).
+Ca exemplu practic, vei desena o căsuță cu un perete de cărămidă, un acoperiș, iarbă, un soare și text.
+
+---
+
+## 📌 Concepte cheie din tutorial
+
+1. **Clasa Graphics (`juce::Graphics`)**: Conține toate funcțiile de desenare (linii, forme geometrice, text, culori, umpleri de modele).
+2. **Parent & Child Components**:
+
+- **Parent Component (`MainComponent`)**: Fereastra sau ecranul principal.
+- **Child Component** (ex: `WallComponent`): Un element grafic adăugat peste părinte.
+
+3. **Coordonate Relative**: Coordonatele (X, Y) ale unei componente copil se raportează întotdeauna la colțul din stânga-sus al **părintelui său direct**, nu la întregul ecran.
+
+---
+
+## 🛠️ Pasul 1: Crearea proiectului în Projucer
+
+1. Deschide **Projucer** și creează un proiect nou de tip **GUI Application**.
+2. Denumește proiectul (ex: `GUI_Tutorial_1`).
+3. Projucer generează automat fișierele `Main.cpp` și `MainComponent.h`/`MainComponent.cpp`.
+
+---
+
+## 🧱 Pasul 2: Desenarea peretelui (`WallComponent`)
+
+### 1. Adăugarea componentei copil în Projucer
+
+- În Projucer, dă click pe pictograma **`+`** din secțiunea fișierelor.
+- Alege **Add New Component Class (split between CPP and Header)**.
+- Numește clasa `WallComponent` (nu uita majuscula) și salvează fișierele în folderul `Source`.
+- Salvează proiectul și deschide-l în IDE-ul tău (Xcode / Visual Studio).
+
+### 2. Implementarea graficii în `WallComponent.cpp`
+
+În metoda `paint(juce::Graphics& g)` din `WallComponent.cpp`:
+
+- Creează un dreptunghi: `juce::Rectangle<int> wall (0, 0, 200, 120);` .
+- Folosește funcția `g.fillCheckerboard()` pentru un efect de cărămidă :
+
+```cpp
+g.fillCheckerboard (wall, 20, 10, juce::Colours::sandybrown, juce::Colours::saddlebrown);
+g.drawRect (wall);
+
+```
+
+### 3. Conectarea componentei în `MainComponent`
+
+- În **`MainComponent.h`**:
+- Include antetul: `#include "WallComponent.h"` .
+- Instanțiază obiectul: `WallComponent wall;`.
+
+- În **`MainComponent.cpp`**:
+- În constructor: Adaugă componenta și fă-o vizibilă :
+
+```cpp
+addAndMakeVisible (wall);
+
+```
+
+- În metoda `resized()`: Setează poziția și dimensiunile :
+
+```cpp
+wall.setBounds (getMinLocalBounds()); // sau specifică coordonate exacte
+
+```
+
+- În metoda `paint()` din `MainComponent`: Schimbă fundalul în albastru (cerul) :
+
+```cpp
+g.fillAll (juce::Colours::skyblue);
+
+```
+
+---
+
+## 🌿 Pasul 3: Adăugarea liniei de iarbă (`GrassComponent`)
+
+1. În **Projucer**, adaugă o nouă clasă de tip componentă numită `GrassComponent`.
+2. Deschide codul în IDE.
+3. În **`GrassComponent.cpp`** -> metoda `paint()`:
+
+```cpp
+g.setColour (juce::Colours::green);
+// Desenează o linie groasă pentru iarbă
+g.drawLine (10.0f, 325.0f, getWidth() - 10.0f, 325.0f, 10.0f);
+
+```
+
+4. Conectează `GrassComponent` în `MainComponent`
+   (în mod similar: `#include`, instanțiere, `addAndMakeVisible(grass)` și `grass.setBounds(getLocalBounds())`).
+
+---
+
+## 🔺 Pasul 4: Desenarea acoperișului triunghiular (`RoofComponent`)
+
+Deoarece clasa `Graphics` nu are o funcție directă `drawTriangle()`, se folosește clasa `juce::Path`.
+
+1. Creează `RoofComponent` din Projucer.
+2. În **`RoofComponent.cpp`** -> metoda `paint()`:
+
+```cpp
+g.setColour (juce::Colours::red);
+
+juce::Path p;
+p.startNewSubPath (200.0f, 190.0f);  // Punctul stânga
+p.lineTo (400.0f, 190.0f);           // Punctul dreapta
+p.lineTo (300.0f, 140.0f);           // Vârful acoperișului
+p.closeSubPath();                    // Închide triunghiul
+
+g.strokePath (p, juce::PathStrokeType (2.0f)); // Desenează conturul
+g.fillPath (p);                                 // Umple triunghiul
+
+```
+
+3. Înregistrează și fă vizibil `RoofComponent` în `MainComponent`.
+
+---
+
+## ☀️ Pasul 5: Desenarea soarelui (`SunComponent`)
+
+1. Creează `SunComponent` în Projucer .
+2. În **`SunComponent.cpp`** -> metoda `paint()`:
+
+```cpp
+g.setColour (juce::Colours::yellow);
+// Desenează o elipsă/cerc la X:400, Y:50, Lățime:50, Înălțime:50
+g.drawEllipse (400.0f, 50.0f, 50.0f, 50.0f, 10.0f);
+
+```
+
+3. Conectează `SunComponent` în `MainComponent` .
+
+---
+
+## 🔤 Pasul 6: Afișarea și personalizarea textului (`TextComponent`)
+
+Pentru a afișa text cu un font personalizat:
+
+1. Creează `TextComponent` din Projucer.
+2. În **`TextComponent.cpp`** -> metoda `paint()`:
+
+```cpp
+// Setarea unui font specific instalat în sistem (ex: Cooper Std)
+juce::Font theFont ("Cooper STD", "Black Italic", 20.0f);
+g.setFont (theFont);
+g.setColour (juce::Colours::black);
+
+// Afișarea textului
+g.drawText ("The Audio Programmer", 10, 10, 400, 60, juce::Justification::topLeft);
+
+```
+
+3. Conectează `TextComponent` în `MainComponent`.
+
+---
+
+## 💡 Sfaturi Importante din Tutorial
+
+- **Adăugarea fișierelor**: Adaugă întotdeauna fișiere noi din **Projucer**, nu direct din IDE (Xcode/Visual Studio).
+  Dacă le adaugi din IDE, Projucer le va suprascrie la următoarea salvare!
+- **Sistemul de coordonate**: Când creezi componente copil în interiorul altei componente (ex: o ușă în interiorul peretelui), coordonata `(0,0)` devine colțul din stânga-sus al peretelui, nu al ferestrei principale.
+- **Referințe oficiale**: Verifică întotdeauna documentația API pe site-ul JUCE pentru clasa `juce::Graphics` și `juce::Rectangle` pentru a vedea toate metodele disponibile.

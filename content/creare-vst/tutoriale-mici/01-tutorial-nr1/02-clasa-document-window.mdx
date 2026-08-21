@@ -1,0 +1,102 @@
+---
+title: 'Clasa DocumentWindow din framework-ul C++ JUCE'
+description: 'Clasa DocumentWindow din framework-ul C++ JUCE'
+order: 2
+category: 'JUCE'
+level: 'Incepator'
+---
+
+În acest ghid vei învăța cum funcționează clasa **`DocumentWindow`** din framework-ul C++ **JUCE**, care este utilizată pentru a crea și personaliza fereastra principală a unei aplicații desktop (procesoare audio, synth-uri sau plugin-uri VST).
+
+---
+
+### Pasul 1: Înțelegerea structurii de bază (`Main.cpp`)
+
+După ce deschizi proiectul de start (de pe site-ul JUCE) în Projucer și îl lansezi în IDE-ul tău (Xcode sau Visual Studio), observi două clase principale în fișierul `Main.cpp`:
+
+1. **`TestApplication`**: Moștenește clasa `JUCEApplication`.
+   Aceasta controlează ciclul de viață al aplicației (pornire, oprire).
+2. **`MainWindow`**: O clasă internă care moștenește din **`DocumentWindow`**.
+
+- Aici este definită efectiv fereastra aplicației tale (cu bara de titlu, butoane de închidere/minimizare și suprafața de desenare).
+
+---
+
+### Pasul 2: Constructorul `DocumentWindow` și masca de biți (_Bit Mask_)
+
+Apelează constructorul clasei `DocumentWindow` în clasa ta `MainWindow`.
+Parametrii principali ai constructorului sunt:
+
+- **Numele ferestrei** (ex. `getApplicationName()`).
+- **Culoarea de fundal** (ex. `Desktop::getInstance().getDefaultLookAndFeel().findColour(...)`).
+- **Butoanele ferestrei (_Required Buttons_)**.
+
+#### Cum funcționează butoanele (Masca de biți / _Bit Mask_):
+
+JUCE folosește operații pe biți (_bitwise_) pentru a stabili ce butoane apar pe bara de titlu:
+
+- `1` (în binar `0001`) = Butonul **Minimize**
+- `2` (în binar `0010`) = Butonul **Maximize**
+- `4` (în binar `0100`) = Butonul **Close**
+- `7` (în binar `0111`) = **Toate butoanele**
+
+> **Sfat de cod curat:** În loc să folosești numere brute precum `7` sau `4`, folosește constantele puse la dispoziție de JUCE, cum ar fi `DocumentWindow::allButtons`.
+
+---
+
+### Pasul 3: Personalizarea ferestrei (Dimensiuni, Culoare, Vizibilitate)
+
+În metoda de inițializare a aplicației (`initialise`), se creează instanța ferestrei:
+
+```MainComponent.cpp
+// Setează centrul și dimensiunile ferestrei (lățime x înălțime)
+centreWithSize (300, 200);
+
+// Setează fereastra să fie vizibilă pe ecran
+setVisible (true);
+
+```
+
+**Modificarea culorii de fundal:**
+Puteți schimba culoarea direct folosind clasa `Colours`:
+
+```cpp
+// Schimbă fundalul în verde lime sau negru
+setBackgroundColour (Colours::lime);
+
+```
+
+---
+
+### Pasul 4: Adăugarea de funcționalități avansate prin moștenire
+
+Fiind o clasă derivată din `ResizableWindow` și `TopLevelWindow`, `DocumentWindow` are acces la o serie de metode utile pe care le poți adăuga în constructor:
+
+#### 1. Activarea redimensionării ferestrei (_Resizable_)
+
+Pentru a permite utilizatorului să tragă de colțul din dreapta-jos al ferestrei pentru a o redimensiona:
+
+```cpp
+setResizable (true, true); // (Este redimensionabilă, Afișează iconița de redimensionare în colț) [00:15:06]
+
+```
+
+#### 2. Folosirea barei de titlu native a sistemului de operare
+
+Implicit, JUCE desenează propria bară de titlu.
+Dacă dorești să folosești bara de titlu nativă (macOS sau Windows):
+
+```cpp
+setUsingNativeTitleBar (true);
+
+```
+
+---
+
+### Pasul 5: Compilarea și testarea
+
+1. Salvează fișierul `Main.cpp` .
+2. Apasă **Build and Run** în IDE-ul tău (`Cmd + R` în Xcode sau `F5` în Visual Studio).
+3. Vei obține o fereastră complet funcțională, nativă sau personalizată, pregătită pentru adăugarea componentelor audio (knob-uri, slidere, forme de undă)
+
+---

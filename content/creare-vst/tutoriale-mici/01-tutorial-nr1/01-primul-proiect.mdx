@@ -1,0 +1,98 @@
+﻿---
+title: 'Introducere și Primul tău Proiect'
+description: 'Introducere și Primul tău Proiect'
+order: 1
+category: 'JUCE'
+level: 'Incepator'
+---
+
+JUCE este un framework C++ de nivel industrial folosit intensiv în industria audio pentru dezvoltarea de plugin-uri VST/AU/AAX și aplicații software (utilizat de companii precum Korg, Cycling '74, Arturia, Xfer Records etc.).
+
+---
+
+### Pasul 1: Descărcarea Framework-ului JUCE
+
+1. Deschide browserul și accesează site-ul [juce.com](https://juce.com).
+2. Apasă pe butonul **Get JUCE**
+3. Alege licența/opțiunea potrivită pentru tine (ex: opțiunea gratuită/Educațională sau Personal).
+4. Descarcă arhiva cu framework-ul pe calculatorul tău.
+
+---
+
+### Pasul 2: Organizarea Directorului și Lansarea Projucer
+
+1. După descărcare, dezarhivează dosarul obținut.
+2. Mută folderul **JUCE** în directorul tău principal de aplicații (de exemplu, `/Applications` pe macOS sau în `C:\` pe Windows).
+3. În interiorul folderului JUCE vei găsi aplicația numită **Projucer**.
+   Aceasta este unealta care îți gestionează proiectul și generează fișierele pentru mediul tău de dezvoltare (IDE).
+4. Deschide aplicația **Projucer**.
+
+---
+
+### Pasul 3: Explorarea unui Proiect Demo / Structura Fișierelor
+
+Pentru a înțelege cum funcționează organizarea fișierelor într-un proiect JUCE:
+
+1. Din Projucer, deschide un proiect demonstrativ navigând în folderul `JUCE/examples/Demo`.
+2. **Structura fișierelor:**
+
+- **`Builds/`**: Conține proiectele generate specifice fiecărui sistem de operare (Xcode pentru Mac, Visual Studio pentru Windows, Linux, etc.).
+  JUCE îți permite să scrii codul o singură dată și să îl compilezi multi-platformă.
+- **`.jucer`**: Fișierul de configurare Projucer.
+- **`JuceLibraryCode/`**: Modulele și bibliotecile interne furnizate de framework.
+- **`Resources/`**: Fișiere media/resurse (imagini, fișiere audio `.wav` etc.).
+- **`Source/`**: Codul sursă C++ propriu-zis (`Main.cpp`, `MainComponent.cpp` etc.).
+
+---
+
+### Pasul 4: Compilarea și Rularea Proiectului Demo
+
+1. În Projucer, după ce ai deschis fișierul `.jucer`, apasă pe butonul din partea de sus: **"Save and Open in IDE"**.
+2. Projucer va deschide automat mediul tău de dezvoltare (ex: **Xcode** pe Mac sau **Visual Studio** pe Windows).
+3. În IDE, apasă pe **Build / Run**`.
+4. Vei vedea aplicația demonstrativă rulând, care include exemple pentru:
+
+- Butoane și meniuri grafice
+- Customizarea interfeței (_Look and Feel_)
+- Suport Multi-Touch, animații și grafică 2D
+- Sintetizatoare audio și componente de redare audio/video
+
+---
+
+### Pasul 5: Crearea Primului Tău Proiect JUCE
+
+1. Închide proiectul demo și revino în Projucer.
+2. Selectează **New Project** .
+3. Alege template-ul **GUI Application**.
+4. Configurează proiectul:
+
+- **Project Name:** `Test` (sau alt nume dorit)
+- **Target Platform:** Selectează IDE-ul tău (de exemplu, Xcode pentru Mac sau Visual Studio pentru Windows).
+
+5. Apasă pe **Create...** și salvează fișierul pe disc.
+
+---
+
+### Pasul 6: Deschiderea și Prima Compilare
+
+1. În Projucer, dă click din nou pe **Save and Open in IDE**.
+2. În IDE, mergi în folderul de cod sursă `Source/` și deschide fișierul `MainComponent.cpp`.
+3. Apasă **Build and Run** (sau `Command + R` / `F5`).
+4. După compilare, va apărea o fereastră albă simplă cu textul **"Hello World!"** `[00:13:16]`.
+
+---
+
+### Pasul 7: Modificarea Codului (Modificări Vizuale) `[00:13:20]`
+
+Pentru a verifica modul în care codul controlează interfața:
+
+1. În `MainComponent.cpp`, caută metoda de desenare `paint(Graphics& g)`.
+2. **Schimbă dimensiunea fontului:** Caută linia unde se setează dimensiunea textului și schimbă valoarea de la `16.0f` la `50.0f`.
+3. **Schimbă culoarea textului:**
+
+- Pentru a vedea culorile disponibile, poți ține apăsată tasta `Command` (Mac) sau `Ctrl` (Windows) și să dai click pe clasa `Colours`.
+- Înlocuiește culoarea curentă cu `Colours::limegreen`.
+
+4. **Schimbă textul afișat:** Înlocuiește `"Hello World!"` cu un alt text, de exemplu `"The Audio Programmer"`.
+5. Recompilează și rulează proiectul (`Command + R` / `F5`) .
+6. Vei vedea fereastra actualizată cu noul text verde de dimensiuni mari.
