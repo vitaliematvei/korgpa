@@ -1,0 +1,56 @@
+---
+title: 'Makeup Gain (Amplificarea de compensare)'
+description: 'Makeup Gain (Amplificarea de compensare)'
+order: 17
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-15.jpg"
+    alt="Figura 17-15"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.15:</p> Cum lucreaza un compresor in detaliu
+</div>
+
+Funcția principală a unui compresor este de a face sunetele mai tari să devină mai încetinite.
+Ca urmare, percepția asupra volumului general al semnalului compresat va scădea cel mai probabil.
+Pentru a compensa acest lucru, controlul de **makeup gain** (numit uneori _gain_ sau _output_) sporește pur și simplu nivelul semnalului de ieșire cu un număr fix de dB.
+Această amplificare este aplicată în mod uniform semnalului, independent de orice altă setare—fiind afectate atât semnalele care se află sub prag (_threshold_), cât și cele de peste prag.
+Compresoarele realizează acest lucru fie prin ajustarea valorii de amplificare pe calea secundară (_side-chain_) înainte ca aceasta să fie aplicată de etapa de amplificare (_gain stage_), fie prin simpla amplificare a semnalului după etapa de amplificare.
+
+Conform axiomei noastre „ce e mai tare se aude mai bine”, atunci când facem comparații A/B există posibilitatea ca versiunea compresată să sune mai puțin impresionantă din cauza scăderii de volum.
+Makeup gain-ul este adesea setat astfel încât, indiferent dacă compresorul este activat sau dezactivat, volumul perceput al semnalului să rămână același.
+În acest fel, orice comparație efectuată este corectă și independentă de variațiile de volum.
+
+Unele compresoare dispun de o funcție de **auto makeup gain** (amplificare automată de compensare).
+Compresoarele cu auto makeup gain calculează cantitatea de amplificare necesară pentru a aduce la același nivel semnalul de intrare și cel de ieșire pe baza unor setări precum pragul (_threshold_), raportul de compresie (_ratio_) și timpul de revenire (_release_).
+Auto makeup gain-ul este independent de semnalul de intrare și variază doar atunci când sunt ajustate controalele compresorului.
+
+Discutabil, nu există nicio cale prin care un auto makeup gain automat să se potrivească impecabil cu dinamica tuturor instrumentelor și cu nivelurile posibile la care au fost înregistrate acestea.
+În practică, auto makeup gain-ul produce adesea o variație a volumului perceput atunci când compresorul este dezactivat (_bypass_).
+De aceea, atunci când au posibilitatea, utilizatorii aleg de cele mai multe ori să dezactiveze această funcție.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-16.jpg"
+    alt="Figura 17-16"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.16:</p>**Makeup Gain (Amplificarea de compensare)**
+
+(a) Semnalul de intrare înainte de compresie.
+
+(b) Semnalul după compresie cu un raport (_ratio_) de 2:1, dar înainte de aplicarea amplificării de compensare (_makeup gain_).
+
+(c) Semnalul de ieșire după aplicarea a 2 dB de _makeup gain_. De reținut că, în acest exemplu, măsurătoarea de vârf (_peak_) atât pentru semnalul de intrare (a), cât și pentru cel de ieșire (c) este identică. Cu toate acestea, semnalul (c) va fi perceput ca fiind mai tare.
+
+</div>

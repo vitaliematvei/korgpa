@@ -1,0 +1,36 @@
+---
+title: 'Hold (Menținere)'
+description: 'Hold (Menținere)'
+order: 15
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Foarte puține compresoare oferă un parametru de _hold_, care este de asemenea legat de setările de timp.
+În termeni simpli, _hold_-ul determină cât timp este menținută reducerea de nivel (_gain reduction_) înainte ca faza de _release_ (revenire) să înceapă.
+Figura 17.14 ilustrează acest lucru.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-14.jpg"
+    alt="Figura 17-14"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.14:</p>Funcția Hold la un compresor audio.
+  Această ilustrație simplificată arată nivelurile de intrare (input) în partea
+  de sus, cantitatea de reducere a atenuării (gain reduction) aplicată în mijloc
+  și nivelul de după compresie (post-compression) în partea de jos. Se poate
+  observa că, odată ce nivelul semnalului original scade, compresorul menține
+  reducerea de amplificare pentru o scurtă perioadă (hold) înainte de a începe
+  etapa de revenire (release).
+</div>
+În practică, funcția de _hold_ pe un compresor se obține prin modificarea
+vitezei de _release_, astfel încât în primele faze reducerea de nivel abia dacă
+se schimbă. Deși rezultatele sunt doar similare cu cele prezentate în Figura
+17.14, impresia generală rămâne aceea că reducerea de nivel este menținută
+(_held_).
+
+---

@@ -1,0 +1,31 @@
+---
+title: 'Stereo linking (Interconectarea stereo)'
+description: 'Stereo linking (Interconectarea stereo)'
+order: 20
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Un compresor hardware stereo este, în esență, o unitate alcătuită din două compresoare mono.
+Cu excepția cazului în care este configurat altfel, aceste două compresoare mono funcționează independent în ceea ce se numește modul _dual-mono_.
+Să luăm în considerare ce se întâmplă atunci când semnalele de la microfoanele de overhead stereo sunt trimise într-un compresor aflat în acest mod.
+Un cazan (_floor tom_) va fi, cel mai probabil, mai tare în microfonul care acoperă o anumită parte a setului de tobe—să spunem, partea dreaptă.
+Când cazanul este lovit, compresorul din dreapta va aplica o reducere de amplificare (_gain reduction_) mai mare decât cel din stânga.
+Ca urmare, canalul stâng va fi mai tare, iar imaginea stereo a overhead-urilor se va deplasa spre stânga.
+În mod similar, când _crash_ din stânga este lovită, imaginea overhead-urilor se va muta spre dreapta.
+Astfel, în modul _dual-mono_, de fiecare dată când o tobă este lovită într-o parte a panoramei, imaginea stereo se poate deplasa în partea opusă.
+Funcția _stereo linking_ interconectează ambele compresoare, astfel încât o cantitate identică de reducere a atenuării este aplicată ambelor canale.
+Cu _stereo linking_ activat, când cazanul este lovit, ambele părți sunt compresate în mod egal și nu are loc nicio deplasare a imaginii stereo.
+
+> În aproape toate cazurile, funcția _stereo linking_ este activată atunci când se compresează un semnal stereo.
+
+Există diferite moduri de a realiza interconectarea stereo.
+De exemplu, intrarea stereo poate fi însumată în mono înainte de a alimenta ambele căi secundare (_side-chain_).
+Problema acestei abordări este că interacțiunea de fază dintre cele două canale poate produce o sumă mono distorsionată.
+Pentru a combate acest lucru, unele compresoare mențin o separare stereo pe parcursul celor două căi secundare și adoptă abordarea de tip _„cel mai puternic câștigă”_ (_strongest-win_)—cea mai mare reducere de amplificare generată de oricare dintre canale este trimisă către etapa de amplificare (_gain stage_) a ambelor canale.
+Prin această abordare, încă are sens să avem setări diferite pe canale diferite—setând un raport (_ratio_) mai mic pe canalul drept, facem compresorul mai puțin sensibil la evenimentele din partea dreaptă (cum ar fi o lovitură de cazan).
+
+Spre deosebire de echivalentele lor hardware, pluginurile software oferă rar un comutator pentru _stereo linking_.
+Un compresor software știe dacă semnalul de intrare este mono sau stereo, iar pentru intrările stereo, _stereo linking_-ul este activat automat.
+Unele compresoare software oferă totuși un buton pentru a activa modul _dual-mono_ pentru semnalele stereo.
+Un astfel de mod poate fi necesar atunci când semnalul stereo nu are caracteristici de imagine pozițională, cum ar fi în cazul unui efect de _delay_ stereo.

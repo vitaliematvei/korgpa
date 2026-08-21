@@ -1,0 +1,40 @@
+---
+title: 'Look-ahead (Anticiparea semnalului)'
+description: 'Look-ahead (Anticiparea semnalului)'
+order: 19
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Compresia poate fi dificilă în cazul variațiilor bruște de nivel, cum sunt cele ale tranzienților.
+Pentru a controla tranzienții, un compresor are nevoie de un răspuns foarte rapid, însă acest lucru nu este întotdeauna posibil.
+În primul rând, etapa de amplificare (_gain stage_) a unor compresoare—cum sunt cele optice, de exemplu—nu este adesea suficient de rapidă pentru a prinde acești tranzienți.
+Apoi, chiar dacă un compresor oferă timpi rapizi de răspuns, o limitare bruscă și agresivă a semnalului s-ar putea să nu ofere un rezultat muzical.
+Ar fi excelent dacă calea secundară (_side-chain_) ar putea „vedea” semnalul de intrare cu puțin timp înainte, având astfel mai mult timp să reacționeze la tranzienți.
+Funcția de _look-ahead_ face posibil acest lucru.
+
+O modalitate de a implementa funcția _look-ahead_ pe compresoarele analogice este întârzierea semnalului înainte ca acesta să fie procesat.
+Această întârziere (_delay_), de obicei de aproximativ 4 ms, este introdusă după ce o copie a semnalului a fost trimisă către _side-chain_.
+În acest fel, un tranzient care intră în compresor va fi detectat imediat de către _side-chain_, dar va fi procesat doar puțin mai târziu.
+Acest lucru permite folosirea unor timpi de _attack_ mai lungi (mai muzicali), deoarece există un decalaj de câteva milisecunde între declanșarea compresiei și procesarea efectivă a semnalului care a generat-o.
+Ca o analogie, dacă am avea _look-ahead_ în tenis, ar fi ca și cum am îngheța mingea pentru o secundă în timp ce trece peste fileu, permițându-i jucătorului să se repoziționeze perfect după ce vede direcția în care se îndreaptă mingea.
+
+La un compresor hardware, funcția _look-ahead_ poate fi comutată (activată/dezactivată).
+Când _look-ahead_-ul este activat, semnalul de ieșire este de asemenea întârziat.
+Aceste câteva milisecunde de întârziere rareori creează decalaje de ritm evidente, dar pot duce la probleme de fază dacă semnalul compresat este mixat cu o piesă similară (de exemplu, microfonul de sus și cel de jos de la premieră/snare).
+În cazul pluginurilor software, orice întârziere care ar putea fi introdusă este, de regulă, compensată automat (_auto-compensated_).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-18.jpg"
+    alt="Figura 17-18"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.18:</p>**Funcția look-ahead la un compresor
+  hardware.** După ce o copie a semnalului este trimisă către calea secundară
+  (*side-chain*), semnalul este întârziat pe calea principală de semnal, oferind
+  circuitului de comandă mai mult timp pentru a reacționa la semnal.
+</div>

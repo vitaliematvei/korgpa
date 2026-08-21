@@ -1,0 +1,103 @@
+---
+title: 'Indicatoarele de nivel ale compresorului (Compressor meters)'
+description: 'Indicatoarele de nivel ale compresorului (Compressor meters)'
+order: 23
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Compresoarele oferă în mod obișnuit trei opțiuni de monitorizare: nivelul de intrare (_input_), nivelul de ieșire (_output_) și reducerea de amplificare (_gain reduction_).
+În ceea ce privește mixajul, se spune adesea: „Ascultă, nu privi”.
+Este adevărat—ar trebui să putem seta toate controalele compresorului pe baza a ceea ce auzim; totuși, identificarea subtilităților în acțiunea unui compresor necesită experiență, iar diferitele indicatoare pot fi de mare ajutor, mai ales când vine vorba de setările brute, inițiale.
+Ajustările fine și finale se fac întotdeauna după auz.
+
+Dintre cele trei indicatoare, cel mai util este **indicatorul de gain reduction**, care arată cantitatea de atenuare aplicată în timp real.
+Valoarea afișată combină efectul tuturor controalelor compresorului (cum ar fi _threshold_, _ratio_, _attack_, _release_, modul _peak_ sau _RMS_ etc.).
+Principalele roluri ale acestui indicator sunt:
+
+- **De a ne arăta câtă reducere de amplificare se aplică** (oferind o sugestie privind valoarea potrivită pentru _makeup gain_).
+- **De a ne indica momentul în care are loc reducerea de amplificare.** În special ne interesează:
+  – când începe;
+  – când se oprește.
+- **De a oferi o indicație vizuală a activității parametrilor de attack și release** (ceea ce ajută la ajustarea lor fină).
+
+De exemplu, când scopul nostru este să nivelăm dinamică unei piese vocale, ne dorim ca indicatorul de _gain reduction_ să se miște în ritm cu fluctuațiile de nivel pe care le auzim la vocea neprocesată (sau pe care le vedem pe indicatorul de intrare).
+Dacă timpul de _attack_ sau cel de _release_ este prea lung, indicatorul va părea „leneș” în comparație cu dinamica semnalului, iar compresia se va comporta la fel.
+
+Termenii de _compresie_ și _gain reduction_ sunt adesea folosiți ca fiind sinonimi, oamenii considerând că valoarea compresiei este egală cu valoarea reducerii de amplificare.
+Când cineva spune că compresează un semnal cu 8 dB, se referă de obicei la faptul că cea mai mare valoare indicată de acul de _gain reduction_ este de 8 dB.
+Cu toate acestea, asocierea directă a citirii de pe indicator cu cantitatea de compresie nu este o practică tocmai corectă.
+Dacă indicatorul de _gain reduction_ rămâne fix la 8 dB (să presupunem, din cauza unui timp ipotetic de _release_ de 10 ore), nu are loc nicio compresie—există doar o atenuare constantă a amplificării de 8 dB.
+În mare parte, un astfel de compresor se comportă ca un fader: în afară de momentul în care _gain reduction_-ul urcă la 8 dB, semnalul de ieșire păstrează toate variațiile de nivel de la intrare, indiferent dacă acestea s-au produs peste sau sub prag.
+Pentru ca procesul de compresie să aibă loc, valoarea reducerii de amplificare trebuie să varieze în timp, iar indicatorul trebuie să se miște; cu cât se mișcă mai repede, cu atât compresia este mai accentuată.
+
+Există o similitudine directă cu sunetul în sine—sunetul este rezultatul modificărilor de presiune a aerului; o presiune constantă, fie ea ridicată sau scăzută, nu generează sunet.
+În mod similar, nivelul de compresie este determinat de schimbările în reducerea de amplificare.
+Am putea considera cantitatea de compresie ca fiind o medie a diferenței absolute dintre valoarea de vârf (_peak_) și valoarea mediată (_RMS_) a _gain reduction_-ului.
+Dar aceasta este o poveste pentru o altă carte.
+
+În plus, trebuie să luăm în considerare și plaja în care se deplasează acest indicator.
+Dacă o voce depășește pragul (_threshold_) între fraze, dar în interiorul fiecărei fraze indicatorul se mișcă doar între 4 și 6 dB, atunci **compresia efectivă este de doar 2 dB**.
+La începutul și la sfârșitul fiecărei fraze, semnalul este încă compresat în drumul său spre și dinspre valoarea de 4 dB, dar această compresie este marginală în comparație cu cea care are loc între 4 și 6 dB.
+Vom numi intervalul în care _gain reduction_-ul variază **compresie dinamică** (4–6 dB în cazul nostru) și vom folosi termenul de **compresie statică** pentru intervalul fix (0–4 dB în cazul nostru), unde reducerea de amplificare are loc doar în drumul spre sau dinspre zona de compresie dinamică.
+Figura 17.20 ilustrează diferențele dintre cele două.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-20.jpg"
+    alt="Figura 17-20"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.20:</p>**Compresia dinamică și compresia
+  statică.** Compresia dinamică are loc în intervalul în care acul/indicatorul
+  de *gain reduction* variază. Compresia statică are loc doar atunci când
+  reducerea de amplificare urcă spre sau coboară din zona de compresie dinamică.
+</div>
+
+Compresia statică poate fi rezultatul unui _release_ prea lent sau al unui prag (_threshold_) setat prea jos.
+Dacă este vorba de cea din urmă situație, ar fi înțelept să ridicăm pragul, astfel încât indicatorul de _gain reduction_ să se miște constant între 0 dB și valoarea maximă.
+Acest lucru ar minimiza compresia statică.
+Cu toate acestea, există cazuri în care compresia statică are complet sens, cum ar fi atunci când compresia este folosită pentru a sculpta anvelopa dinamică a sunetelor, iar pragul este setat intenționat mai jos pentru a permite un _attack_ mai vizibil/accentuat.
+
+Observația subiectivă privind o compresie ușoară, moderată sau agresivă se bazează pe indicatorul de _gain reduction_.
+Tocmai am văzut că nivelul real de compresie este mult mai complex decât citirea simplă oferită de acest indicator.
+De asemenea, este riscant să traducem orice observație în cifre exacte, deoarece ceea ce o persoană consideră o compresie agresivă, o alta poate considera moderată.
+Ca o generalizare, o compresie de 8 dB pe un mix stereo este destul de agresivă.
+Pentru instrumente individuale, în general se consideră:
+
+- **Compresie ușoară:** sub 4 dB
+- **Compresie moderată:** între 4 dB și 8 dB
+- **Compresie agresivă (heavy):** peste 8 dB (Figura 17.21)
+  <div className="my-4 flex justify-center">
+    <img
+      src="/images/mixing/17-21.jpg"
+      alt="Figura 17-21"
+      className="h-auto w-9/10 max-w-xs"
+    />
+  </div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.21:</p>**Un indicator de gain reduction
+  (reducere a amplificării).** Descrierile de deasupra indicatorului reprezintă
+  un ghid extrem de orientativ cu privire la modul în care unele persoane ar
+  putea asocia diferitele valori ale reducerii de amplificare.
+</div>
+
+Vorim aici strict despre _compresia dinamică_—a avea o reducere de amplificare constantă de 20 dB este echivalent cu a nu avea compresie deloc.
+
+Este posibil să fi observat că numerele din Figura 17.21 sunt pozitive și dispuse de la dreapta la stânga.
+Aceasta este direcția opusă indicatoarelor de _input_ și _output_ și sugerează că reducerea de amplificare coboară nivelul semnalului, nu îl ridică.
+De asemenea, la compresoarele fără un indicator dedicat de _gain reduction_, reducerea de amplificare este afișată pe același indicator cu nivelurile de intrare și ieșire (folosind un comutator pentru a selecta ce se afișează).
+Deoarece pe majoritatea indicatoarelor cea mai mare parte a scalei se află sub 0 dB, acolo este afișată și reducerea de amplificare.
+Foarte des, o reducere de atenuare de 6 dB va fi afișată ca –6 dB.
+Din punct de vedere strict tehnic, o scădere a unei valori negative este o creștere, astfel încât o reducere de atenuare de –6 dB înseamnă, în esență, o amplificare de 6 dB.
+Mulți proiectanți ignoră acest detaliu și, deși au un indicator dedicat etichetat „gain reduction”, scala arată incorect valori negative.
+
+**Indicatorul de intrare (input meter)** este util atunci când setăm pragul (_threshold_). De exemplu, dacă niciun semnal nu depășește –6 dB, cu excepția unui vârf pe care vrem să-l controlăm, acolo este locul unde am putea poziționa pragul. De asemenea, putem determina domeniul de acțiune al nivelurilor de intrare privind acest indicator.
+
+**Indicatorul de ieșire (output meter)** oferă o indicație vizuală a ceea ce auzim și se asigură că nivelul de ieșire nu depășește o anumită limită, cum ar fi 0 dBFS. De asemenea, indicatorul de ieșire ne poate ajuta să determinăm aproximativ valoarea de _makeup gain_ fără a fi nevoie să comutăm compresorul în _bypass_ pentru comparație.
+
+{/* am ramas Controls in practice .314 */}

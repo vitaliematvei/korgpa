@@ -1,0 +1,49 @@
+---
+title: 'Hard-knee și Soft-knee (Tranziția de la prag)'
+description: 'Hard-knee și Soft-knee (Tranziția de la prag)'
+order: 18
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Pe curba raportului de compresie, _knee_ (genunchiul) reprezintă punctul determinat de prag (_threshold_) în care raportul (_ratio_) se schimbă de la amplificare unitară (1:1) la valoarea setată.
+Nu e greu de imaginat de ce se numește așa: pe un grafic de transfer al caracteristicilor, această curbă amintește de genunchiul unei persoane care stă jos.
+Tipul de compresoare discutat până acum funcționează pe principiul _hard-knee_—pragul stabilește o limită strictă între lipsa procesării și procesarea completă.
+Tranziția bruscă dintre cele două oferă o compresie mai evidentă și un efect mai distinctiv.
+Putem îndulci o astfel de compresie mărind timpii de _attack_ și _release_, însă aceste setări nu se potrivesc întotdeauna cu materialul audio procesat.
+
+Principiul _soft-knee_ (numit și _over-easy_ sau _soft ratio_) permite o tranziție mai lină între starea fără procesare și cea cu procesare—reducerea de amplificare (_gain reduction_) începe undeva sub nivelul pragului, cu un raport foarte mic, iar raportul de compresie complet este atins undeva deasupra pragului.
+În timp ce un compresor _hard-knee_ comută direct de la 1:1 la 4:1 de îndată ce semnalul depășește pragul, la un compresor _soft-knee_ raportul crește treptat de la 1:1 la 4:1 într-o zonă de tranziție extinsă de ambele părți ale pragului.
+Această a doua excepție—în care semnalele aflate sub prag suferă o reducere de nivel—este ilustrată în Figura 17.17.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-17.jpg"
+    alt="Figura 17-17"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.17:</p> **Hard-knee și soft-knee.** La setarea
+  *hard-knee*, raportul de compresie (*ratio*) este atins instantaneu de îndată
+  ce semnalul depășește pragul (*threshold*). La setarea *soft-knee*, raportul
+  complet este atins treptat, în interiorul unei zone de tranziție extinse de
+  ambele părți ale pragului.
+</div>
+
+Setarea _soft-knee_ este utilă atunci când ne dorim o compresie mai transparentă (adesea întâlnită la linii vocale).
+Tranziția lină dintre lipsa procesării și compresia efectivă minimizează senzația de procesare, ceea ce ne permite să setăm un raport (_ratio_) mai mare.
+De asemenea, opțiunea _soft-knee_ eliberează controalele de _attack_ și _release_ de sarcina de a atenua duritatea compresiei, permițându-ne să setăm timpi mai scurți pentru ambele (lucru util în aplicații precum creșterea volumului perceput - _loudening_).
+Atunci când căutăm un efect de compresie pronunțat, o setare _hard-knee_ este mai potrivită.
+
+- **Soft-knee** este pentru o compresie mai transparentă.
+- **Hard-knee** este pentru mai mult efect (caracter).
+
+Compresoarele pot oferi doar modul _hard-knee_, doar _soft-knee_ sau un comutator pentru a alterna între cele două.
+Unele compresoare oferă și grade diferite de ajustare a „genunchiului”, permițându-ne să determinăm plaja în dB a zonei de tranziție în raport cu scala de intrare.
+De exemplu, în Figura 17.17, plaja de tranziție este de 8 dB, extinzându-se cu câte 4 dB de fiecare parte a pragului.
+În acest caz, compresia va începe cu un raport foarte blând la −13 dB, iar raportul complet va fi atins la −5 dB.
+O plajă de tranziție de 0 dB reprezintă funcția _hard-knee_ (o astfel de setare poate fi văzută la pluginul Oxford Dynamics din Figura 17.13, sub controlul de _attack_).
+
+Pentru a genera un comportament de tip _soft-knee_, un compresor analogic trebuie să modifice atât pragul, cât și funcțiile de scalare. Un _soft-knee_ precis este dificil de obținut în domeniul analogic: este posibil ca pragul să nu se afle exact în centrul „genunchiului”, iar raportul să devieze în afara zonei de tranziție. Compresoarele digitale nu au nicio problemă în a reda un _soft-knee_ perfect, precum cel din Figura 17.17.
