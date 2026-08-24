@@ -1,0 +1,170 @@
+---
+title: 'Clasa Slider & Rectangle'
+description: 'Clasa Graphics Class, Parent & Child Components'
+order: 5
+category: 'JUCE'
+level: 'Incepator'
+---
+
+În acest tutorial vei învăța cum să folosești elementele de interfață grafică (GUI) din framework-ul C++ **JUCE**: slider-ele (`juce::Slider`), etichetele text (`juce::Label`) și cum să legi două slider-e între ele folosind clasa listener `juce::Slider::Listener`.
+
+---
+
+### **Pasul 1: Crearea unui nou proiect JUCE**
+
+1. Deschide **Projucer** și creează o aplicație nouă de tip **GUI Application**.
+2. Denumește proiectul `SliderTutorial` (sau un nume similar) și salvează-l în folderul tău de dezvoltare.
+3. Deschide proiectul în IDE-ul tău (Xcode sau Visual Studio).
+4. Fișierele principale pe care le vei modifica sunt `MainComponent.h` și `MainComponent.cpp`.
+
+---
+
+### **Pasul 2: Declararea componentelor în Header (`MainComponent.h`)**
+
+Trebuie să declarăm două slider-e (unul pentru Frecvență și unul pentru Durată), etichetele lor asociate și să moștenim clasa listener.
+
+1. **Adaugă moștenirea listener-ului:** Clasa `MainComponent` trebuie să moștenească public `juce::Slider::Listener`.
+2. **Declară componentele în secțiunea `private`:**
+
+- Două slider-e (`frequencySlider`, `durationSlider`).
+- Două etichete (`frequencyLabel`, `durationLabel`).
+
+3. **Suprascrie (override) funcția virtuală a listener-ului:**
+
+- `void sliderValueChanged (juce::Slider* slider) override;`
+
+#### **Exemplu de cod (`MainComponent.h`):**
+
+```cpp
+#pragma once
+#include <JuceHeader.h>
+
+class MainComponent  : public juce::Component,
+                       public juce::Slider::Listener // Moștenim Slider::Listener
+{
+public:
+    MainComponent();
+    ~MainComponent() override;
+
+    void paint (juce::Graphics&) override;
+    void resized() override;
+
+    // Metoda callback din Slider::Listener
+    void sliderValueChanged (juce::Slider* slider) override;
+
+private:
+    // Slider-ele
+    juce::Slider frequencySlider;
+    juce::Slider durationSlider;
+
+    // Etichetele (Labels)
+    juce::Label frequencyLabel;
+    juce::Label durationLabel;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
+};
+
+```
+
+---
+
+### **Pasul 3: Configurarea Slider-elor și Etichetelor (`MainComponent.cpp`)**
+
+În constructorul `MainComponent::MainComponent()`, vom configura fiecare componentă pe rând.
+
+#### **3.1 Configurtare Slider Frecvență (`frequencySlider`)**
+
+- **Afișare:** Adaugă-l pe ecran cu `addAndMakeVisible (frequencySlider)` .
+- **Interval (Range):** Setează intervalul de la 50 Hz la 5000 Hz cu `setRange (50.0, 5000.0)`.
+- **Sufix text:** Adaugă sufixul `" Hz"` pentru valoare cu `setTextValueSuffix (" Hz")`.
+- **Valoare inițială:** Setează valoarea de pornire la 500 Hz cu `setValue (500.0)`.
+- **Skew Factor (Scară Logaritmică):** Pentru ca ajustarea frecvențelor audio să fie naturală, setează punctul de mijloc al slider-ului la 500 Hz: `setSkewFactorFromMidPoint (500.0)`.
+- **Înregistrare Listener:** Adaugă componenta curentă ca ascultător (`addAndMakeVisible` & `addLister(this)`).
+
+#### **3.2 Configurare Etichetă Frecvență (`frequencyLabel`)**
+
+- Adaugă eticheta: `addAndMakeVisible (frequencyLabel)`.
+- Setează textul: `setText ("Frequency", juce::dontSendNotification)`.
+- **Atașare la Slider:** Poziționează eticheta în stânga slider-ului automat: `attachToComponent (&frequencySlider, true)`.
+
+#### **3.3 Configurare Slider Durată (`durationSlider`)**
+
+Frecvența și durata sunt în relație inversă (T = 1/f).
+
+- Adaugă slider-ul: `addAndMakeVisible (durationSlider)`.
+- Intervalul duratei este inversul intervalului frecvenței: `setRange (1.0 / 5000.0, 1.0 / 50.0)`.
+- Setează sufixul: `setTextValueSuffix (" s")` .
+- Setează punctul de mijloc logaritmic: `setSkewFactorFromMidPoint (0.002)`.
+- Adaugă listener: `durationSlider.addListener (this)`.
+
+#### **3.4 Configurare Etichetă Durată (`durationLabel`)**
+
+- Adaugă pe ecran: `addAndMakeVisible (durationLabel)`.
+- Setează textul: `setText ("Duration", juce::dontSendNotification)`.
+- Atașează la slider: `attachToComponent (&durationSlider, true)`.
+
+#### **3.5 Stilul Casetei de Text (TextBox)**
+
+Pentru ca valorile lungi (cu multe zecimale) să nu fie trunchiate cu `...`, mărește lățimea casetei de text:
+
+```cpp
+frequencySlider.setTextBoxStyle (juce::Slider::TextBoxLeft, false, 120, frequencySlider.getTextBoxHeight());
+durationSlider.setTextBoxStyle (juce::Slider::TextBoxLeft, false, 120, durationSlider.getTextBoxHeight());
+
+```
+
+---
+
+### **Pasul 4: Interconectarea Slider-elor (`sliderValueChanged`)**
+
+Aici definim ce se întâmplă atunci când utilizatorul mișcă unul dintre slider-e .
+În `MainComponent.cpp`, implementează metoda `sliderValueChanged`:
+
+```cpp
+void MainComponent::sliderValueChanged (juce::Slider* slider)
+{
+    if (slider == &frequencySlider)
+    {
+        // Când se mișcă slider-ul de frecvență, actualizăm durata: T = 1 / f
+        durationSlider.setValue (1.0 / frequencySlider.getValue(), juce::dontSendNotification);
+    }
+    else if (slider == &durationSlider)
+    {
+        // Când se mișcă slider-ul de durată, actualizăm frecvența: f = 1 / T
+        frequencySlider.setValue (1.0 / durationSlider.getValue(), juce::dontSendNotification);
+    }
+}
+
+```
+
+_Notă:_ Folosim `juce::dontSendNotification` la apelul `setValue` pentru a evita o buclă infinită de evenimente între cele două slider-e.
+
+---
+
+### **Pasul 5: Poziționarea pe Ecran (`resized`)**
+
+Setează dimensiunile și pozițiile slider-elor în metoda `resized()` din `MainComponent.cpp`:
+
+```cpp
+void MainComponent::resized()
+{
+    const int border = 120; // Spațiu lăsat în stânga pentru etichete
+
+    // Poziționare Slider Frecvență
+    frequencySlider.setBounds (border, 20, getWidth() - border - 20, 20);
+
+    // Poziționare Slider Durată
+    durationSlider.setBounds (border, 50, getWidth() - border - 20, 20);
+}
+
+```
+
+---
+
+### **Pasul 6: Compilarea și Rularea Proiectului**
+
+1. Rulează aplicația din IDE-ul tău (`Cmd + R` pe Mac / `F5` pe Windows) .
+2. Vei observa două slider-e etichetate corespunzător: **Frequency** și **Duration**.
+3. Când deplasezi `frequencySlider`, `durationSlider` își va recalcula automat valoarea în secunde în timp real și invers.
+
+{/* am ramas https://www.youtube.com/watch?v=po46y8UKPOY&list=PLLgJJsrdwhPxa6-02-CeHW8ocwSwl2jnu&index=7 */}
