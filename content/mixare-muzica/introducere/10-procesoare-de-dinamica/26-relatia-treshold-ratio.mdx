@@ -1,0 +1,42 @@
+---
+title: 'Relația dintre prag (threshold) și rată (ratio)'
+description: 'Relația dintre prag (threshold) și rată (ratio)'
+order: 26
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+În cele trei exemple anterioare, cu cât pragul a fost setat mai jos, cu atât rata de compresie a fost mai mică — aspect ce evidențiază o legătură strânsă între acești doi parametri.
+Coborârea pragului înseamnă o compresie mai accentuată, în timp ce reducerea ratei are efectul opus.
+
+Adesea, aceste două comenzi sunt finisate simultan: ajustarea în jos a uneia este urmată de ajustarea în jos a celeilalte (și viceversa).
+Ideea este că, odată ce s-a obținut o cantitate aproximativă de compresie necesară, coborârea pragului (mai multă compresie) urmată de reducerea ratei (mai puțină compresie) va menține aproximativ același nivel global de compresie, dar cu un **caracter sonor ușor diferit**.
+
+---
+
+### Extindere vs. Intensitate
+
+Deși un prag mai coborât și o rată mai mare duc ambele la mai multă compresie, efectul fiecărui parametru este diferit:
+
+- **Prag mai coborât:** extinde suprafața comprimată — o porțiune mai mare din semnal trece de prag și este procesată.
+- **Rată mai mare:** intensifică procesarea — aplică o compresie mai dură pe ceea ce se afla deja peste prag.
+
+Altfel spus: **un prag mai scăzut afectează o porțiune mai mare din semnal, în timp ce o rată mai mare amplifică efectul asupra părții deja afectate.**
+
+> **Pragul definește extinderea compresiei. Rata definește intensitatea ei.**
+> Dacă pragul este setat prea sus pe o piesă vocală, nici măcar un raport de 1.000:1 nu va egaliza interpretarea.
+> În mod similar, dacă rata este mult prea mică, semnalul nu se va egaliza, indiferent cât de jos coborâm pragul.
+> Găsirea echilibrului perfect între prag și rată este una dintre cele mai importante provocări în compresie.
+
+---
+
+### Transparența compresiei
+
+Modul în care acești doi parametri interacționează influențează direct cât de sesizabil devine efectul:
+
+- Pragul funcționează ca un filtru de discriminare între ceea ce este procesat și ce rămâne neatins.
+  Cu cât pragul este mai ridicat, cu atât diferența dintre semnalul procesat și cel neprocesat este mai accentuată.
+- La o voce unde se dorește o compresie cât mai **transparentă**, un prag moderat asociat cu o rată moderată va face efectul mai evident decât dacă am seta un prag foarte coborât, dar cu o rată extrem de blândă (de exemplu, 1.2:1).
+
+Deoarece timpii de răspuns (_attack_ și _release_) acționează asupra variațiilor de nivel de peste prag, caracteristicile temporale rămân active chiar și la un prag setat foarte jos.
+Prin urmare, un prag mai scăzut nu înseamnă automat un efect mai evident — transparența depinde de combinația optimă dintre prag, rată și ceilalți parametri de control.

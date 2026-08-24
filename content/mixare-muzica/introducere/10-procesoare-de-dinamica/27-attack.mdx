@@ -1,0 +1,178 @@
+---
+title: 'Timpul de atac (Attack)'
+description: 'Timpul de atac (Attack)'
+order: 27
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Unul dintre motivele menționate anterior pentru utilizarea timpiilor de atac (_attack_) mai lungi a fost prevenirea suprimării atacului natural al instrumentului.
+Însă nu ne dorim întotdeauna păstrarea atacului natural.
+Uneori vrem să îmblânzim lovitura unei tobe, astfel încât toba mare (_kick_), toba mică (_snare_) și alte elemente similare să fie mai puțin dominante în mixaj.
+În astfel de cazuri, se ajustează un atac mai scurt.
+
+> **Cu cât timpul de atac este mai lung, cu atât păstrăm mai mult din atacul natural al instrumentului.
+> Totuși, acest lucru nu este dorit în toate situațiile.**
+
+Modul în care un atac mai lung ajută la menținerea atacului natural poate fi demonstrat cu ușurință pe instrumentele de percuție.
+Figura 17.27 ilustrează efectul diferiților timpi de atac asupra unei tobe mici.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-27.jpg"
+    alt="Figura 17-27"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.27:</p>**Efectul diferiților timpi de atac
+  (*attack*) asupra unei tobe mici (*snare*).** Acumularea atacului este
+  reprezentată sub fiecare explicație. Cu cât timpul de atac al compresorului
+  este mai lung, cu atât se păstrează mai mult din atacul natural al
+  instrumentului.
+</div>
+
+Se poate observa că, fără atac (_attack_ setat pe minim), atacul natural este aproape pierdut, deoarece compresorul îl strivește destul de drastic (evident, acest lucru depinde și de setările de prag și rată).
+Apoi, cu cât atacul este mai lung, cu atât se păstrează mai mult din atacul natural.
+Un atac lung abia dacă afectează atacul natural — sau, în cazul specific al acestei tobe mici, abia dacă afectează ceva.
+
+Instinctiv, ne-am putea întreba: dacă vrem să păstrăm atacul natural al unui instrument, de ce să nu setăm timpul de atac cât mai sus posibil?
+Atacul lung din Figura 17.27 demonstrează de ce această abordare este neinspirată.
+Se vede clar că, până când semnalul coboară sub prag, faza de atac abia a apucat să acumuleze suficientă reducere a amplificării (_gain reduction_) — efectul compresiei este practic anulat, făcând întregul proces inutil.
+
+Pe baza Figurii 17.12, știm că, la scurt timp după ce semnalul tobei mici începe să scadă, reducerea de amplificare aplicată începe și ea să scadă, iar în acel punct faza de atac se oprește și compresorul intră în faza de _release_.
+Acest punct din Figura 17.27 este locul în care acumularea atacului devine gri și putem observa că efectul maxim potențial nu este atins nici pentru setările de atac mediu, nici pentru cele cu atac lung.
+
+---
+
+### Modificarea anvelopei dinamice și a timbrului
+
+Chiar și atunci când semnalul rămâne peste prag după faza de atac, un timp de atac mai lung este rareori benefic.
+Putem demonstra acest lucru pe o lovitură de clapă de pian în Figura 17.28.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-28.jpg"
+    alt="Figura 17-28"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.28:</p>**Efectul diferiților timpi de atac
+  (*attack*) asupra unei clape de pian.** Timpul de atac lung a cauzat o
+  modificare a anvelopei de nivel, ceea ce ar distorsiona timbrul
+  instrumentului.
+</div>
+
+- **Atacul scurt** aduce reducerea amplificării la impact maxim imediat după ce atacul natural a scăzut, iar anvelopa dinamică rezultată seamănă cu anvelopa semnalului de intrare.
+- **Atacul lung** modifică vizibil anvelopa dinamică și duce la o alterare nedorită a timbrului.
+
+Această exemplificare ne învață ce reprezintă un timp de atac adecvat din punct de vedere muzical pentru instrumentele percutante: **acel timp care afectează doar atacul natural, fără a altera anvelopa dinamică ce îi urmează.**
+
+---
+
+### Atacul în compresia pe Overhead-uri și efecte adverse
+
+Un alt motiv pentru care un atac mai lung este util implică compresia pe _overhead-uri_ (microfoanele de ambient pentru tobe).
+Dacă toba mare este principalul instrument care declanșează compresorul, iar atacul este setat prea scurt, nu doar atacul natural al tobei mari va fi suprimat, ci și orice altă tobă jucată sub ea (cum ar fi cinelul _hi-hat_).
+Dacă acest lucru se întâmplă pe timpul tare (_downbeat_), cinelele de pe timpul tare vor fi mai încet decât celelalte cinele.
+Aceasta poate fi o abordare potrivită pentru ritmuri mai exotice, dar rareori pentru un ton contemporan de acid-house sau punk-rock, unde dorim ca elementele scurte să se strecoare înainte ca procesarea compresorului să acționeze asupra lor.
+
+Unul dintre lucrurile pe care trebuie să le luăm în considerare este **cantitatea de reducere a amplificării (_gain reduction_)** care are loc efectiv:
+
+- Cu cât atenuarea este mai mare, cu atât efectul de atac devine mai vizibil (o atenuare maximă de 1 dB este incomparabilă cu una de 8 dB).
+- În general, o compresie masivă beneficiază de timpi de atac mai lungi, astfel încât variațiile mari să aibă loc treptat, făcând schimbările de nivel mai puțin drastice.
+
+De asemenea, un atac rapid combinat cu o atenuare mare poate produce cu ușurință un **clic audibil**.
+Deși aceste clicuri de atac sunt uneori folosite intenționat pentru a oferi mai multă definiție tobelor mari, în majoritatea cazurilor sunt nedorite.
+
+---
+
+### Compromisul dinamic la semnale vocale (Catch-22)
+
+Apare însă o dilemă (_catch-22_): un atac mai lung lasă o parte din nivel să treacă înainte de a-l reduce (iar la o compresie puternică, reducerea este considerabilă).
+Prin urmare, cu timpi de atac mai lungi, schimbările de nivel pot fi mai puțin drastice, dar mai ușor de observat de către ureche.
+
+Aceasta este o problemă frecventă când se aplică o compresie puternică pe sunete mai puțin percutante, cum este **vocea**:
+
+- Dacă atacul este **prea scurt**, dinamica vocii devine plată și își pierde viața.
+- Dacă atacul este **mai lung**, poate apărea un pop de nivel la începutul fiecărei fraze.
+
+Uneori se poate găsi un compromis prin ridicarea pragului sau reducerea ratei de compresie (_ratio_).
+Totuși, anumite tehnici speciale de compresie pot oferi o soluție mult mai elegantă.
+
+---
+
+### Distorsiunea pe frecvențele joase
+
+O altă consecință a unui atac foarte rapid este **distorsiunea frecvențelor joase**.
+Motivul este că perioada de oscilație a frecvențelor joase este suficient de lungă încât compresorul acționează în interiorul fiecărui ciclu al undei, în loc să acționeze pe anvelopa dinamică generală a semnalului.
+
+Figura 17.29 arată rezultatul acestui fenomen: atacul afectează fiecare jumătate de ciclu.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-29.jpg"
+    alt="Figura 17-29"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.29:</p>**Distorsiunea pe frecvențele joase
+  rezultată în urma setărilor cu atac rapid.** Semnalul de sus este o undă
+  sinusoidală de 50 Hz care trece prin plugin-ul McDSP Analog Channel 1
+  (reprezentat în colțul din dreapta jos). Setările compresorului includ un timp
+  de *attack* de 1 ms și un *release* de 10 ms. Rezultatul procesat este
+  prezentat în semnalul de jos, unde se poate observa cum atacul acționează în
+  interiorul fiecărei jumătăți de ciclu al undei.
+</div>
+Compresorul deformează unda sinusoidală de intrare într-o formă diferită,
+adăugând distorsiune:
+
+- Compresoarele analogice tind să genereze o distorsiune mai plăcută.
+- În cantități mari, acest tip de distorsiune adaugă o textură aspra în mixaj.
+- În cantități mici și moderate, adaugă căldură și definiție instrumentelor bas.
+
+#### Funcția _Hold_
+
+Scopul principal al comenzii **Hold** este remedierea acestui tip de distorsiune.
+Prin menținerea atenuării (_gain reduction_) pentru o scurtă perioadă, atacul și _release_-ul sunt împiedicate să urmărească forma undei audio.
+Ciclul unei unde sinusoidale de 50 Hz durează 20 ms, astfel că timpul de _hold_ este adesea setat în jurul acestei valori.
+
+---
+
+### Alterarea tonului și a frecvențelor înalte
+
+Setările de atac pot afecta tonalitatea semnalului comprimat: **timpii de atac mai lungi tind să îmblânzească frecvențele înalte**. Alternativ, acest lucru poate fi perceput ca o accentuare a frecvențelor joase și un plus de căldură.
+
+Motivul este ilustrat în Figura 17.30:
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-30.jpg"
+    alt="Figura 17-30"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.30:</p>**Rata de variație a nivelului și
+  frecvențele.** **(a)** Se poate observa că panta formei de undă de înaltă
+  frecvență este mai abruptă. În timpul în care unda sinusoidală de înaltă
+  frecvență a crescut cu 20 dB, cea de joasă frecvență a crescut cu doar 10 dB.
+  **(b)** Schimbările mai rapide de nivel sunt asociate cu frecvențele înalte.
+  Un timp de *attack* lung pe un compresor poate transforma o creștere de nivel
+  precum **(2)** în **(3)**, ceea ce atenuează (îmblânzește) frecvențele înalte.
+  Vom vedea mai târziu că un *noise gate* poate produce un salt brusc de nivel
+  precum **(1)**, proces ce generează frecvențe înalte.
+</div>
+
+- Frecvențele înalte sunt rezultatul schimbărilor rapide de nivel.
+- Frecvențele joase sunt rezultatul schimbărilor lente.
+
+Un timp de _release_ lung poate încetini viteza cu care nivelul semnalului crește, ceea ce atenuează creșterea rapidă de nivel specifică frecvențelor înalte.
+
+{/* am ramas Release .324 */}

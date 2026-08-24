@@ -1,0 +1,109 @@
+---
+title: 'Rata de compresie (Ratio)'
+description: 'Rata de compresie (Ratio)'
+order: 25
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Un compresor cu o rată de peste 10:1 se comportă similar cu un limiter — la un raport de 10:1, un semnal care depășește pragul cu un interval substanțial de 40 dB este redus la doar 4 dB peste prag.
+Cu toate acestea, nici măcar un compresor cu o rată de ∞:1 nu este cu adevărat un limiter (semnalele pot depăși în continuare pragul din cauza unui timp de _attack_ lung sau a modului de detectare RMS), astfel încât raporturile mai mari de 10:1 își au locul lor în mixaj.
+
+În procesul de mastering, ratele folosite pe compresor (înainte de limiter) sunt de regulă blânde, menținute în jurul valorii de 2:1.
+În schimb, în mixaj pot fi folosite orice valori — de la 1.1:1 până la 60:1.
+Cu toate acestea, o rată de **4:1** este adesea recomandată ca un punct de pornire excelent în majoritatea scenariilor.
+
+---
+
+### Efectul degresiv al creșterii ratei de compresie
+
+Logica ne spune că o rată mai mare aplică o compresie mai puternică, făcând efectul mai evident.
+Un principiu crucial de înțeles este că **randamentul compresiei scade pe măsură ce mărim rata**:
+
+- O schimbare de la **1:1 la 2:1** pentru o depășire a pragului de 8 dB generează o atenuare (_gain reduction_) de **4 dB**.
+- O schimbare de la **8:1 la 16:1** pentru aceeași depășire oferă doar o atenuare suplimentară de **0,5 dB**.
+
+Privit din punct de vedere practic, ajustările la rate mici sunt mult mai semnificative decât aceleași ajustări la rate mari — o trecere de la **1.4:1 la 1.6:1** va produce o compresie mai sesizabilă decât o trecere de la **8:1 la 16:1**.
+Majoritatea potențiometrelor de _ratio_ țin cont de acest aspect, folosind o scară exponențială (de exemplu, intervalul 1:1 – 2:1 poate ocupa 50% din cursă, 2:1 – 4:1 încă 25%, și așa mai departe).
+
+Cea mai mare parte din pierderea de nivel și intensificarea efectului sunt vizibile în prima măsură (unde rata crește de la 1:1 la 2:1) și în a doua măsură (unde rata ajunge la 4:1).
+Schimbările din măsurile următoare sunt nesemnificative în comparație cu primele două.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-25.jpg"
+    alt="Figura 17-25"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.25:</p>**Efectul degresiv al creșterii ratei de
+  compresie (*ratio*).** Rata de compresie este indicată deasupra fiecărui
+  grafic, iar pragul (*threshold*) este setat la 0 dB.
+</div>
+
+---
+
+### Sugestii de rate de compresie pentru aplicațiile uzuale
+
+Aplicațiile discutate în Figura 17.23 necesită abordări diferite în alegerea ratei de compresie:
+
+<div className="my-6 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+  <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300 border-collapse">
+    <thead className="bg-slate-100 dark:bg-slate-800/80 text-xs uppercase tracking-wider text-slate-900 dark:text-slate-100 font-semibold border-b border-slate-200 dark:border-slate-700">
+      <tr>
+        <th scope="col" className="px-5 py-3.5">Aplicație</th>
+        <th scope="col" className="px-5 py-3.5 whitespace-nowrap">
+          Setare <span className="italic font-normal border-b border-dashed border-slate-400">Ratio</span> recomandată
+        </th>
+        <th scope="col" className="px-5 py-3.5">Explicație &amp; Mecanism</th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-slate-200 dark:divide-slate-800 bg-white dark:bg-slate-900">
+      <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors">
+        <td className="px-5 py-4 font-semibold text-slate-900 dark:text-slate-100 align-top">
+          Controlul nivelurilor / vârfurilor
+        </td>
+        <td className="px-5 py-4 align-top whitespace-nowrap">
+          <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-mono font-semibold bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300">
+            Ridicat (~10:1)
+          </span>
+        </td>
+        <td className="px-5 py-4 align-top text-slate-600 dark:text-slate-400 leading-relaxed">
+          Deoarece pragul este ridicat și captează doar vârful, rata determină direct cât de ferm este redus acesta. O rată mare acționează decisiv și autoritar.
+        </td>
+      </tr>
+
+      <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors">
+        <td className="px-5 py-4 font-semibold text-slate-900 dark:text-slate-100 align-top">
+          Egalizarea nivelului
+        </td>
+        <td className="px-5 py-4 align-top whitespace-nowrap">
+          <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-mono font-semibold bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-300">
+            Moderat (~3:1)
+          </span>
+        </td>
+        <td className="px-5 py-4 align-top text-slate-600 dark:text-slate-400 leading-relaxed">
+          Pragul este setat la nivelul mediu. Deoarece majoritatea semnalului se află peste prag, o rată prea mare ar strangula dinamica, în timp ce una prea mică nu ar egaliza suficient.
+        </td>
+      </tr>
+
+      <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors">
+        <td className="px-5 py-4 font-semibold text-slate-900 dark:text-slate-100 align-top">
+          <span className="block">Creșterea volumului perceput</span>
+          <span className="text-xs text-slate-500 dark:text-slate-400 italic font-normal">Loudening</span>
+        </td>
+        <td className="px-5 py-4 align-top whitespace-nowrap">
+          <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-mono font-semibold bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300">
+            Scăzut (~1.4:1)
+          </span>
+        </td>
+        <td className="px-5 py-4 align-top text-slate-600 dark:text-slate-400 leading-relaxed">
+          Pragul este foarte jos, pregătind terenul pentru o compresie agresivă. Chiar și o rată moderată ar distruge dinamica, motiv pentru care o rată mică menține semnalul natural.
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>

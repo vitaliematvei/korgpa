@@ -1,0 +1,168 @@
+---
+title: 'Pragul (Threshold)'
+description: 'Pragul (Threshold)'
+order: 24
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Figura 17.22 prezintă nivelurile posibile ale unei interpretări nepercutante — un pasaj vocal, de exemplu.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-22.jpg"
+    alt="Figura 17-22"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.22:</p>**Zona de acțiune a unei interpretări
+  nepercutante.** Cu excepția creșterii inițiale și a scăderii finale, nivelul
+  semnalului variază doar în intervalul de la 0 la –10 dB.
+</div>
+Se poate observa că nivelurile fluctuează între 0 și –10 dB. Vom numi acest
+interval **zona de acțiune** (_action range_), iar aceasta ne ajută să
+determinăm setarea pragului pentru aplicații specifice.
+
+Trebuie clarificat că setarea pragului peste 0 dB nu are sens — doar dacă curba de compresie (_knee_) este lină (_soft knee_), altfel nu va avea loc nicio compresie.
+Setarea pragului în această zonă va genera o **compresie selectivă** — doar porțiunile de semnal care depășesc pragul vor fi procesate.
+Uneori exact acest lucru este de dorit, de pildă când vrem să atenuăm doar părțile de semnal foarte puternice.
+Pericolul compresiei selective constă însă în trecerea repetată între starea de procesare și cea neutră, ceea ce face ca efectul de compresie să devină evident și nefiresc.
+
+Setarea pragului la limita inferioară a zonei de acțiune (–10 dB în Figura 17.22) va produce un tratament uniform pentru toate variațiile de nivel din interiorul ei.
+Deși s-ar putea să nu fie potrivită în orice situație, când o interpretare are o zonă clară de acțiune, limita ei inferioară reprezintă un punct de pornire excelent pentru prag.
+
+---
+
+### Efectul coborârii pragului sub zona de acțiune
+
+Un aspect esențial este ce se întâmplă când setăm pragul sub zona de acțiune.
+
+Presupunem mai întâi că pragul este setat la baza zonei de acțiune (–10 dB), cu o rată de compresie (_ratio_) de 2:1.
+Vârful cel mai înalt din Figura 17.22 atinge 0 dB, depășind pragul cu 10 dB, deci va fi atenuat cu 5 dB.
+Dacă timpul de revenire (_release_) este setat la 10 ms pentru o reducere de 10 dB, când acest vârf coboară la –10 dB, cei 5 dB de reducere a amplificării (_gain reduction_) vor avea nevoie de 5 ms pentru a-și reveni.
+
+Dacă reducerea pragului ajunge la –20 dB:
+
+- Același vârf depășește pragul cu 20 dB și va fi atenuat cu 10 dB — dublu față de anterior.
+- Deoarece atenuarea este acum de 10 dB, timpul de revenire va fi de 10 ms.
+
+Efectiv, prin coborârea pragului crescă valoarea atenuării (_gain reduction_), comprimând și mai mult dinamica și încetinind răspunsul timpilor de _release_ și _attack_.
+În plus, un prag la –20 dB va duce la o compresie statică de 5 dB, deoarece tot ce se află între –20 și –10 dB va fi comprimat constant (cu excepția etapelor de creștere și descreștere ale semnalului).
+
+---
+
+### Trei aplicații comune ale compresiei
+
+Figura 17.23 ilustrează nivelul unei interpretări ipotetice (de exemplu, o voce).
+Fiecare coloană reprezintă o aplicație diferită, iar setarea pragului este indicată pe rândul de sus, alături de semnalul de intrare (identic în toate cele trei cazuri).
+În această interpretare există un vârf și o scădere accentuată de nivel (_dip_).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-23.jpg"
+    alt="Figura 17-23"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.23:</p>**Setări ale pragului (*threshold*)
+  pentru aplicații uzuale de compresie.** **(a)** Controlul nivelurilor. **(b)**
+  Egalizarea nivelurilor. **(c)** Creșterea volumului perceput (*loudening*). Pe
+  coloane, de sus în jos, sunt reprezentate: semnalul de intrare și setarea
+  pragului, apoi semnalul comprimat înainte de *makeup gain*, iar la final
+  semnalul de ieșire după aplicarea *makeup gain*-ului.
+</div>
+
+<div className="my-6 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+  <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300 border-collapse">
+    <thead className="bg-slate-100 dark:bg-slate-800/80 text-xs uppercase tracking-wider text-slate-900 dark:text-slate-100 font-semibold border-b border-slate-200 dark:border-slate-700">
+      <tr>
+        <th scope="col" className="px-5 py-3.5">Aplicație</th>
+        <th scope="col" className="px-5 py-3.5">Setare prag (<span className="italic font-normal border-b border-dashed border-slate-400">Threshold</span>)</th>
+        <th scope="col" className="px-5 py-3.5 whitespace-nowrap">Rezultat asupra dinamicii</th>
+        <th scope="col" className="px-5 py-3.5">Efect principal</th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-slate-200 dark:divide-slate-800 bg-white dark:bg-slate-900">
+      <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors">
+        <td className="px-5 py-4 font-medium text-slate-900 dark:text-slate-100 align-top">
+          <span className="block font-semibold">(a) Controlul vârfurilor</span>
+          <span className="text-xs text-slate-500 dark:text-slate-400 italic">Containing peaks</span>
+        </td>
+        <td className="px-5 py-4 align-top">
+          <span className="font-semibold text-emerald-600 dark:text-emerald-400">Ridicat:</span> Aproape de baza vârfului, peste restul nivelurilor.
+        </td>
+        <td className="px-5 py-4 align-top whitespace-nowrap">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+            Pierdere marginală
+          </span>
+        </td>
+        <td className="px-5 py-4 align-top text-slate-600 dark:text-slate-400 leading-relaxed">
+          Atenuează doar vârful. Permite creșterea nivelului general (<span className="italic font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">makeup gain</span>), făcând semnalele medii și slabe mai prezente.
+        </td>
+      </tr>
+
+      <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors">
+        <td className="px-5 py-4 font-medium text-slate-900 dark:text-slate-100 align-top">
+          <span className="block font-semibold">(b) Egalizarea nivelului</span>
+          <span className="text-xs text-slate-500 dark:text-slate-400 italic">Level balancing</span>
+        </td>
+        <td className="px-5 py-4 align-top">
+          <span className="font-semibold text-amber-600 dark:text-amber-400">Moderat:</span> Imediat peste zonă scăzută (<span className="italic">dip</span>), sub restul semnalului.
+        </td>
+        <td className="px-5 py-4 align-top whitespace-nowrap">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">
+            Pierdere moderată
+          </span>
+        </td>
+        <td className="px-5 py-4 align-top text-slate-600 dark:text-slate-400 leading-relaxed">
+          Trage semnalul puternic în jos spre zona scăzută. Cu <span className="italic font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">makeup gain</span>, semnalul mediu revine la nivelul inițial, iar scăderea este adusă mai în față.
+        </td>
+      </tr>
+
+      <tr className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors">
+        <td className="px-5 py-4 font-medium text-slate-900 dark:text-slate-100 align-top">
+          <span className="block font-semibold">(c) Creșterea volumului perceput</span>
+          <span className="text-xs text-slate-500 dark:text-slate-400 italic">Loudening / Condensing</span>
+        </td>
+        <td className="px-5 py-4 align-top">
+          <span className="font-semibold text-rose-600 dark:text-rose-400">Scăzut:</span> La baza semnalului; compresie pe aproape tot semnalul.
+        </td>
+        <td className="px-5 py-4 align-top whitespace-nowrap">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300">
+            Pierdere maximă
+          </span>
+        </td>
+        <td className="px-5 py-4 align-top text-slate-600 dark:text-slate-400 leading-relaxed">
+          Uniformizează puternic vârful, pasajele medii și cele scăzute. Ridică nivelul mediu (<span className="italic font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">RMS</span>), oferind un volum perceput mult mai mare.
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+---
+
+### Controlul plajei dinamice a instrumentelor
+
+Dincolo de aceste aplicații generale, pragul poate fi setat în funcție de plaja dinamică a unui instrument.
+La o tobă mică (_snare_), de exemplu, se poate urmări doar atacul (_attack_), setând pragul astfel încât să capteze doar această fază inițială (Figura 17.24).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-24.jpg"
+    alt="Figura 17-24"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.24:</p>**Captarea atacului unei tobe mici
+  (*snare*).** Pragul (*threshold*) este setat astfel încât atacul să se afle
+  deasupra acestuia, iar decreșterea (*decay*-ul) dedesubt.
+</div>
+
+Un detaliu important: cu cât pragul este mai scăzut, cu atât acumularea atacului este captată mai devreme. Acest lucru permite extinderea timpului de _attack_, o tehnică foarte utilă în mixaj.
