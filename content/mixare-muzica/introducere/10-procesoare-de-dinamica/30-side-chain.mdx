@@ -1,0 +1,88 @@
+---
+title: 'Controlul de Side-Chain'
+description: 'Controlul de Side-Chain'
+order: 30
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Interacțiunea dintre _threshold_ (prag), _ratio_ (raport de compresie), _attack_ și _release_ ne oferă un control extins asupra semnalului comprimat.
+Posibilitatea de a modifica semnalul de **side-chain** adaugă un nivel suplimentar de control și deschide noi aplicații pentru compresie.
+Semnalul de side-chain poate fi modificat prin două metode: fie folosind filtrele interne (_built-in_) ale compresorului, fie prin procesoare externe aplicate pe calea de side-chain.
+Utilizarea unor procesoare la alegere pe un side-chain extern ne oferă controlul absolut; totuși, în multe cazuri, filtrele integrate sunt mai mult decât suficiente.
+
+Natura semnalului care alimentează circuitul de side-chain poate fi de două tipuri:
+
+1. **Semnalul original de intrare** (pe care îl putem egaliza).
+2. **Un semnal complet diferit** (folosit pentru aplicații specifice sau efecte creative).
+
+Pentru început, să vedem beneficiile modificării semnalului original de intrare.
+
+---
+
+### Reacția compresorului la frecvențele joase
+
+Una dintre caracteristicile principale ale compresoarelor este că sunt **mult mai sensibile la frecvențele joase**.
+Cu alte cuvinte, bașii au tendința să declanșeze compresorul mult mai puternic decât frecvențele înalte.
+
+Această reacție are două cauze principale:
+
+- **Durata perioadei:** Având o perioadă de undă mai lungă, semnalele de frecvență joasă petrec mai mult timp peste nivelul de _threshold_.
+- **Percepția volumului:** Frecvențele joase trebuie să aibă o energie mai mare (un nivel dB mai ridicat) pentru a fi percepute la fel de tare ca frecvențele medii/înalte (conform curbelor Fletcher-Munson / _equal-loudness curves_).
+
+Această particularitate este motivul direct pentru care compresoarele au reputația de a „întuneca” sau „matifia” sunetul (_dulling_) — pe măsură ce joasele declanșează compresia, nivelul înaltelor este și el redus automat la pachet.
+
+> **Pe scurt:** Frecvențele joase tind să declanșeze compresia mai puternic decât cele înalte, fapt ce poate duce la pierderea clarității (_dulling_) pe instrumentele comprimate.
+
+---
+
+### Aplicație practică: Tobe și instrumente percusive
+
+Un exemplu clar apare la compresia canalelor de **overheads** (mifrofoanele de deasupra tobelor): toba mare (_kick_) este aproape întotdeauna primul element care depășește pragul și declanșează compresia.
+Astfel, de fiecare dată când bate toba mare, nivelul cinelilor scade brusc.
+În plus, dacă _threshold-ul_ este setat prea jos (sau _ratio-ul_ prea sus), riscăm să „strivim” toba mare, în timp ce setările potrivite pentru _kick_ s-ar putea să nu declanșeze nicio compresie atunci când se cântă doar pe cinele.
+Practic, setul de tobe nu mai este comprimat uniform.
+
+O consecință tipică este efectul de „treaptă” pe cinelul de _crash_, al cărui volum scade brusc la fiecare lovitură de tobă mare sau tobă mică (_snare_).
+
+Aceeași problemă apare pe orice sunet cu spectru larg (_broadband_) — frecvențele joase și cele înalte nu sunt comprimate în mod egal.
+Soluția este **filtrarea frecvențelor joase din cale de side-chain**.
+Aplicarea unui filtru High-Pass (HPF) pe side-chain face ca răspunsul compresorului să devină mult mai echilibrat pe semnale complexe.
+
+> **Pe scurt:** Un filtru High-Pass (HPF) aplicat pe side-chain asigură o compresie mult mai uniformă pe materialele audio cu spectru larg.
+
+---
+
+### Egalizarea side-chain-ului pentru variații de pitch
+
+O problemă similară apare la interpretările care variază ca înălțime a notei (_pitch_):
+
+- **La voce:** Frecvențele medii-joase (_low-mids_) variază considerabil în funcție de nota cântată. Pe măsură ce linia melodică urcă și coboară, notele mai joase declanșează o compresie mai puternică.
+  Aplicarea unui HPF pe side-chain-ul canalului de voce oferă o compresie mult mai consistentă pe tot parcursul piesei.
+- **La chitara bas:** Nota Mi grav (E1 approx 41 Hz) generează mult mai multă energie pe joase decât nota Mi aflată cu două octave mai sus (E3 approx 165 Hz).
+  Prin urmare, Mi-ul grav va declanșa o compresie mult mai agresivă, deși Mi-ul mai înalt are nevoie de mai multă definiție.
+  Rezultatul va fi un bas dezechilibrat — cu notele joase mai compresate și mai puțin definite.
+
+Această regulă se aplică la vioară, trompetă sau aproape orice alt instrument: **cu cât nota este mai joasă, cu atât compresia este mai puternică**.
+
+Filtru aplicat pe side-chain este, de regulă, un **High-Pass Filter** (cu orice pantă / _slope_), dar se pot folosi și filtre de tip _Low-Shelf_ sau chiar egalizoare parametrice.
+
+> **Pe scurt:** Egalizarea side-chain-ului (în special filtrarea frecvențelor joase) oferă o compresie mai uniformă între notele grave și cele acute.
+
+---
+
+### Modificarea tonalității și egalizarea dinamică
+
+Privind lucrurile din alt unghi:
+
+- Dacă filtrăm toate frecvențele sub **500 Hz** din calea de side-chain, acele frecvențe vor rămâne mai prezente în semnalul final, deoarece nu vor mai declanșa compresia.
+- Dacă amplificăm regiunea de **4 kHz** pe side-chain, compresorul va reacționa mai puternic la acea zonă și va atenua mai mult frecvența de 4 kHz din semnalul audio (acesta fiind, în esență, principiul de funcționare al unui **De-Esser**).
+
+Această tehnică duce la un fenomen interesant: **egalizarea side-chain-ului modifică tonalitatea semnalului comprimat**.
+În general, te poți aștepta la un efect opus setărilor făcute pe EQ-ul din side-chain.
+Însă schimbările tonale obținute sunt mult mai sofisticate decât un simplu EQ inversat — vorbim despre o **egalizare dependentă de compresie**, adică o formă de **egalizare dinamică**.
+
+Pe lângă protejarea semnalului, putem folosi egalizarea de side-chain pentru a finisa spectrul de frecvențe al instrumentelor.
+Este o tehnică ce necesită exercițiu, dar care oferă rezultate excelente în mixaj.
+
+> **Pe scurt:** Egalizarea pe side-chain alterează tonalitatea semnalului comprimat și permite o egalizare dinamică mult mai avansată decât egalizarea statică standard.

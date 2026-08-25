@@ -1,0 +1,78 @@
+---
+title: 'Echilibrarea nivelurilor (Balancing levels)'
+description: 'Echilibrarea nivelurilor (Balancing levels)'
+order: 3
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Figura 17.33 prezintă nivelurile posibile a trei elemente din mix înainte și după compresie.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-33.jpg"
+    alt="Figura 17-33"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.33:</p>Nivelurile relative înainte și după compresie:
+
+    (a) Înainte de compresie: Fluctuațiile de nivel fac imposibilă echilibrarea acestor trei instrumente.
+
+    (b) După compresie: Sarcina de echilibrare devine mult mai ușoară.
+
+</div>
+
+Se poate observa că, înainte de compresie, fluctuațiile de nivel ale fiecărui instrument sunt destul de problematice: în anumite momente toba mică (_snare_) este cea mai tare, în altele basul sau vocea; nivelul tobei mici variază constant, iar uneori basul depășește vocea, alteori invers.
+Este un haos total.
+Indiferent cât de mult am încerca să echilibrăm un astfel de aranjament folosind doar faderii, nivelurile relative se vor schimba radical în timp.
+
+Cu toate acestea, după ce comprimăm fiecare instrument în parte, le putem echilibra astfel încât raportul dintre ele să rămână constant.
+Mai mult, le putem aduce mai aproape ca nivel unele de altele, oferind senzația unui mix mai tare și mai solid.
+
+O astfel de echilibrare are loc de obicei foarte devreme în procesul de mixaj, pentru a face piesele mai ușor de gestionat și pentru a oferi o logică nivelurilor relative.
+La această etapă inițială nu căutăm o compresie perfectă — setările brute sunt suficiente pentru a obține un echilibru rezonabil.
+Pe măsură ce trecem de la procesarea brută la cea fină, acordăm o atenție sporită compresiei individuale pe fiecare instrument.
+
+Dintre cele trei instrumente, **echilibrarea vocii este de o importanță capitală**, deoarece aceasta prezintă cele mai mari variații de nivel.
+În cazul tobei mici, echilibrarea nivelului ar putea fi al doilea obiectiv, după adăugarea de _punch_.
+Abordarea pentru fiecare instrument va fi diferită: ne dorim o compresie transparentă pe voce, în timp ce pe toba mică putem căuta un efect mai pronunțat.
+
+---
+
+### Setări recomandate pentru echilibrarea nivelurilor
+
+Dacă ar fi să generalizăm un punct de plecare pentru echilibrarea dinamicii, următoarele ghidaje sunt utile:
+
+- **Threshold (Prag):** Setat la baza domeniului de acțiune, astfel încât să capteze toate fluctuațiile de nivel.
+- **Ratio (Raport de compresie):** Depinde de mărimea vârfurilor (_overshoots_) și de gradul în care vrem să păstrăm dinamica.
+  Un _ratio_ mare poate strivi instrumentul, în timp ce unul mic s-ar putea să nu fie suficient.
+  Pe voce se va aplica, cel mai probabil, cel mai mare _ratio_, având în vedere fluctuațiile mari de nivel și faptul că o dinamică mai îmblânzită este mai puțin sesizabilă la voce.
+- **Attack & Release:**
+- _Pentru instrumente non-percusive:_ Setări rapide, astfel încât să se aplice mai multă compresie și schimbările de nivel să fie urmărite prompt.
+  Atenție însă la distorsiunile pe joase și la modul în care sunt afectate atacul și decay-ul natural.
+- _Pentru instrumente percusive:_ Timpi mai lungi de _attack_ și _release_, pentru a păstra dinamica originală.
+
+- **Hold (Menținere):** Dacă este disponibil, ajută la reducerea distorsiunilor pe frecvențele joase, permițând în același timp utilizarea unor timpi mai scurți de _attack_ și _release_.
+- **Knee:** De tip _Soft_ (comutare lină), deoarece la echilibrarea nivelurilor nu urmărim neapărat un efect agresiv de compresie.
+- **Peak vs. RMS:** Depinde de instrument — cel mai probabil **RMS** pentru voce și **Peak** pentru toba mică.
+- **Filtru Side-chain:** Recomandat. Atenuarea sau filtrarea frecvențelor joase din side-chain pe toate cele trei instrumente oferă o detecție mai precisă și un rezultat mai curat.
+- **Makeup Gain:** Ajustat astfel încât compararea A/B să fie corectă (volumul perceput să nu se schimbe atunci când punem compresorul în _Bypass_).
+
+---
+
+### Naturalețe vs. Control rigid pe tobe
+
+O decizie importantă pe care trebuie să o luăm este până unde mergem cu echilibrarea.
+Dacă toate loviturile de tobă mică și tobă mare sunt aduse exact la același nivel, pot sunat ca dintr-un _drum machine_ (toboșar automat).
+Din fericire, timbrul unei tobe se schimbă în funcție de forța loviturii (_velocity_), astfel încât amprenta naturală se păstrează chiar și atunci când nivelul peak-urilor este egalizat.
+
+O producție care caută un sunet mai natural va beneficia de o echilibrare mai relaxată.
+În schimb, în producțiile moderne, mai agresive (sau pe secțiunile de forță ale unei piese), mulți ingineri de mixaj tind să uniformizeze loviturile de tobă într-un mod aproape mecanic.
+
+Trebuie să ținem minte că, în cazul tobelor, linia dintre „natural” și „sloppy” (execuție neglijentă) este foarte subțire. Un toboșar bun va avea consistență, dar și mici variații naturale.
+Dacă însă fiecare lovitură are un nivel complet aleatoriu, interpretarea va sunat amatoricește.
+
+> **Pe scurt:** Loviturile de tobă uniformizate (chiar și la un _velocity_ egal) pot da senzația unei interpretări foarte puternice și precise, deși acest lucru nu este întotdeauna potrivit pentru genurile muzicale care necesită naturalețe.

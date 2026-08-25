@@ -1,0 +1,88 @@
+---
+title: 'Release-ul (Timpul de revenire)'
+description: 'Release-ul (Timpul de revenire)'
+order: 28
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Parametrii _Release_ și _Attack_ au câteva lucruri în comun.
+Un release foarte scurt poate distorsiona frecvențele joase din același motiv din care o face și un attack scurt.
+Și în acest caz, controlul de _Hold_ (menținere) poate reduce acest tip de distorsiune.
+Pe de altă parte, un release lung are tendința de a atenua frecvențele înalte, pe același principiu pe care îl aplică un attack lung.
+De asemenea, un release foarte scurt poate produce clicuri audibile — deși, spre deosebire de clicurile produse de attack, este greu de găsit o utilizare practică pentru cele cauzate de release.
+Reglatul release-ului devine mai important în cazul unei compresii mai agresive, deoarece acesta acționează asupra unor reduceri de nivel (_gain reduction_) mai mari.
+
+> **Pe scurt:** Timpii scurți de release pot cauza distorsiuni pe frecvențele joase și clicuri audibile.
+
+Un aspect de luat în considerare este faptul că revenirea gain-ului (_gain recovery_) în timpul fazei de release are loc uneori în zonele de liniște.
+De exemplu, dacă încerci să cânți cu voce tare „when we eat” și apoi „when we go”, este foarte probabil să tai scurt cuvântul „eat”, în timp ce pe „go” îl lași să se stingă treptat.
+Scăderile rapide de nivel vocal (cum este pe „eat”) pot fi mai scurte de 50 ms, iar un release mai lung de această valoare va ajunge să afecteze liniștea ce urmează.
+Deși setarea release-ului este importantă pentru a controla aceste pauze vocale, trebuie să recunoaștem că o parte din revenirea gain-ului are loc pe secțiuni inaudibile.
+Acest lucru sugerează că release-ul poate fi mult mai critic pentru instrumente care rar intră în liniște deplină, cum ar fi overheadele de tobă sau chitarele ritmice.
+Aceste instrumente sunt, de asemenea, mai predispuse la efectul de „pompaj” (_pumping_), cauzat direct de timpii scurți de release.
+
+> **Pe scurt:** Un release scurt poate provoca efectul de pompaj (_pumping_).
+
+Așa cum s-a discutat la diferența dintre reducerea de gain și compresie, un timp de release extrem de lung (ipotetic, 10 ore) va produce o reducere constantă a nivelului — exact opusul compresiei.
+Atât un attack lung, cât și un release lung încetinesc variațiile de reducere a gain-ului, făcând compresorul să acționeze mai degrabă ca un fader automat lent.
+Ca urmare, efectul de compresie devine mai puțin sesizabil.
+Prin analogie, dacă în timpul unei ajustări manuale a nivelului (_gain-riding_) inginerul mișcă faderul extrem de lent, variațiile de nivel ale semnalului de intrare abia dacă se vor schimba.
+Efectul real al compresiei apare doar atunci când reducerea de gain urmărește activ schimbările de nivel ale semnalului de intrare.
+Timpii scurți de release duc la o revenire mai rapidă a gain-ului, ceea ce crește nivelul mediu de ieșire și senzația de volum (_perceived loudness_).
+
+> **Pe scurt:** Timpii scurți de release rezultă într-o compresie mai evidentă, un efect mai pronunțat și o crește a volumului perceput.
+
+Să folosim o tobă mică (_snare_) pentru a demonstra funcționarea release-ului.
+Cu cât attack-ul este mai lung, cu atât se păstrează mai mult din atacul natural al instrumentului.
+Efectul release-ului poate fi ușor înțeles greșit, deoarece este exact opus ca natură: **cu cât release-ul este mai lung, cu atât se păstrează mai puțin din decay-ul (stinguerea) natural al instrumentului**.
+
+Controlul de release determină viteza cu care reducerea de gain scade — cu alte cuvinte, cât de repede își revine semnalul.
+Odată ce nivelul semnalului de intrare scade, un release mai lung va încetini rata de revenire, aplicând mai multă compresie pe semnalul rămas.
+Este interesant de observat efectul unui release mediu, care remodeliază vizibil decay-ul tobei.
+Această „umflătură” suplimentară poate altera timbrul tobei într-un mod neplăcut.
+De cele mai multe ori, urmărim fie să lăsăm decay-ul intact, fie să îl atenuăm complet.
+
+În cazul vocilor, ne dorim un release rapid pentru ca semnalul, aflat deja în scădere, să nu fie atenuat și mai mult de compresor.
+Totuși, atât attack-ul, cât și release-ul se ocupă și de schimbările de nivel care depășesc pragul (_threshold_), așa că la voce funcția lor este adesea legată de urmărirea fluctuațiilor dinamicilor.
+
+> **Pe scurt:** Un release mai lung pe compresor înseamnă mai puțin din decay-ul natural al instrumentului și poate altera timbrul acestuia.
+
+Nicio discuție despre release nu ar fi completă fără a menționa legătura strânsă a acestuia cu **ritmul piesei**.
+Când aplicăm compresie pe instrumente percusive, release-ul dictează lungimea fiecărei lovituri și modul în care aceasta se stinge.
+Setări diferite de release pot schimba radical felul în care un instrument se „așază” pe ritmul muzicii.
+De exemplu, o tobă mică ce lovește la fiecare doime poate sunat corect în mix dacă lungimea ei percepută este ajustată la valoarea unei pătrimi.
+Nu există reguli stricte — trebuie să experimentăm cu release-ul până când sună natural.
+
+După lovitura de tobă mică, indicatorul de reducere a gain-ului (_gain reduction meter_) arată dacă și când nivelul revine la 0 dB.
+De regulă, ne dorim ca revenirea să fie completă înainte de următoarea lovitură, altfel noua lovitură va fi atenuată de compresia rămasă din urmă.
+
+Dar ce se întâmplă dacă toboșarul cântă doimi în cea mai mare parte a piesei, iar înainte de refren bagă un break cu optimi?
+O setare de release potrivită pentru doimi va fi prea lungă pentru optimi și le va estompa accentul.
+De obicei, acele optimi sunt puse acolo tocmai pentru a crea energie înainte de refren, așa că atenuarea lor este fix contrariul a ceea ce ne dorim.
+Pe de altă parte, un release setat pentru optimi s-ar putea să nu fie potrivit pentru doimile din restul piesei.
+În acest caz, există două opțiuni principale:
+
+1. Să faci un compromis cu o setare medie (care nu va fi nici perfectă, nici dezastruoasă pentru ambele lungimi de notă).
+2. Să automatizezi parametrul de release astfel încât fiecare secțiune să se simtă corect.
+
+> **Pe scurt:** În cazul execuțiilor percusive, ne dorim ca reducerea de gain să revină complet la 0 dB înainte de sosirea următoarei note.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-31.jpg"
+    alt="Figura 17-31"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.31:</p>Timpul de release pe o tobă mică (snare):
+
+    Cu un release scurt, decay-ul rămâne neschimbat în comparație cu semnalul original.
+
+    Cu un release mediu, îi ia ceva timp gain-ului să își revină, iar abia apoi decay-ul natural revine la nivelurile sale originale.
+
+    Cu un release lung, decay-ul este atenuat și se păstrează foarte puțin din el.
+
+</div>

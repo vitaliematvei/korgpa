@@ -1,0 +1,108 @@
+---
+title: 'Remodelarea anvelopelor dinamice (Reshaping dynamic envelopes)'
+description: 'Remodelarea anvelopelor dinamice (Reshaping dynamic envelopes)'
+order: 5
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Schimbările de nivel aplicate de un compresor remodelează anvelopa dinamică a sunetelor.
+În cei mai simpli termeni, pragul (_threshold_) definește ce parte a anvelopei este remodelată, iar raportul (_ratio_) definește în ce măsură este modificată.
+Parametrii de _attack_ și _release_ ne oferă un control mult mai fin asupra acestei remodelări — putem altera atacul și decay-ul natural în diverse moduri.
+
+---
+
+### 1. Adăugarea de _punch_ și accentuarea atacului
+
+Prima aplicație este adăugarea de _punch_.
+Înainte de a vedea cum obține un compresor acest efect, trebuie să definim termenul: _punch-ul_ înseamnă impact, forță, atac direct și energie — concepte care nu au nicio legătură cu mișcarea lentă.
+Pentru a avea impact, atacul trebuie să fie brusc.
+
+La fel cum în muzică un tempo mai rapid înseamnă note mai scurte și energie mai mare, în compresie putem scurta sunetele prin **atenuarea decay-ului** lor:
+
+- **Attack mai lung:** Lasă atacul natural al instrumentului să treacă necomprimat.
+- **Release lung:** Atenuează decay-ul natural al sunetului.
+
+Efectul poate fi accentuat prin ajustarea ușoară a atacului, astfel încât o mică parte din compresie să prindă vârful atacului natural, condensându-l pentru un plus de impact.
+
+Același principiu se folosește pentru:
+
+- Accentuarea atacului natural;
+- Accentuarea tranzienților;
+- Revitalizarea tranzienților sparți sau aplatizați;
+- Reconstrucția dinamicii pierdute (din cauza unei supracompresii anterioare).
+
+Tot ce trebuie să facem este să **aplicăm _Makeup Gain_** după ce am atenuat decay-ul.
+Astfel, după compensarea nivelului, atacul devine mult mai pronunțat în comparație cu semnalul original necomprimat.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-35.jpg"
+    alt="Figura 17-35"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.35:</p>Adăugarea de *punch* pe o tobă mică (*snare*) cu ajutorul unui compresor:
+
+Atacul (_attack_) este setat suficient de lung pentru a păstra atacul natural al tobei, în timp ce timpul de revenire (_release_) este setat lung, astfel încât reducerea de gain (_gain reduction_) să atenueze decay-ul natural.
+
+</div>
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-36.jpg"
+    alt="Figura 17-36"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.36:</p>Accentuarea atacului unei tobe mici (*snare*) cu ajutorul unui compresor:
+
+Atacul (_attack_) este setat suficient de lung pentru a păstra atacul natural al tobei, în timp ce timpul de revenire (_release_) lung atenuează decay-ul.
+După aplicarea nivelului de recuperare (_makeup gain_), atacul devine mai puternic/mai tare, în timp ce decay-ul revine la nivelul său original.
+
+</div>
+
+---
+
+### 2. Poziționarea instrumentelor în spațiul 3D al mixului
+
+Compresia este o metodă sofisticată de a aduce instrumentele mai în față sau de a le împinge mai în spate în mix:
+
+- **Fader vs. Compresor:** Ridicarea unui fader afectează întregul spectru de frecvențe și durata sunetului, putând detașa instrumentul din mix și făcându-l prea dominant sau provocând probleme de mascare audio.
+- **Control pe anvelopă:** Dacă vrem o tobă mare (_kick_) mai în față, de ce să nu-i accentuăm doar atacul?
+  Dacă vrem să o trimitem mai în spate, de ce să nu-i îmblânzim atacul sau decay-ul?
+
+Dacă egalizatoarele sunt o alternativă chirurgicală la faderi pe axa **frecvențelor**, compresoarele acționează ca faderi chirurgicali pe axa **timpului** (duratei sunetului).
+
+> **Pe scurt:** Compresia poate fi folosită pentru a aduce instrumentele mai în față sau mai în spate în mix.
+
+---
+
+### 3. Accentuarea decay-ului și a sustain-ului
+
+Pentru a accentua decay-ul (coada sunetului):
+
+1. **Atenuăm atacul** folosind un _attack_ foarte rapid.
+2. Lăsăm decay-ul necomprimat (sau lăsăm gain-ul să își revină rapid cu un _release_ scurt).
+3. Ridicăm semnalul cu **Makeup Gain**.
+
+Această setare (_threshold_ jos, _ratio_ mare, _attack_ rapid, _release_ rapid) este extrem de utilă când vrem ca **reverberațiile** să devină mai prezente în mix sau când vrem să mărim **sustain-ul** instrumentelor (în special la chitare).
+
+#### Atenție la reverberațiile naturale:
+
+Comprimarea spațiilor / reverberațiilor naturale poate afecta informația spațială — percepția realistă a spațiului depinde direct de dinamica naturală a reverb-ului.
+Dacă se dorește un efect natural, compresia pe reverb trebuie aplicată cu grijă.
+În schimb, în contexte creative, compresia poate spori considerabil efectul de spațialitate.
+
+---
+
+### 4. Controlul micro-dinamicii pe instrumente non-percusive
+
+Deși instrumentele percusive sunt ideale pentru a demonstra _attack-ul_ și _release-ul_, controlul micro-dinamicii este la fel de util și pe instrumente mai calme.
+
+De exemplu, o chitară acustică înregistrată cu un microfon de condensator cu membrană mică poate sunat prea „săritoare” sau mai agresivă decât în realitate.
+Putem folosi un compresor pentru a netezi aceste micro-vârfuri dinamice deranjante, obținând un sunet general mai rotunjit și mai omogen.

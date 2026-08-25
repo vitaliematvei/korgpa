@@ -1,0 +1,56 @@
+---
+title: 'Creșterea volumului perceput (Loudening)'
+description: 'Creșterea volumului perceput (Loudening)'
+order: 4
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Efectul de _loudening_ se obține prin creşterea nivelului mediu al semnalului (_RMS / average level_), păstrând în același timp nivelul de vârf (_peak_).
+În etapa de mixaj, acest lucru se face mai puțin în sensul de masterizare (unde se urmărește maximizarea volumului general al unui mix stereo) și mai mult cu scopul de a condensa dinamica instrumentelor individuale, oferindu-le un impact mult mai puternic.
+Dacă un anumit instrument nu reușește să își facă loc printre celelalte elemente din mix, puțină compresie de acest tip îl va ajuta să taie prin mix (_cut through_).
+De asemenea, _loudening-ul_ este o altă metodă eficientă de echilibrare a nivelurilor.
+
+---
+
+### Setări recomandate pentru _Loudening_
+
+- **Knee:** Opțiunea _Soft-Knee_ este obligatorie aici, deoarece efectul rigid cauzat de un _Hard-Knee_ va limita posibilitatea de a folosi setări extreme pe ceilalți parametri.
+  Cu cât intervalul (_span_) de knee este mai mic, cu atât compresia devine mai evidentă; totuși, setări extrem de mari pentru knee vor limita capacitatea de a împinge nivelurile mai sus.
+  În general, încercăm să avem un interval de knee la fel de lat ca domeniul de acțiune al semnalului de intrare — un interval de **30 dB** poate fi un punct bun de plecare.
+- **Ratio (Raport de compresie):** Setat la maxim. Tranziția lină oferită de _Soft-Knee_ va asigura o limitare treptată, iar parametrul _Threshold_ va fi folosit pentru a determina gradul de limitare efectivă.
+- **Threshold (Prag):** Când _Threshold-ul_ este setat sub 0 dB la o valoare egală cu jumătate din intervalul de knee, efectul complet al knee-ului este atins la 0 dB, iar doar semnalele care depășesc acest nivel vor fi limitate.
+  Orice coborâre suplimentară a pragului va rezulta într-un domeniu de limitare identic pentru semnalele puternice de intrare.
+  De exemplu, cu un _Soft-Knee_ de 40 dB și _Threshold-ul_ setat la **–20 dB**, limitarea va afecta semnalele de intrare de la 0 dB în sus.
+  Dacă coborâm _Threshold-ul_ cu 10 dB, ajungând la **–30 dB**, limitarea se va aplica primilor 10 dB din vârful semnalului de intrare.
+- **Makeup Gain:** Identic cu valoarea _Threshold-ului_, dar inversat ca semn. De exemplu, pentru un _Threshold_ la **–12 dB**, _Makeup Gain-ul_ va fi de **+12 dB**.
+  Deoarece _Ratio-ul_ este setat la maxim, această potrivire exactă aduce nivelul maxim de ieșire la 0 dB.
+- **Attack & Release:** La fel ca la echilibrarea nivelurilor — timpi scurți pentru instrumente mai puțin percusive și un _attack_ mai lung pentru cele percusive.
+  Trebuie monitorizată cu atenție apariția distorsiunilor pe frecvențele joase.
+- **Hold (Menținere):** Ca și în cazul echilibrării dinamice, poate reduce distorsiunile pe frecvențele joase.
+- **Peak vs. RMS:** Deoarece ne dorim un efect de compresie cât mai puțin sesizabil și mai transparent, modul **RMS** este cel preferat.
+- **Filtru Side-chain:** Foarte probabil. Atenuarea sau filtrarea frecvențelor joase din calea de side-chain oferă o detecție mai precisă și reduce efectul neplăcut de pompaj (_pumping_).
+
+---
+
+Această abordare specifică presupune o compresie mai accentuată pe semnalele cu volum mare.
+Deși oferă o energie sporită semnalului, metoda nu excelează la capitolul păstrării dinamicii originale.
+Putem ajusta totuși acești parametri pentru a obține o compresie mai puțin agresivă, care să conserve mai bine dinamica: de exemplu, dacă reducem _Ratio-ul_ la **6:1**, _Makeup Gain-ul_ va trebui coborât corespunzător pentru a compensa plusul de nivel pe ieșire.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-34.jpg"
+    alt="Figura 17-34"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17.34:</p>Trei abordări pentru creșterea volumului perceput (*Loudening*):
+
+  <ul className="mt-2 list-disc list-inside text-left">
+    <li><strong>(a)</strong> Punctul final al knee-ului este atins la 0 dB. Orice semnal de intrare care depășește 0 dB va fi limitat.</li>
+    <li><strong>(b)</strong> O compresie mai agresivă se obține prin coborârea pragului (threshold) și creșterea nivelului de recuperare (makeup gain). Efectul complet al knee-ului este atins la –10 dB, astfel încât limitarea începe pentru orice semnal de intrare care depășește –10 dB.</li>
+    <li><strong>(c)</strong> Un efect mai moderat se poate obține prin setarea unui ratio mai mic. Această abordare păstrează dinamica semnalului de intrare mult mai bine decât celelalte două.</li>
+  </ul>
+</div>
