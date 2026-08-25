@@ -1,0 +1,150 @@
+---
+title: 'Refactorizarea Coșului de Cumpărături (Cart)'
+description: 'Refactorizarea Coșului de Cumpărături (Cart)'
+order: 7
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Atunci când scriem cod, abordarea de tip **MVP (Minimum Viable Product)** este extrem de eficientă: ne concentrăm mai întâi pe funcționalitățile de bază, iar ulterior revenim pentru a finisa și optimiza codul printr-un proces iterativ.
+Această metodă ne permite să lansăm cod funcțional mult mai rapid — chiar dacă nu arată perfect de la început, putem pune în producție o versiune stabilă și putem identifica ce caracteristici trebuie ajustate.
+
+În această etapă, vom aplica refactorizarea pentru componentele coșului de cumpărături (`MiniCart` și `Cart`), deoarece ambele folosesc o logică foarte similară.
+
+---
+
+1. **Extragerea funcției de formatare:** MiniCart.jsx.
+   Deschide fișierul `MiniCart.jsx` și copiază funcția de formatare a prețului:
+
+```javascript
+const eUSLocale = (x) => {
+  return x.toLocaleString('en-US', {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  });
+};
+```
+
+2. **Centralizarea funcției în utilitare:** lib/utils.js.
+   Deschide fișierul `utils.js` din folderul `\lib` și navighează la finalul acestuia.
+   Pe o linie nouă, adaugă cuvântul cheie `export` înaintea funcției lipite:
+
+```javascript
+export const eUSLocale = (x) => {
+  return x.toLocaleString('en-US', {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  });
+};
+```
+
+Salvează și închide fișierul `utils.js`.
+
+3. **Refactorizarea componentei MiniCart:** MiniCart.jsx.
+   În `MiniCart.jsx`, înlocuiește fiecare instanță a vechiului cod de formatare:
+
+```javascript
+${item.price.toLocaleString("en-US", {
+  maximumFractionDigits: 2,
+  minimumFractionDigits: 2,
+})}
+
+```
+
+...cu noua apelare a funcției:
+
+```javascript
+${eUSLocale(totalPrice)}
+
+```
+
+Schimbă elementele HTML din jurul acestei funcții: folosește tag-ul `<span>` pentru prima apariție și `<h3>` pentru a doua apariție.
+
+4. **Refactorizarea componentei Cart:** Cart.jsx.
+   Repetă modificările din pasul anterior în fișierul `Cart.jsx`. De această dată, înlocuiește tag-urile din jurul fiecărei instanțe cu `<span>`.
+
+5. **Crearea componentei EmptyCart:** src/components/Cart/EmptyCart.jsx.
+   Creează un folder nou numit `Cart` în `\src\components`.
+   În interiorul acestuia, creează fișierul `EmptyCart.jsx` și adaugă următorul cod:
+
+```jsx
+import React from 'react';
+import { AiOutlineShopping } from 'react-icons/ai';
+
+const EmptyCart = ({ children }) => {
+  return (
+    <div className="empty-cart">
+      <AiOutlineShopping size={150} />
+      <p>Your shopping bag is empty</p>
+      {children}
+    </div>
+  );
+};
+
+export default EmptyCart;
+```
+
+Salvează și închide fișierul.
+
+6. **Exportul componentei folosite:** src/components/index.js.
+   Deschide fișierul `index.js` din `\src\components` și adaugă referința pentru noua componentă:
+
+```javascript
+export { default as EmptyCart } from './Cart/EmptyCart';
+```
+
+7. **Integrarea EmptyCart în MiniCart:** MiniCart.jsx.
+   În `MiniCart.jsx`, caută linia în care se verifică dacă coșul este gol (`{cartItems.length < 1 && (`) și actualizează blocul de cod astfel:
+
+```jsx
+{
+  cartItems.length < 1 && (
+    <EmptyCart>
+      <Link href="/shop">
+        <button type="button" className="btn">
+          Go to Shop
+        </button>
+      </Link>
+    </EmptyCart>
+  );
+}
+```
+
+8. **Integrarea EmptyCart în Cart:** Cart.jsx.
+   Deschide `Cart.jsx` și aplică o modificare similară pentru starea de coș gol:
+
+```jsx
+{
+  cartItems.length < 1 && (
+    <EmptyCart>
+      <Link href="/">
+        <button
+          type="button"
+          onClick={() => setShowCart(false)}
+          className="btn"
+        >
+          Continue Shopping
+        </button>
+      </Link>
+    </EmptyCart>
+  );
+}
+```
+
+Salvează toate fișierele deschise.
+
+9. **Testarea aplicației:** Terminal & Browser.
+1. Deschide un terminal Node.js în directorul rădăcină al proiectului.
+1. Rulează comanda: `npm run dev`.
+1. Accesează în browser `http://localhost:3000/shop`.
+1. Dă click pe un produs și apoi apasă pe **Add to Cart**.
+1. Verifică dacă contorul de lângă pictograma coșului din `NavBar` se schimbă din `0` în `1` și dacă produsul apare în subsolul paginii.
+
+---
+
+### Concluzie
+
+Aceste modificări nu schimbă doar aspectul vizual, ci optimizează structura aplicației prin reutilizarea codului (DRY - _Don't Repeat Yourself_).
+Izolarea stării de coș gol într-o componentă separată (`EmptyCart`) și centralizarea formatării valutare simplifică mentenanța pe termen lung.
+
+{/* am ramas Integrating a Payment Provider .121 */}
