@@ -1,0 +1,156 @@
+---
+title: 'LookAndFeel partea 2'
+description: 'LookAndFeel partea 2'
+order: 8
+category: 'JUCE'
+level: 'Incepator'
+---
+
+### Pasul 1: Crearea proiectului și configurarea inițială
+
+1. Deschide **Projucer** și creează un proiect nou de tip **GUI Application**.
+2. Deschide proiectul în mediul tău de dezvoltare (Xcode / Visual Studio).
+3. În `MainComponent.h`, adaugă membrii componentei de tip slider:
+
+```cpp
+juce::Slider dial1;
+
+```
+
+4. În `MainComponent.cpp`, în constructor, configurează stilul potentiometrului:
+
+```cpp
+dial1.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+dial1.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
+addAndMakeVisible(dial1);
+
+```
+
+5. În metoda `resized()`, stabilește dimensiunea sliderului pentru a ocupa întreaga fereastră:
+
+```cpp
+dial1.setBounds(getLocalBounds());
+
+```
+
+---
+
+### Pasul 2: Definirea clasei personalizate `LookAndFeel`
+
+Pentru a evita aglomerarea componentei principale, creează o clasă separată pentru stilul vizual.
+
+1. Definește o clasă nouă care moștenește `juce::LookAndFeel_V4`:
+
+```cpp
+class OtherLookAndFeel : public juce::LookAndFeel_V4
+{
+public:
+    OtherLookAndFeel() {}
+
+    void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height,
+                         float sliderPos, const float rotaryStartAngle,
+                         const float rotaryEndAngle, juce::Slider& slider) override
+    {
+        // Aici vom adăuga codul de desenare personalizată
+    }
+};
+
+```
+
+2. În `MainComponent.h`, instanțiază clasa ta:
+
+```cpp
+OtherLookAndFeel otherLookAndFeel;
+
+```
+
+3. În constructorul din `MainComponent.cpp`, aplică noul stil sliderului:
+
+```cpp
+dial1.setLookAndFeel(&otherLookAndFeel);
+
+```
+
+---
+
+### Pasul 3: Calcularea geometriei și centrarea cadranului
+
+Pentru ca potentiometrul să rămână perfect rotund chiar dacă fereastra își schimbă proporțiile (lățimea diferită de înălțime), trebuie să calculezi diametrul maxim și centrul zonei de desenare [[18:25](https://www.google.com/search?q=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D_IocXoXUWdQ%26t%3D1105)].
+
+Adaugă în metoda `drawRotarySlider`:
+
+```cpp
+// Calcularea diametrului ca fiind minimul dintre lățime și înălțime
+auto diameter = juce::jmin(width, height);
+auto radius = diameter / 2.0f;
+
+// Calcularea centrului zonei
+auto centerX = x + width / 2.0f;
+auto centerY = y + height / 2.0f;
+
+// Calcularea coordonatelor de colț pentru încadrare
+auto rx = centerX - radius;
+auto ry = centerY - radius;
+
+```
+
+---
+
+### Pasul 4: Desenarea corpului potentiometrului (Fundal și Contur)
+
+Utilizând dimensiunile calculate la Pasul 3, desenează cercul principal și conturul acestuia.
+
+```cpp
+// Cercul principal (umplutura dial-ului)
+g.setColour(juce::Colours::red); // sau orice altă culoare preferată
+g.fillEllipse(rx, ry, diameter, diameter);
+
+// Conturul exterior
+g.setColour(juce::Colours::black);
+g.drawEllipse(rx, ry, diameter, diameter, 5.0f); // grosime de 5 pixeli
+
+```
+
+---
+
+### Pasul 5: Calcularea unghiului de rotație curente
+
+Sliderul returnează o poziție `sliderPos` între `0.0` (minim) și `1.0` (maxim). Pentru a poziționa acul (indicatorul/tick-ul) la unghiul corect în radiani, aplică formula de scalare [[33:41](https://www.google.com/search?q=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D_IocXoXUWdQ%26t%3D2021)]:
+
+```cpp
+auto angle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
+
+```
+
+---
+
+### Pasul 6: Crearea și poziționarea acului (Tick Marker)
+
+Pentru a desena acul indicator care se rotește odată cu potentiometrul:
+
+1. Definește forma acului folosind o cale (`juce::Path`).
+2. Aplică o transformare matriceală (`juce::AffineTransform`) pentru a roti și a deplasa acul pe marginea cadranului.
+
+```cpp
+// Crearea dreptunghiului indicator (acului)
+juce::Path dTick;
+auto tickWidth = 4.0f;
+auto tickLength = radius * 0.33f; // acul va avea o treime din rază
+
+// Desenăm dreptunghiul decalat cu valoarea -radius pe axa Y pentru a fi orientat corect
+dTick.addRectangle(-tickWidth / 2.0f, -radius, tickWidth, tickLength);
+
+g.setColour(juce::Colours::black);
+
+// Aplicăm rotația după unghiul curent și translația la centrul potentiometrului
+g.fillPath(dTick, juce::AffineTransform::rotation(angle).translated(centerX, centerY));
+
+```
+
+---
+
+### Rezumat al funcționării
+
+- **`drawRotarySlider`**: Suprascrie grafica implicită furnizată de JUCE.
+- **`jmin` & Centrare**: Garantează menținerea aspectului circular indiferent de scalarea ferestrei.
+- **`AffineTransform`**: Permite rotirea precisă a acului indicator în jurul centrului cercului pe baza poziției curente a parametrului.

@@ -1,0 +1,75 @@
+---
+title: 'Juce offline'
+description: 'Juce offline'
+order: 9
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Acest ghid explică cum poți genera și accesa **documentația cadrului de lucru (framework-ului) JUCE în mod offline** (fără conexiune la internet), folosind instrumentul **Doxygen**.
+
+---
+
+## 🛠️ Cerințe preliminare
+
+- **Sistem de operare:** Ghidul este prezentat pe macOS (procesul poate diferi ușor pe Windows sau Linux).
+- **Terminal** (sau Linia de comandă).
+- Framework-ul JUCE instalat pe calculator.
+
+---
+
+1. **Instalarea instrumentelor necesare (Homebrew și Doxygen):** Rularea comenzilor în Terminal pe macOS.
+   Pentru a genera documentația, ai nevoie de utilitarul **Doxygen**.
+
+1. Deschide aplicația **Terminal**.
+1. Înregistrează și rulează comanda pentru instalarea **Homebrew** (dacă nu îl ai deja instalat):
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+```
+
+3. După instalarea Homebrew, instalează **Doxygen** rulând comanda:
+
+```bash
+brew install doxygen
+
+```
+
+2. **Navigarea la directorul Doxygen din JUCE:** Localizarea fișierului Doxyfile.
+   Documentația offline se bazează pe fișierul de configurare `Doxyfile` inclus în structura de fișiere JUCE.
+
+1. Deschide **Finder** și mergi în dosarul **Applications** (Aplicații).
+1. Caută dosarul JUCE (autorul menționează că procesul a funcționat corect folosind un dosar dintr-o instalare anterioară `JUCE old`, sau direct în structura unde există folderul numit `doxygen` .
+1. În interiorul folderului JUCE, găsește dosarul numit **`doxygen`** .
+1. În Terminal, folosește comanda `cd` pentru a intra în acest dosar :
+
+- Tastează `cd ` (cu spațiu după).
+- Trage (_drag and drop_) dosarul `doxygen` din Finder direct în fereastra Terminalului pentru a insera automat calea completă.
+- Apasă **Enter**.
+
+3. **Generarea documentației prin Doxygen:** Rularea comenzii de generare a fișierelor HTML.
+1. Cu Terminalul poziționat în interiorul dosarului `doxygen`, tastează comanda:
+
+```bash
+doxygen
+
+```
+
+2. Apasă **Enter** .
+3. Doxygen va începe procesarea codului sursă și crearea fișierelor de documentație locale.
+
+4. **Accesarea și salvarea documentației offline:** Deschiderea documentației în browser.
+   După finalizarea procesului de către Doxygen, se va crea o structură de fișiere de tip pagină web (HTML).
+
+5. Intră în dosarul generat (de obicei dosarul `doc` sau `html` creat în cadrul folderului `doxygen`).
+6. Caută fișierul numit **`index.html`**.
+7. Fă dublu-click pe **`index.html`** pentru a-l deschide în browserul tău web favorit.
+8. Adaugă pagina la **Bookmarks / Favorite** în browser pentru a o accesa rapid oricând, chiar și fără o conexiune la internet.
+
+---
+
+## 💡 De ce este utilă această documentație locală?
+
+- **Puncte forte:** Documentația generată local prin Doxygen este mai detaliată decât versiunea API standard de pe site-ul oficial.
+- **Ce conține:** Oferă acces rapid la lista claselor (`Class Index`) , membrii claselor, definiții de tipuri (`typedefs`), funcții înrudite și structura completă a modulului JUCE.

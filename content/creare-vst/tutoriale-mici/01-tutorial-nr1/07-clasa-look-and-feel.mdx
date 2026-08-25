@@ -1,0 +1,167 @@
+---
+title: 'LookAndFeel'
+description: 'LookAndFeel'
+order: 7
+category: 'JUCE'
+level: 'Incepator'
+---
+
+În acest ghid vei învăța cum să modifici aspectul vizual (culori, stiluri) al elementelor de tip `Slider` (potențiometre/roți de control - Dials) folosind sistemul **LookAndFeel** din cadrul framework-ului JUCE în C++.
+
+---
+
+### Pasul 1: Crearea și configurarea potențiometrelor (Sliders/Dials)
+
+Pentru început, în fișierul header al componentei principale (de exemplu, `MainComponent.h`), declară două obiecte `juce::Slider`:
+
+```cpp
+juce::Slider dial1;
+juce::Slider dial2;
+
+```
+
+În constructorul componentei tale (`MainComponent.cpp`), configurează ambele `Slider`-uri pentru a fi afișate ca butoane rotative (rotary dials) și adaugă-le pe ecran:
+
+```cpp
+MainComponent::MainComponent()
+{
+    // Configurare dial1
+    dial1.setSliderStyle(juce::Slider::SliderStyle::Rotary);
+    dial1.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
+    addAndMakeVisible(dial1);
+
+    // Configurare dial2
+    dial2.setSliderStyle(juce::Slider::SliderStyle::Rotary);
+    dial2.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
+    addAndMakeVisible(dial2);
+
+    setSize(400, 300);
+}
+
+```
+
+Apoi, în metoda `resized()`, poziționează-le pe ecran astfel încât fiecare să ocupe jumătate din lățime:
+
+```cpp
+void MainComponent::resized()
+{
+    auto border = 20;
+    auto dialWidth = (getWidth() / 2) - border;
+    auto dialHeight = getHeight() - (border * 2);
+
+    dial1.setBounds(border, border, dialWidth, dialHeight);
+    dial2.setBounds(border + dialWidth, border, dialWidth, dialHeight);
+}
+
+```
+
+---
+
+### Pasul 2: Personalizarea culorilor globale folosind LookAndFeel
+
+JUCE folosește un obiect global `LookAndFeel` pentru a defini stilul implicit al tuturor componentelor UI.
+Puteți schimba culoarea unui element (ex: conturul sau indicatorul potențiometrului) direct pe instanța implicită `LookAndFeel`.
+
+Fiecare componentă are constante speciale pentru culori (`ColorIDs`).
+Pentru un `Slider`, poți folosi de exemplu `juce::Slider::rotarySliderOutlineColourId` sau `juce::Slider::rotarySliderFillColourId`.
+
+#### Modificarea unei culori la nivel global:
+
+```cpp
+// Schimbă culoarea conturului pentru TOATE potențiometrele din aplicație
+getLookAndFeel().setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colours::red);
+
+```
+
+> **Notă:** Când aplici `getLookAndFeel().setColour(...)`, modificarea va afecta **toate** instanțele de `Slider` care folosesc stilul LookAndFeel implicit.
+
+---
+
+### Pasul 3: Aplicarea unui stil individual (pentru controale diferite)
+
+Dacă dorești ca `dial1` și `dial2` să aibă culori diferite, redefinireaLook-and-Feel-ului global nu este de ajuns.
+Pentru a rezolva acest lucru, poți crea o instanță separată a clasei `LookAndFeel_V4` (sau `LookAndFeel_V3`/alta versiune) pentru un anumit element:
+
+#### 1. Declară un nou obiect LookAndFeel în Header:
+
+```cpp
+juce::LookAndFeel_V4 otherLookAndFeel;
+
+```
+
+#### 2. Configurează noul LookAndFeel și asociază-l doar unuia dintre potențiometre:
+
+```cpp
+// Setăm o culoare specifică pentru noul LookAndFeel
+otherLookAndFeel.setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colours::blue);
+
+// Aplicăm noul stil doar pentru dial2
+dial2.setLookAndFeel(&otherLookAndFeel);
+
+```
+
+Acum `dial1` va folosi stilul implicit, iar `dial2` va folosi `otherLookAndFeel` cu nuanța albastră.
+
+---
+
+### Pasul 4: Crearea unei clase proprii de LookAndFeel (Custom LookAndFeel Class)
+
+Dacă dorești să aplici mai multe personalizări complexe sau să suprascrii modul de desenare al elementelor, cea mai curată și structurată abordare este crearea unei clase proprii care moștenește din `juce::LookAndFeel_V4`.
+
+#### 1. Definește clasa proprie (în header sau deasupra componentei):
+
+```cpp
+class OtherLookAndFeel : public juce::LookAndFeel_V4
+{
+public:
+    OtherLookAndFeel()
+    {
+        // Poți seta multiple culori direct în constructorul clasei tale
+        setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colours::green);
+        setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::orange);
+        setColour(juce::Slider::thumbColourId, juce::Colours::pink);
+    }
+};
+
+```
+
+#### 2. Declară și folosește clasa personalizată în componenta ta:
+
+In fișierul `.h`:
+
+```cpp
+OtherLookAndFeel customLookAndFeel;
+
+```
+
+În constructorul `.cpp`:
+
+```cpp
+// Aplicăm clasa personalizată pe dial2
+dial2.setLookAndFeel(&customLookAndFeel);
+
+```
+
+---
+
+### Pasul 5: Curățarea memoriei la distrugerea componentei (Important!)
+
+Pentru a evita erorile de memorie sau pointeri invalizi (_dangling pointers_), este o bună practică să resetezi pointerul LookAndFeel la `nullptr` în destructorul componentei tale dacă obiectul `LookAndFeel` este distrus odată cu componenta.
+
+În destructor (`MainComponent::~MainComponent()`):
+
+```cpp
+MainComponent::~MainComponent()
+{
+    dial2.setLookAndFeel(nullptr);
+}
+
+```
+
+---
+
+### Rezumat al pașilor
+
+1. **Implicit / Global:** Folosește `getLookAndFeel().setColour(...)` când vrei ca toate controalele de un anumit tip să arate la fel.
+2. **Local / Individual:** Folosește `element.setLookAndFeel(&alteModificari)` pentru controale specifice.
+3. **Perspectivă de dezvoltare curată:** Creează o clasă personalizată care moștenește din `juce::LookAndFeel_V4` și setează-ți acolo schema de culori sau desenele vectoriale custom (despre desenarea custom de la zero se discută în partea a 2-a a tutorialului).
