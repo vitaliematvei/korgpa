@@ -1,0 +1,110 @@
+---
+title: 'Sinteză Wavetable'
+description: 'Sinteză Wavetable'
+order: 12
+category: 'JUCE'
+level: 'Incepator'
+---
+
+### Conceptul Teoretic: De ce Sinteză Wavetable?
+
+În loc să calculăm funcția trigonometrică `std::sin()` la fiecare esantion (de 44.100 de ori pe secundă), precalculăm **un singur ciclu complet** al undei sinusoidale și îl stocăm într-un tablou de date (vector).
+Parcurgem apoi acest tabel la viteze diferite pentru a genera sunet la orice frecvență dorită, optimizând masiv consumul CPU.
+
+---
+
+### Tutorial Pas cu Pas
+
+1. **Crearea Proiectului:** Configurarea inițială în Projucer.
+1. Deschide **Projucer** și creează o nouă aplicație de tip **Audio Application**.
+1. Numește proiectul `WavetableSine` și deschide-l în IDE-ul tău (Xcode sau Visual Studio).
+1. În fișierul principal de cod, vei lucra în clasa `MainComponent` (care moștenește `AudioAppComponent`).
+
+1. **Declararea Variabilelor de Mediu:** Definirea tabelului și a parametrilor de fază în header / membrii clasei.
+   În secțiunea de variabile membre a clasei (în `MainComponent.h` sau la începutul clasei în `MainComponent.cpp`), adaugă următoarele variabile:
+
+```cpp
+juce::Array<float> waveTable; // Tabelul JUCE pentru stocarea valorilor undei
+double waveTableSize = 1024.0; // Dimensiunea tabelului (numărul de eșantioane stocate)
+double frequency = 440.0;     // Frecvența sunetului dorit (A4 / 440 Hz)
+double phase = 0.0;           // Poziția curentă în cadrul tabelului
+double increment = 0.0;       // Pasul de avansare în tabel la fiecare eșantion
+double amplitude = 0.25;      // Volumul semnalului (previne distorsiunile)
+
+```
+
+3. **Inițializarea și Calculul Tabelului (prepareToPlay):**
+   Popularea wavetable-ului înainte de procesarea audio.
+   În funcția `prepareToPlay (int samplesPerBlockExpected, double sampleRate)`, precalculăm unda sinusoidală și pasul de incrementare:
+
+```cpp
+void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override
+{
+    frequency = 440.0;
+    phase = 0.0;
+
+    // Calculăm cu cât avansăm în tabel la fiecare eșantion redat
+    increment = (frequency * waveTableSize) / sampleRate;
+
+    // Populăm waveTable cu un ciclu complet de undă sinusoidală (2 * PI)
+    for (int i = 0; i < waveTableSize; ++i)
+    {
+        float sampleValue = std::sin((2.0 * juce::MathConstants<double>::pi * i) / waveTableSize);
+        waveTable.insert(i, sampleValue);
+    }
+}
+
+```
+
+4. **Generarea Semnalului Audio (getNextAudioBlock):** Redarea datelor din tabel către canalele Stânga/Dreapta.
+   În funcția `getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)`, parcurgem bufferul și trimitem valorile către difuzoare:
+
+```cpp
+void getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill) override
+{
+    // Obținem pointerii de scriere pentru canalele Stânga (0) și Dreapta (1)
+    auto* leftSpeaker = bufferToFill.buffer->getWritePointer(0, bufferToFill.startSample);
+    auto* rightSpeaker = bufferToFill.buffer->getWritePointer(1, bufferToFill.startSample);
+
+    for (int sample = 0; sample < bufferToFill.numSamples; ++sample)
+    {
+        // Citim valoarea din wavetable transformând faza curentă într-un indice întreg
+        float currentSample = waveTable[(int)phase] * (float)amplitude;
+
+        // Trimitem valoarea către ambele canale
+        leftSpeaker[sample] = currentSample;
+        rightSpeaker[sample] = currentSample;
+
+        // Incrementăm faza și aplicăm FMOD pentru a reveni la începutul tabelului când depășim dimensiunea sa
+                phase = std::fmod(phase + increment, waveTableSize);
+    }
+}
+
+```
+
+5. **Curățarea Resurselor (releaseResources):** Eliberarea memoriei la închiderea aplicației.
+   În funcția `releaseResources()`, eliberează resursele dacă este necesar:
+
+```cpp
+void releaseResources() override
+{
+    waveTable.clear();
+}
+
+```
+
+---
+
+### Rezumat al Formulelor Cheie
+
+- **Incrementul de fază (`increment`):**
+
+Increment = Frecvență x Dimensiune Wavetable / Rată de Eșantionare (Sample Rate)
+
+- **Calculul valorilor în tabel:**
+
+Sample[i] = sin(2 x pi x i / Dimensiune Wavetable)
+
+- **Bucla infinită (Wrap-around):** Se folosește `std::fmod(phase + increment, waveTableSize)` pentru ca indexul să reia citirea de la `0` după ce ajunge la `1024`.
+
+{/* am ramas https://www.youtube.com/watch?v=xTZQJ6i-zp0&list=PLLgJJsrdwhPxa6-02-CeHW8ocwSwl2jnu&index=13/ */}

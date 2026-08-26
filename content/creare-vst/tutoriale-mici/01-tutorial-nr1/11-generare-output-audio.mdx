@@ -1,0 +1,110 @@
+---
+title: 'Generare Output Audio'
+description: 'Generare Output Audio'
+order: 11
+category: 'JUCE'
+level: 'Incepator'
+---
+
+În acest tutorial vei învăța cum funcționează generarea de semnal audio în cadrul framework-ului C++ **JUCE**, creând un generator simplu de **zgomot alb (white noise)**.
+
+---
+
+## Prerechizite și Concepte Cheie
+
+- **Clasa `juce::AudioAppComponent**`: Spre deosebire de aplicațiile grafice standard (`juce::Component`), aplicațiile audio moștenesc din această clasă care oferă acces la placa de sunet și la buffer-ele audio.
+- **Structura `juce::AudioSourceChannelInfo**`: Un obiect primit la fiecare cadru audio care oferă acces la buffer-ul de date (probele audio), canalul curent, numărul de eșantioane și indexul de start.
+- **Intervalul de amplitudine**: Difuzoarele așteaptă valori în virgulă mobilă (`float`) cuprinse între **`-1.0f` și `+1.0f**`. Orice valoare depășește acest interval produce distorsiune (clipping).
+
+---
+
+1. **Crearea Proiectului în Projucer:** Setarea tipului corect de aplicație.
+1. Deschide **Projucer** și creează un proiect nou.
+1. Alege tipul de proiect **Audio Application** (nu GUI Application).
+1. Denumește proiectul `AudioOut1` și salvează-l pe disc.
+1. Deschide proiectul în mediul tău de dezvoltare (Xcode / Visual Studio / CLion).
+
+1. **Înțelegerea structurii codului generat:** Analizarea metodelor din MainComponent.cpp.
+   Clasa `MainComponent` conține trei metode virtuale pure moștenite din `AudioAppComponent` care controlează fluxul audio:
+
+- `prepareToPlay (int samplesPerBlockExpected, double sampleRate)`: Rulat o singură dată la pornirea modulului audio.
+  Aici inițializezi filtre sau parametri dependenți de sample rate.
+- `getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)`:
+  **Cea mai importantă metodă.** Este apelată în mod repetat în bucla audio în timp real pentru a umple buffer-ul cu eșantioane.
+- `releaseResources()`: Apelată când dispozitivul audio se oprește.
+
+De asemenea, în constructor este apelată funcția:
+
+```cpp
+setAudioChannels (2, 2); // 2 canale de intrare, 2 canale de ieșire (stereo)
+
+```
+
+3. **Declararea generatorului de numere aleatoare:** Adăugarea membrilor privați.
+   Pentru a genera zgomot alb, avem nevoie de o sursă de numere aleatoare.
+   Deschide fișierul `MainComponent.h` și adaugă la secțiunea `private:` un obiect `juce::Random`:
+
+```cpp
+private:
+    juce::Random random;
+
+```
+
+4. **Implementarea procesării audio în getNextAudioBlock:** Scrierea buclelor de iterare.
+   În `MainComponent.cpp`, șterge codul implicit din `getNextAudioBlock` și implementează iterarea pe canale și pe eșantioane [[08:45](https://www.youtube.com/watch?v=GjNeYI6-uNE&t=525)].
+
+### Algoritmul detaliat:
+
+1. **Parcurgerea canalelor**: Aflăm numărul total de canale stereo (2) prin `bufferToFill.buffer->getNumChannels()`.
+2. **Obținerea pointer-ului de scriere**: Pentru fiecare canal, cerem pointer-ul către memoria buffer-ului folosind `getWritePointer(channel, startSample)`.
+3. **Generarea valorilor float între -1.0 și +1.0**: Metoda `random.nextFloat()` returnează o valoare între `0.0` și `1.0`.
+   O transformăm matematic astfel:
+
+Valoare = nextFloat() x 2.0f - 1.0f
+
+4. **Atenuarea volumului**: Pentru a nu deteriora difuzoarele sau auzul, multiplicăm rezultatul cu un factor de reducere (ex: `0.25f`).
+
+```cpp
+void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
+{
+    // Obtinem numarul de canale de iesire disponibile
+    const int numChannels = bufferToFill.buffer->getNumChannels();
+
+    // Numarul de esantioane/probele (samples) de procesat in acest block
+    const int numSamples = bufferToFill.numSamples;
+
+    // Iteram prin fiecare canal (0 = Stanga, 1 = Dreapta)
+    for (int channel = 0; channel < numChannels; ++channel)
+    {
+        // Obtinem pointer-ul direct de scriere in buffer pentru canalul curent
+        float* buffer = bufferToFill.buffer->getWritePointer (channel, bufferToFill.startSample);
+
+        // Iteram prin fiecare sample din buffer
+        for (int sample = 0; sample < numSamples; ++sample)
+        {
+            // Generam un număr intre 0.0 si 1.0, il scalam la [-1.0, 1.0]
+            float randomSample = (random.nextFloat() * 2.0f) - 1.0f;
+
+            // Reducem volumul la 25% pentru siguranta auzului
+            buffer[sample] = randomSample * 0.25f;
+        }
+    }
+}
+
+```
+
+5. **Oprirea sunetului la închiderea aplicației:** Curățarea resurselor.
+   În destructorul din `MainComponent.cpp`, asigură-te că oprești procesarea audio apelând `shutdownAudio()`:
+
+```cpp
+MainComponent::~MainComponent()
+{
+    shutdownAudio();
+}
+
+```
+
+6. **Rularea proiectului:** Testarea ieșirii audio.
+   Compilează și rulează aplicația. Dacă totul este configurat corect, vei auzi un fâșâit continuu de **zgomot alb**.
+
+---

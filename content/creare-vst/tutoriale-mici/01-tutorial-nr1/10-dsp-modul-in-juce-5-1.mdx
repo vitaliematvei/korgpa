@@ -1,0 +1,48 @@
+---
+title: 'Noul DSP Module in JUCE 5.1'
+description: 'Noul DSP Module in JUCE 5.1'
+order: 10
+category: 'JUCE'
+level: 'Incepator'
+---
+
+## 📋 Structura pe Pași a Tutorialului
+
+1. **Pregătirea Mediului și Deschidere Proiect:** JUCE 5.1 sau o versiune mai nouă.
+1. Deschideți folderul de instalare **JUCE**.
+1. Navigați către folderul de exemple: `JUCE/examples/`.
+1. Deschideți demo-ul numit **DSPDemo** _(sau `JUCE Examples` din Projucer)_.
+1. Deschideți proiectul în IDE-ul dumneavoastră (Xcode / Visual Studio) și setați proiectul să compileze.
+
+1. **Explorarea Claselor din Noul Modul juce_dsp:** Structura fișierelor din framework.
+   Aruncați o privire în header-ele incluse în modulul DSP pentru a înțelege ce instrumente aveți la dispoziție:
+
+- **`juce::dsp::FilterDesign`**: Proiectare de filtre FIR (Finite Impulse Response) și IIR (Infinite Impulse Response) prin specificarea coeficienților.
+- **`juce::dsp::Convolution`**: Motor de convoluție pentru Reverb-uri pe bază de Impulse Response (IR) sau simulări de cabinete/echipamente hardware.
+- **`juce::dsp::FastMath` / `Matrix` / `LookupTable**`: Calcule matematice rapide pentru sinteză audio și procesare de semnal optimizată.
+- **`juce::dsp::WaveShaper`**: Pentru efecte de distorsiune, saturation și overdrive.
+- **`juce::dsp::Oscillator`**: Generator de unde audio (sine, square, sawtooth etc.).
+- **SIMD Optimization**: Procesare optimizată pe mai multe eșantioane audio simultan.
+
+3. **Testarea Convoluției (Convolution Engine):** Simulare de echipamente cu fișiere IR.
+   Rulați aplicația **DSPDemo** compilată:
+
+1. În colțul din stânga sus, încărcați un fișier audio de test din resurse (ex: `cassette_recorder.wav` sau `guitar_amp.wav`).
+1. Ascultați cum fișierul audio original trece prin motorul de convoluție și preia răspunsul în frecvență al unui magnetofon cu casetă sau al unui amplificator de chitară.
+
+1. **Testarea Filtrelor Audio (FIR vs. IIR):** Filtre de frecvență.
+1. Schimbați pe tab-ul **FIR Filter** / **IIR Filter**.
+1. Ajustați parametrul de **Cutoff** (frecvența de tăiere) și factorul **Q** (rezonanța).
+1. Comutați între diferitele tipuri de filtre: _Low Pass_, _High Pass_, _Band Pass_.
+1. Experimentați cu diferitele funcții de ferestruire (_Windowing Functions_) pentru analiza spectrală.
+
+1. **Generare de Semnal și Distorsiune (Oscillator & WaveShaper):** Sinteză și efecte dinamic-nonlineare.
+1. Selectați secțiunea **Oscillator**: Modificați tipul undei generat și reglați frecvența (Pitch).
+1. Selectați secțiunea **WaveShaper / Overdrive**: Aplicați algoritmul de distorsiune non-liniară pentru a adăuga armonice semnalului audio.
+
+---
+
+## 📌 Concluzie și Următorii Pași
+
+Modulul `juce_dsp` simplifică masiv dezvoltarea de efecte audio C++, eliminând necesitatea de a scrie algoritmi matematici complecși de la zero.
+Blocurile de cod prezentate în demo pot fi preluate direct în proiectele de pluginuri VST3/AU.
