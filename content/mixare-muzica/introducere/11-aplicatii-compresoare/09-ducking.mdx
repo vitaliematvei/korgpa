@@ -1,0 +1,80 @@
+---
+title: 'Ducking'
+description: 'Ducking'
+order: 9
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Această tehnică îți permite să transformi un compresor obișnuit într-un **ducker real** (care aplică o reducere de nivel constantă, fără fluctuații), rezolvând problema variațiilor dinamice ale semnalului de Side-Chain (de exemplu, o voce).
+
+---
+
+### Conceptul: De ce este nevoie de acest truc?
+
+- **Compresor cu Side-Chain clasic:** Nivelul de reducere a semnalului (Gain Reduction) variază în funcție de cât de tare depășește semnalul Side-Chain pragul (_threshold_). Dacă vocea are dinamica fluctuantă, chitarele vor oscila și ele în volum într-un mod nefiresc.
+- **Ducker real:** Aplică o atenuare **fixă și stabilă** de fiecare dată când semnalul Side-Chain este prezent.
+- **Soluția:** Folosirea unui canal intermediar (_Moderate Track_) alimentat cu **zgomot roz (Pink Noise)** și controlat de un **Noise Gate**. Zgomotul roz are un nivel constant, oferind compresorului un semnal Side-Chain perfect uniform.
+
+---
+
+### Ghid pas cu pas pentru configurare
+
+**Obiectiv:** Vocea să reducă volumul chitarelor într-un mod fix și stabil de fiecare dată când solistul cântă.
+
+#### Pasul 1: Crearea canalului intermediar (Moderate Track)
+
+1. Creează o piesă audio sau aux nouă în DAW-ul tău și numește-o **„Pink Noise SC”**.
+2. Introdu pe această piesă un generator de semnal (Signal Generator / Test Tone) setat pe **Pink Noise** (zgomot roz).
+3. **Important:** Scoate această piesă din mixul principal (Main Out / Master Bus). Nu dorești ca zgomotul roz să se audă în piesa finală; el va servi doar ca semnal de control intern.
+
+---
+
+#### Pasul 2: Configurarea Noise Gate-ului pe canalul cu Zgomot Roz
+
+1. Adaugă un plugin de **Noise Gate** pe piesa „Pink Noise SC”.
+2. Activează intrarea **Side-Chain (Key Input)** a Gate-ului și trimite pe ea un trimiter (_Send_) din piesa de **Voce**.
+3. Setează parametrii Gate-ului:
+
+- **Threshold:** Reglează-l astfel încât Gate-ul să se deschidă prompt ori de câte ori vocea cântă.
+- **Attack:** Foarte rapid (1–5 ms), pentru ca zgomotul să treacă instantaneu când începe vocea.
+- **Hold / Release:** Ajustează-le astfel încât Gate-ul să rămână deschis curat pe durata frazelor vocale și să se închidă lin între cuvinte sau pauze.
+
+_Rezultat intermediar:_ În acest moment, zgomotul roz trece de Gate doar atunci când vocea este prezentă, generând un semnal cu nivel constant.
+
+---
+
+#### Pasul 3: Rutarea Zgomotului Roz către Compresorul Chitarelor
+
+1. Adaugă un **Compresor** pe canalul (sau grupul) de **Chitare**.
+2. Activează intrarea **Side-Chain (Key Input)** a acestui compresor.
+3. Creează un _Send_ din piesa „Pink Noise SC” rutat direct către intrarea Side-Chain a compresorului de pe chitare.
+
+---
+
+#### Pasul 4: Reglarea Compresorului pentru Ducking Fix
+
+Deoarece semnalul care declanșează compresorul este acum zgomotul roz (care are o amplitudine constantă), compresorul va reacționa mereu la fel:
+
+1. **Threshold:** Coboară pragul până când compresorul detectează zgomotul roz și începe atenuarea.
+2. **Ratio:** Setează un raport ferm (de la `4:1` până la `10:1` sau chiar `Limiter`), în funcție de cât de agresivă vrei să fie atenuarea.
+3. **Gain Reduction:** Ajustează pragul și raportul până când obții cantitatea fixă dorită de atenuare (de exemplu, `-3 dB` sau `-6 dB` constant pe chitare).
+4. **Attack & Release:**
+
+- **Attack:** Rapid, pentru a lăsa loc vocii imediat ce apare.
+- **Release:** Reglează-l muzical, astfel încât chitarele să revină la volumul lor normal într-un mod natural când vocea tace.
+
+---
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-38.jpg"
+    alt="Figura 17-38"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17-38:</p>Cum faci un compresor să funcționeze ca un ducker. Piesa de voce este trimisă către o cale de magistrală (bus) numită Gate SC. Piesa moderată are un generator de semnal pe primul său slot de inserție (care generează zgomot roz), urmat de un gate care are intrarea de sidechain setată pe magistrala Gate SC. Această piesă moderată nu este inclusă în mixaj, ci este rutată către o magistrală numită Gated Noise. Pe piesa de chitară cu distors este încărcat un compresor, având sidechain-ul setat pe magistrala Gated Noise.
+
+</div>

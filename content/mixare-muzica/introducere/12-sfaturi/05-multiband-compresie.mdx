@@ -1,0 +1,187 @@
+---
+title: 'Compresare multiband'
+description: 'Compresare multiband'
+order: 5
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Compresia multiband funcționează după principiul _„dezbină și stăpânește”_ aplicat spectrului de frecvențe: în loc să proceseze întregul semnal sonor la un loc (așa cum face un compresor broadband clasic), ea împarte sunetul în mai multe benzi independente și aplică o compresie specifică pe fiecare dintre ele.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-43.jpg"
+    alt="Figura 17-43"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17-43:</p>O diagramă bloc a unui compresor
+  multibandă. În această ilustrație este prezentat un compresor pe trei benzi.
+  Semnalul de intrare este divizat în trei, iar filtrele sunt utilizate pentru a
+  reține frecvențele corespunzătoare fiecărei benzi. Apoi, fiecare bandă este
+  procesată de propriul său compresor, iar cele trei benzi sunt sumate împreună
+  pentru a constitui semnalul de ieșire. În partea de jos putem observa efectul
+  combinat al filtrelor și frecvențele de tăiere (crossover) dintre diferitele
+  benzi.
+</div>
+
+Tutorialul de mai jos este structurat pe pași clari pentru a înțelege conceptul, avantajele, aplicațiile practice și alternativa manuală.
+
+---
+
+### Pasul 1: Înțelegerea limitei compresorului clasic (Broadband)
+
+Compresorul convențional procesează întregul spectru de frecvențe simultan. Acest lucru creează o problemă directă: o frecvență dominantă declanșează atenuația tuturor celorlalte frecvențe.
+
+- **Efectul de „matuire” (dulling):** Dacă frecvențele joase (b basul) declanșează compresorul, acesta va reduce și frecvențele înalte, făcând sunetul întunecat.
+- **Problema chitarei bas:** Notele joase puternice provoacă reducerea de câștig (gain reduction), afectând mediile și înaltele care oferă definiție instrumentului.
+- **Problema de-essing-ului pe voce:** Dacă încerci să reduci sibilanțele („s”-urile), un compresor clasic va atena și corpul (mediile) sau armonicile superioare ale vocii.
+
+---
+
+### Pasul 2: Funcționarea de bază a Compresorului Multiband
+
+Un compresor multiband (sau _split-band_) folosește un circuit numit **crossover** pentru a separa semnalul audio de intrare în benzi de frecvență distincte, punând un compresor separat pe fiecare bandă.
+
+- **Exemplu De-Esser:** Poți defini o bandă restrânsă între **3 kHz și 8 kHz**. Compresia se va activa _doar_ la vârfurile de sibilanță din acest interval, lăsând restul spectrului neafectat.
+- **Aplicație similară:** Eliminarea rezonanțelor supărătoare de pe o chitară acustică fără a-i strica tonul general.
+
+---
+
+### Pasul 3: Arhitectura și Controlul Modulului Multiband
+
+Majoritatea pluginurilor multiband moderne oferă controale dedicate per bandă, dar și controale globale.
+
+1. **Setarea frecvențelor de crossover:** Delimitarea benzilor.
+   Alegi punctele de tăiere (ex: 20–150 Hz pentru joase, 150–2.500 Hz pentru medii, 2.500–20.000 Hz pentru înalte).
+
+2. **Configurarea parametrilor per bandă:** Ajustare individuală.
+   Setezi **Threshold**, **Ratio**, **Attack**, **Release** și **Makeup Gain** independent pentru fiecare zonă de frecvență.
+
+3. **Reglajul parametrilor globali:** Master control.
+   Ajustezi controalele globale ale pluginului care afectează simultan toate benzile (de ex. balansul wet/dry sau gain-ul de ieșire).
+
+---
+
+### Pasul 4: Aplicații Practice în Mixaj și Masterizare
+
+Compresia multiband este ideală pentru semnale de bandă largă (ex: un mix stereo complet în mastering), dar aduce avantaje uriașe și pe instrumente individuale:
+
+<div className="my-6 w-full overflow-x-auto rounded-lg border border-slate-200 shadow-sm dark:border-slate-800">
+  <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
+    <thead className="bg-slate-100 text-xs uppercase tracking-wider text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+      <tr>
+        <th scope="col" className="px-6 py-4 font-semibold">
+          Instrument / Sursă
+        </th>
+        <th scope="col" className="px-6 py-4 font-semibold">
+          Problemă de rezolvat
+        </th>
+        <th scope="col" className="px-6 py-4 font-semibold">
+          Soluție cu Compresie Multiband
+        </th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+      <tr className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/50">
+        <td className="px-6 py-4 font-semibold text-slate-900 dark:text-white">
+          Tobă mare (Kick drum)
+        </td>
+        <td className="px-6 py-4">
+          Raport inconsecvent între joase și atacul de medii-înalte (click) la
+          lovituri încet/tare.
+        </td>
+        <td className="px-6 py-4">
+          Compresezi banda de joase și aplici{' '}
+          <em className="italic text-indigo-600 dark:text-indigo-400">
+            makeup gain
+          </em>{' '}
+          doar pe joase pentru un corp constant indiferent de intensitatea
+          loviturii.
+        </td>
+      </tr>
+      <tr className="bg-slate-50/50 hover:bg-slate-100/80 dark:bg-slate-900/50 dark:hover:bg-slate-800/50">
+        <td className="px-6 py-4 font-semibold text-slate-900 dark:text-white">
+          Kick programat (Sample)
+        </td>
+        <td className="px-6 py-4">
+          Sunet artificial cu raport identic constant între joase și înalte.
+        </td>
+        <td className="px-6 py-4">
+          Setezi un{' '}
+          <em className="italic text-indigo-600 dark:text-indigo-400">
+            threshold
+          </em>{' '}
+          coborât și un{' '}
+          <em className="italic text-indigo-600 dark:text-indigo-400">ratio</em>{' '}
+          mic pe banda de medii-înalte. Cu cât lovitura e mai puternică, cu atât
+          atacul e comprimat mai mult, simulând răspunsul din lumea reală.
+        </td>
+      </tr>
+      <tr className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/50">
+        <td className="px-6 py-4 font-semibold text-slate-900 dark:text-white">
+          Voce (Proximity Effect)
+        </td>
+        <td className="px-6 py-4">
+          Basul crește excesiv când solistul se apropie prea mult de microfon.
+        </td>
+        <td className="px-6 py-4">
+          Compresezi strict banda de frecvențe joase pentru a stabiliza
+          variațiile de ton create de mișcarea solistului.
+        </td>
+      </tr>
+      <tr className="bg-slate-50/50 hover:bg-slate-100/80 dark:bg-slate-900/50 dark:hover:bg-slate-800/50">
+        <td className="px-6 py-4 font-semibold text-slate-900 dark:text-white">
+          Mix Stereo (Mastering)
+        </td>
+        <td className="px-6 py-4">Limita de volum fără distorsiuni.</td>
+        <td className="px-6 py-4">
+          Aplici un{' '}
+          <em className="italic text-indigo-600 dark:text-indigo-400">
+            release
+          </em>{' '}
+          mai rapid pe benzile înalte (ceea ce crește volumul perceput) și un{' '}
+          <em className="italic text-indigo-600 dark:text-indigo-400">
+            release
+          </em>{' '}
+          adecvat pe joase pentru a evita distorsiunea.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+---
+
+### Pasul 5: Alternativa Manuală (Când nu ai un plugin multiband)
+
+Dacă DAW-ul sau sistemul tău nu include un compresor multiband, poți reconstrui manual acest proces folosind filtre și compresoare broadband:
+
+1. **Routing:** Trimite piesa sursă către o cale de magistrală (bus) și returneaz-o pe două piese audio separate.
+2. **Filtrare:**
+
+- Pe prima piesă pui un **Low-Pass Filter** (ex: tăiere la 1 kHz).
+- Pe a doua piesă pui un **High-Pass Filter** (tăiere la aceeași frecvență de 1 kHz).
+
+3. **Procesare:** Inserează câte un compresor clasic pe fiecare din cele două piese.
+4. **Sumare:** Trimite ambele piese la același volum către magistrala principală de mix (mix bus).
+
+> **Notă tehnică privind calitatea:** Deși ruta manuală funcționează, un compresor multiband dedicat va suna superior. Pluginurile dedicate includ algoritmi avansați pentru alinierea fazei între benzi în momentul în care semnalele se reunesc (sumare), evitând anomaliile acustice.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-44.jpg"
+    alt="Figura 17-44"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17-44:</p>Universal Audio Precision Multiband.
+  Acest plugin oferă un compresor, un expander sau un gate pentru fiecare dintre
+  cele cinci benzi. În stânga se află controalele pentru compresorul benzii
+  joase (LF) selectate. Graficul din mijloc arată diviziunea de frecvență între
+  cele cinci benzi. Indicatoarele din dreapta arată reducerea de câștig (gain
+  reduction) pentru fiecare bandă.
+</div>

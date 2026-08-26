@@ -1,0 +1,70 @@
+---
+title: 'Compresare Sidechain'
+description: 'Compresare Sidechain'
+order: 8
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Această tehnică este cunoscută în producția audio sub numele de **Sidechain Compression** (sau _Ducking_).
+Ea este utilizată pentru a crea un efect de „pompaj” ritmic (_dynamic movement_) și pentru a elibera spațiu în frecvențe pentru instrumentele de impact (de obicei toba mare / kick-ul).
+
+Mai jos găsești un ghid detaliat, pas cu pas, aplicabil în orice program de producție muzicală (DAW: Ableton, FL Studio, Logic Pro, Cubase, etc.).
+
+---
+
+### Pasul 1: Pregătirea pieselor și a semnalelor
+
+Înainte de a configura compresorul, trebuie să identifici cele două elemente principale din proiect:
+
+1. **Piesa Receptor (Subiectul):** Instrumentul ale cărui dinamici vor fi modificate (de exemplu: un sintetizator, o orgă/pad care cântă acorduri lungi sau un loop de tobe).
+2. **Piesa Trigger (Sursa de control):** Instrumentul care va dicta când scade volumul (de obicei, toba mare / **Kick**).
+
+---
+
+### Pasul 2: Insertarea compresorului și activarea Sidechain-ului
+
+1. Adaugă un plugin de **Compresor** direct pe piesa Receptor (pe orga/pad-ul tău).
+2. Deschide fereastra compresorului și caută secțiunea sau butonul numit **Sidechain** (sau _External Sidechain_).
+3. Activează opțiunea Sidechain și selectează ca sursă de intrare (_Input/Source_) piesa cu **Kick-ul**.
+
+---
+
+### Pasul 3: Setarea compresorului pentru efectul de pompaj
+
+Pentru a obține o scădere clară a volumului la fiecare lovitură de kick și o revenire ritmică, configurează parametrii compresorului astfel:
+
+- **Threshold (Prag):** Coboară pragul destul de mult (setare joasă). Cu cât pragul este mai jos, cu atât compresorul va reacționa mai puternic la kick.
+- **Ratio (Rport de compresie):** Setează o valoare moderată spre mare (de la **4:1** până la **8:1** sau chiar mai mult pentru un efect extrem).
+- **Attack (Timp de atac):** Setează-l foarte rapid (**0.1 ms – 10 ms**). Compresorul trebuie să reducă volumul orgii _imediat_ ce kick-ul a fost lovit.
+- **Release (Timp de revenire):** Setează-l din ureche, sincronizat cu tempoul piesei. Volumul orgii trebuie să revină la nivelul normal exact înainte să lovească următorul kick.
+
+> **Efect obținut:** La fiecare lovitură de kick, volumul orgii scade brusc (clearing space în mix), iar între lovituri volumul crește, creând senzația de mișcare dinamică automatizată.
+
+---
+
+### Pasul 4: Aplicarea tehnicii pe alte instrumente (Ex: Loop-uri de tobe)
+
+Poți aplica exact aceeași logică pentru a transforma un loop de tobe static într-unul mai sofisticat și mai accentuat ritmic:
+
+1. Pune un compresor pe piesa cu un loop de percuție/sintetizator.
+2. Trimite un semnal de sidechain din snare (toba mică) sau dintr-un element de percuție secundar.
+3. Reglează parametrii astfel încât loop-ul să se adapteze la groove-ul principal al piesei.
+
+---
+
+### Pasul 5: Tehnica avansată – Sincronizarea cu Delay pe Sidechain
+
+Pentru mișcări ritmice complexe care se blochează pe tempoul piesei (_tempo-locked_), poți adăuga o linie de **Delay**:
+
+1. **Creează un canal aux/send dedicat:** Canal intermediar pentru semnalul trigger.
+   Trasează semnalul Kick-ului către un canal auxiliar (Aux/Bus) separat, care va servi drept sursă externă de sidechain.
+
+2. **Adaugă un Delay sincronizat pe canalul Aux:** Setați timpul de delay la valori de notă.
+   Inserează un effect de Delay pe acest canal auxiliar și setează-l pe modul **Sync** (de exemplu: note de 1/8, 1/16 sau note cu punct). Oprește semnalul uscat (_Dry 0%, Wet 100%_).
+
+3. **Setează compresorul să citească canalul de Delay:** Schimbarea sursei de Sidechain.
+   Alege ca sursă de Sidechain pe compresor canalul auxiliar cu Delay (și nu kick-ul direct).
+
+4. **Ajustează revenirea (Release-ul):** Sincronizare fină.
+   Compresorul va fi declanșat acum nu doar la lovitura inițială de kick, ci și pe ecourile sincronizate ale acestuia, generând un model ritmic complex și pulsatoriu.

@@ -1,0 +1,78 @@
+---
+title: 'Compressor pe MIX Bus'
+description: 'Compressor pe MIX Bus'
+order: 7
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+### **Cum și când să folosești compresia pe Mix Bus**
+
+Compresia pe mix bus (sau _bus compression_) este procesul de aplicare a unui compresor pe canalul master/stereo în timpul fazei de mixaj.
+Utilizată corect, aceasta oferă acel efect de „lipici” (_mix glue_), făcând elementele individuale să sune ca un întreg unitar.
+
+---
+
+#### **Pasul 1: Înțelege dilema din industrie și alege-ți abordarea**
+
+Înainte de a introduce un compresor pe master, trebuie să știi că inginerii de sunet profesioniști sunt împărțiți în două tabere:
+
+- **Pro-compresie pe bus:** Ingineri care activează compresorul încă de la începutul mixajului, folosind setări foarte subtile (ex. un compresor legendar precum SSL Bus Compressor).
+- **Contra-compresie pe bus:** Ingineri care preferă să nu folosească deloc compresor pe master în timpul mixajului.
+
+> **Regulă importantă pentru Mastering:** Dacă decizi să mixezi printr-un compresor de bus pentru vibe și control, este recomandat ca adesea să **dezactivezi (bypass)** compresorul înainte de a exporta (_print_) fișierul final pentru inginerul de mastering.
+> Majoritatea inginerilor de mastering preferă un mix necomprimat pe stereo bus pentru a avea spațiu de manevră dinamic.
+
+---
+
+#### **Pasul 2: Identifică motivele corecte pentru a o folosi**
+
+Compresia pe mix bus oferă două avantaje majore:
+
+1. **Pasiune și energie:** Adaugă un nivel de entuziasm și coeziune sonoră care face mixul mai captivant.
+2. **Simularea mediilor de difuzare:** Îți permite să evaluezi cum va suna piesul la radio sau în cluburi, unde lanțul de semnal aplică deja o compresie și o limitare agresivă.
+
+- _Verificare cheie:_ Observă cum influențează frecvențele joase (kick-ul și basul) restul mixului.
+  Kick-ul devine prea subtil sau explodează necontrolat?
+
+---
+
+#### **Pasul 3: Setarea compresorului (Regula Subtilității)**
+
+Dacă nu folosești un hardware de clasă sau un plugin de calitate (de tip SSL G-Master Bus, VCA sau Mu), iar setările nu sunt subtile, rezultatul va fi blurat și neclar.
+
+- **Ratio (Raport):** Scăzut, de obicei **1.5:1** sau maxim **2:1** (evită raporturi mari precum 4:1).
+- **Attack (Atac):** LENT (30 ms sau mai mult) – pentru a lăsa tranzienții (bătăile de tobe) să treacă necomprimați.
+- **Release (Eliberare):** RAPID sau **Auto** – ajustat în ritmul piesei, astfel încât acul compresorului să respire odată cu muzica.
+- **Gain Reduction (Reducerea de nivel):** În jur de **1 dB – 2 dB max**. Acul indicator trebuie abia să se miște la pasajele cele mai puternice.
+
+---
+
+#### **Pasul 4: Evită capcanele majore ale compresiei pe bus**
+
+Compresia pe master schimbă radical modul în care funcționează faderele din DAW.
+Fii atent la următoarele riscuri:
+
+1. **Pierderea controlului asupra nivelurilor relative:**
+   Dacă compresorul lucrează prea tare, în momentul în care îi dai _bypass_, balanța tuturor instrumentelor va deveni hаоtică.
+2. **Efectul de „răspuns invers” al faderelor:**
+   La un raport de 4:1 pe bus, dacă ridici faderul unui instrument cu 4 dB, volumul perceput în mix s-ar putea să crească doar cu 1 dB.
+3. **Sufocarea frecvențelor joase (Kick vs. Mix):**
+   Deoarece compresorul pe stereo bus nu are Gain Makeup individual pe fiecare cale, dacă ridici volumul la kick, vei împinge compresorul să lucreze mai tare pe frecvențele joase.
+   Rezultatul? Kick-ul s-ar putea să se auză **mai încet** și mai înăbușit, comprimând în plus și restul instrumentelor.
+4. **Interdependența continuă:**
+   Orice modificare făcută pe un fader individual schimbă modul în care reacționează compresorul de pe bus.
+   Va trebui să verifici dinamic comportamentul acestuia pe parcursul mixajului.
+
+---
+
+### **Concluzie: Ești pregătit pentru bus compression?**
+
+Verifică dacă îndeplinești cele 3 condiții esențiale:
+
+- Deții un **compresor de calitate** (hardware sau plugin dedicat de bus).
+- Aplici **setări extrem de subtile** (reducere de maxim 1-2 dB).
+- Ai **urechile formate** pentru a auzi modificările fine de dinamică.
+
+Pentru un începător, compresia pe mix bus poate funcționa ca un strat translucid care doar blurează ceea ce se află în spate — adică mixul propriu-zis.
+Dacă nu ești sigur pe proces, este mai sigur să mixezi fără compresie pe master și să lași dinamica globală în seama procesului de mastering.

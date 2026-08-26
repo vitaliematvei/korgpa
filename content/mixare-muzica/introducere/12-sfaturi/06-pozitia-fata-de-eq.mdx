@@ -1,0 +1,46 @@
+---
+title: 'Equalizer (EQ) și Compressor'
+description: 'Equalizer (EQ) și Compressor'
+order: 6
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Adaptarea detaliată a acestui ghid de mixaj vă ajută să decideți corect ordinea dintre **Equalizer (EQ)** și **Compressor**. Structura pe pași de mai jos explică fiecare abordare în funcție de obiectivul audio.
+
+1. **Pasul 1: Identificați problema tonală sau dinamică a semnalului:** Stabiliți prioritatea înainte de a introduce vreun plugin.
+   Înainte de a alege ordinea pluginurilor, ascultați pista audio (voce, tobe, chitară) și puneți-vă o întrebare simplă: **Vreau să curăț semnalul înainte să procesez dinamica, sau vreau să modelez tonul final?**
+
+- **Frecvențele joase activează compresorul cel mai puternic:** Sub-boom-ul sau frecvențele parazite joase vor face compresorul să „pompeze” agresiv, chiar dacă sunetul util (ex: vocea sau cinele) nu este puternic.
+
+2. **Pasul 2: Aplicați EQ Înainte de Compresor (Pre-EQ) dacă vreți să controlați reacția compresorului:** Folosit pentru egalizare structurală sau corectivă.
+   Plasați egalizatorul **înaintea** compresorului atunci când doriți ca anumite frecvențe să NU declanșeze compresia.
+
+- **Cum procedeți:** Aplicați un filtru Pass-Sus (High-Pass Filter) pe voce sau pe overheads (cinele) pentru a tăia frecvențele joase inutile înainte ca ele să ajungă în compresor.
+- **Avertisment important:** Orice modificare ulterioară făcută pe un Pre-EQ schimbă modul în care compresorul reacționează. Dacă măriți sau tăiați o frecvență din Pre-EQ, va trebui să reajustați pragul (_Threshold_) al compresorului.
+
+3. **Pasul 3: Utilizați Side-Chain EQ (Metoda Optimizată):** Cea mai curată tehnică dacă echipamentul sau pluginul vă permite.
+   Dacă compresorul dvs. are opțiune de **Side-Chain EQ (Internal Side-Chain)**, folosiți-o pentru a filtra semnalul de detecție fără a altera tonul direct al piesei.
+
+- **Avantaj:** Tonul semnalului audio rămâne afectat doar de egalizatorul de la final. Nu aveți nevoie de două egalizatoare separate.
+- **Limitare:** Unele egalizatoare side-chain integrate au benzi limitate sau mai puțin control.
+  Dacă nu aveți destulă precizie, reveniți la metoda Pre-EQ de la Pasul 2.
+
+4. **Pasul 4: Aplicați EQ După Compresor (Post-EQ) pentru modelarea tonului final:** Folosit pentru egalizare artistică și compensare.
+   Plasați egalizatorul **după** compresor pentru toate modificările care țin de timbrul, strălucirea sau culoarea instrumentului, ori pentru a compensa frecvențele pierdute în timpul compresiei.
+
+- **Cum procedeți:** După ce compresorul a stabilizat volumul piesei, folosiți Post-EQ pentru a adăuga aer (înalte) sau pentru a scoate în evidență frecvențele medii ale instrumentului.
+
+5. **Pasul 5: Verificați dacă Post-EQ nu distruge controlul dinamic:** Pasul de auditare fină.
+   Fiți atenți la amplificările (_boost-urile_) făcute după compresor.
+   Un boost agresiv pe o frecvență specifică poate strica echilibrul dinamic obținut de compresor.
+
+- **Exemplu:** Dacă pe o voce deja comprimată amplificați zona de **1760 Hz** (nota La / A), toate notele La vor deveni brusc stridente și vor sări în volum față de restul liniei melodice.
+- **Soluție:** Dacă un Post-EQ cauzează vârfuri de volum necontrolate, faceți experimente: treceți acea modificare în Pre-EQ sau reduceți intensitatea boost-ului.
+
+---
+
+### Regula de Aur
+
+- **EQ Înainte de Compresor:** Când egalizarea servește la pregătirea/curățarea semnalului pentru compresor.
+- **EQ După Compresor:** Pentru modelarea artistică a tonului și finisarea caracterului sonor.

@@ -1,0 +1,61 @@
+---
+title: 'Setarea unui compresor'
+description: 'Setarea unui compresor'
+order: 4
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Această metodă funcționează excelent atât ca ghid practic pentru mixaj (în special pentru voce și tobe), cât și ca **exercițiu de antrenare a auzului**.
+Prin împingerea inițială a setărilor la extrem, efectul fiecărui control devine ușor de identificat.
+
+Procesul este structurat pe trei etape logice: **amploarea** (Threshold), **gradul** (Ratio) și **temporizarea** (Attack & Release).
+
+---
+
+1. **Pregătirea setărilor inițiale (Exagerarea efectului):** Scopul este de a face compresia cât mai evidentă de la bun început.
+   Reglează controalele pentru o compresie maximă și agresivă:
+
+- **Threshold:** Setează-l la **maximum** (complet sus), astfel încât compresorul să nu acționeze încă.
+- **Ratio:** Setează-l la **maximum** (complet sus / limita infinit:1).
+- **Attack:** Setează-l la **cel mai scurt timp posibil**.
+- **Release:** Setează-l la **cel mai scurt timp posibil**.
+- **Moduri suplimentare (opțional):** Dacă compresorul permite selectarea opțiunilor **Peak/RMS** sau **Hard/Soft Knee**, alege-le în funcție de instrument.
+  Pentru exercițiul de auz, alege **Peak** și **Hard-Knee**.
+
+2. **Determinarea amplorii (Ajustarea Threshold-ului):** Identifică exact ce parte din semnal va fi comprimată.
+   Coborâți treptat valoarea **Threshold-ului**.
+
+Din cauza setărilor extreme anterioare, în momentul în care semnalul depășește pragul, compresia va fi foarte evidentă.
+Timpii ultra-scurți de attack și release pot provoca chiar o distorsiune audibilă.
+Astfel poți identifica precis porțiunea din semnal afectată.
+
+> **Sfat:** Setează Threshold-ul puțin mai jos decât nivelul aparent ideal; acest lucru va ajuta ulterior la obținerea unei compresii mai uniforme.
+
+3. **Determinarea gradului (Ajustarea Ratio-ului):** Calibrarea intensității compresiei.
+   Coborâți valoarea **Ratio-ului** de la nivelul maxim către o valoare mai naturală (de exemplu: 2:1, 4:1 sau 8:1, în funcție de sursă).
+
+După ce ai stabilit ce porțiune din semnal comprimi (la Pasul 2), reduci pragul de reducere a volumului pentru a obține un sunet muzical, fără strivire.
+
+4. **Reglarea timpului de Attack:** Lăsarea tranzienților să treacă.
+   Mărește treptat timpul de **Attack** (fă-l mai lung decât valoarea minimă inițială).
+
+Ajustează până când atacul inițial al instrumentului (de exemplu, lovitura în tobă sau atacul consoanelor la voce) trece prin compresor fără a fi tăiat brusc, oferind impact și claritate semnalului.
+
+5. **Reglarea timpului de Release:** Modelarea revenirii semnalului.
+   Mărește treptat timpul de **Release** (fă-l mai lung decât valoarea minimă inițială).
+
+Ajustează viteza de revenire astfel încât compresorul să „respire” în ritmul pisei, fără efect neplăcut de pompare (_pumping_) sau distorsiuni pe frecvențele joase.
+
+---
+
+### De ce este importantă această ordine?
+
+Ordinea controalelor în această metodă nu este aleatorie, ci respectă modul în care funcționează un compresor:
+
+1. **Threshold și Ratio afectează timpii:** Modificarea pragului și a rației schimbă cantitatea totală de reducere a câștigului (_gain reduction_).
+   Cu cât reducerea este mai mare, cu atât timpii reali de attack și release devin mai lenți.
+   De aceea, aceștia se setează **după** Threshold și Ratio.
+2. **Attack-ul se setează înaintea Release-ului:** Un timp de release prea lung poate suprapune faza de revenire peste faza următoare de attack, mascând impactul inițial al semnalului.
+
+După parcurgerea acestor pași, vei fi foarte aproape de setarea ideală, fiind necesare doar mici ajustări de finețe (_fine-tuning_) și reglarea nivelului de ieșire (_Make-up Gain_).

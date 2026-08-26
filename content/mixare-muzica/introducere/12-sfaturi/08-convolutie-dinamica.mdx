@@ -1,0 +1,72 @@
+---
+title: 'Convoluția Dinamică'
+description: 'Convoluția Dinamică'
+order: 8
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+### Ghid pas cu pas: Cum funcționează și se aplică Convoluția Dinamică
+
+#### Pasul 1: Înțelegerea Convoluției Standard (Statică)
+
+- **Conceptul de bază:** Convoluția este procesul prin care capturăm amprenta acustică sau caracteristicile unui echipament audio pentru a le replica digital.
+- **Cum funcționează:** Se trimite un semnal de test (ex: un impuls audio) printr-un sistem (cum ar fi o sală de concert sau un echipament analogic) și se înregistrează răspunsul (_system response_).
+- **Principalul avantaj:** Nu este nevoie să știi cum funcționează circuitele interne ale aparatului; algoritmul învață doar ce intră și ce iese.
+
+---
+
+#### Pasul 2: Trecerea la Convoluția Dinamică (Pentru Compresoare și EQ-uri)
+
+Spre deosebire de reverbele dinamic liniare, compresoarele reacționează diferit în funcție de nivelul semnalului de intrare, frecvență și setările aparatului.
+
+- **Pionieratul:** Tehnologia a fost dezvoltată de compania **Sintefex Audio**.
+- **Diferența cheie:** Convoluția dinamică nu face o singură fotografie sonoră, ci realizează o **serie complexă de măsurători** la diferite niveluri de volum, frecvențe și configurări ale filtrelor/rapoartelor de compresie.
+
+---
+
+#### Pasul 3: Procesul de Măsurare și Samplare (Pas cu Pas)
+
+Pentru a emula un compresor analogic vintage, procesorul parcurge următorii pași:
+
+1. **Măsurarea în trepte (_Step-wise Approach_):** Deoarece este imposibil de măsurat un număr infinit de setări, se iau valori discrete.
+
+- _Exemplu de Ratio:_ Se măsoară doar valorile întregi (`1:1`, `2:1`, `3:1`, `4:1` etc.).
+
+2. **Generarea bazei de date de amprente:** Echipamentul stochează reacția compresorului analogic pentru fiecare dintre aceste puncte de referință.
+
+---
+
+#### Pasul 4: Interpolarea Inteligentă (Depășirea Limitărilor)
+
+În mod normal, dacă ai măsurat doar rapoarte de `2:1` și `3:1`, pluginul te-ar limita doar la aceste opțiuni.
+
+- **Soluția tehnologică:** Algoritmii moderni de convoluție dinamică calculează automat valorile intermediare (_aproximează_).
+- **Exemplu practic:** Dacă alegi un Ratio de `2.5:1`, algoritmul interpolează inteligent un răspuns aflat exact la jumătatea distanței dintre amprentele măsurate pentru `2:1` și `3:1`.
+
+---
+
+#### Pasul 5: Aplicarea Practică în Studio
+
+Tehnologia de convoluție dinamică a fost integrată în echipamente renumite folosite în producția audio profesională:
+
+- **Focusrite Liquid Channel:** Echipament hardware care poate emula circuitele și sunetul multor compresoare clasice.
+- **Focusrite Liquid Mix:** Platformă DSP pentru DAW-uri care pune la dispoziție **40 de emulări de compresoare** (și 20 de egalizatoare) bazate pe cele mai apreciate unități analogice din studiourile profesionale.
+
+---
+
+### Ideea Cheie
+
+Prin convoluție dinamică, primești sunetul autentic, nelinear și cald al compresoarelor analogice vintage direct în mediul digital, combinând amprenta sonoră reală cu flexibilitatea software-ului modern.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-45.jpg"
+    alt="Figura 17-45"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17-45:</p> Focusrite Liquid Mix
+</div>

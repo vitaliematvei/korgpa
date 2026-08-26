@@ -1,0 +1,130 @@
+﻿---
+title: 'Compresia paralelă'
+description: 'Compresia paralelă'
+order: 1
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Compresia paralelă este unul dintre cele mai vechi și mai comune trucuri din mixaj.
+Compresia paralelă fusese deja implementată ca parte a sistemului de reducere a zgomotului Dolby A, care a fost introdus în 1965.
+În 1977, Mike Bevelle a publicat un articol în revista Studio Sound, care i-a oferit acestei tehnici o mare parte din popularitate.
+Bob Katz a inventat termenul de _compresie paralelă_, alte denumiri fiind _compresie side-chain_ (ceea ce este derutant, deoarece nu side-chain-ul compresorului este cel pe care îl comprimăm) și _trucul de compresie NY_ (inginerii din New York erau cunoscuți pentru utilizarea acestei tehnici).
+Este aplicată de obicei pe tobe, bas și voci, deși poate fi aplicată pe aproape orice instrument.
+
+Compresia pe care am discutat-o până acum în acest capitol este compresia descendentă — semnalele puternice sunt reduse ca nivel.
+O problemă fundamentală a acestei practici este că urechile noastre sunt mai sensibile la reducerea semnalelor puternice decât la amplificarea semnalelor slabe.
+De asemenea, artefactele de compresie tind să fie mai vizibile, deoarece sunt declanșate de semnale cu nivel ridicat.
+
+Ideea din spatele compresiei paralele este destul de simplă — în loc să reducem nivelurile ridicate, le ridicăm pe cele scăzute.
+Urechea percepe acest lucru ca fiind mult mai natural, iar artefactele declanșate de semnalele de nivel mic fac ca efectul de compresie să fie mai puțin evident.
+În plus, compresia paralelă păstrează dinamica mult mai bine decât compresia descendentă, deoarece tranzienții nu sunt reduși — dacă este ceva, partea lor inferioară este consolidată.
+Fiind mai transparentă, compresia paralelă ne permite să solicităm compresorul și mai tare atunci când urmărim un efect mai puternic.
+De asemenea, putem ajusta gradul de impact folosind un singur fader în loc de o mulțime de controale ale compresorului.
+
+Compresia paralelă ne permite să facem sunetele și mai mari, păstrându-le în același timp dinamica.
+
+Compresia paralelă implică o configurație simplă: se ia o copie a unui semnal, se comprimă și se combină versiunea comprimată cu originalul necomprimat (Figura 17.39).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-39.jpg"
+    alt="Figura 17-39"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17-39:</p>Compresia paralelă este o combinație
+  între o versiune comprimată și una necomprimată a aceleiași surse. Nivelul
+  versiunii comprimate este cel pe care îl modificăm pentru un efect mai
+  pronunțat sau mai discret.
+</div>
+
+În general vorbind, originalul rămâne constant ca nivel, iar versiunea comprimată este suprapusă sub el la un nivel ales de noi.
+
+Există diferite moduri de a realiza acest lucru într-un secvențiator audio.
+Dacă este vorba despre o singură piesă, putem pur și simplu să duplicăm piesa și să comprimăm duplicatul.
+Cu toate acestea, dacă schimbăm ceva pe piesa originală (de exemplu, egalizarea), trebuie să schimbăm și pe duplicat.
+O abordare mai populară implică trimiterea piesei în cauză — sau a unui grup de piese — către un bus; bus-ul este alimentat în două aux-uri, iar compresorul este încărcat doar pe un singur aux (Figura 17.40).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-40.jpg"
+    alt="Figura 17-40"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17-40:</p>Comprimarea paralelă în Digital
+  Performer. Semnalul de ieșire al diferitelor piste de tobe este direcționat
+  către o cale de magistrală numită „drumix”. Această magistrală alimentează
+  două canale auxiliare — drumix și drumix PC. Pe acesta din urmă se încarcă un
+  compresor, iar semnalul său este mixat la un nivel mai scăzut împreună cu
+  canalul auxiliar drumix.
+</div>
+
+Modificăm apoi nivelul piesei aux comprimate.
+Trebuie să ne asigurăm că nu există nicio întârziere între versiunea originală și cea comprimată, altfel va apărea filtrarea de tip pieptene — compensarea automată a întârzierii (auto delay compensation) garantează că acest lucru nu se va întâmpla.
+
+Deși este necesară o rutare suplimentară atunci când compresia paralelă se face pe o consolă analogică, cel puțin o piesă aux dintr-un secvențiator audio ar putea fi economisită dacă plug-in-urilor de compresie li s-ar oferi posibilitatea de a mixa semnalele de intrare comprimate și necomprimate (ceva foarte similar cu controlul standard wet/dry de pe un emulator de reverberație).
+Deși acest lucru necesită un efort foarte mic de implementare, doar câteva compresoare oferă un astfel de control.
+PSP Vintage Warmer 2 din Figura 17.41 este unul dintre ele.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-41.jpg"
+    alt="Figura 17-41"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17-41:</p>PSP VintageWarmer 2. Controlul Mix (aflat
+  în dreapta comutatorului Brick Wall) ne permite să combinăm semnalul de
+  intrare neprocesat cu versiunea comprimată, făcând din compresia paralelă o
+  sarcină extrem de simplă.
+</div>
+
+Compresia paralelă este o formă de compresie ascendentă — în loc să facem sunetele mai tari mai încetinite (compresie descendentă), facem sunetele încetinite mai tari.
+Însă compresia paralelă este diferită de compresia ascendentă prin faptul că semnalele de nivel mic sunt amplificate într-un mod liniar (raport 1:1), cel mai drastic raport având loc chiar deasupra genunchiului de compresie (knee), iar de acolo în sus curba raportului revine încet la 1:1. Figura 17.42 ilustrează acest lucru. Putem considera că compresia paralelă are cel mai mare efect asupra semnalelor de nivel mediu pe măsură ce trec peste prag (threshold). În practică, totuși, pragul este setat destul de jos sub domeniul de acțiune, astfel încât, în cele din urmă, semnalele slabe sunt cele care primesc cel mai mult din efect. În esență, cu cât semnalul este mai slab, cu atât este mai mult ridicat ca nivel; semnalele de nivel ridicat sunt de abia amplificate. Acest lucru poate fi foarte util pentru echilibrarea nivelului.
+
+Putem vedea din Figura 17.42a că tranziția raportului în jurul knee-ului poate fi destul de drastică.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/17-42.jpg"
+    alt="Figura 17-42"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 17-42:</p>Compresia paralelă și curbele de raport
+  rezultante. (a) Versiunea comprimată, cu un raport de 1.000:1, este cu 6 dB
+  mai tare decât versiunea necomprimată pentru a demonstra forma curbei de
+  raport rezultante. Putem observa că, de la raportul de 1:1 de sub prag,
+  raportul revine lent la 1:1 pe măsură ce semnalul devine mai tare. (b)
+  Aceleași setări ca la (a), doar că versiunea comprimată este cu 6 dB sub
+  versiunea necomprimată. Putem observa o curbă de raport mai lină deasupra
+  cotului (knee). (c) Aceleași setări ca la (a), dar cu un raport de 2:1. Din
+  nou, putem observa o curbă de raport mai lină deasupra cotului.
+</div>
+
+Putem obține o tranziție mai lină în două moduri: fie reducem raportul, fie reducem nivelul versiunii comprimate.
+Pe măsură ce reducem nivelul versiunii comprimate, suma rezultată va migra spre curba de câștig unitar a versiunii necomprimate.
+Cu versiunea comprimată redusă de tot, suma rezultată este identică cu versiunea necomprimată.
+
+Timpul de atac (attack) al compresorului este setat să fie cât mai rapid posibil, astfel încât tranzienții ascuțiți să nu fie supra-accentuați (cu excepția cazului în care ne dorim acest lucru).
+Dacă transparența este ceea ce urmărim, timpul de eliberare (release) este setat pentru a minimiza efectul de pompare și distorsiunile de frecvență joasă.
+Cu toate acestea, un efect puternic poate fi obținut dacă versiunea comprimată pompează și distorsionează și, din nou, controlăm cât din acest efect se mixează folosind nivelul versiunii comprimate.
+
+Tehnica compresiei paralele este aproape fără egal atunci când este aplicată unui grup de instrumente care a fost deja procesat dinamic, cum ar fi un mix de tobe.
+Aplicarea unei compresii standard pe un mix de tobe poate afecta ușor dinamica fiecărei piese sursă.
+De exemplu, în timp ce setăm compresia mixului de tobe, trebuie să găsim timpii potriviți de atac și eliberare care vor păstra caracterul dinamic al fiecărei tobe.
+Compresia paralelă face ca întreaga operațiune de adăugare a puterii să fie mai puțin restrictivă.
+
+Compresia paralelă este, de asemenea, una dintre rarele tehnici în care un compresor ar putea fi utilizat într-o configurație de trimitere pe aux (aux send) în loc de inserțiile standard.
+Luând un mix de tobe, de exemplu, putem crea un submix alternativ folosind trimiteri (sends) și putem alimenta bus-ul de trimitere către compresorul paralel.
+Apoi, dacă vrem puțin mai multă greutate pe toba mare (kick), nivelul de trimitere al tobei mari este ridicat.

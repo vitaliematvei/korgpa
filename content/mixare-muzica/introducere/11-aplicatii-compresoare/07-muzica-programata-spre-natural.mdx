@@ -1,0 +1,49 @@
+---
+title: 'Muzica programata(MIDI) spre natural'
+description: 'Muzica programata(MIDI) spre natural'
+order: 7
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Adaptarea detaliată, sub formă de ghid pas cu pas, pentru obținerea unui sunet natural din instrumentele programate se regăsește mai jos.
+
+---
+
+### De ce sună muzica programată „rece” sau artificială?
+
+Performanța unui muzician real într-un studio are o complexitate dinamică imposibil de replicat perfect doar prin sintetizatoare:
+
+- **Sintetizoare vs. Instrumente reale:** Un sintetizator are parametri de _Attack_ și _Release_, dar aceștia nu modifică un acord aflat deja în desfășurare. La un pian acustic, rezonanța fiecărui acord interacționează în lanț cu acordul care urmează.
+- **Comportamentul fizic al instrumentelor:** Un cinel _Crash_ lovit când este oprită va suna complet diferit față de una lovită în timp ce încă se balansează. Aceeași regulă se aplică la tobă mică (_snare_) și la majoritatea instrumentelor acustice.
+- **Lipsa legăturii dintre evenimente:** Fiecare notă, acord sau lovitură de tobă programată este tratată ca un eveniment izolat. Nu există o legătură dinamică naturală între ele.
+
+**Soluția:** Compresia audio procesează toate aceste evenimente ca pe un întreg, creând acea legătură dinamică de grup specifică interpretărilor reale.
+
+---
+
+1. **Identificarea problemei de dinamică:** Detectarea efectului de „mitralieră”.
+   Ascultă cu atenție pasajele rapide de tobă mică (_snare rolls_) sau acordurile repetative din piesă.
+
+În cazul programării brute, fiecare lovitură individuală sare în evidență într-un mod mecanic și rigid.
+Identifică canalul sau grupul unde separarea dintre note sună artificial.
+
+2. **Trimiterea elementelor pe o șină sau grup comun:** Pregătirea semnalului pentru compresie.
+   Pentru a crea legătura dinamică dintre note, nu aplica procesarea pe fiecare notă separat.
+
+Rutează pistele individuale ale instrumentului (de exemplu, toate componentele de tobă sau toate straturile de clape) către un singur **Bus / Group Channel** în DAW.
+
+3. **Setarea timpului de Attack rapid:** Atenuarea tranzienților rigizi.
+   Adaugă un compresor pe canalul de grup și fixează un timp de **Attack rapid** (de exemplu, între 1 ms și 15 ms, în funcție de material).
+
+- **Scop:** Attack-ul rapid taie vârful inițial (tranzientul) al fiecărei lovituri, făcând ca notele individuale să nu mai iasă atât de agresiv în evidență.
+
+4. **Setarea timpului de Release rapid:** Păstrarea cozilor de semnal și a decay-ului.
+   Reglează parametrul **Release pe o valoare rapidă** (sau sincronizată cu tempo-ul piesei).
+
+- **Scop:** Un Release rapid permite compresorului să revină prompt după fiecare vârf, păstrând _decay-ul_ (coada naturală a sunetului) și umplând spațiile goale dintre note.
+
+5. **Ajustarea pragului (Threshold) și a raportului (Ratio):** Sudarea note-lor într-un tot unitar.
+   Coboară valoarea _Threshold_-ului până când obții o reducere de câștig (_Gain Reduction_) moderată (aprox. 2 – 5 dB) și setează un _Ratio_ subtil (între 2:1 și 4:1).
+
+- **Rezultat:** Spațiile libere dintre lovituri sau acorduri devin mai puțin sesizabile, iar seria de evenimente izolate se transformă într-o frază muzicală fluidă și coerentă.

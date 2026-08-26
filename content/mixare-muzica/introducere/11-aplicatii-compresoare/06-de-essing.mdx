@@ -1,0 +1,42 @@
+---
+title: 'Ce este De-essing-ul?'
+description: 'Ce este De-essing-ul?'
+order: 6
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Acest text explică modul în care funcționează **de-essing-ul** (reducerea sibilanței/sunetelor ascuțite precum „s”, „ș”, „ț”) folosind o metodă manuală cu un compresor cu intrare de **side-chain**, precum și limitările acestei metode comparativ cu un plugin dedicat de De-esser.
+
+---
+
+1. **Pasul 1: Înțelegerea principiului de bază (Ce este De-essing-ul?):**
+   De-essing-ul este procesul prin care atenuezi (scazi volumul) vocii **doar în momentele în care apar sunete sibilante** (frecvențe înalte și deranjante).
+
+Pentru a automatiza acest proces manual, folosim un compresor al cărui circuit de control (**side-chain**) este pacălit să reacționeze intens doar la frecvențele ascuțite.
+
+2. **Pasul 2: Configurarea semnalului de Side-Chain (Detectarea):**
+   Pentru ca compresorul să știe _când_ să acționeze, trebuie să îi trimitem pe intrarea de side-chain un semnal modificat:
+
+- **Amplifică frecvența sibilantă:** Aplică un egalizator (EQ) pe linia de side-chain și mărește semnificativ zona de frecvențe unde sunetul „s” este deranjant (de regulă între 4 kHz și 8 kHz).
+- **Filtrează frecvențele joase:** Tunde/elimină frecvențele din sub acea zonă (High-Pass Filter) pentru ca basul sau frecvențele medii ale vocii să nu declanșeze compresorul din greșeală.
+
+3. **Pasul 3: Setarea Pragului (Threshold) și Atenuarea:**
+   De fiecare dată când solistul pronunță un „s” sau „ș”, semnalul din side-chain va avea un vârf puternic de volum:
+
+- Vârful de frecvență înaltă depășește **pragul (threshold-ul)** setat pe compresor.
+- Compresorul reacționează instantaneu și **scade volumul întregului semnal audio** pe durata acelui sunet.
+
+4. **Pasul 4: Identificarea problemelor metodei manuale:**
+   Deși această tehnică manuală funcționează, textul scoate în evidență **două dezavantaje majore**:
+
+1. **Atenuare globală (Cumpăna de corp și armonici):** Când compresorul reduce volumul, el nu taie doar sunetul „s”, ci scade nivelul _întregii voci_. Astfel, se pierd temporar armonicile superioare și corpul (frecvențele joase/medii) ale vocii.
+1. **Inconstanță la volume mici:** În pasajele muzicale încet cântate (șoptite sau cu volum redus), sibilanța s-ar putea să nu fie suficient de puternică pentru a depăși pragul compresorului. Astfel, compresorul va trata doar sibilanțele din pasajele tari, lăsându-le pe cele din pasajele încet netratate.
+
+1. **Pasul 5: Soluția – Utilizarea unui De-esser dedicat:**
+   Un plugin de **De-esser dedicat** bine conceput este proiectat special pentru a rezolva ambele probleme:
+
+- **Compresie pe bandă specifică (Split-band):** Reduce doar frecvența problematice fără să afecteze restul corpului vocii.
+- **Detecție dinamică/relativă:** Recunoaște sibilanța indiferent dacă pasajul este cântat tare sau încet.
+
+---
