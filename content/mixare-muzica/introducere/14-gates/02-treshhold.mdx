@@ -1,0 +1,38 @@
+---
+title: 'Threshold (Pragul de acționare)'
+description: 'Threshold (Pragul de acționare)'
+order: 2
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Un _gate_ (poartă de zgomot) acționează asupra semnalelor care se află **sub** nivelul pragului setat (_threshold_) – acestea sunt atenuate, uneori până la mutire completă (_mute_).
+În schimb, semnalele care depășesc pragul (**peste** _threshold_) trec netăiate și nemodificate, cu excepția situațiilor în care se aplică o anumită temporizare de atac (_attack_).
+
+Un _gate_ funcționează pe o logică simplă de tip „da/nu”: îi pasă doar dacă semnalul este peste sau sub prag.
+Spunem că poarta este **închisă** atunci când semnalul scade sub _threshold_ și că este **deschisă** atunci când semnalul depășește acest prag.
+_(Figura 19.3 ilustrează modul în care un gate procesează semnalul unui tobă mică / snare)._
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/19-3.jpg"
+    alt="Figura 19-3"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 19-3:</p>Prag (Threshold)
+Funcția de prag a unui noise gate. Semnalul original dinaintea aplicării gate-ului conține o lovitură de tobă mică (snare) și câteva vârfuri de cinel (hi-hat) pe care dorim să le eliminăm. Pragul este setat peste nivelul maxim al cinelului, astfel încât gate-ul se deschide doar când intervine toba mică. Gate-ul se închide în momentul în care semnalul tobei mici scade sub pragul stabilit. În final, după aplicarea efectului, rămâne doar porțiunea puternică a tobei mici.
+
+Explicația termenilor adaptați:
+
+    Gate / Noise Gate: În română se folosește direct termenul din engleză (gate) sau descrierea funcțională (poartă de zgomot).
+
+    Snare: Tobă mică (sau premul).
+
+    Hi-hat: Cinel (sau fus).
+
+    Spikes / Peaks: Vârfuri de semnal / nivel maxim.
+
+</div>

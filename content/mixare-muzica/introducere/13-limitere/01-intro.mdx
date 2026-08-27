@@ -1,0 +1,130 @@
+﻿---
+title: 'Info Limitere'
+description: 'Info Limitere'
+order: 1
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Un limiter (limitator) este conceput pentru un singur scop critic: **să prevină depășirea unui prag de semnal (threshold)**, indiferent de dinamica piesei.
+
+În loc de o abordare pur teoretică, iată un ghid detaliat pas cu pas pentru a înțelege principiile de funcționare și aplicarea corectă a unui limiter în mixaj și masterizare.
+
+---
+
+### Pasul 1: Înțelege scopul și aplicațiile de bază
+
+Limiterele sunt utilizate ori de câte ori semnalul audio nu trebuie să depășească sub nicio formă un nivel maxim admis:
+
+- **Mixaj și Producție Digitală:** Prevenirea clipping-ului digital (depășirea nivelului de **0 dBFS**) înainte de exportul în fișiere audio.
+- **Masterizare:** Creșterea percepției de volum general (loudness maximization) menținând în siguranță vârfurile (peaks).
+- **Protecție Hardware (PA Systems):** Protejarea difuzoarelor de arsuri cauzate de vârfuri extreme de semnal.
+- **Radio FM:** Prevenirea depășirii benzii de frecvență alocate pentru a nu interfera cu stațiile vecine.
+
+---
+
+### Pasul 2: Diferențiază un Compressor "Setat ca Limiter" de un "True Limiter"
+
+Un compresor obișnuit poate fi forțat să acționeze similar unui limiter, însă un **True Limiter** folosește algoritmi diferiți pentru a evita distorsiunile dure:
+
+<div className="w-full max-w-4xl mx-auto my-6 space-y-4">
+      {/* Container Tabel cu scroll orizontal pe ecran mic */}
+      <div className="overflow-x-auto rounded-lg border border-slate-200 shadow-sm dark:border-slate-800">
+        <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
+          <thead className="bg-slate-50 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:bg-slate-900 dark:text-slate-400">
+            <tr>
+              <th scope="col" className="px-6 py-4">Parametru</th>
+              <th scope="col" className="px-6 py-4">Compresor ca Limiter</th>
+              <th scope="col" className="px-6 py-4">True Limiter Dedicat</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-200 bg-white dark:divide-slate-800 dark:bg-slate-950">
+            <tr className="transition-colors hover:bg-slate-50/50 dark:hover:bg-slate-900/50">
+              <td className="px-6 py-4 font-semibold text-slate-900 dark:text-white">Knee</td>
+              <td className="px-6 py-4">Hard-knee (brusc)</td>
+              <td className="px-6 py-4">Soft-knee progresiv (ajunge la ∞:1 la prag)</td>
+            </tr>
+            <tr className="transition-colors hover:bg-slate-50/50 dark:hover:bg-slate-900/50">
+              <td className="px-6 py-4 font-semibold text-slate-900 dark:text-white">Attack</td>
+              <td className="px-6 py-4">Zero Attack time</td>
+              <td className="px-6 py-4">Look-ahead și atac adaptiv sub prag</td>
+            </tr>
+            <tr className="transition-colors hover:bg-slate-50/50 dark:hover:bg-slate-900/50">
+              <td className="px-6 py-4 font-semibold text-slate-900 dark:text-white">Sensing</td>
+              <td className="px-6 py-4">Peak-sensing</td>
+              <td className="px-6 py-4">Detectare inteligentă a transientelor</td>
+            </tr>
+            <tr className="transition-colors hover:bg-slate-50/50 dark:hover:bg-slate-900/50">
+              <td className="px-6 py-4 font-semibold text-slate-900 dark:text-white">Rezultat Sonic</td>
+              <td className="px-6 py-4">Brutal, agresiv, distorsiuni evidente</td>
+              <td className="px-6 py-4">Transparent, atenuează dinamic înainte de vârf</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* Nota Tehnică (Callout Box) */}
+      <div className="rounded-r-lg border-l-4 border-blue-500 bg-blue-50/50 p-4 text-sm text-slate-700 dark:bg-blue-950/30 dark:text-slate-300">
+        <p>
+          <strong className="font-semibold text-blue-900 dark:text-blue-300">Notă tehnică:</strong> Soft-knee-ul și funcția de <em className="italic">look-ahead</em> (analizarea semnalului cu câteva milisecunde înainte) permit limiterului să reducă nivelul <em className="italic">înainte</em> ca vârful să treacă de prag, eliminând artefactele auditive dure.
+        </p>
+      </div>
+    </div>
+
+---
+
+### Pasul 3: Configurează controalele principale
+
+Spre deosebire de compresoare, un limiter oferă mult mai puține opțiuni (pentru a nu compromite protecția de vârf).
+Procesul de setare urmează acești pași:
+
+1. **Setează Ceiling-ul (Output Level):**
+
+- Reprezintă limita absolută peste care semnalul nu va trece niciodată.
+- **Recomandare:** Setează _Ceiling-ul_ la **-0.2 dBFS** (sau chiar -1.0 dBFS pentru streaming) pentru a preveni vârfurile inter-sample (_True Peak_) ce apar la conversia Digital-Analog.
+- În masterizare, se lasă de obicei **3 dB de headroom** pentru procesările ulterioare.
+
+2. **Ajustează Input Level (sau Threshold):**
+
+- Creșterea nivelului de intrare împinge semnalul în pragul fixat.
+- La multe limitere, coborârea _threshold-ului_ aplică automat _makeup gain_, efectul fiind identic cu ridicarea _input-ului_.
+
+3. **Calibrează Release-ul:**
+
+- Setează viteza cu care limiterul revine la nivelul normal după atenuare.
+  Un release prea rapid produce efect de "pompare" (_pumping_), iar unul prea lent distruge dinamica transientelor.
+
+---
+
+### Pasul 4: Folosește Limiterul ca Loudness Maximizer (Fără să păcălești urechea)
+
+Ridicarea nivelului de _Input_ într-un limiter crește volumul perceput, ceea ce creează iluzia optică/auditivă că sunetul devine "mai bun" (creierul uman asociază semnalul mai tare cu o calitate superioară).
+
+- **Regula de aur pentru A/B Testing:** Când evaluezi dacă un limiter îmbunătățește mixul, folosește controlul de **Output** ca _makeup gain negativ_ (compensează volumul în jos).
+- **Verificarea artefactelor:** Ascultă mixul la același volum de ieșire percheziționând distorsiunile pe frecvențele joase sau pierderea tranzienților (tobe "tocate").
+  Dacă apar artefacte nemuzicale, redu nivelul de intrare.
+
+---
+
+### Pasul 5: Evită cea mai frecventă greșeală (Limiter vs. Compresor)
+
+Un limiter **NU** este o scurtătură pentru compresie.
+
+- **Compresorul** oferă control fin asupra plajei dinamice, atacului și tonului instrumentelor.
+- **Limiterul** este un instrument de control final al vârfurilor (_peak control_).
+- **Lanțul recomandat:** Plasează limiterul **după** compresor.
+  Compresorul nivelează dinamica și oferă caracter, iar limiterul prinde ultimele scăpări de vârfuri și maximizează volumul.
+
+> **Punct de control final:** Dacă limiterul tău lucrează constant la reduceri masive de gain (mai mult de 2-3 dB de Gain Reduction în mod continuu), problema este în mixaj — ajustează nivelurile pieselor sau folosește atenuări din compresie înainte de a ajunge la limiter.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/18-1.jpg"
+    alt="Figura 18-1"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 18-1:</p> UAD Precision Limiter plugin
+</div>

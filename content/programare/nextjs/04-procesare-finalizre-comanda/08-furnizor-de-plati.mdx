@@ -1,0 +1,136 @@
+---
+title: 'Furnizor de plăți'
+description: 'Furnizor de plăți'
+order: 8
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Iată ghidul pas cu pas pentru integrarea procesatorului de plăți **Stripe** într-o aplicație Next.js.
+
+---
+
+## Partea 1: Configurarea Inițială Stripe
+
+Această etapă asigură conectarea aplicației la contul Stripe și inițializarea SDK-ului.
+
+1. **Obținerea cheilor API din Dashboard-ul Stripe:** Pas de configurare a contului.
+
+- Autentifică-te în contul Stripe pe [dashboard.stripe.com/login](https://dashboard.stripe.com/login).
+- În meniul din dreapta sus, dă click pe **Developers**.
+- Din meniul stâng, selectează **API Keys**. În secțiunea **Standard Keys** vei găsi cele două chei de acces:
+- **Publishable key** (Cheia publică)
+- **Secret key** (Cheia secretă — apasă pe **Reveal secret key** pentru a o afișa)
+
+> **Sfat:** Dând click direct pe valoarea unei chei, aceasta se copiază automat în clipboard.
+
+2. **Configurarea variabilelor de mediu:** Protejarea datelor sensibile.
+
+- Creează un fișier numit `.env` în rădăcina proiectului (root).
+- Adaugă următoarele două linii, înlocuind spațiile marcate cu cheile tale reale:
+
+```env
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_introdu_cheia_publica_aici
+NEXT_PUBLIC_STRIPE_SECRET_KEY=sk_test_introdu_cheia_secreta_aici
+
+```
+
+- Salvează și închide fișierul `.env`.
+
+3. **Crearea utilitarului de inițializare Client Side:** Fișierul lib/getStripe.js.
+
+- Creează un fișier nou numit `getStripe.js` în folderul `/lib` din proiectul tău.
+- Adaugă următorul cod (asigură-te că pachetul `@stripe/stripe-js` este instalat în proiect):
+
+```javascript
+import { loadStripe } from '@stripe/stripe-js';
+
+let stripePromise;
+
+const getStripe = () => {
+  if (!stripePromise) {
+    stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+  }
+  return stripePromise;
+};
+
+export default getStripe;
+```
+
+4. **Adăugarea endpoint-ului API Server Side:** Fișierul pages/api/stripe.js.
+
+- În folderul `/src/pages/api` (sau `/pages/api`), adaugă fișierul `stripe.js` din resursele proiectului.
+- Acest endpoint este responsabil de crearea sesiunii de checkout pe serverul Node.js.
+
+---
+
+## Partea 2: Integrarea Checkout-ului în Componente
+
+Acum adăugăm logica de trimitere a produselor către Stripe și butonul de plată în componentele de coș.
+
+1. **Modificarea componentei Cart.jsx:** Coșul principal de cumpărături.
+   **1. Adaugă importurile necesare** la începutul fișierului `Cart.jsx`:
+
+```javascript
+import getStripe from '../../lib/getStripe';
+import toast from 'react-hot-toast';
+```
+
+**2. Adaugă funcția de Checkout** imediat după funcția `eUSLocale`:
+
+```javascript
+const handleCheckout = async () => {
+  const stripe = await getStripe();
+
+  const response = await fetch('/api/stripe', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(cartItems),
+  });
+
+  if (response.status === 500) return;
+
+  const data = await response.json();
+
+  toast.loading('Redirecting...');
+
+  stripe.redirectToCheckout({
+    sessionId: data.id,
+  });
+};
+```
+
+**3. Adaugă butonul în interfață** imediat după blocul de afișare a prețului total
+(`<h3>${eUSLocale(totalPrice)}</h3></div>`):
+
+```jsx
+<div className="btn-container">
+  <button type="button" className="btn" onClick={handleCheckout}>
+    Pay with Stripe
+  </button>
+</div>
+```
+
+- Salvează și închide `Cart.jsx`.
+
+2. **Modificarea componentei MiniCart.jsx:** Coșul secundar / Modal.
+
+- Deschide `MiniCart.jsx`.
+- Repetă pașii de la punctul 1 (importurile `getStripe` și `toast`), adaugă funcția `handleCheckout` și inserează markup-ul pentru butonul **Pay with Stripe**.
+- Salvează și închide fișierul.
+
+3. **Configurarea paginii de confirmare:** Fișierul pages/success.js.
+
+- Copiază fișierul `success.js` din resursele descărcate și plasează-l în folderul `/pages`.
+- Aceasta este pagina pe care Stripe va redirecționa cumpărătorul după finalizarea cu succes a plății.
+
+---
+
+### Corecție tehnică importantă în cod
+
+În codul din textul original există o mică eroare în funcția `handleCheckout`:
+
+1. Instanța Stripe nu era extrasă înainte de utilizare. Linia `const stripe = await getStripe();` a fost inclusă la începutul funcției în pasul de mai sus.
+2. Proprietatea de verificare din Fetch API este `response.status` (nu `response.statusCode`).

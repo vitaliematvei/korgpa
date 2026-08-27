@@ -1,0 +1,48 @@
+---
+title: 'Histerezis (Hysteresis)'
+description: 'Histerezis (Hysteresis)'
+order: 3
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Pentru a permite o deschidere rapidă a Porții de Zgomot (Noise Gate) odată ce semnalul a depășit pragul (_threshold_), detecția de nivel la majoritatea porților se bazează pe detectarea valorilor de vârf (_peak-sensing_).
+Cu toate acestea, fluctuațiile de nivel sunt mult mai pronunțate în cazul detectării de vârf decât la cea de tip RMS.
+
+Atunci când semnalul fluctuează în nivel, acesta poate trece peste și sub prag de mai multe ori într-un interval scurt de timp.
+Acest lucru provoacă o deschidere și închidere extrem de rapidă a porții, generând un tip de distorsiune numit **„chattering”** (săritură/tremur repetat al semnalului).
+
+O modalitate de a rezolva această problemă este utilizarea a două praguri separate:
+
+- un prag peste care poarta se **deschide**;
+- un prag sub care poarta se **închide**.
+
+A avea două controale separate pentru praguri ar fi însă incomod, deoarece orice ajustare la unul dintre ele ar necesita modificări și la celălalt.
+În loc să ofere două controale distincte, porțile de zgomot pun la dispoziție un singur prag (_Threshold_) și un control numit **Histerezis** (_Hysteresis_).
+
+- **Pragul Principal (_Threshold_)** stabileste valoarea la care poarta se deschide.
+- **Controlul Histerezis** determină cu câți dB sub pragul principal se va fixa pragul de închidere.
+
+> **Exemplu:** Dacă pragul este setat la **–20 dB**, iar histerezisul la **5 dB**, pragul de închidere a porții va fi automat la **–25 dB**.
+
+Multe porți de zgomot nu oferă histerezisul ca un control ajustabil, ci au o valoare fixă integrată din fabrică, de regulă între **4 și 10 dB**.
+Atunci când aveți la dispoziție un potentiometru dedicat pentru histerezis, aceste valori reprezintă un punct de plecare excelent pentru reglaj.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/19-4.jpg"
+    alt="Figura 19-4"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 19-4:</p>Controlul cu histerezis al unei porți. (a)
+  O poartă cu un singur prag, fără control prin histerezis. Oscilațiile parazite
+  (chattering) apar din cauza deschiderii și închiderii rapide a porții,
+  declanșate de fluctuațiile bruște ale nivelului. (b) O poartă cu control prin
+  histerezis. Poarta se deschide doar când semnalul depășește pragul de
+  deschidere și se închide doar când semnalul scade sub pragul de închidere.
+  Varianta de nivel între cele două praguri nu provoacă comutarea stării porții,
+  evitându-se astfel oscilațiile parazite.
+</div>

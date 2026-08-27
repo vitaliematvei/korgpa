@@ -1,0 +1,136 @@
+---
+title: 'Atacul și Release-ul (Attack & Release)'
+description: 'Atacul și Release-ul (Attack & Release)'
+order: 5
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+**Atacul (Attack)** controlează cât de repede se deschide gate-ul, iar **release-ul** controlează cât de repede se închide.
+
+De exemplu, dacă valoarea parametrului _Range_ este setată la –80 dB, un gate închis va aplica o reducere de –80 dB pe semnalul de intrare.
+Atacul determină viteza cu care acest nivel de –80 dB crește la 0 dB în momentul deschiderii gate-ului, în timp ce release-ul determină cât de repede revine câștigul (gain-ul) la –80 dB atunci când gate-ul se închide.
+
+Timpii de răspuns ai unui gate se măsoară de regulă în milisecunde:
+
+- **Atacul** variază de obicei între **0,010 ms (10 μs) și 100 ms**.
+- **Release-ul** se încadrează frecvent între **5 ms și 3.000 ms**.
+
+La fel ca în cazul compresoarelor, ambii parametri determină rata de variație a gain-ului.
+La unele gate-uri, timpii de răspuns sunt raportați la o schimbare de nivel de 10 dB.
+Astfel, cu un atac de 1 ms și un range de –10 dB, gate-ul are nevoie de 1 ms pentru a se deschide complet;
+totuși, dacă range-ul este setat la –80 dB, deschiderea completă va dura 8 ms.
+
+**Concluzia practică:** Valoarea parametrului _Range_ influențează timpul total de deschidere și închidere.
+Prin urmare, alegerea unui range mai mic permite obținerea unor timpi de atac și release efectiv mai rapizi.
+Într-un mix aglomerat, un range de –40 dB este adesea suficient pentru a face inaudibile semnalele care scad sub prag (_threshold_).
+
+---
+
+### Comportamentul anvelopei dinamice: Gate vs. Compresor
+
+Parametrii de atac și release au un efect opus asupra anvelopei dinamice față de cel pe care îl au în cazul compresoarelor:
+
+- **Atac mai lung pe gate** -> se păstrează **mai puțin** din atacul natural al semnalului.
+- **Release mai lung pe gate** -> se păstrează **mai mult** din declinul (_decay_) natural al semnalului.
+
+---
+
+### Zgomote de clic și distorsiuni pe frecvențe joase
+
+Timpii de atac și release foarte scurți pot produce **clicuri audibile** din cauza schimbărilor bruște de nivel.
+O creștere abruptă generată de un atac ultra-rapid creează frecvențe înalte artificiale — cu cât atacul este mai scurt, cu atât frecvența generată este mai ridicată.
+Același principiu se aplică și release-ului, deși acțiunea gate-ului pe semnalele slabe de sub threshold este de obicei mai puțin sesizabilă.
+În funcție de semnalul procesat, un răspuns prea rapid poate altera și frecvențele joase sau medii.
+
+La procesarea elementelor tranzitorii (în special cele cu conținut bogat în frecvențe joase, cum este toba mare / _kick-ul_), setarea atacului este critică.
+Majoritatea caracterului unui kick se află chiar în primul său ciclu de undă.
+Un gate poate distorsiona această zonă crucială:
+
+1. **Un atac prea scurt** produce schimbări abrupte de nivel și clicuri.
+2. **Un atac prea lung** taie din impactul inițial al tobei.
+
+În ambele cazuri, tonalitatea tobei mari are de suferit pe tot spectrul (joase, medii și înalte).
+Ideal este ca atacul să păstreze forma originală a undei — lucru realizabil cel mai bine folosind funcția de **Look-Ahead**.
+
+De asemenea, setările foarte scurte pot provoca distorsiuni pe frecvențele joase dacă gate-ul acționează chiar în interiorul ciclurilor individuale ale undei. Mărirea atacului, a release-ului sau a parametrului **Hold** rezolvă această problemă.
+
+---
+
+### Integrarea ritmică și specificul procesării
+
+În cazul instrumentelor de percuție, setările de release și hold trebuie să se sincronizeze cu **groove-ul și ritmul piesei**.
+Gate-ul trebuie să se închidă complet înainte de următoarea lovitură; în caz contrar, loviturile succesive vor fi procesate diferit din cauza variațiilor de gain reduction rămase din faza de atac.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/19-7.jpg"
+    alt="Figura 19-7"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 19-7:</p>Iată o adaptare în limba română, păstrând termenii tehnici consacrați din domeniul producției audio pentru a fi cât mai clară și naturală:
+
+**Efectul timpilor de attack și release asupra unui snare trecut prin gate.**
+
+Pe rândul de sus sunt ilustrate diferite valori pentru **attack**, fără timp de release; scăderea reducerii de câștig (gain reduction) este reprezentată prin triunghiul de deasupra graficelor. Se poate observa că, cu cât timpul de attack este mai lung, cu atât reducerea de câștig scade mai încet, iar din attack-ul original al snare-ului se păstrează tot mai puțin. O setare de attack foarte lungă face ca reducerea de câștig să scadă atât de lent încât nimic din semnal nu mai rămâne audibil înainte ca nivelul de intrare să coboare sub pragul setat (threshold).
+
+Pe rândul de jos sunt prezentate diferite valori pentru **release**, fără timp de attack; creșterea reducerii de câștig este marcată prin triunghiul de deasupra graficelor. Se observă că, cu cât timpul de release este mai lung, cu atât gate-ul atenuază semnalul mai lent după ce acesta scade sub threshold, permițând astfel audierea unei porțiuni mai mari din decay-ul natural al tobei.
+
+---
+
+**Explicație rapidă a termenilor folosiți:**
+
+- **Snare:** Toba mică.
+- **Gate (Noise Gate):** Procesor de semnal care taie sunetul când scade sub un anumit nivel.
+- **Attack:** Timpul în care gate-ul se deschide complet.
+- **Release:** Timpul în care gate-ul se închide înapoi după ce semnalul a scăzut sub threshold.
+- **Gain reduction:** Gradul de atenuare/reducere a volumului aplicat de procesor.
+
+</div>
+
+În mod tradițional, pe gate-uri se folosesc atacuri scurte (pentru a lăsa să treacă semnalul care depășește pragul) și release-uri scurte (pentru a atena rapid ce este sub prag).
+Însă aceste setări agresive devin problematice deoarece gate-ul lucrează adesea cu variații uriașe de nivel (–60 dB sau mai mult), spre deosebire de un compresor care operează de obicei pe plaje de ~20 dB cu o tranziție lină.
+Gate-ul nu are un mecanism de atenuare treptată — el este fie deschis, fie închis.
+
+#### Când se recomandă timpi mai lungi?
+
+- **Instrumente cu atac și release natural lung:** De exemplu, pad-urile sintetizate care cresc și scad lin.
+  Timpii scurți ar tăia brusc semnalul când trece peste sau sub threshold, pe când timpii lungi păstrează dinamica naturală.
+- **Prevenirea declanșărilor false (_False Triggers_):** Un atac mai lung permite coborârea ușoară a threshold-ului.
+  Dacă un element nedorit (cum ar fi scurgerea de la cinel / _hi-hat_) depășește scurt threshold-ul, un atac lent va împiedica gate-ul să se deschidă complet înainte ca semnalul să scadă la loc, făcând acele interferențe inaudibile.
+  <div className="my-4 flex justify-center">
+    <img
+      src="/images/mixing/19-8.jpg"
+      alt="Figura 19-8"
+      className="h-auto w-9/10 max-w-xs"
+    />
+  </div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 19-8:</p>**Un toba mare (kick) procesat cu gate.** Piesa de sus arată semnalul original al tobei, unde se observă ușor prima oscilație dominantă. Piesa din mijloc prezintă toba după aplicarea efectului de gate, folosind setările afișate în dreapta pe pluginul *Digidesign DigiRack Expander/Gate*. Timpul de atac (*attack*) a fost setat cât mai scurt posibil, iar funcția de anticipare (*look-ahead*) a fost dezactivată. Se poate observa pierderea parțială a impactului inițial și creșterea bruscă de nivel provocată de deschiderea gate-ului, ceea ce generează frecvențe înalte nedorite. Piesa de jos arată toba originală după procesarea cu aceleași setări, dar cu funcția *look-ahead* activată. Se vede clar cum atacul inițial a rămas intact, fără a fi afectat.
+
+---
+
+**Explicație rapidă a termenilor tehnici:**
+
+- **Gate / Noise Gate:** Un procesor audio care taie sau atenuează semnalul sub un anumit nivel (threshold) pentru a elimina zgomotul de fundal dintre lovituri.
+- **Kick:** Toba mare (toba de picior).
+- **Look-ahead (Anticipare):** Funcție care analizează semnalul audio cu câteva milisecunde înainte ca acesta să ajungă la procesor, permițând gate-ului să se deschidă la timp pentru a nu „tăia” din atacul inițial.
+- **Attack (Atac):** Viteza cu care gate-ul reacționează și se deschide din momentul în care semnalul depășește pragul setat.
+
+---
+
+**Explicație rapidă a termenilor folosiți:**
+
+- **Snare:** Toba mică.
+- **Gate (Noise Gate):** Procesor de semnal care taie sunetul când scade sub un anumit nivel.
+- **Attack:** Timpul în care gate-ul se deschide complet.
+- **Release:** Timpul în care gate-ul se închide înapoi după ce semnalul a scăzut sub threshold.
+- **Gain reduction:** Gradul de atenuare/reducere a volumului aplicat de procesor.
+
+</div>
+
+{/* am ramas Hold .365 */}

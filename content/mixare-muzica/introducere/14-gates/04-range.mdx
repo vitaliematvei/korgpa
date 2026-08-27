@@ -1,0 +1,57 @@
+---
+title: 'Plaja de acțiune (Range)'
+description: 'Plaja de acțiune (Range)'
+order: 4
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+**Range** (sau adâncimea de procesare) definește cantitatea de atenuare (reducere a semnalului) aplicată sunetelor care scad sub pragul setat (_threshold_).
+De exemplu, o valoare _range_ de **-10 dB** înseamnă că semnalele aflate sub prag sunt atenuate cu 10 dB.
+Adesea, aceste semnale sunt percepute ca fiind complet tăiate (mute), însă în practică este vorba doar de o atenuare masivă, valoarea tipică pentru muting fiind de **-80 dB**.
+
+Valoarea _range_ poate fi exprimată atât prin numere pozitive, cât și negative.
+În funcție de producător, o atenuare a semnalului de 40 dB poate fi afișată ca **40 dB** sau **-40 dB**.
+În această carte folosim notația negativă.
+O valoare mică reprezintă un efect subtil (de exemplu, -5 dB), în timp ce o valoare mare indică o atenuare puternică (de exemplu, -80 dB).
+
+**Aplicare în mixaj**
+În general, valorile mari pentru _range_ sunt cel mai des întâlnite în mixaj.
+Totuși, uneori avem nevoie doar de o atenuare ușoară:
+
+- **Zgomotul de respirație la voce:** Tăierea completă a respirațiilor dintre frazele cântate poate suna artificial, așa că este de preferat doar să le reduci volumul.
+- **Ambiența încăperii:** O atenuare moderată ajută la reducerea reverberației nedorite prinse în înregistrare, fără a crea tăieturi bruște în sunet.
+
+---
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/19-5.jpg"
+    alt="Figura 19-5"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 19-5:</p>Funcția de transfer a unui gate (poartă de zgomot).
+
+    (a) Un gate cu un interval (range) de 0 dB: atât sub prag (threshold), cât și peste acesta, raportul intrare-ieșire este la amplificare unitară (unity gain), iar poarta nu va avea niciun efect asupra semnalului.
+
+    (b) Un gate cu un interval de –20 dB: toate semnalele care scad sub prag sunt pur și simplu atenuate cu 20 dB. De exemplu, un semnal de intrare de –40 dB va ieși din poartă la nivelul de –60 dB.
+
+    (c) Un gate cu un interval de –80 dB: acesta taie complet (mutes) toate semnalele aflate sub prag.
+
+    (d) Tot un interval de –80 dB, dar cu o scală de ieșire extinsă: aceasta arată ce se întâmplă sub limitele scalei standard. Putem observa mai clar aici că un semnal de intrare de –40 dB va ieși din poartă la nivelul de –120 dB.
+
+Notă tehnică:
+
+    Gate / Poartă de zgomot: În practica audio din România se folosește foarte des termenul preluat din engleză (gate), dar traducerea tehnică oficială este poartă de zgomot.
+
+    Threshold: Tradus prin prag.
+
+</div>
+
+**Notă rapidă pentru termeni:**
+
+- **Threshold** = Pragul peste/sub care intervine efectul (de obicei se păstrează ca atare în mediul de producție audio din România).
+- **Noise Gate / Gate** = Poartă de zgomot.

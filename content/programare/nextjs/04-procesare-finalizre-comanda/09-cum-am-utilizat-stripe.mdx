@@ -1,0 +1,106 @@
+---
+title: 'Integrarea Stripe într-o aplicație Next.js'
+description: 'Integrarea Stripe într-o aplicație Next.js'
+order: 9
+category: 'NextJS'
+level: 'Incepator'
+---
+
+### **Ghid pas cu pas: Integrarea Stripe într-o aplicație Next.js**
+
+Procesul de configurare a plăților prin Stripe este împărțit în două mari etape: **configurarea inițială (credentele)** și **conectarea la nivel de cod**.
+
+---
+
+### **Etapa 1: Configurarea mediului și conectarea inițială**
+
+#### **Pasul 1: Obținerea cheilor API și configurarea `.env**`
+
+1. Autentifică-te în panoul **Stripe Dashboard**.
+2. Mergi la secțiunea **Developers > API keys** pentru a copia cheile de acces.
+3. În rădăcina proiectului, deschide (sau creează) fișierul `.env.local` (sau `.env`) și adaugă cheia publică:
+
+```env
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+STRIPE_SECRET_KEY=sk_test_...
+
+```
+
+> **Notă:** Salvarea cheilor în `.env` este esențială pentru securitate, deoarece păstrează datele sensibile în afara codului sursă public sau a depozitului Git.
+
+#### **Pasul 2: Crearea utilitarului de încărcare Stripe (`getStripe.js`)**
+
+1. Adaugă pachetul `@stripe/stripe-js` în proiect dacă nu este deja instalat (`npm install @stripe/stripe-js`).
+2. Creează un fișier utilitar (ex: `lib/getStripe.js`) pentru a instanția obiectul Stripe o singură dată (evitând reîncărcările inutile):
+
+```javascript
+import { loadStripe } from '@stripe/stripe-js';
+
+let stripePromise;
+
+const getStripe = () => {
+  if (!stripePromise) {
+    stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+  }
+  return stripePromise;
+};
+
+export default getStripe;
+```
+
+---
+
+### **Etapa 2: Integrarea în fluxul de cumpărături (Cart & Checkout)**
+
+#### **Pasul 3: Configurarea componentei principale de coș (`Cart.jsx`)**
+
+1. **Importă dependențele necesare:**
+
+- Utilitarul `getStripe.js` creat anterior.
+- `react-hot-toast` pentru afișarea notificărilor către utilizator.
+
+2. **Creează funcția de manipulare a plății (`handleCheckout`):**
+
+- Trimite o cerere `POST` către propriul endpoint API (ex: `/api/stripe`) pentru a crea o sesiune de checkout Stripe.
+- Obține `sessionId`-ul generat.
+- Redirijază cumpărătorul către pagina securizată Stripe folosind instanța Stripe:
+
+```javascript
+const stripe = await getStripe();
+await stripe.redirectToCheckout({ sessionId: data.id });
+```
+
+3. **Adaugă butonul de plată:**
+
+- În markup-ul componentei, adaugă butonul **"Pay by Stripe"** și leagă evenimentul `onClick` de funcția `handleCheckout`.
+
+#### **Pasul 4: Aplicarea aceleiași logici în `MiniCart.jsx**`
+
+1. Deschide componenta de coș secundar (`MiniCart.jsx` / sertar de coș).
+2. Adaugă aceleași importuri (`getStripe` și `react-hot-toast`).
+3. Replică funcția `handleCheckout` și atașeaz-o butonului de plată din `MiniCart`.
+   > **Observație refactoring:** Deși această duplicare funcționează imediat, este recomandat să extragi ulterior logica `handleCheckout` într-un hook personalizat (ex: `useCheckout`) sau într-un context global pentru a menține codul curat (DRY).
+
+---
+
+### **Etapa 3: Finalizarea fluxului și Testarea**
+
+#### **Pasul 5: Crearea paginii de confirmare (`success.js`)**
+
+1. Creează fișierul de pagină `pages/success.js` (sau în App Router: `app/success/page.js`).
+2. Această pagină servește ca punct de întoarcere pentru cumpărător după finalizarea plății pe serverele Stripe.
+3. În această pagină poți:
+
+- Reținea starea coșului (golirea produselor cumpărate).
+- Afișa un mesaj de mulțumire și detaliile comenzii.
+- Confirma că comanda este gata de procesare și expediere.
+
+#### **Pasul 6: Testarea fluxului cap-coadă**
+
+1. Porneste serverul de dezvoltare (`npm run dev`).
+2. Adaugă produse în coș din interfață.
+3. Apasă pe **"Pay by Stripe"** și verifică dacă ești redirecționat corect către pagina de Checkout Stripe.
+4. Folosește un card de test oferit de Stripe (ex: `4242 4242 4242 4242`) pentru a simula tranzacția.
+5. Verifică dacă redirecționarea finală se face pe pagina `/success`.
+
+{/* am ramas Testing the Checkout Process .126 */}
