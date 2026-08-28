@@ -1,0 +1,89 @@
+---
+title: 'Testarea procesului de finalizare a comenzii (Checkout)'
+description: 'Testarea procesului de finalizare a comenzii (Checkout)'
+order: 10
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Acum că am configurat Stripe, este timpul să ne testăm site-ul – va funcționa așa cum ne așteptăm?
+
+Of bineînțeles că da – am toată încrederea în voi, dragi cititori! Știu că acest pas poate fi emoționant, deoarece nu suntem niciodată pe deplin siguri dacă totul este la locul lui sau dacă am omis ceva.
+A sosit însă momentul să scăpăm de aceste îndoieli – haideți să supunem site-ul primului său test.
+
+**Testarea site-ului**
+
+Pentru a efectua testul inițial al site-ului, urmați acești pași:
+
+1. Mai întâi, deschideți o sesiune de terminal Node.js și asigurați-vă că directorul de lucru indică spre folderul proiectului nostru. La linia de comandă, tastați `npm run dev` și apăsați Enter, apoi navigați către un produs (eu am ales `http://localhost:3000/product/quince-cobnut` ca exemplu).
+2. Dați clic pe produs pentru a-l adăuga în coș. Ar trebui să vedeți o notificare în partea de sus a paginii.
+3. Navigați la pagina de checkout/coș, derulați până la butonul **Pay with Stripe** și dați clic pe el. Așteptați redirecționarea către pagina următoare.
+4. Pe această pagină, introduceți orice detalii doriți pentru câmpurile e-mail, numele de pe card, codul poștal și țara. Detaliile exacte nu sunt critice pentru această etapă, dar vă sugerez să le păstrați realiste – de exemplu, o adresă de e-mail care arată ca una standard, chiar dacă nu trebuie să fie funcțională!
+5. Pentru câmpurile cardului, utilizați următoarele date:
+
+<div className="my-6 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+  <table className="w-full text-left text-sm border-collapse">
+    <thead>
+      <tr className="border-b border-slate-200 bg-slate-50/80 dark:border-slate-800 dark:bg-slate-800/50">
+        <th className="px-5 py-3.5 font-semibold text-slate-900 dark:text-slate-100">
+          Câmp
+        </th>
+        <th className="px-5 py-3.5 font-semibold text-slate-900 dark:text-slate-100">
+          Valoare
+        </th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+      <tr className="transition-colors hover:bg-slate-50/50 dark:hover:bg-slate-800/30">
+        <td className="px-5 py-3.5 font-medium text-slate-800 dark:text-slate-200">
+          Card number{' '}
+          <span className="text-xs text-slate-500 font-normal dark:text-slate-400">
+            (Număr card)
+          </span>
+        </td>
+        <td className="px-5 py-3.5">
+          <code className="rounded-md bg-slate-100 px-2.5 py-1 font-mono text-xs font-semibold text-slate-800 border border-slate-200/80 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200">
+            4111 1111 1111 1111
+          </code>
+        </td>
+      </tr>
+      <tr className="transition-colors hover:bg-slate-50/50 dark:hover:bg-slate-800/30">
+        <td className="px-5 py-3.5 font-medium text-slate-800 dark:text-slate-200">
+          CVC field{' '}
+          <span className="text-xs text-slate-500 font-normal dark:text-slate-400">
+            (Cod CVC)
+          </span>
+        </td>
+        <td className="px-5 py-3.5">
+          <code className="rounded-md bg-slate-100 px-2.5 py-1 font-mono text-xs font-semibold text-slate-800 border border-slate-200/80 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200">
+            370
+          </code>
+        </td>
+      </tr>
+      <tr className="transition-colors hover:bg-slate-50/50 dark:hover:bg-slate-800/30">
+        <td className="px-5 py-3.5 font-medium text-slate-800 dark:text-slate-200">
+          MM / YY field{' '}
+          <span className="text-xs text-slate-500 font-normal dark:text-slate-400">
+            (Data expirării)
+          </span>
+        </td>
+        <td className="px-5 py-3.5">
+          <code className="rounded-md bg-slate-100 px-2.5 py-1 font-mono text-xs font-semibold text-slate-800 border border-slate-200/80 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200">
+            11 / 27
+          </code>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+Stripe oferă o documentație completă pentru testare – puteți vedea mai multe exemple la `[https://stripe.com/docs/testing](https://stripe.com/docs/testing)`. Puteți alege să folosiți oricare dintre acele carduri de test – acestea vor oferi rezultate diferite în Stripe, în funcție de țara și numărul de card utilizat.
+
+6. Apoi, apăsați butonul **Pay** și lăsați procesarea să se finalizeze – dacă totul este în regulă, ar trebui să vedem pagina de succes (_Success page_) însoțită de o animație cu confetti.
+7. Odată ce tranzacția este finalizată, conectați-vă în contul dvs. Stripe la `[https://dashboard.stripe.com/login](https://dashboard.stripe.com/login)`, apoi dați clic pe **Payments** (Plăți).
+8. Ar trebui să vedeți plata efectuată. În imaginea din exemplu sunt prezentate mai multe plăți din faza de dezvoltare și testare, dar în cazul dvs. va apărea doar una singură.
+9. Dați clic pe **Succeeded** pentru a vizualiza comanda – veți vedea detalii precum momentul în care a fost inițiată plata, clientul, suma și produsele comandate.
+
+Dacă derulați în jos, veți vedea chiar și o secțiune numită **Risk Management** – aceasta este o funcționalitate oferită de Stripe pentru a vă ajuta să determinați dacă o comandă este suspectă și, prin urmare, nu ar trebui livrată. Aceasta devine însă disponibilă doar după ce treceți site-ul în producție (_live_).
+
+Dacă ați reușit să ajungeți în această etapă, felicitări – ați finalizat prima achiziție în magazinul dvs.! Site-ul nostru demonstrativ este operațional, din moment ce putem alege un produs, îl putem adăuga în coș și îl putem „plăti” (da, știu că nu sunt bani reali, dar asta va urma la timpul ei…).

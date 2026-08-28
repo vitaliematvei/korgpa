@@ -1,0 +1,58 @@
+---
+title: 'Aplicarea modificărilor'
+description: 'Aplicarea modificărilor'
+order: 4
+category: 'NextJS'
+level: 'Incepator'
+---
+
+În regulă – am explorat câteva dintre opțiunile de stilizare și am stabilit tema: haideți să începem să adăugăm puțină culoare!
+
+Adăugarea stilurilor de bază într-o aplicație Next.js este o jucărie – așa cum am văzut deja, putem face site-ul nostru să arate mai atractiv în mai multe moduri.
+Cea mai directă metodă (dar poate nu cea mai practică) este aplicarea stilurilor CSS standard.
+Având în vedere natura globală a stilizării în Next.js, cel mai bine este să facem asta importând fișierul CSS în `_app.js`, aflat în folderul `pages`.
+
+Știu că nu este varianta ideală, deoarece înseamnă că nu putem izola (_scope_) stilurile în acest mod (cel puțin nu ușor sau curat).
+Cu toate acestea, este o metodă validă și reprezintă un punct de plecare excelent pentru a aplica stilizări mai optimizate ulterior.
+Haideți să intrăm în detalii pentru a înțelege mai bine la ce mă refer.
+
+**APLICAREA STILURILOR**
+
+Adăugarea stilurilor într-o aplicație Next.js este simplă – pentru a face asta, urmați acești pași:
+
+1. **Ștergeți fișierele CSS implicite:**
+   Mergeți în folderul `\src\styles` și ștergeți fișierul `globals.css` – îl vom înlocui cu unul nou în curând. Faceți același lucru și pentru `home.module.css`, aflat în același folder.
+
+2. **Adăugați imaginea principală:**
+   Extrageți o copie a imaginii `frontimage.jpg` și plasați-o într-un folder nou numit `images`, creat în folderul `/public`.
+
+3. **Curățați resursele SVG nefolosite:**
+   Este posibil să vedeți câteva imagini SVG suplimentare în același folder `images`: `next.svg`, `vercel.svg` și `thirteen.svg`. Nu avem nevoie de niciuna dintre ele, așa că le puteți șterge. (Acestea provin din structura implicită a unui site Next.js, deci pot fi înlocuite ușor dacă va fi nevoie.)
+
+4. **Copiați noul fișier de stiluri:**
+   Copiați fișierul `globals.css` din arhiva cu resurse a acestei cărți și plasați-l în folderul `\src\styles`.
+
+5. **Verificați importul global:**
+   Deschideți fișierul `/src/pages/_app.js`. Dacă totul este în regulă, ar trebui să vedeți deja un import pentru `globals.css` în blocul de importuri de la începutul fișierului.
+
+Dacă din orice motiv nu este prezent, adăugați această linie înainte de definirea funcției:
+
+```javascript
+import '../styles/globals.css';
+```
+
+6. **Porniți serverul de dezvoltare:**
+   Salvați și închideți toate fișierele deschise. Deschideți un terminal Node.js și navigați în folderul proiectului (dacă nu sunteți deja acolo). Rulați comanda:
+
+```bash
+npm run dev
+
+```
+
+Apoi apăsați **Enter**.
+
+Dacă totul a mers bine, accesând `http://localhost:3000/` ar trebui să vedeți noua interfață.
+Da – arată mult mai bine comparativ cu acel layout gri și monoton, nu-i așa?
+Ce-i drept, probabil că nu va câștiga niciun premiu de design prea curând, dar măcar arată destul de decent.
+
+Acest lucru demonstrează cât de simplu este să adaugi stiluri – totul se reduce, de fapt, la două lucruri: punerea foii de stil în locul potrivit și adăugarea importului în fișierul corect. Mai sunt câteva puncte interesante pe care vreau să le menționez despre foaia noastră de stil, așa că, înainte de a analiza metode alternative de stilizare, haideți să explorăm mai în detaliu modificările pe care le-am făcut.

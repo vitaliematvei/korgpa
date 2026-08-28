@@ -1,0 +1,130 @@
+﻿---
+title: 'Explorarea opțiunilor'
+description: 'Explorarea opțiunilor'
+order: 1
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Mâna sus: câți dintre voi se mai bazează încă pe modul de veche școală (_old-school_) de a adăuga CSS?
+
+Știți la ce mă refer – crearea unui foi de stil lungi (_stylesheet_), importarea ei în secțiunea `<head>` a site-ului și reîmprospătarea manuală a browserului pentru a vedea modificările.
+Ah, și speranța că ai nimicit din prima acele modificări…
+
+Toate aceste abordări tradiționale au fost testate și funcționează bine.
+Cu toate acestea, vremurile s-au schimbat: când vine vorba de stilizarea site-urilor Next.js (dar și a altora), avem câteva opțiuni suplimentare pe lângă utilizarea foilor de stil CSS standard.
+Tabelul 5-1 enumeră câteva dintre ele, care sunt suportate nativ (_out of the box_) de Next.js – noi vom folosi două dintre ele în site-ul nostru demonstrativ.
+
+<div className="w-full overflow-x-auto rounded-lg border border-slate-200 shadow-sm">
+  <table className="w-full text-left text-sm text-slate-700">
+    <caption className="p-4 text-left font-semibold text-slate-900 bg-slate-50 border-b border-slate-200">
+      Tabelul 5-1. Unele dintre opțiunile disponibile pentru stilizarea unui
+      site Next.js
+    </caption>
+    <thead className="bg-slate-100 text-xs uppercase tracking-wider text-slate-600 border-b border-slate-200">
+      <tr>
+        <th scope="col" className="px-6 py-3 font-semibold w-1/4">
+          Instrument
+        </th>
+        <th scope="col" className="px-6 py-3 font-semibold w-3/4">
+          Detalii
+        </th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-slate-200 bg-white">
+      {/* Rândul 1 */}
+      <tr className="hover:bg-slate-50 transition-colors">
+        <td className="px-6 py-4 font-medium text-slate-900 whitespace-nowrap">
+          Sass (folosind Dart Sass)
+        </td>
+        <td className="px-6 py-4 leading-relaxed">
+          Disponibil la{' '}
+          <a
+            href="https://www.sass-lang.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline"
+          >
+            www.sass-lang.com
+          </a>
+          . Ideal pentru a oferi suport navigatoarelor mai vechi, dacă este
+          necesar, în afara celor care nu sunt suportate de Next.js.
+        </td>
+      </tr>
+      {/* Rândul 2 */}
+      <tr className="hover:bg-slate-50 transition-colors">
+        <td className="px-6 py-4 font-medium text-slate-900 whitespace-nowrap">
+          Module CSS (CSS modules)
+        </td>
+        <td className="px-6 py-4 leading-relaxed">
+          Această opțiune este disponibilă în navigator în mod implicit și
+          necesită o configurație minimă.
+        </td>
+      </tr>
+      {/* Rândul 3 */}
+      <tr className="hover:bg-slate-50 transition-colors">
+        <td className="px-6 py-4 font-medium text-slate-900 whitespace-nowrap">
+          CSS-în-JS
+        </td>
+        <td className="px-6 py-4 leading-relaxed">
+          CSS-in-JS este o opțiune mai avansată, folosind instrumente precum
+          Styled Components, Tailwind sau Emotion.
+          <br />
+          <span className="text-xs text-slate-500 mt-1 block">
+            Consultați{' '}
+            <a
+              href="https://nextjs.org/docs/basic-features/built-in-css-support#css-in-js"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              documentația Next.js CSS-in-JS
+            </a>{' '}
+            pentru exemple.
+          </span>
+        </td>
+      </tr>
+      {/* Rândul 4 */}
+      <tr className="hover:bg-slate-50 transition-colors">
+        <td className="px-6 py-4 font-medium text-slate-900 whitespace-nowrap">
+          PostCSS
+        </td>
+        <td className="px-6 py-4 leading-relaxed">
+          Disponibil la{' '}
+          <a
+            href="https://www.postcss.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline"
+          >
+            www.postcss.org
+          </a>{' '}
+          — vine cu câteva transformări deja integrate în configurația
+          implicită, cum ar fi Autoprefixer și Flexbox. Pentru mai multe detalii
+          și un exemplu, accesați{' '}
+          <a
+            href="https://nextjs.org/docs/advanced-features/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline"
+          >
+            Funcționalități Avansate Next.js
+          </a>
+          .
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+Următoarea întrebare pe care o aud deja este: pe care o alegem? Ca întotdeauna în astfel de scenarii, răspunsul scurt va fi aproape mereu: _„Depinde.”_ Ar putea suna ca o eschivă, dar nu vă faceți griji: există un motiv întemeiat pentru care spun asta – lăsați-mă să vă explic. Deși Next.js oferă opțiuni pentru stilizarea site-urilor în mai multe moduri diferite, metoda pe care o veți alege va depinde în cele din urmă de circumstanțele, cunoștințele și experiența voastră.
+
+Cea mai simplă opțiune de utilizat (dură dar nu întotdeauna cea mai practică) este CSS-ul standard – îl putem adăuga într-una sau mai multe foi de stil, atâta timp cât importăm fișierele în `_app.js`. Unde devine mai puțin practic este la dimensiune – ați văzut cele peste 600 de linii de cod din foaia de stil pe care am adăugat-o în ultimul demo? Sigur, este un site relativ mic, dar totuși: este mult cod de gestionat!
+
+Putem ocoli această problemă a codului lung folosind una dintre cele două metode (tehnic trei, dar voi reveni la metoda numărul 3 în curând) – **Sass** sau **CSS Modules**. Dacă nu ați folosit niciuna dintre ele, acestea vă pot ajuta să împărțiți foile de stil mari în fișiere individuale mai mici, bazate pe anumite zone, funcționalități sau componente. Noi putem alege cum să le împărțim – indiferent cum o facem, fișierele devin mai scurte și mai ușor de gestionat. Sass oferă mult mai mult decât atât, cum ar fi variabile, _mixin-uri_ și altele; vom trece prin fiecare opțiune mai târziu în acest capitol.
+
+Următoarea opțiune este **CSS-in-JS**, unde putem adăuga stilurile inline pe un element țintă sau sub formă de foaie de stil inline – mă gândesc la exemple precum Emotion ([www.emotion.sh](https://www.emotion.sh)), Styled Components ([www.styled-components.com](https://www.styled-components.com)) sau Tailwind ([www.tailwindcss.com](https://www.tailwindcss.com) sau [www.tailwindui.com](https://www.tailwindui.com)). Deși aceste librării sunt instrumente excelente în sine, ele sunt oarecum excesive (_overkill_) pentru site-ul nostru mic! Am putea folosi chiar și un instrument precum **PostCSS** pentru a ne procesa stilurile, deși asta necesită mult mai mult de muncă pentru configurare, fiind practic doar dacă aveți deja ceva pregătit.
+
+Punctul critic aici este că **Next.js nu este rigid (_opinionated_)** când vine vorba de stilizare – deși s-ar putea să aveți câțiva pași de parcurs atunci când setați stilurile, sunteți liberi să alegeți oricare metodă se potrivește nevoilor voastre. Da, s-ar putea să trebuiască să puneți stilurile în anumite locuri, dar numai dacă decideți să folosiți acea opțiune – totul depinde de voi!
+
+În regulă – să trecem la lucruri ceva mai tehnice. Înainte de a intra în detaliile adăugării stilurilor, vreau să acopăr câteva aspecte care au legătură cu modul în care ne vom stiliza site-ul.

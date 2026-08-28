@@ -1,0 +1,33 @@
+---
+title: 'Ce sa intimplat'
+description: 'Ce sa intimplat'
+order: 5
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Deci, ce modificări am făcut în ultimul demo?
+
+Pentru a demonstra o idee, le-am păstrat în mod intenționat simple – atunci când stilizezi o aplicație Next.js, adăugarea stilurilor urmează aceiași pași ca la orice site static.
+Adaugi foaia de stil (_stylesheet_) și o imporți în fișierul corect: în cazul nostru, `_app.js`.
+
+În regulă, s-ar putea să simplific prea mult lucrurile aici, dar ați prins ideea – nu a trebuit să configurăm sau să modificăm nicio setare; totul a funcționat direct, _out of the box_.
+
+Merită totuși menționat că, dacă vă uitați la stilurile pentru componenta **Tabs** utilizată pe paginile individuale de produs, veți observa un stil ușor diferit (joc de cuvinte intenționat).
+Am folosit **BEM** (_Block Element Modifier_) – o metodologie populară care ajută la scrierea unor nume de clase mai curate în CSS și la evitarea situațiilor în care am putea avea conflicte cauzate de straturi multiple de CSS.
+Deși BEM este o metodologie practică în sine, ea nu este consecventă cu celelalte stiluri pe care le-am folosit, așa că ar trebui probabil să refactorizăm acest cod pentru a-l face mai uniform.
+În același timp, recomand redenumirea foii de stil – `globals.css` nu este cel mai potrivit nume aici, deoarece avem stiluri care nu sunt menite să fie globale!
+
+Pentru oricine este curios de metodologia BEM, recomand să accesați site-ul oficial BEM pentru mai multe detalii la `[https://getbem.com/introduction/](https://getbem.com/introduction/)`.
+
+Singura altă modificare pe care am făcut-o a fost adăugarea unei noi imagini `frontimage.jpg` (pe care foaia de stil o referențiază) și eliminarea unor imagini redundante adăugate atunci când am creat site-ul inițial.
+Cum se spune, treabă rezolvată…
+
+Sau nu? Sigur, putem rămâne la o foaie de stil standard – nu este nimic greșit în utilizarea acestei abordări, cel puțin din perspectivă tehnică.
+Dar dacă am face asta, nu am folosi la maximum ceea ce ne poate oferi Next.js – în plus, ar trebui să gestionăm o foaie de stil care va deveni tot mai mare și, în cele din urmă, prea greu de întreținut!
+
+Pentru a evita această problemă, ar trebui să analizăm câteva metode alternative pe care Next.js le suportă – **CSS Modules**, **Sass**, **CSS-in-JS** sau chiar **PostCSS**.
+Având în vedere că site-ul nostru nu este atât de mare, mă voi concentra pe primele două, dar voi atinge pe scurt CSS-in-JS și PostCSS spre sfârșitul acestui capitol.
+Având în vedere acest lucru, să începem cu **CSS Modules** pentru a vedea cum ne va face viața puțin mai ușoară atunci când gestionăm stilurile într-un site Next.js.
+
+{/* am ramas Taking Alternative Approaches .138 */}
