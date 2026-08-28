@@ -1,0 +1,213 @@
+---
+title: 'Creare primului Plug-in Pt.1'
+description: 'Creare primului Plug-in Pt.1'
+order: 15
+category: 'JUCE'
+level: 'Incepator'
+---
+
+În acest ghid pas cu pas vei învăța cum să construiești primul tău plugin audio de tip **Gain Slider** (control de volum) folosind cadrul de dezvoltare **JUCE** (C++).
+Proiectul face legătura dintre interfața grafică (UI) și procesarea de semnal în timp real (DSP).
+
+---
+
+## 📋 Cerințe preliminare & Structura proiectului
+
+Un plugin JUCE este împărțit în două clase principale:
+
+1. **`PluginProcessor` (Back-end / DSP):** Aici se procesează blocurile de semnal audio (ex. multiplicarea fiecărui eșantion pentru modificarea volumului).
+2. **`PluginEditor` (Front-end / GUI):** Aici se creează elementele grafice (ex. potențiometre, slidere) cu care interacționează utilizatorul.
+
+---
+
+## 🛠️ Pasul 1: Crearea proiectului în Projucer
+
+1. Deschide **Projucer** și creează un proiect nou de tip **Audio Plug-in**.
+2. Numește proiectul `GainTutorial1`.
+3. Setează opțiunile de export (ex. `AU` / `VST3`) și deschide proiectul în mediul tău de dezvoltare (Xcode pe macOS sau Visual Studio pe Windows).
+
+---
+
+## ⚙️ Pasul 2: Pregătirea Back-end-ului (`PluginProcessor`)
+
+Trebuie să definim o variabilă care să stocheze valoarea multiplicatorului de volum și să aplicăm această valoare asupra fiecărui eșantion audio (_sample_).
+
+### 2.1. Declararea variabilei în `PluginProcessor.h`
+
+Deschide `PluginProcessor.h` și adaugă în secțiunea **`public`** o variabilă de tip `double` pentru a putea fi accesată ulterior din interfață:
+
+```cpp
+public:
+    // Variabila care va controla nivelul volumului
+    double rawVolume;
+
+```
+
+### 2.2. Inițializarea și procesarea semnalului în `PluginProcessor.cpp`
+
+1. În constructorul `GainTutorial1AudioProcessor::GainTutorial1AudioProcessor()`, inițializează valoarea implicită:
+
+```cpp
+rawVolume = 0.015; // Valoare mică pentru testare inițială
+
+```
+
+2. Mergi în funcția `processBlock()` din `PluginProcessor.cpp`.
+   Aici se aplică algoritmul audio prin parcurgerea fiecărui canal și fiecărui eșantion:
+
+```cpp
+void GainTutorial1AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+{
+    juce::ScopedNoDenormals noDenormals;
+    auto totalNumInputChannels  = getTotalNumInputChannels();
+    auto totalNumOutputChannels = getTotalNumOutputChannels();
+
+    // Curățăm canalele inactive
+    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+        buffer.clear (i, 0, buffer.getNumSamples());
+
+    // Parcurgem canalele (0 = Stânga, 1 = Dreapta)
+    for (int channel = 0; channel < totalNumInputChannels; ++channel)
+
+        // Parcurgem fiecare eșantion (sample) din bufer
+        for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
+        {
+            // Preluăm sample-ul curent, îl multiplicăm cu rawVolume și îl scriem înapoi
+            float currentSample = buffer.getSample(channel, sample);
+            buffer.setSample(channel, sample, currentSample * rawVolume);
+        }
+}
+
+```
+
+> **Cum funcționează?**
+> Semnalul audio digital este reprezentat de valori flotante între `-1.0` și `+1.0`.
+> Multiplicarea directă a acestor valori cu un număr modifică amplitudinea (volumul).
+
+---
+
+## 🎨 Pasul 3: Crearea Interfeței Grafice (`PluginEditor`)
+
+Acum vom adăuga un slider în interfață și îl vom configura.
+
+### 3.1. Declararea slider-ului în `PluginEditor.h`
+
+Deschide `PluginEditor.h` și adaugă un obiect de tip `juce::Slider`:
+
+```cpp
+private:
+    juce::Slider gainSlider;
+
+```
+
+### 3.2. Configurarea și afișarea slider-ului în `PluginEditor.cpp`
+
+În constructorul `GainTutorial1AudioProcessorEditor::GainTutorial1AudioProcessorEditor(...)`:
+
+```cpp
+GainTutorial1AudioProcessorEditor::GainTutorial1AudioProcessorEditor (GainTutorial1AudioProcessor& p)
+    : AudioProcessorEditor (&p), audioProcessor (p)
+{
+    // Setează dimensiunea ferestrei plugin-ului (Lățime x Înălțime)
+    setSize (200, 400);
+
+    // Face slider-ul vizibil în fereastră
+    addAndMakeVisible(gainSlider);
+
+    // Setări de stil
+    gainSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+    gainSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 25);
+
+    // Setează intervalul [0.0 , 1.0] și valoarea inițială
+    gainSlider.setRange(0.0, 1.0);
+    gainSlider.setValue(0.5);
+}
+
+```
+
+În funcția `resized()` din `PluginEditor.cpp`, definește poziția și dimensiunea slider-ului:
+
+```cpp
+void GainTutorial1AudioProcessorEditor::resized()
+{
+    // Ocupă întreaga suprafață a ferestrei
+    gainSlider.setBounds(getLocalBounds());
+}
+
+```
+
+---
+
+## 🔗 Pasul 4: Conectarea UI-ului cu Back-end-ul (Ascultarea evenimentelor)
+
+Pentru ca mișcarea slider-ului să modifice variabila `rawVolume` din `PluginProcessor`, trebuie să moștenim clasa `juce::Slider::Listener`.
+
+### 4.1. Adăugarea moștenirii în `PluginEditor.h`
+
+Modifică declarația clasei editorului și adaugă metoda `sliderValueChanged`:
+
+```cpp
+class GainTutorial1AudioProcessorEditor  : public juce::AudioProcessorEditor,
+                                           public juce::Slider::Listener // Moștenire
+{
+public:
+    GainTutorial1AudioProcessorEditor (GainTutorial1AudioProcessor&);
+    ~GainTutorial1AudioProcessorEditor() override;
+
+    void paint (juce::Graphics&) override;
+    void resized() override;
+
+    // Metodă apelată automat la mișcarea slider-ului
+    void sliderValueChanged (juce::Slider* slider) override;
+
+private:
+    GainTutorial1AudioProcessor& audioProcessor;
+    juce::Slider gainSlider;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GainTutorial1AudioProcessorEditor)
+};
+
+```
+
+### 4.2. Înregistrarea ascultătorului în `PluginEditor.cpp`
+
+În constructor, adaugă linia de mai jos pentru ca editorul să poată recepționa mișcările slider-ului:
+
+```cpp
+gainSlider.addListener(this);
+
+```
+
+### 4.3. Implementarea logică a schimbării de valoare
+
+Adaugă implementarea metodei `sliderValueChanged` în `PluginEditor.cpp`:
+
+```cpp
+void GainTutorial1AudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
+{
+    // Verificăm dacă evenimentul provine de la slider-ul nostru
+    if (slider == &gainSlider)
+    {
+        // Transmiterea valorii către variabila din PluginProcessor
+        audioProcessor.rawVolume = gainSlider.getValue();
+    }
+}
+
+```
+
+---
+
+## 🧪 Pasul 5: Compilare și Testare
+
+1. **Compilează proiectul** în IDE-ul tău.
+2. Deschide DAW-ul preferat (ex. Ableton Live, Logic Pro, Reaper) sau un gazdă de plugin-uri JUCE (_JUCE AudioPluginHost_).
+3. Încarcă o buclă audio pe o pistă stereo și inserează noul plugin.
+4. Acționează slider-ul: vei observa că la niveluri mici modificarea volumului este foarte sesizabilă, iar la niveluri ridicate creșterea pare liniară și mai puțin uniformă pentru urechea umană.
+
+---
+
+## 📌 Concluzii și pași următori
+
+- **Ajustarea Liniară vs. Logaritmică:** În această prima parte, modificarea volumului se face **liniar** ($y = x$).
+  Deoarece urechea umană percepe sunetul și volumul în mod **logaritmic** (măsurat în decibeli - dB), mișcarea liniară nu oferă un control natural pe întreaga cursă a potentiometrului.
+- **Partea 2:** În tutorialul următor se transformă scara liniară într-una logaritmică / decibelică pentru o senzație profesională la mixaj.

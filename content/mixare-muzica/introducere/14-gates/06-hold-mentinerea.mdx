@@ -1,0 +1,49 @@
+---
+title: 'Hold (Menținerea)'
+description: 'Hold (Menținerea)'
+order: 6
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+După ce semnalul scade sub prag (threshold), timpul de menținere (hold time) determină cât timp atenuarea semnalului de către gate rămâne neschimbată.
+De exemplu, dacă se aplică o reducere de nivel de 8 dB în momentul în care semnalul coboară sub prag, o perioadă de hold de 2 secunde va însemna 2 secunde fixe cu o atenuare de 8 dB.
+Odată ce perioada de hold se încheie, începe faza de release (revenire).
+În general, gate-urile oferă un timp de hold între 0 și 5 secunde.
+
+Funcția Hold înlocuiește adesea parametrul Release atunci când se dorește păstrarea dintelui și a declinului natural (decay) al unui instrument.
+Există două motive principale pentru acest lucru:
+
+1. Așa cum se poate observa în Figura 19.7, este nevoie de un timp de release destul de lung pentru a păstra decay-ul natural.
+
+O valoare atât de mare pentru release nu este întotdeauna practică, deoarece s-ar putea să nu se termine înainte ca următorul atac al semnalului să depășească din nou pragul. 2. Dacă faza de release începe imediat ce semnalul scade sub prag, decay-ul este accelerat artificial — de exemplu, stinsul natural al unui premier (snare) va fi suprapus peste panta artificială creată de faza de release.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/19-9.jpg"
+    alt="Figura 19-9"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 19-9:</p>**Diferența dintre Release și Hold**
+
+Prin parametrul **Release**, declinul natural (_decay_-ul) al instrumentului este remodelat și modificat artificial, lucru care nu se întâmplă atunci când folosim **Hold**.
+
+Timpul scurt de **Release** aplicat imediat după perioada de **Hold** are rolul exclusiv de a preveni apariția clicurilor sau a zgomotelor de comutație la închiderea gate-ului.
+
+</div>
+
+Utilizarea parametrului Hold în loc de Release permite menținerea ratei naturale de stingere a sunetului.
+Timpul de hold poate fi ajustat pentru a se potrivi cu intervalul dintre două lovituri, folosind totuși o valoare mică de release doar pentru ca gate-ul să se închidă fără clicuri audibile (Figura 19.9).
+
+> **Notă:** Funcția Hold poate fi utilizată pentru a păstra caracterul decay-ului natural.
+
+La fel ca la compresoare, timpii mai lungi de hold pot reduce distorsiunile pe frecvențele joase.
+De asemenea, un hold mai lung poate diminua efectul de chattering (oscilația rapidă închis/deschis), menținând gate-ul deschis atunci când semnalul fluctuează rapid în jurul pragului.
+În acest sens, funcția hold oferă o utilitate similară cu cea de histerezis (hysteresis) — astfel, când plugin-ul sau echipamentul nu dispune de histerezis, se poate folosi parametrul hold în locul acestuia.
+
+În plus, hold-ul poate fi utilizat pentru a compensa timpul de Look-Ahead setat.
+De exemplu, dacă Look-Ahead este setat la 10 ms, gate-ul va începe să se închidă cu 10 ms înainte ca semnalul să scadă efectiv sub prag.
+Setarea unui timp de hold de 10 ms va compensa exact această reacție timpurie.

@@ -1,0 +1,25 @@
+---
+title: 'Look-ahead (Anticiparea semnalului)'
+description: 'Look-ahead (Anticiparea semnalului)'
+order: 7
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Aceasta este, probabil, cea mai mare problemă a gate-urilor: un timp de **attack** scurt produce clicuri audibile, în timp ce un attack lung atenuează atacul natural al sunetului și poate chiar tăia prima silabă a cuvintelor.
+Un prag (**threshold**) mai coborât?
+Imposibil, altfel semnalul nedorit (_spill_-ul) va deschide gate-ul.
+Filtrarea semnalului de **side-chain**?
+Ajută puțin. Totuși, există o soluție: funcția **look-ahead**.
+
+La fel ca la compresoare, look-ahead îi permite circuitului de side-chain să analizeze semnalul de intrare cu puțin timp înainte ca procesarea propriu-zisă să aibă loc.
+Acest lucru ne permite să setăm timpi de attack mai lungi, deoarece faza de attack începe mai devreme.
+În momentul în care semnalul ajunge la etajul de amplificare (_gain stage_), atenuarea a scăzut deja suficient pentru a lăsa tranzientul de atac să treacă fără clicuri sau deformări ale anvelopei de semnal.
+
+Același principiu se aplică și pentru **release** — de vreme ce faza de release începe cu puțin timp înainte ca semnalul procesat să scadă sub prag, putem seta timpi de release mai lungi.
+Unul dintre marile avantaje ale funcției look-ahead este că permite timpi de attack și release mai mari, făcând acțiunea gate-ului mult mai naturală și mai puțin intruzivă.
+
+> **Notă:** Funcția look-ahead face acțiunea gate-ului mult mai puțin intruzivă și mai transparentă.
+
+O funcție de look-ahead pe un gate analogic va introduce o latență (întârziere) la ieșire.
+Gate-urile software (plugin-urile) nu au această problemă, cu condiția ca compensarea automată a latenței (_Plugin Delay Compensation_ / PDC) să fie activată în DAW. Există totodată un truc extrem de util bazat pe look-ahead care elimină complet latența, valabil atât pentru gate-urile analogice, cât și pentru cele digitale.

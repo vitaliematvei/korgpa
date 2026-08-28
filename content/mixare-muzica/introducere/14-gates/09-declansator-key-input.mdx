@@ -1,0 +1,45 @@
+---
+title: 'Key Input (Intrarea de comandă / Declansator)'
+description: 'Key Input (Intrarea de comandă / Declansator)'
+order: 9
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Gate-urile, la fel ca și compresoarele, ne permit să introducem un semnal extern în circuitul de side-chain.
+În cazul unui compresor, această intrare externă se numește _External Side-Chain_.
+La un gate, aceeași intrare este adesea numită **Key Input** (pentru a evita confuziile atunci când un procesor de dinamică include atât un compresor, cât și un gate, iar side-chain-ul fiecăruia poate fi alimentat din surse externe diferite).
+
+Putem alimenta intrarea _Key Input_ fie cu un semnal similar cu cel procesat, fie cu un semnal complet diferit:
+
+- **Semnal similar (microfon dedicat de gate):** Un microfon suplimentar plasat pe o tobă, utilizat ulterior în mix doar pentru a comanda gate-ul.
+  Rolul lui este exclusiv de a capta toba cu cât mai puțin _spill_ (zgomot de fond), motiv pentru care este poziționat foarte aproape de fața tobei, fără a urmări fidelitatea timbrului.
+  Când procesăm un premier, trimitem semnalul microfonului principal în intrarea audio a gate-ului, iar semnalul microfonului de gate în _Key Input_.
+  Astfel, putem seta un prag (_threshold_) mai coborât, obținând un gating mult mai precis.
+- **Semnal similar (microfon intern vs. extern):**
+  Un canal poate fi controlat pe baza altui canal similar.
+  De exemplu, piesa de _Kick Out_ (microfonul din afara tobei mari) se procesează mult mai curat dacă este comandată prin _Key Input_ de semnalul de la _Kick In_ (microfonul din interiorul tobei), care captează în mod natural mai puțin zgomot de la restul setului.
+
+> **Notă:** Utilizarea unei intrări _Key Input_ permite coborârea pragului de declanșare și oferă o libertate mult mai mare în ajustarea celorlalți parametri ai gate-ului.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/19-10.jpg"
+    alt="Figura 19-10"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 19-10:</p>
+  Procesarea tobei mari de exterior (Kick-Out) în raport cu cea de interior (Kick-In)
+
+Ilustrația prezintă o configurație de înregistrare, deși această tehnică se aplică de obicei în faza de mixaj, folosind pistele deja înregistrate.
+
+Pista de Kick-In (microfonul din interiorul tobei) captează, de regulă, mult mai puțin spill (zgomot scurs de la celelalte tobe) decât pista de Kick-Out (microfonul din exterior).
+Atunci când aplicăm gate pe canalul de Kick-Out, trimiterea semnalului de Kick-In în intrarea de comandă (Key Input) a gate-ului oferă o procesare mult mai muzicală și mai naturală.
+
+În plus, sunetul ajunge la microfonul din interior (Kick-In) puțin mai devreme decât la cel din exterior (Kick-Out), oferind astfel un efect natural de look-ahead (anticipare).
+Un microfon dedicat pentru gate (gate-mic) poate înlocui canalul de Kick-In în cazul altor elemente, cum ar fi premierul (snare).
+
+</div>

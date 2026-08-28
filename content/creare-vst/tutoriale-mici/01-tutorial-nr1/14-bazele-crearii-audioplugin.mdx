@@ -1,0 +1,72 @@
+---
+title: 'Bazele in crearea de audio-plugin-uri'
+description: 'Bazele in crearea de audio-plugin-uri'
+order: 14
+category: 'JUCE'
+level: 'Incepator'
+---
+
+În această primă parte, nu vom scrie algoritmi complecși, ci ne vom concentra pe înțelegerea structurii de bază, explorarea codului implicit și generarea (build) primului tău plugin care va prelua un semnal audio și îl va reda nealterat.
+
+### Pasul 1: Crearea unui proiect nou în Projucer
+
+1. Deschide aplicația Projucer.
+2. Selectează șablonul **Audio Plug-In**.
+3. Denumește proiectul (de exemplu, „plugin test 1”) și salvează-l în folderul preferat dedicat proiectelor JUCE.
+4. Apasă pe _Create_ pentru a genera structura proiectului.
+
+### Pasul 2: Înțelegerea structurii de fișiere
+
+După crearea proiectului, vei observa că au fost generate două perechi principale de fișiere (.cpp și .h):
+
+- **PluginProcessor (Backend):** Acesta este inima plugin-ului tău. Aici vei scrie toți algoritmii de procesare digitală a semnalului (DSP).
+  Orice modificare matematică sau efect aplicat sunetului va avea loc în aceste fișiere.
+- **PluginEditor (Frontend / UI):** Acesta reprezintă interfața grafică a plugin-ului.
+  Aici vei adăuga slidere, butoane rotative (dials) și te vei ocupa de aspectul vizual cu care interacționează utilizatorul.
+
+### Pasul 3: Setări importante în Projucer
+
+Înainte de a deschide codul într-un IDE (precum Xcode), trebuie să verificăm câteva setări importante în Projucer:
+
+- **Exporters (Exportatori):** Făcând click pe săgeata de la _Exporters_ (ex: Xcode), poți schimba numele binarului (_Binary name_) sub care va rula plugin-ul tău.
+- **Locația de salvare (Binary Location):** Prin default pe Mac, plugin-ul nu se va compila în arhiva globală a sistemului, ci în folderul _Library_ al utilizatorului local (`~/Library/Audio/Plug-Ins/`).
+  Acesta este un aspect ce provoacă adesea confuzii.
+- **Module (Paths):** Dacă descarci proiecte de pe internet și întâmpini erori din cauza modulelor pe care IDE-ul nu le găsește, mergi la secțiunea _Modules_, apasă pe iconița de setări și selectează **„Set paths for all modules”** pentru a seta căile automat pentru toate bibliotecile dintr-un singur loc, fără a le corecta manual pe rând.
+- **Metadate și Opțiuni I/O:** Dacă mergi la setările generale ale proiectului tău, poți schimba numele companiei tale (ex. _yourcompany_) ce va apărea în DAW, precum și bifa dacă plugin-ul va avea nevoie de intrări/ieșiri MIDI (în cazul în care construiești un sintetizator).
+
+### Pasul 4: Explorarea codului (în Xcode/Visual Studio)
+
+Când deschizi proiectul în IDE-ul tău, analizează fișierele principale:
+
+**În PluginProcessor.cpp:**
+
+- `prepareToPlay`: Această funcție este apelată în momentul în care apeși butonul „Play” în DAW (ex. Ableton, Logic).
+  Aici se fac inițializările necesare și declararea variabilelor înainte de redarea efectivă.
+- `processBlock`: Aici are loc procesarea matematică propriu-zisă (DSP). Primești un „buffer” cu eșantioanele audio (samples) sau mesajele MIDI care intră în plugin.
+  În acest spațiu vei aplica efectele dorite, iar apoi le vei scoate la ieșire.
+  Deocamdată, semnalul doar intră și iese neschimbat.
+- `getStateInformation` și `setStateInformation`: Aceste funcții te ajută mai târziu să creezi un sistem de preset-uri, salvând și amintindu-și setările pe care utilizatorul le-a făcut în interiorul plugin-ului.
+
+**În PluginEditor.cpp:**
+
+- Fișierul vine deja cu un simplu mesaj „Hello World” setat pe un fundal standard.
+  La fel ca la aplicațiile obișnuite JUCE, ai o funcție de `paint` (pentru desenarea culorilor / graficii) și o funcție de `resized` pentru plasarea butoanelor și adaptarea la redimensionări.
+
+### Pasul 5: Compilarea (Build) plugin-ului
+
+Pentru a testa că scheletul aplicației funcționează:
+
+1. În partea din stânga sus a mediului de dezvoltare (în acest caz Xcode), asigură-te că selectezi ca target generarea unui modul compatibil, cum ar fi formatul **AU (Audio Unit)** (pentru Ableton/Logic pe Mac).
+2. Apasă pe _Build_ (sau Command+B).
+
+Dacă procesul s-a încheiat cu succes, fișierul `.component` generat îl vei regăsi la destinația: `User / Library / Audio / Plug-Ins / Components`.
+
+### Pasul 6: Testarea în DAW (Digital Audio Workstation)
+
+1. Deschide Ableton Live (sau DAW-ul tău preferat).
+2. Creează un _Audio Track_ simplu.
+3. Navighează în meniul de plugin-uri, intră la _Audio Units_, caută „yourcompany” (dacă nu ai modificat setarea din Projucer) și trage **„plugin test 1”** pe track.
+4. Interfața plugin-ului se va deschide afișând mesajul standard „Hello World”.
+5. Adaugă un _loop_ (o buclă audio) pe acel track și dă-i play.
+6. Vei observa că sunetul intră și iese din plugin în mod corect și clar.
+   Chiar dacă încă nu modifică sunetul, testul îți validează că structura, conexiunile și build-ul funcționează perfect!

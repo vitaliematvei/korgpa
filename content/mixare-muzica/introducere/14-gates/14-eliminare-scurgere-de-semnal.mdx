@@ -1,0 +1,51 @@
+---
+title: 'Removing Spill (Eliminarea scurgerilor de semnal)'
+description: 'Removing Spill (Eliminarea scurgerilor de semnal)'
+order: 14
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+O mare parte din înregistrările din ziua de azi se realizează prin suprapuneri succesive (_overdubs_); acestea sunt mai puțin predispuse la scurgeri de semnal, astfel încât, în general, ne confruntăm doar cu semnalul scurs din căști și cu scurgerile (_spill_-ul) dintre diferitele piese de tobe.
+Spill-ul poate cauza patru probleme principale:
+
+- **Afectarea separării:** În mod ideal, ne dorim ca fiecare pistă să reprezinte un singur instrument sau o singură tobă (microfoanele de cameră și overhead-urile fiind excepții evidente).
+  O pistă de premier (_snare_) care conține și fus (_hi-hat_) va îngreuna separarea celor două.
+  De exemplu, o astfel de pistă hibridă va restricționa panoramarea independentă a fiecărui element, ceea ce poate duce la o imagine stereo neclară sau pătată pentru cel puțin unul dintre ele.
+- **Filtrarea de pieptene (_Comb filtering_):**
+  Sunetul de fus captat de microfonul de premier s-ar putea să nu fie în fază cu pista dedicată de fus sau cu microfoanele de overhead.
+  Când premierul este mixat cu oricare dintre aceste piese, filtrarea de pieptene va afecta cel mai probabil timbrul fusului, oferindu-i un sunet gol, metalic sau fazat.
+  Orice instrument poate suferi o pierdere de claritate, de impact sau o colorare a timbrului dacă pista sa este mixată cu propriul _spill_ captat pe o altă pistă.
+- **Adăugarea de zgomot nedorit:** Ori de câte ori un instrument nu cântă, scurgerile de semnal de pe pista sa pot produce sunete deranjante.
+  Cazanele (_floor toms_) sunt notorii pentru producerea unui hârâit/vibrații pe frecvențele joase (_rumble_) atunci când se cântă pe restul setului.
+  De asemenea, semnalul scurs din căști poate adăuga zgomot pe secțiunile silențioase.
+- **Interferența cu procesarea:** De exemplu, o toba mare (_kick_) puternică rămasă pe pista de premier poate declanșa compresorul de pe premier și poate interfera cu procesarea acestuia.
+  De asemenea, amplificarea frecvențelor înalte (_boost_ pe EQ) pe o pistă de tom va accentua și scurgerile de fus prezente pe acea pistă.
+
+Această listă sugerează că spill-ul ar trebui eliminat ori de câte ori este posibil.
+Cu toate acestea, există situații când, după eliminarea spill-ului, putem observa că dezactivarea gate-ului (_bypass_) are de fapt un efect pozitiv asupra mixului.
+Motivele pentru acest lucru sunt de cele mai multe ori imprevizibile.
+Cu toate acestea, trebuie să eliminăm mai întâi spill-ul pentru a înțelege dacă eliminarea lui îmbunătățește într-adevăr mixul.
+De asemenea, merită reținut că procesoarele adăugate ulterior în mix, cum ar fi compresoarele și egalizatoarele, pot influența acest rezultat.
+Acestea fiind spuse, odată ce mixul se află în etapele finale, merită încercat un bypass pe gate-urile de spill pentru a vedea dacă mixul sună mai bine sau mai rău.
+
+Una dintre principalele provocări în gating este păstrarea timbrului instrumentului procesat.
+S-a menționat deja că o setare mai coborâtă a pragului (_threshold_) ajută în acest sens.
+Această sarcină devine mai dificilă atunci când semnalul util și spill-ul au niveluri relativ apropiate, mai ales dacă împart aceleași regiuni de frecvență.
+Perechi potențial problematice sunt premierul și fusul, sau toba mare și tomurile — în special dacă scurgerile de semnal nu au fost luate în considerare în timpul selectării și poziționării microfoanelor.
+
+Putem folosi orice funcție disponibilă pe gate pentru a îmbunătăți procesarea:
+
+- **Egalizarea pe side-chain** ne permite să atenuăm spill-ul prin tăierea frecvențelor sale dominante.
+- **Look-ahead** ne permite să păstrăm mai mult din atacul natural.
+- **Hysteresis** ne permite să păstrăm mai mult din declinul natural (_decay_) al instrumentului.
+
+Pentru sarcinile de gating deosebit de dificile, este extrem de benefic să folosim cel puțin una dintre aceste funcții, dacă nu pe toate.
+
+> **Notă:** Una dintre principalele provocări în aplicarea gate-ului este păstrarea timbrului original al instrumentului — în special atacul și decay-ul său natural.
+
+Atunci când punem gate pe tobe, există adesea un compromis între lungimea decay-ului natural și cantitatea de spill — cu cât păstrăm mai mult din decay-ul natural, cu atât mai mult spill va scăpa nefiltrat. Spill-ul rămas este adesea dat mai tare de către un compresor pus după gate, iar instrumentul nedorit poate deveni mai prezent în mix pentru perioade scurte, cât timp gate-ul rămâne deschis. De exemplu, scurgerile de fus de pe pista de premier pot face ca fusul să se audă mai tare în timp ce premierul se stinge.
+
+O soluție pentru această problemă implică atenuarea (_ducking_) piesei dedicate de fus în mod opus față de gating-ul premierului — astfel, în timp ce gate-ul deschis adaugă puțin spill de fus, pista principală de fus este atenuată automat. O altă soluție este **reconstrucția decay-ului**: gate-ul scurtează agresiv decay-ul astfel încât să nu mai rămână niciun spill, iar apoi se folosește un efect de reverberație pentru a simula și înlocui decay-ul natural eliminat.
+
+{/* am ramas Reshaping dynamic envelopes .371 */}

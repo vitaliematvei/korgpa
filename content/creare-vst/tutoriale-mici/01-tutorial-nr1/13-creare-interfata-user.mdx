@@ -1,0 +1,191 @@
+---
+title: 'Interfață grafică (GUI) folosind controale de tip Slider și Label'
+description: 'Interfață grafică (GUI) folosind controale de tip Slider și Label'
+order: 13
+category: 'JUCE'
+level: 'Incepator'
+---
+
+În acest ghid vei învăța cum să adaugi o interfață grafică (GUI) folosind controale de tip **Slider** și **Label** în cadrul unui cadru JUCE, conectându-le la parametrii de frecvență și amplitudine ai unui oscilator de tip wavetable.
+
+---
+
+### Cerințe prealabile
+
+- Un proiect JUCE existent care generează un semnal audio cu Wavetable (din tutorialul anterior).
+- Acces la fișierele principale ale proiectului: `MainComponent.h` și `MainComponent.cpp`.
+
+---
+
+## Pasul 1: Definirea elementelor GUI în fișierul Header (`MainComponent.h`)
+
+Trebuie să declarăm sliderele și etichetele necesare, precum și să derivăm clasa noastră `MainComponent` din ascultătorul de slidere `juce::Slider::Listener`.
+
+1. Deschide **`MainComponent.h`**.
+2. Modifică declarația clasei pentru a moșteni din `juce::Slider::Listener`:
+
+```cpp
+class MainComponent  : public juce::AudioAppComponent,
+                       public juce::Slider::Listener
+{
+public:
+    // ... restul codului existent
+
+```
+
+3. Declară metoda pur virtuală `sliderValueChanged` în secțiunea `public`:
+
+```cpp
+void sliderValueChanged (juce::Slider* slider) override;
+
+```
+
+4. Adaugă o funcție ajutătoare pentru actualizarea frecvenței și o variabilă pentru rata de eșantionare:
+
+```cpp
+void updateFrequency();
+
+```
+
+5. Adaugă controalele UI și variabila pentru rata de eșantionare în secțiunea `private`:
+
+```cpp
+private:
+    juce::Slider freakSlider;
+    juce::Slider ampSlider;
+
+    juce::Label freakLabel;
+    juce::Label ampLabel;
+
+    double currentSampleRate { 0.0 };
+
+```
+
+---
+
+## Pasul 2: Configurarea controalelor UI în Constructor (`MainComponent.cpp`)
+
+În constructorul clasei `MainComponent`, inițializăm proprietățile grafice (stil, interval, etichete) și înregistrăm componenta ca ascultător (_listener_).
+
+```cpp
+MainComponent::MainComponent()
+{
+    // --- Configurare Slider Frecvență ---
+    freakSlider.setSliderStyle (juce::Slider::LinearHorizontal);
+    freakSlider.setRange (50.0, 500.0); // Frecvențe între 50Hz și 500Hz
+    freakSlider.setTextValueSuffix (" Hz"); // Adaugă sufixul "Hz"
+    freakSlider.addListener (this); // Înregistrează MainComponent ca listener
+    freakSlider.setValue (200.0); // Valoare inițială
+    addAndMakeVisible (freakSlider);
+
+    freakLabel.setText ("Frequency", juce::dontSendNotification);
+    freakLabel.attachToComponent (&freakSlider, true); // Atașează eticheta la stânga sliderului [00:16:10]
+
+    // --- Configurare Slider Amplitudine ---
+    ampSlider.setSliderStyle (juce::Slider::LinearHorizontal);
+    ampSlider.setRange (0.0, 1.0); // Interval de câștig de la 0.0 la 1.0 [00:18:12]
+    ampSlider.addListener (this);
+    ampSlider.setValue (0.0); // Valoare inițială [00:19:32]
+    addAndMakeVisible (ampSlider);
+
+    ampLabel.setText ("Amplitude", juce::dontSendNotification);
+    ampLabel.attachToComponent (&ampSlider, true);
+
+    setSize (600, 400);
+    setAudioChannels (0, 2);
+}
+
+```
+
+---
+
+## Pasul 3: Poziționarea elementelor pe ecran în `resized()`
+
+Pentru ca elementele grafice să fie afișate corect pe ecran, trebuie să le setăm dimensiunile și pozițiile în metoda `resized()`.
+
+```cpp
+void MainComponent::resized()
+{
+    const int labelSpace = 100; // Spațiu rezervat în stânga pentru etichete [00:03:42]
+
+    // Setează poziția pentru Slider-ul de Frecvență
+    freakSlider.setBounds (labelSpace, 20, getWidth() - labelSpace - 20, 20);
+
+    // Setează poziția pentru Slider-ul de Amplitudine
+    ampSlider.setBounds (labelSpace, 50, getWidth() - labelSpace - 20, 20);
+}
+
+```
+
+---
+
+## Pasul 4: Gestionarea Evenimentelor `sliderValueChanged`
+
+Când utilizatorul mișcă un slider, această metodă este apelată automat.
+Aici preluăm noile valori și actualizăm variabilele audio.
+
+```cpp
+void MainComponent::sliderValueChanged (juce::Slider* slider)
+{
+    if (slider == &freakSlider)
+    {
+        frequency = freakSlider.getValue(); // Preia valoarea frecvenței
+    }
+    else if (slider == &ampSlider)
+    {
+        amplitude = ampSlider.getValue(); // Preia valoarea amplitudinii
+    }
+}
+
+```
+
+---
+
+## Pasul 5: Conectarea GUI cu Procesarea Audio Real-Time
+
+Pentru a actualiza corect pasul de redare al oscilatorului Wavetable în timp ce utilizatorul mișcă sliderul, trebuie să mutăm calculul pasului (_table delta/increment_) într-o funcție dedicată care poate fi apelată în callback-ul audio.
+
+1. **Salvarea ratei de eșantionare în `prepareToPlay**`:
+
+```cpp
+void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
+{
+    currentSampleRate = sampleRate;
+    frequency = freakSlider.getValue();
+    amplitude = ampSlider.getValue();
+}
+
+```
+
+2. **Implementarea funcției `updateFrequency()**`:
+
+```cpp
+void MainComponent::updateFrequency()
+{
+    // Calculează incrementul de fază pentru oscilator bazat pe frecvența curentă
+    increment = (frequency * tableSize) / currentSampleRate;
+}
+
+```
+
+3. **Apelarea `updateFrequency()` în `getNextAudioBlock**`:
+
+```cpp
+void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
+{
+    updateFrequency(); // Actualizează frecvența la fiecare bloc audio
+
+    // Logica de procesare și umplere a bufferului audio...
+    // ...
+}
+
+```
+
+---
+
+### Observații finale
+
+- **Artifacte sonore:**
+  În timpul mișcării rapide a sliderului de amplitudine este posibil să auziți mici zgomote de pocnit (clicks/artifacts).
+  Acest lucru apare deoarece schimbarea valorii se face instantaneu.
+  În tutorialele avansate se recomandă introducerea unui algoritm de interpolare (rampare/smoothing) precum `juce::LinearSmoothedValue`.

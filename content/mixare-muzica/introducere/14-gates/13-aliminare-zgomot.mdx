@@ -1,0 +1,40 @@
+---
+title: 'Removing Noise (Eliminarea zgomotului)'
+description: 'Removing Noise (Eliminarea zgomotului)'
+order: 13
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Zgomotul poate ajunge într-o înregistrare în numeroase moduri.
+Benzile magnetice, microfoanele, preamplificatoarele, orice componentă analogică și convertoarele A/D sunt doar câteva exemple de echipamente care își suprapun zgomotul propriu peste semnal.
+De asemenea, când înregistrarea are loc într-un studio de acasă (home studio), zgomotul de fundal devine adesea o problemă.
+În esență, orice semnal care a trecut vreodată prin domeniul analogic conține un anumit nivel de zgomot.
+Chiar și semnalele pur digitale — cum ar fi o linie de bas generată de un instrument virtual — pot include distorsiuni de cuantizare sau zgomot de _dither_.
+
+Din fericire, tehnologia modernă permite înregistrări mult mai curate decât în trecut, astfel încât o mare parte din zgomotul din înregistrările de astăzi este inaudibil.
+În general, dacă se folosesc echipamente de calitate și sunt utilizate corect, s-ar putea să nu fie nevoie de un gate pentru eliminarea zgomotului în nicio etapă a mixajului.
+Dacă, de exemplu, raportul semnal/zgomot (_signal-to-noise ratio_) într-o înregistrare digitală este de 60 dB (nivelul zgomotului fiind la –60 dBFS), există mari șanse ca acesta să nu fie o problemă.
+Chiar și niveluri mai ridicate de zgomot pot fi insesizabile, deoarece, în multe cazuri, semnalul util îl maschează.
+Zgomotul tinde să fie mai vizibil în aranjamentele aerisite și în secțiunile mai silențioase ale unei producții — în ambele situații există mai puține elemente care să-l acopere.
+
+Un aspect important de luat în considerare este că zgomotul poate deveni mai evident pe măsură ce mixajul avansează.
+De exemplu, după aplicarea parametrului _makeup gain_ de pe un compresor, nivelul zgomotului va crește și el.
+De asemenea, prin amplificarea frecvențelor înalte (boost pe EQ) ale unei piese, zgomotul va deveni cel mai probabil mai sesizabil.
+
+Chiar și atunci când zgomotul este audibil, trebuie să ne întrebăm: _Ce este greșit în a avea puțin zgomot?_ Mulți oameni asociază sunetul sintetic al sistemelor digitale tocmai cu lipsa zgomotului și a distorsiunilor.
+De fapt, unii ingineri adaugă intenționat zgomot sau distorsiune într-o înregistrare digitală sterilă pentru a replica câteva dintre particularitățile familiare ale lumii analogice.
+Zgomotul, în aceste cazuri, poate fi similar cu un fâșâit de bandă (_tape hiss_) sau chiar pârâitul unui vinil.
+Cu toate acestea, alte tipuri de zgomot — cum ar fi cel produs de o mașină de spălat — reprezintă o problemă, neavând nicio șansă să amintească cuiva de sunetul analogic cald.
+
+> **Notă:** Trebuie analizat cu atenție ce zgomot necesită gating și ce poate fi tolerat.
+
+Un alt punct esențial este că urechile noastre găsesc nivelurile variabile de zgomot (cum ar fi variațiile de respirație) mult mai deranjante decât un nivel constant de zgomot.
+Acest fapt este luat în considerare în multe sisteme de reducere a zgomotului.
+Trebuie să ținem cont de acest lucru atunci când punem gate pe o piesă cu zgomot — nivelurile de zgomot fluctuante rezultate după gating pot fi mai vizibile decât nivelul de zgomot constant de dinainte de procesare.
+
+Să presupunem, de exemplu, că avem un aranjament aerisit cu o piesă de voce ce conține zgomot de fundal.
+Zgomotul va fi probabil mascat sau mai puțin sesizabil în timp ce solistul cântă.
+Provocarea este să ne asigurăm că deschiderea și închiderea gate-ului nu provoacă variații evidente de zgomot.
+Odată ce vocea scade sub prag (_threshold_) și se stinge, un timp de _release_ lent poate provoca o coborâre vizibilă și deranjantă a nivelului de zgomot.
+Dacă vocea este trimisă și către un efect de reverberație, această scădere de zgomot va fi și mai accentuată.
