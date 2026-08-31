@@ -1,0 +1,160 @@
+---
+title: 'Folosirea Sass (SCSS)'
+description: 'Configurarea și utilizarea Sass / SCSS în Next.js'
+order: 7
+category: 'NextJS'
+level: 'Incepator'
+---
+
+## Utilizarea Sass în Next.js
+
+În era internetului, **Sass** poate fi considerat deja un instrument clasic (_old school_) — a apărut (în diverse forme) încă din anul 2006. De-a lungul anilor, au existat implementări pentru numeroase medii și limbaje de programare, cum ar fi _libSass_ pentru C++, _jSass_ pentru Java sau chiar _phamlp_ pentru PHP.
+
+Astăzi, când vorbim despre Sass în ecosistemul modern de JavaScript, ne referim la versiunea oficială scrisă în **Dart** (**Dart Sass**), care utilizează sintaxa modernă **SCSS** (formatul cu acolade, identic și complet compatibil cu CSS standard).
+
+### De ce am folosi Sass?
+
+Dacă folosiți deja Sass, cu siguranță ați creat de-a lungul timpului:
+
+- **Variabile** pentru culori, fonturi și dimensiuni;
+- **Mixin-uri** pentru reguli reutilizabile;
+- **Funcții și calcule dinamice**;
+- **Selectori imbricați (_nesting_)**.
+
+Next.js oferă suport nativ pentru **Dart Sass**. Atâta timp cât stilurile voastre sunt compatibile cu Dart Sass, integrarea este extrem de simplă.
+
+> **Important:** Bibliotecile vechi `node-sass` și `libSass` sunt în prezent marcate ca învechite (_deprecated_). Next.js utilizează direct pachetul modern `sass`.
+
+Pentru acest exercițiu demonstrativ, vom converti stilurile pentru pagina **Despre Noi (_About_)**. Procesul de conversie pentru celelalte pagini și componente urmează exact aceiași pași.
+
+---
+
+## Ghid pas cu pas: Configurarea Sass în proiect
+
+Urmați acești pași pentru a adăuga suport pentru Sass în aplicația Next.js:
+
+### Pasul 1: Instalarea pachetului `sass`
+
+Deschideți un terminal în folderul rădăcină al proiectului și rulați comanda de instalare:
+
+```bash
+npm install --save-dev sass
+```
+
+### Pasul 2: Configurarea fișierului `next.config.js`
+
+Deschideți fișierul `next.config.js` din rădăcina proiectului și adăugați opțiunea `sassOptions` pentru a include folderul de stiluri (acest lucru simplifică importurile SCSS):
+
+```javascript
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  sassOptions: {
+    includePaths: ['styles'],
+  },
+};
+
+module.exports = nextConfig;
+```
+
+### Pasul 3: Crearea fișierului principal `index.scss`
+
+În folderul `src/styles`, creați un fișier nou numit `index.scss`. În acest fișier vom agrega modulele de stiluri folosind directiva modernă `@use`:
+
+```scss
+@use 'about'; /* Stilurile pentru pagina About Us */
+```
+
+### Pasul 4: Importul fișierului SCSS în `_app.js`
+
+Deschideți fișierul `src/pages/_app.js` și adăugați importul noului fișier `index.scss` imediat sub importul stilurilor globale:
+
+```javascript
+import '../styles/globals.css'; /* Stiluri comune */
+import '../styles/index.scss'; /* Stiluri principale Sass */
+```
+
+Salvați și închideți fișierul `_app.js`.
+
+### Pasul 5: Crearea modulului de stiluri `about.scss`
+
+Creați un fișier nou numit `about.scss` în folderul `src/styles/`.
+
+### Pasul 6: Migrarea și optimizarea stilurilor cu imbricare (Nesting)
+
+Deschideți `src/styles/globals.css` și căutați secțiunea aferentă paginii Despre Noi:
+
+```css
+/* ABOUT ---------------------------------------- */
+.about-us {
+  width: 70%;
+  margin: 0 auto;
+}
+.about-us p:nth-child(1) {
+  margin: 40px 0 0 0;
+  font-family: 'Oswald', sans-serif;
+  font-size: 42px;
+}
+.about-us > p:nth-child(2) {
+  margin: 20px 0 20px 0;
+}
+```
+
+Copiați aceste reguli în noul fișier `about.scss` și refactorizați-le folosind sintaxa specifică Sass cu selectorul părinte `&` (_nesting_):
+
+```scss
+.about-us {
+  width: 70%;
+  margin: 0 auto;
+
+  & p:nth-child(1) {
+    margin: 40px 0 0 0;
+    font-family: 'Oswald', sans-serif;
+    font-size: 42px;
+  }
+
+  & > p:nth-child(2) {
+    margin: 20px 0 20px 0;
+  }
+}
+```
+
+Salvați fișierul `about.scss`.
+
+### Pasul 7: Curățarea stilurilor vechi din `globals.css`
+
+După ce ați mutat și salvat stilurile în `about.scss`, comentați sau ștergeți secțiunea `ABOUT` din fișierul `globals.css` pentru a evita încărcarea duplicatelor.
+
+### Pasul 8: Testarea în browser
+
+Dacă serverul de dezvoltare nu rulează deja, porniți-l din terminal:
+
+```bash
+npm run dev
+```
+
+Accesați în browser `http://localhost:3000/about`. Pagina va arăta exact la fel ca înainte, dar dacă inspectați sursa fișierelor CSS în DevTools, veți vedea că stilurile provin acum din fișierele SCSS compilate.
+
+---
+
+## Deconstruirea modificărilor și concepte cheie
+
+1. **Imbricarea selectorilor (_Nesting_)**:  
+   În loc să repetăm selectorul de clasă părinte `.about-us` pentru fiecare element descendent, Sass ne permite să grupăm regulile logic în interiorul blocului părinte folosind caracterul `&`. Acest lucru menține codul mai concis și mai lizibil.
+
+2. **Directiva modernă `@use`**:  
+   Spre deosebire de vechea directivă `@import` (care introducea toate variabilele în contextul global și crea riscuri de coliziune), `@use` încarcă stilurile și variabilele într-un mod modular și izolat.
+
+3. **Sass combinat cu Module CSS (`.module.scss`)**:  
+   Dacă doriți atât beneficiile limbajului Sass (variabile, mixin-uri), cât și izolarea locală a numelor de clase (_scoping_), Next.js suportă nativ fișiere cu extensia `.module.scss` (de exemplu: `About.module.scss`). Se importă în React exact ca un modul CSS standard:
+   ```javascript
+   import styles from './About.module.scss';
+   ```
+
+---
+
+## Concluzie
+
+Adăugarea suportului pentru Sass în Next.js necesită doar instalarea dependenței `sass` și definirea fișierelor `.scss`. Acest mecanism oferă flexibilitate maximă: putem migra treptat paginile, păstrând în același timp componentele existente fără a le afecta funcționalitatea.
+
+{/* am ramas Breaking Apart the Code Changes 146 */}

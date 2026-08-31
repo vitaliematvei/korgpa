@@ -1,0 +1,231 @@
+---
+title: 'Folosirea Modulelor CSS'
+description: 'Abordări alternative de stilizare cu CSS Modules în Next.js'
+order: 6
+category: 'NextJS'
+level: 'Incepator'
+---
+
+## Explorarea abordărilor alternative
+
+Dacă ați lucrat anterior cu React, sunteți cel mai probabil familiarizați cu unul dintre principiile de bază ale acestui framework: **nu trebuie să punem toate stilurile într-un singur fișier global**.
+Același principiu se aplică și în Next.js — există mai multe moduri de a structura stilurile, însă ideea fundamentală rămâne aceeași: împărțirea CSS-ului în fișiere mai mici și dedicate fiecărei componente.
+
+### De ce facem acest lucru?
+
+1. **Fișiere mai mici și ușor de întreținut**: Stilurile se aplică exclusiv componentei în care sunt importate, eliminând riscul conflictelor de denumire (cu excepția cazului în care duplicăm stiluri din greșeală).
+2. **Tranziție treptată (progresivă)**: Atâta timp cât avem fundamentele puse la punct, putem converti stilurile pas cu pas în timp, fără a fi nevoie de o rescriere totală de la zero (_big-bang approach_).
+
+Pentru a realiza acest lucru, avem două opțiuni principale:
+
+- **Module CSS (CSS Modules)** — abordarea modernă, nativă și recomandată;
+- **Sass (SCSS)** — abordarea clasică, ideală dacă doriți să folosiți variabile complexe, mixin-uri sau să asigurați compatibilitate extinsă.
+
+Haideți să explorăm mai întâi utilizarea **Modulelor CSS**.
+
+---
+
+## Ce sunt și cum funcționează Modulele CSS?
+
+Modulele CSS au două mari avantaje:
+
+- **Suport nativ**: Next.js le suportă direct, fără configurări suplimentare.
+- **Spații de nume automate (_namespaced styles_)**: La compilare, Next.js generează nume unice de clase (adăugând un hash unic), ceea ce garantează că stilurile unei componente nu se vor suprapune peste stilurile altei componente.
+
+În plus, Next.js efectuează automat **code-splitting** pentru CSS: pe ecran se încarcă doar stilurile strict necesare paginii sau componentei curente, optimizând viteza de încărcare.
+
+Pentru a vedea exact cum funcționează, vom converti stilurile componentei `Footer` într-un Modul CSS.
+
+---
+
+## Ghid pas cu pas: Conversia componentei Footer la CSS Modules
+
+Urmați acești pași pentru a adăuga suport pentru CSS Modules în componenta Footer:
+
+### Pasul 1: Crearea folderului dedicat
+
+Mergeți în folderul `src/components` și creați un folder nou numit `Footer`. Aici vom păstra atât componenta JSX, cât și fișierul de stil dedicat acesteia (o practică numită _colocation_).
+
+### Pasul 2: Crearea fișierului de modul CSS
+
+În interiorul folderului `src/components/Footer`, creați un fișier nou numit:
+
+```text
+Footer.module.css
+```
+
+_(Extensia `.module.css` este obligatorie pentru ca Next.js să recunoască fișierul ca modul CSS)._
+
+### Pasul 3: Migrarea stilurilor din globals.css
+
+1. Deschideți fișierul `src/styles/globals.css`.
+2. Căutați blocul de stiluri aferent componentei `Footer`.
+3. Copiați acel bloc în noul fișier `Footer.module.css`.
+4. Comentați sau ștergeți stilurile vechi din `globals.css` pentru a preveni duplicarea la compilare.
+5. Salvați ambele fișiere.
+
+### Pasul 4: Mutarea componentei Footer
+
+Mutați fișierul `Footer.jsx` în noul folder `src/components/Footer/`.  
+Asigurați-vă că actualizați importurile către `Footer` în fișierele părinte (de exemplu în `Layout.jsx`):
+
+```javascript
+import Footer from './Footer/Footer';
+```
+
+### Pasul 5: Actualizarea fișierului Footer.jsx
+
+Deschideți `Footer.jsx` și efectuați următoarele modificări:
+
+1. Importați modulul CSS:
+   ```javascript
+   import styles from './Footer.module.css';
+   ```
+2. Înlocuiți clasele clasice de tip string (`className="footer-container"`) cu referințe la obiectul `styles` în format **camelCase** (`className={styles.footerContainer}`).
+
+Codul actualizat va arăta astfel:
+
+```jsx
+import React from 'react';
+import Link from 'next/link';
+import { AiFillInstagram, AiOutlineTwitter } from 'react-icons/ai';
+import MiniCart from '../MiniCart';
+import PaymentIcons from '../PaymentIcons';
+import styles from './Footer.module.css';
+
+const Footer = () => {
+  return (
+    <>
+      <div className={styles.footerContainer}>
+        <div className={styles.footerContent}>
+          <div>
+            <Link href="/delivery">Delivery</Link>
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/terms">Terms and Conditions of Sale</Link>
+            <Link href="/contact">Contact Us</Link>
+          </div>
+          <div>Contact: hello@macaronmagic.com</div>
+          <MiniCart />
+        </div>
+        <div className={styles.iconContainer}>
+          <PaymentIcons />
+          <div className={styles.icons}>
+            <AiFillInstagram />
+            <AiOutlineTwitter />
+          </div>
+        </div>
+        <p className={styles.copyright}>
+          © 2022 Macaron Magic. All rights reserved.
+        </p>
+      </div>
+    </>
+  );
+};
+
+export default Footer;
+```
+
+### Pasul 6: Adaptarea claselor în `Footer.module.css`
+
+În fișierul `Footer.module.css`, redenumim clasele din sintaxa cu cratimă (_kebab-case_) în notație _camelCase_ pentru a corespunde proprietăților din JavaScript:
+
+```css
+.footerContainer {
+  color: #caa34d;
+  background-color: #000000;
+  text-align: center;
+  margin-top: 20px;
+  padding: 30px 10px;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  border-bottom: 1px solid #c7c7c7;
+}
+
+.footerContainer .footerContent {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  width: 800px;
+}
+
+.footerContainer .footerContent div {
+  flex-direction: column;
+  display: flex;
+  text-align: left;
+  min-width: 250px;
+  margin-right: 20px;
+}
+
+.footerContainer .footerContent div:last-child {
+  margin-right: 0;
+}
+
+.footerContainer .mini-cart-bottom {
+  width: 100%;
+}
+
+.footerContainer .icons {
+  font-size: 30px;
+  display: flex;
+  gap: 10px;
+}
+
+.footerContainer .iconContainer {
+  width: 800px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.copyright {
+  font-size: 13px;
+  color: #888888;
+  margin-top: 10px;
+}
+```
+
+> **Notă:** Proprietățile CSS rămân identice; am ajustat doar denumirea claselor pentru a fi ușor accesibile ca proprietăți de obiect (`styles.numeClasa`).
+
+### Pasul 7: Testarea aplicației
+
+Salvați toate fișierele și porniți serverul de dezvoltare dacă nu rulează deja:
+
+```bash
+npm run dev
+```
+
+Deschideți browserul la adresa `http://localhost:3000/`. Aspectul vizual al subsolului (_Footer_) va fi identic cu cel anterior, însă modul în care stilurile sunt aplicate este acum mult mai robust.
+
+### Pasul 8: Verificarea claselor generate în DevTools
+
+Dacă deschideți instrumentele de dezvoltare din navigator (**Inspect Element** / `F12`), veți observa că numele claselor din codul HTML randat nu mai sunt simple șiruri precum `footerContainer`, ci au un format unic compilat de Next.js:
+
+```text
+Footer_footerContainer__k7X9q
+```
+
+Acest identificator unic generat automat garantează că stilurile din `Footer` nu vor intra niciodată în conflict cu o altă clasă numită `footerContainer` din alt modul.
+
+---
+
+## Analiza modificărilor și bune practici
+
+1. **Organizarea fișierelor (Colocation)**:  
+   Gruparea componentei și a stilului său în același folder (`src/components/Footer/`) păstrează structura proiectului curată și scalabilă. Dacă în viitor ștergem componenta `Footer`, ștergem și stilurile asociate dintr-un singur loc.
+
+2. **Convenția camelCase**:  
+   Deși putem accesa clase cu cratime folosind notația cu paranteze drepte (`styles['footer-container']`), folosirea stilului `styles.footerContainer` este mult mai curată, mai rapidă și mai compatibilă cu autocompletarea din IDE.
+
+3. **Migrarea treptată (Progresivă)**:  
+   Componentele copil (cum ar fi `PaymentIcons` sau `MiniCart`) pot continua să folosească stiluri globale până când sunt migrate rând pe rând. Next.js permite conviețuirea fără probleme a stilurilor globale cu Modulele CSS.
+
+---
+
+## Ce urmează?
+
+Modulele CSS reprezintă soluția ideală pentru majoritatea aplicațiilor moderne Next.js. Totuși, dacă aveți proiecte existente bazate pe **Sass**, doriți să folosiți variabile globale sau funcții avansate din SCSS, Next.js oferă suport integrat și pentru Sass.
+
+În tutorialul următor vom explora cum putem converti și integra stilurile folosind **Sass (SCSS)** în Next.js!
