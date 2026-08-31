@@ -6,6 +6,109 @@ category: 'JUCE'
 level: 'Incepator'
 ---
 
+# Tutorial JUCE C++: Conversie Logaritmică pentru Gain Slider
 
+În procesarea semnalelor audio (DSP), una dintre cele mai comune probleme la crearea unui control de volum (Gain Slider) este diferența dintre **amplitudinea liniară** (0.0 – 1.0) și **percepția umană a volumului**.
 
-{/* ACESTA NU EMRGE am ramas https://www.youtube.com/watch?v=Cm49E9kDwSc&list=PLLgJJsrdwhPxa6-02-CeHW8ocwSwl2jnu&index=16 */}
+Urechea umană nu percepe intensitatea sonoră în mod liniar, ci **logaritmic**.
+Dacă folosim o scară liniară, modificările de volum din ultima porțiune a slider-ului (ex. 75% - 100%) vor părea aproape nesemnificative.
+
+În acest tutorial pas cu pas, vom înțelege ecuația matematică de conversie din Decibeli (dB) în Gain liniar și o vom implementa direct în C++ folosind cadrul de lucru **JUCE**.
+
+## 1. Problema: Liniar vs. Logaritmic
+
+Când lucrăm cu semnale audio digitale:
+
+- Amplitudinea brută este cuprinsă între `0.0` (tăcere completă) și `1.0` (amplitudine maximă / 0 dBFS).
+- Scara în decibeli (dB SPL / dBFS) este definită astfel încât volumul maxim este **0 dB**, iar valorile negative (ex. **-48 dB**, **-96 dB**) reprezintă atenuarea.
+
+Dacă slider-ul controlează direct valoarea liniară de la `0.0` la `1.0`, mișcarea cursorului va fi abruptă la valorile mici și imperceptibilă la valorile mari.
+
+## 2. Derivarea Ecuației Matematice
+
+Ecuația standard din ingineria audio pentru convertirea amplificării liniare X în decibeli este:
+
+dB = 20 \* log_10(X)
+
+Deoarece slider-ul nostru din interfață va transmite o valoare exprimată direct în decibeli (ex. de la `-48 dB` la `0 dB`), trebuie să rezolvăm ecuația pentru a afla factorul de multiplicare X (raw volume).
+
+### Pasul 2.1: Împărțirea la 20
+
+dB/20 = log_10(X)
+
+### Pasul 2.2: Inversarea logaritmului (baza 10)
+
+X = 10^(dB/20)
+
+Aceasta este formula pe care o vom codifica în C++ folosind funcția `std::pow` din biblioteca matematică standard!
+
+## 3. Implementare pas cu pas în JUCE (C++)
+
+Vom configura slider-ul în editorul interfeței (`PluginEditor.cpp`) și vom aplica factorul de multiplicare în procesorul audio (`PluginProcessor.cpp`).
+
+### Pasul 1: Configurarea Slider-ului în Editor
+
+În fișierul `PluginEditor.cpp`, setați intervalul slider-ului în decibeli (de la `-48 dB` la `0 dB`):
+
+```cpp
+// PluginEditor.cpp
+void MainAudioProcessorEditor::resized()
+{
+    // Setăm plaja de valori între -48 dB și 0 dB SPL
+    gainSlider.setRange(-48.0, 0.0, 0.1);
+
+    // Setați o valoare inițială (ex. -1 dB)
+    gainSlider.setValue(-1.0);
+}
+```
+
+### Pasul 2: Calculul Factorului de Gain în C++
+
+Când citim valoarea din slider, aplicăm formula derivată 10^(dB/20)
+
+```
+// În callback-ul slider-ului sau în loop-ul de procesare - void GainTutorial1AudioProcessorEditor::sliderValueChanged(juce::Slider* slider)
+float dBValue = gainSlider.getValue(); // Valoare între -48.0 și 0.0
+
+// Aplicăm formula 10^(dB / 20)
+float rawVolume = std::pow(10.0f, dBValue / 20.0f);
+
+// Transmiterea valorii calculate către procesorul audio
+processor.rawVolume = rawVolume;
+```
+
+### Pasul 3: Aplicarea Gain-ului pe Buffer-ul Audio
+
+În metoda processBlock din PluginProcessor.cpp, multiplicăm eșantioanele audio cu rawVolume:
+
+```
+// PluginProcessor.cpp
+void MainAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+{
+    juce::ScopedNoDenormals noDenormals;
+
+    for (int channel = 0; channel < buffer.getNumChannels(); ++channel)
+    {
+        auto* channelData = buffer.getWritePointer (channel);
+
+        for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
+        {
+            // Multiplicăm fiecare eșantion cu volumul calculat logaritmic
+            channelData[sample] *= rawVolume;
+        }
+    }
+}
+```
+
+### Pasul 4. Alternativă JUCE: setSkewFactorFromMidPoint
+
+JUCE oferă și o metodă integrată mai rapidă pentru a înclina (skew) scara unui slider fără a modifica manual ecuația în DSP
+
+```
+// Setează valoarea de mijloc vizuală la -22 dB pentru a simula o scară logaritmică
+gainSlider.setSkewFactorFromMidPoint(-22.0);
+```
+
+## Notă:
+
+Deși setSkewFactorFromMidPoint este utilă pentru ajustări rapide ale GUI-ului, calculul explicit 10^(dB/20) garantează precizie matematică standard în aplicațiile de producție audio
