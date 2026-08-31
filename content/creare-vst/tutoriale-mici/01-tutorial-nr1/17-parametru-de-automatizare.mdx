@@ -1,0 +1,129 @@
+---
+title: 'Crearea Parametrilor de Automatizare în JUCE'
+description: 'Crearea Parametrilor de Automatizare în JUCE'
+order: 17
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Fără acest parametru, potul/slider-ul din plugin poate fi mișcat cu mouse-ul, dar DAW-ul (Ableton, FL Studio, Cubase etc.) nu poate înregistra sau desenat linii de automatizare în timp.
+
+## Tutorial Pas cu Pas: Crearea Parametrilor de Automatizare în JUCE
+
+### Pasul 1: Definirea ID-urilor și a Numelor Parametrilor
+
+Pentru a evita greșelile de scriere când faci legătura între interfață și procesor, este recomandat să definești constante global sau directive #define.
+
+În header-ul procesorului (PluginProcessor.h):
+
+dupa
+
+```
+#include <JuceHeader.h>
+```
+
+Adauga
+
+```
+#define GAIN_ID "gain"
+#define GAIN_NAME "Gain"
+```
+
+### Pasul 2: Crearea AudioProcessorValueTreeState în Procesor
+
+Clasa AudioProcessorValueTreeState gestionează legătura dintre parametrii procesorului audio și interfața grafică (GUI).
+
+    1. În PluginProcessor.h, declară obiectul în secțiunea private sau public:
+
+```
+juce::AudioProcessorValueTreeState treeState;
+```
+
+    2. În constructorul din PluginProcessor.cpp, inițializează treeState folosind o listă de inițializare (Initializer List):
+
+```
+PluginAudioProcessor::PluginAudioProcessor()
+    : treeState(*this, nullptr) // *this reprezintă procesorul, nullptr pentru UndoManager
+{
+    // Crearea și adăugarea parametrului
+    treeState.createAndAddParameter(
+        GAIN_ID,                            // ID-ul parametrului
+        GAIN_NAME,                          // Numele afișat în DAW
+        String(),                           // Text / Label (opțional)
+        NormalizableRange<float>(0.0f, 1.0f), // Intervalul de valori
+        0.5f,                               // Valoarea implicită
+        nullptr,
+        nullptr
+    );
+
+    treeState.state = ValueTree("Foo");
+}
+```
+
+### Pasul 3: Legarea Slider-ului din Interfață (GUI) la Parametru
+
+În partea de editor (PluginEditor), trebuie creat un Attachment care face legătura directă între elementul vizual (Slider) și parametrul creat în procesor (AudioProcessorValueTreeState).
+
+    1. În PluginEditor.h, adaugă un pointer de tip ScopedPointer (sau std::unique_ptr în versiunile mai noi de JUCE):
+
+```
+juce::AudioProcessorValueTreeState::SliderAttachment sliderAttach;
+// Sau folosind ScopedPointer:
+// ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> sliderAttach;
+```
+
+2. În constructorul din PluginEditor.cpp, legăm slider-ul:
+
+```
+PluginAudioEditor::PluginAudioEditor (PluginAudioProcessor& p)
+    : AudioProcessorEditor (&p), processor (p)
+{
+    // Inițializarea legăturii dintre Slider și Parametru
+    sliderAttach = new AudioProcessorValueTreeState::SliderAttachment(
+        processor.treeState, // Referința către treeState din procesor
+        GAIN_ID,             // ID-ul parametrului definit anterior
+        gainSlider           // Obiectul Slider din GUI
+    );
+
+    addAndMakeVisible(gainSlider);
+    setSize (400, 300);
+}
+```
+
+### Pasul 4: Calcularea Scalei Logaritmice (Opțional / Recomandat)
+
+Pentru ca volumul să se simtă natural la ureche (scara decibelică), poți converti valoarea dintr-un interval liniar sau în dB într-o scară multiplicativă.
+
+Dacă folosești o plajă de valori între -48 dB și 0 dB:
+
+    - În procesorul audio (processBlock), convertești valoarea în factor de multiplicare scalar:
+
+```
+// În processBlock (PluginProcessor.cpp)
+float gainInDecibels = gainValue; // Valoare între -48 și 0
+
+// Formula pentru conversia dB în ampitudine scalară (0.0 - 1.0)
+float gainScalar = std::pow(10.0f, gainInDecibels / 20.0f);
+
+// Multiplicarea buffer-ului audio cu factorul obținut
+for (int channel = 0; channel < totalNumInputChannels; ++channel)
+{
+    float* channelData = buffer.getWritePointer (channel);
+    for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
+    {
+        channelData[sample] *= gainScalar;
+    }
+}
+```
+
+### Pasul 5: Testarea în DAW
+
+    Compilează proiectul ca plugin (VST3 / AU).
+
+    Deschide DAW-ul favorit (ex: Ableton, FL Studio, Cubase).
+
+    Încarcă plugin-ul pe o pistă audio.
+
+    Activează modul de automatizare pe pistă: vei observa că parametrul Gain apare acum în lista de parametri automatizabili, iar mișcarea slider-ului din plugin desenează în timp real linia roșie de automatizare.
+
+{/* am ramas https://www.youtube.com/watch?v=S0i7RizW0Sk&list=PLLgJJsrdwhPxa6-02-CeHW8ocwSwl2jnu&index=19 */}
