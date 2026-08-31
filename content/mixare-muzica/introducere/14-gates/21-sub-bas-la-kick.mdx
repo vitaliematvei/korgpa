@@ -1,0 +1,91 @@
+---
+title: 'Adăugarea de sub-bass la toba mare (kick)'
+description: 'Adăugarea de sub-bass la toba mare (kick)'
+order: 21
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Acest truc este folosit pentru a adăuga energie pe frecvențele joase sau acel „oomph” tobelor mari.
+Deși unele tobe mari conțin deja un _low-end_ generos, muzica de club și genurile precum drum 'n' bass sau reggae pot beneficia de pe urma unei forțe suplimentare — pe care unii o descriu ca „impact în piept” (chest power), iar alții ca „vânt de frecvență joasă” (LF wind).
+Această tehnică este uneori utilizată și în mixajele rock.
+
+Figura 19.18 arată configurația acestui truc.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/19-18.jpg"
+    alt="Figura 19-18"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 19-18:</p>Adăugarea de sub-bass la o tobă mare
+  (kick). Oscilatorul este trecut prin gate în raport cu toba mare. De fiecare
+  dată când kick-ul lovește, gate-ul se deschide și lasă semnalul oscilatorului
+  să treacă. Atât kick-ul, cât și oscilatorul sunt apoi mixate împreună.
+</div>
+
+Ideea este de a adăuga o frecvență joasă ori de câte ori bate kick-ul.
+Aceasta este generată de un oscilator, care este trecut prin gate în funcție de kick — de câte ori kick-ul lovește, gate-ul se deschide pentru a lăsa semnalul oscilatorului să treacă.
+Figura 19.19 ilustrează această configurație în Logic.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/19-19.jpg"
+    alt="Figura 19-19"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 19-19:</p>Adăugarea de sub-bass la o tobă mare
+  (kick) în Logic. Pista de sub-bass este o pistă aux (auxiliară) pe care este
+  inserat un oscilator pentru a genera o undă sinusală de 45 Hz. Oscilatorul
+  este urmat de un gate, care are intrarea de side-chain alimentată din pista de
+  kick (Pista 1).
+</div>
+
+Deoarece urmărim doar puterea pură, nu ne dorim ca oscilatorul să producă o notă (pitch) recognoscibilă.
+Prin urmare, se folosește o undă sinusală (sinusoidă) — fiind singura formă de undă ce generează o frecvență pură, fără armonici care să contribuie la identificarea notei.
+Frecvența oscilatorului este setată adesea la 40 sau 50 Hz, unde 40 Hz oferă mai multă putere, însă mai puține sisteme audio vor putea să o reproducă fidel.
+Cu cât frecvența este mai ridicată, cu atât nota devine mai evidentă, astfel încât frecvențele de peste 50 Hz sunt rareori utilizate.
+
+Pentru a preveni un bâzâit/brum constant pe frecvențe joase care ar murdări mixul, gate-ul se setează cu parametrul _range_ la maximum, astfel încât să reducă la tăcere complet oscilatorul atunci când kick-ul nu cântă.
+Atacul (attack) este setat scurt, dar este important să fie suficient de lung pentru a preveni click-urile.
+Click-urile produse de o sinusoidă joasă trecută prin gate tind să varieze ca natură, deoarece la fiecare lovitură gate-ul se deschide în puncte aleatorii ale ciclului formei de undă (Figura 19.20).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/19-20.jpg"
+    alt="Figura 19-20"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 19-20:</p>Variația click-urilor la un sub-bass
+  trecut prin gate cu atac rapid. O undă sinusală de 40 Hz a fost trecută prin
+  gate în raport cu toba mare (kick). Această ilustrație arată semnalul rezultat
+  după gate (post-gate) pentru patru lovituri. Atacul scurt produce un click,
+  dar, deoarece gate-ul se deschide în puncte aleatorii ale ciclului formei de
+  undă, pentru fiecare lovitură este generat un click diferit.
+</div>
+
+Un timp de release foarte scurt va produce, de asemenea, click-uri — care pot fi și mai deranjante, fiind adesea decalate față de atacul kick-ului.
+Cu ajutorul parametrilor _hold_ și _release_, putem seta durata fiecărui impuls de sub-bass.
+Un impuls scurt va reconfirma simplu kick-ul, iar cu cât este mai lung, cu atât impactul devine mai puternic.
+Un efect creativ presupune ca sub-bass-ul să fie lăsat mai lung decât kick-ul propriu-zis, setând timpii de hold și release astfel încât să creeze un decay sesizabil (efect asociat mai ales cu piesele drum 'n' bass).
+Acestea fiind spuse, dacă impulsul de sub-bass este făcut prea lung, putem ajunge la un conținut constant de joase care va murdări mixul.
+O altă abordare creativă este de a face sub-bass-ul de pe prima măsură/timpul tare (downbeat) mai lung decât celelalte, accentuând astfel timpii tari.
+
+Marea provocare cu impulsurile de sub-bass constă în echilibrarea lor rațională în spectrul de frecvențe al mixului.
+Monitoarele de studio _full-range_ (sau un subwoofer) și un mediu acustic controlat sunt cerințe obligatorii pentru această sarcină.
+Procesul decurge de obicei astfel: setăm nivelul sub-bass-ului din fader, iar apoi comutăm între monitoarele full-range și cele de proximitate (_near-fields_).
+În timp ce comutăm, ne dorim ca nivelurile relative ale instrumentelor să rămână cât mai similare, iar prin trecerea pe monitoarele full-range să obținem doar un plus de putere — căutăm o extindere a spectrului, nu o adăugire intruzivă.
+
+> **Configurația utilizată pentru acest truc este cel mai des aplicată pentru a adăuga sub-bass unei tobe mari.**
+
+O altă versiune populară a acestui truc implică adăugarea de zgomot alb (white noise) filtrat pe o tobă mică (snare), pentru a-i adăuga definire.
+Putem adăuga la fel de ușor orice semnal pe orice alt instrument de percuție, fie din motive practice, fie creative.

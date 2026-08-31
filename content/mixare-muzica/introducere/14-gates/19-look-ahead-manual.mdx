@@ -1,0 +1,45 @@
+---
+title: 'Look-ahead manual'
+description: 'Look-ahead manual'
+order: 19
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Funcția de _look-ahead_ (anticipare) a unui gate este inestimabilă.
+Majoritatea gate-urilor software o oferă, însă nu toate unitățile hardware dispun de ea.
+Deseori, timpul de look-ahead este fix și poate exista un comutator pentru a dezactiva complet această opțiune.
+Unele gate-uri ne permit, de asemenea, să alegem timpi diferiți de look-ahead — de exemplu, gate-ul MOTU MasterWorks din Figura 19.17 (controlul aflat sub grafic).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/19-17.jpg"
+    alt="Figura 19-17"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 19-17:</p> Look-ahead manual în Pro Tools. Pista de
+  sus este toba mare (kick-ul) procesată prin gate; pista de jos este duplicatul
+  devansat cu 20 ms înapoi în timp. Ieșirea duplicatului este rutată către un
+  bus numit „Kick SC”, care alimentează intrarea de side-chain a plugin-ului
+  McDSP Channel G.
+</div>
+Indiferent ce gate folosești, trucul prezentat aici oferă o anticipare
+(_look-ahead_) garantată pe orice gate.
+
+Ideea din spatele look-ahead-ului manual este destul de simplă.
+Să presupunem că aplicăm un gate pe o toba mare (kick): duplicăm pista de kick, deplasăm (_nudge_) duplicatul înapoi în timp cu câteva milisecunde și, în loc să-l trimitem către bus-ul principal de mix (mix bus), îl trimitem în intrarea de _key input_ (side-chain) a gate-ului aplicat pe kick-ul original.
+Figura 19.17 ilustrează această configurație. Un avantaj al look-ahead-ului manual este că putem seta orice timp de anticipare dorim.
+De exemplu, deplasând pista duplicată cu 20 ms mai devreme, obținem un timp de look-ahead de 20 ms; putem oricând să o mutăm înainte și înapoi (să zicem, în pași de 5 ms) pentru a vedea ce valoare funcționează cel mai bine.
+De obicei, gate-urile au timpi de look-ahead în intervalul 0–10 ms, dar în anumite circumstanțe specifice chiar și 40 ms pot fi adecvate.
+
+Deoarece pista duplicată este devansată în timp față de pista originală de kick, circuitul de side-chain al gate-ului recepționează semnalul cu câteva milisecunde înainte ca acesta să fie procesat.
+Gate-ul, fie el software sau hardware, nu introduce niciun fel de latență/întârziere pe ieșire (_output delay_) — semnalul trimis pe intrarea de key input este cel devansat în timp, nu kick-ul procesat care este întârziat.
+Observați că plugin-ul Channel G din Figura 19.17 este setat astfel încât semnalul din key input să fie filtrat (unde se aplică un filtru hi-cut pentru a reduce sângerarea/zgomotul — _spill_).
+Dacă gate-ul nu ar fi oferit un egalizator integrat pe side-chain, am fi putut pur și simplu să inserăm un egalizator direct pe pista duplicată pentru a obține exact același efect.
+Practic toate DAW-urile și recorderele digitale ne permit să duplicăm o pistă și să o deplasăm înapoi în timp.
+Însă devansarea (_nudging_) nu face tocmai parte din modul de funcționare al unui magnetofon analogic pe bandă.
+Prin urmare, pe bandă configurația ar fi foarte similară cu modul în care gate-urile analogice implementează look-ahead-ul: o pistă ar alimenta atât intrarea gate-ului, cât și intrarea sa de key input, dar copia trimisă spre procesarea de gate ar fi întârziată cu o unitate de delay (ceea ce, evident, ar cauza un întârziere la ieșire).
+Deși look-ahead-ul manual este extrem de util în cazul gate-urilor, el poate fi utilizat cu orice alt procesor de dinamică ce dispune de o intrare externă de side-chain — un compresor poate beneficia de acest truc în exact același mod.

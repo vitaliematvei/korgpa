@@ -1,0 +1,22 @@
+---
+title: 'Look-ahead manual'
+description: 'Look-ahead manual'
+order: 20
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+S-a menționat deja că timpii scurți de attack pe un gate pot produce un _click_ audibil, că cu cât atacul este mai scurt, cu atât frecvența acestui efect secundar este mai ridicată și că creșterea bruscă de nivel poate afecta timbrul instrumentului procesat, în special cel al tobei mari (kick).
+Cu toate acestea, click-ul rezultat din cauza unui attack rapid poate avea și un efect pozitiv asupra kick-ului — adăugând definire.
+Într-adevăr, uneori procesarea prin gate a tobei mari cu un attack scurt îi îmbunătățește prezența generală în mix, deși în majoritatea cazurilor trebuie să facem un compromis, pierzând din impact.
+Un truc simplu ne poate veni în ajutor, permițându-ne atât să păstrăm impactul, cât și să adăugăm definire.
+
+Configurația este următoarea: toba mare originală este trecută prin gate astfel încât atacul inițial (leading edge) să rămână intact (adesea folosind funcția de _look-ahead_), în timp ce o pistă duplicat a kick-ului este procesată prin gate pentru a produce click-ul.
+Cele două piste sunt suprapuse (layered), iar din faderul duplicatului putem determina cât de mult click dorim.
+De asemenea, putem folosi parametrii de attack și threshold ai gate-ului de pe duplicat (_clicker-gate_) pentru a modifica caracterul click-ului (în loc să folosim un egalizator).
+În mod normal, timpii de hold și release sunt menținuți foarte scurți, astfel încât gate-ul să se deschidă doar pentru o perioadă extrem de scurtă, doar atât cât să lase click-ul să treacă.
+Frumusețea acestei configurații este că, odată cu click-ul, o parte din impactul inițial trece și el prin gate, rezultând nu doar o definire îmbunătățită, ci și un plus de putere.
+
+Trucul _kick-clicker_ funcționează excepțional de bine pe muzica secvențiată (MIDI/electronică), unde toate loviturile au o velocitate egală sau foarte similară.
+Problema la o tobă mare înregistrată live este că variațiile de nivel dintre lovituri vor produce click-uri cu un caracter schimbător.
+Există însă o cale elegantă de a ocoli această problemă — plasarea unui compresor înaintea gate-ului folosit ca generator de click.
