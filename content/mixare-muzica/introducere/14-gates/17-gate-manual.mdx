@@ -1,0 +1,79 @@
+---
+title: 'Problema gate-urilor'
+description: 'Problema gate-urilor'
+order: 17
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Inconsecvența procesării prin gate este consecința variațiilor de nivel, care fac parte în mod natural din dinamica unei interpretări reale.
+Dacă luăm tobele ca exemplu, ar fi excelent să putem aplica setări diferite de gate pentru fiecare lovitură în parte, însă automatizarea unui gate în acest scop ar fi extrem de greoaie.
+Din fericire, secvențioarele audio (DAW-urile) oferă o alternativă care ne permite să facem exact acest lucru — o tehnică pe care o vom numi în continuare **gating manual**.
+Ce-i drept, gating-ul manual nu va produce efectul caracteristic pe care îl au multe plug-in-uri de gate și uneori poate fi lipsit de sens — procesarea individuală a 128 de lovituri de toba mare (kick) poate deveni o sarcină tediousă (obositoare).
+Însă în cazul instrumentelor precum tomurile, unde numărul de lovituri este mai redus, tratarea individuală a fiecăreia este complet realizabilă.
+Gating-ul manual funcționează la fel de bine și pe voci, chitări electrice și multe alte instrumente.
+De obicei durează mai mult decât gating-ul standard, dar ne oferă un control mult mai precis asupra rezultatului final.
+
+> **Atunci când este justificat, gating-ul manual reprezintă o alternativă extrem de puternică la gating-ul standard.**
+
+În esență, gating-ul manual este ca un gate procesat offline pe care îl putem finisa ulterior.
+Acesta implică trei etape principale, ilustrate în Figura 19.14:
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/19-14.jpg"
+    alt="Figura 19-14"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 19-14:</p>Gating-ul manual folosind funcția strip
+  silence. De sus în jos: cele trei lovituri originale de tom, semnalul după
+  aplicarea strip silence, după ajustarea limitelor (boundary adjustments) și
+  după aplicarea fade-urilor. Observați că au fost ajustate doar limita din
+  dreapta a celei de-a doua regiuni (a treia lovitură de tom) și lungimile
+  diferite ale fade-urilor pentru fiecare regiune în parte. Această captură de
+  ecran utilizează patru piste pentru a ilustra fiecare pas pe rând; în mod
+  normal, executăm toți acești pași direct pe pista originală.
+</div>
+
+- **Strip silence** (eliminarea tăcerii);
+- **Ajustarea limitelor** (boundary adjustments);
+- **Fade-urile** (fade-in și fade-out).
+
+**Strip silence** este un proces offline care elimină porțiunile silențioase din regiunile audio.
+Funcționează prin tăierea (splicing) unei regiuni audio în regiuni mai mici ce conțin doar semnalele pe care vrem să le păstrăm.
+Figura 19.15 prezintă fereastra „Detect Silence” din Cubase.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/19-15.jpg"
+    alt="Figura 19-15"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 19-15:</p>Fereastra „Detect Silence” din Cubase. În
+  această captură de ecran, procesul este aplicat pe trei lovituri de tom. Din
+  cauza proximității strânse dintre primele două lovituri, acestea ajung să fie
+  incluse în aceeași regiune audio. Este evident, de asemenea, că decay-ul celei
+  de-a treia lovituri este tăiat/scurtat (dar și o parte din zgomotul de fundal
+  / sângerare (spill), care nu este vizibil în această ilustrație). Meritǎ
+  reținut că decay-ul de nivel scăzut care este tăiat aici s-ar putea să nu fie
+  audibil decât dacă tomul este ascultat în solo. Oricum ar fi, putem ajusta
+  ulterior marginile regiunilor audio.
+</div>
+
+Alte DAW-uri oferă parametri similari cu cei din această imagine.
+Asemănarea cu un gate clasic este evidentă prin prezența pragurilor de _open threshold_ și _close threshold_.
+De asemenea, sunt disponibili parametri pentru timpul minim de „gate open” și „gate close”, precum și timpi de _pre-roll_ și _post-roll_, care creează margini de protecție (pad margins) înainte și după fiecare tăietură.
+Timpul de pre-roll este crucial; fără el, procesul va genera cel mai probabil zgomote de tip click/pop, la fel ca un gate normal cu un atac foarte scurt.
+
+Scopul principal al etapei _strip silence_ este împărțirea semnalului util în regiuni logice.
+Delimitarea exactă a fiecărei regiuni este mai puțin critică în acest stadiu, deoarece pasul următor presupune ajustarea individuală a marginilor.
+Dacă setăm corespunzător threshold-ul și timpul de pre-roll la strip silence, modificarea începutului fiecărei regiuni s-ar putea să nici nu mai fie necesară.
+Sfârșitul regiunii se ajustează pentru a se potrivi cu durata de decay pe care o urmărim, ținând cont de nivel și de cantitatea de zgomot/sângerare (_spill_).
+Ultimul pas al gating-ului manual constă în aplicarea fade-urilor la începutul și sfârșitul fiecărei regiuni (fade-in / fade-out), ceea ce are un efect similar cu funcțiile de _attack_ și _release_ ale unui gate obișnuit.
+Putem seta durate diferite de fade pentru fiecare regiune în parte și, în mod normal, avem control complet asupra formei (curbei) fiecărui fade.

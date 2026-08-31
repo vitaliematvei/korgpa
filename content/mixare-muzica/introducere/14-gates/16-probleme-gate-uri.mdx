@@ -1,0 +1,21 @@
+---
+title: 'Problema gate-urilor'
+description: 'Problema gate-urilor'
+order: 16
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Ceea ce este procesat prin gate și modul în care are loc această procesare sunt determinate în mare măsură de setarea threshold-ului (pragului).
+Ideal, ne-am dori ca materialul trecut prin gate să prezinte cât mai puține inconsecvențe de procesare.
+Acest lucru poate fi realizat dacă setarea statică a threshold-ului afectează întotdeauna părți identice ale semnalului, ceea ce de multe ori nu se întâmplă.
+De exemplu, dacă două lovituri de tom variază ca nivel, gate-ul va atenua o porțiune mai mare din atacul și decay-ul natural al loviturii mai slabe.
+Loviturile de premier (snare) pot fi aproximativ la același nivel, dar dacă într-o secțiune specifică toboșarul cântă un crescendo, primele lovituri mai încet s-ar putea să se afle sub threshold și, prin urmare, să fie reduse la tăcere complet (în acest caz specific, putem trece gate-ul în bypass pentru moment).
+
+În mod normal, punem în loop o secțiune specifică în timp ce configurăm gate-ul.
+Odată ce suntem mulțumiți de setări, este important să facem o ascultare cap-coadă — rulând piesa în solo de la început până la sfârșit, pentru a ne asigura că gate-ul funcționează așa cum am intenționat pe toată durata piesei.
+Chiar și în cazul tomurilor care cântă doar ocazional, este înțelept să ascultăm de la început până la sfârșit (în loc să sărim direct de la o lovitură la alta), pentru a ne asigura că nu apar declanșări false / accidentale (în cea mai mare parte a acestei ascultări, sperăm doar să ne bucurăm de tăcere).
+
+În mod tradițional, gate-urile sunt plasate înaintea compresoarelor, deoarece natura compresorului de a reduce plaja dinamică face ca gating-ul să devină o sarcină mai dificilă.
+Cu toate acestea, într-un mixer software (DAW), nu ar fi considerată o practică neobișnuită plasarea unui compresor de nivelare (pentru balans) înaintea gate-ului, astfel încât inconsecvențele de nivel să fie reduse înainte ca semnalul să fie procesat prin gate.
+Gate-ul poate fi urmat în continuare de un alt compresor cu un rol diferit, cum ar fi adăugarea de impact.

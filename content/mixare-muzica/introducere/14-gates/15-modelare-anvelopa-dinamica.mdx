@@ -1,0 +1,94 @@
+---
+title: 'Modelarea anvelopei dinamice'
+description: 'Modelarea anvelopei dinamice'
+order: 15
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+La fel ca compresoarele, gate-urile sunt folosite pentru a remodela anvelopa dinamică a instrumentelor, în special a celor de percuție.
+Putem spune că un compresor acționează asupra tranzientului (odată ce acesta depășește pragul/threshold-ul) și asupra a ceea ce urmează imediat după el (datorită funcției de release).
+Un gate acționează de ambele părți ale tranzientului (în esență, asupra porțiunii de semnal aflate sub threshold).
+Totuși, un gate poate afecta și tranzientul în sine, prin intermediul timpului de atac (attack).
+
+Așa cum am discutat în Capitolul 17, o parte din obținerea acelui efect de „punch” se realizează prin scurtarea duratei instrumentelor de percuție.
+De regulă, decay-ul natural pe care încercăm să-l scurtăm se află sub threshold, ceea ce face ca gate-ul să fie instrumentul ideal pentru această sarcină.
+Este o tehnică foarte veche și comună: aplici un gate pe un instrument de percuție, iar din timpii de release (și hold) determini cât de mult „punch” vrei să obții.
+La fel ca în cazul compresoarelor, trebuie să luăm în calcul senzația ritmică rezultată în urma procesării.
+Deoarece gate-ul comprimă/scurtează durata fiecărei lovituri, rezultatul final al percuțiilor procesate tinde să fie mult mai strâns (tighter) și mai precis.
+
+Figura 19.11 ilustrează această tehnică.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/19-11.jpg"
+    alt="Figura 19-11"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 19-11:</p>Adăugarea de „punch” unui instrument de
+  percuție folosind un gate. Threshold-ul este setat la baza atacului natural,
+  iar parametrul range este fixat la o valoare moderată spre mare. Timpul de
+  release, împreună cu hold-ul, va determina cât de repede este atenuat decay-ul
+  natural și, implicit, durata totală a loviturii.
+</div>
+
+Threshold-ul este setat la baza atacului natural și deasupra decay-ului natural.
+Parametrul range este setat de obicei pe o valoare moderată spre mare.
+Setările de release și hold determină cât de repede este atenuat decay-ul natural (setările mai lungi lăsând un decay natural mai lung).
+Dacă vrem doar să îmblânzim decay-ul natural, nu să-l tăiem de tot, putem folosi valori mai mici pentru range.
+
+> **Gate-urile sunt utilizate frecvent pentru a adăuga „punch” instrumentelor de percuție.**
+
+De asemenea, putem folosi un gate pentru a accentua atacul natural, a scoate în evidență tranzienții, a-i reînvia sau pentru a reconstrui dinamica pierdută.
+Acest lucru se face de obicei prin setarea threshold-ului undeva pe parcursul tranzientului și alegerea unui range foarte mic, astfel încât tot ce se află sub threshold să fie atenuat ușor.
+Este posibilă și amplificarea semnalului de ieșire (output gain), astfel încât tranzientul să devină mai puternic decât înainte, în timp ce tot ce este sub threshold revine la nivelul inițial.
+Figura 19.12 ilustrează acest proces.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/19-12.jpg"
+    alt="Figura 19-12"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 19-12:</p>
+  Acesta este un proces de extindere a tranzienților (transient shaping) obținut prin procesare dinamică. 
+  Iată adaptarea textului în limba română, păstrând terminologia tehnică utilizată în producția muzicală:
+
+Un noise gate configurat pentru a accentua atacul unui premier (snare).
+Pragul (threshold-ul) gate-ului este setat la jumătatea atacului său natural.
+După gating, ambele părți ale tranzientului își reduc nivelul, inclusiv declinul (decay-ul) premierului.
+Dacă amplificăm semnalul de la ieșirea gate-ului, materialul audio aflat sub prag revine la nivelul său original, însă atacul premierului ajunge să fie mai puternic comparativ cu semnalul de dinainte de gating.
+
+</div>
+
+De reținut este că în Figura 19.12 threshold-ul a fost setat mai sus decât baza atacului natural.
+Dacă threshold-ul ar fi fost setat mai jos de atât, acțiunea gate-ului ar fi alterat cel mai probabil anvelopa dinamică a premierului (snare) într-un mod drastic și nedorit.
+
+Figura 19.13 explică de ce această aplicație specifică este puțin mai dificil de realizat cu un gate decât cu un compresor.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/19-13.jpg"
+    alt="Figura 19-13"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 19-13:</p>
+  Un gate care modifică în mod distructiv anvelopa dinamică a unui premier
+  (snare). Din cauza setării scăzute a threshold-ului (pragului), funcția de
+  release a alterat anvelopa dinamică într-un mod drastic, rezultând o nouă
+  formă de undă ce nu mai seamănă cu semnalul de intrare.
+</div>
+
+Așa cum am menționat, funcțiile de attack și release ale unui gate tind să fie mai intruzive din cauza setărilor lor de obicei foarte scurte.
+În timp ce pe un gate am seta timpi rapizi atât pentru attack, cât și pentru release pentru această sarcină, pe un compresor am alege timpi mai lungi, mai puțin intruzivi.
+Un rezultat al acestui fapt este că, atunci când folosim gate-uri pentru acest rol, rezultatele tind să fie mai bruște/agresive („jumpy”) decât cele obținute cu un compresor.
+Din aceste motive, valoarea range-ului la gate este menținută cât mai mică posibil și se folosește funcția de look-ahead.
