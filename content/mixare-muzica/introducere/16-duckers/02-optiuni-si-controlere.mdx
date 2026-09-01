@@ -1,0 +1,96 @@
+---
+title: 'Funcționare și controale'
+description: 'Funcționare și controale'
+order: 2
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Privind înapoi la arhitectura internă a unui gate, tot ce trebuie făcut pentru a transforma un gate într-un **ducker** este inversarea ieșirilor pragului (cele de peste și de sub prag).
+Într-adevăr, duckerele oferă exact aceleași controale ca gate-urile și funcționează într-un mod similar.
+Singura diferență dintre cele două este că, în timp ce un gate atenuează semnalele aflate _sub_ prag, un ducker atenuează semnalele aflate _peste_ prag.
+Cu alte cuvinte, odată ce semnalul depășește pragul, acesta este atenuat (redus ca volum).
+Cantitatea de atenuare este fixă și determinată de parametrul **range** (atenuarea maximă).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/21-2.jpg"
+    alt="Figura 22-2"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 21-2:</p>**Curbă de transfer a unui ducker.**
+  Semnalele care depășesc pragul (*threshold*) sunt atenuate cu o cantitate
+  fixă, determinată de parametrul *range* (20 dB în această ilustrație).
+</div>
+
+Rațiunea de a atenua un semnal cu o cantitate fixă atunci când _el însuși_ depășește un anumit prag este mai puțin întâlnită.
+Însă există numeroase motive pentru a atenua un semnal atunci când un **alt semnal diferit** depășește un prag — cum este exemplul radio de mai sus, unde vrem ca muzica să scadă în volum când vorbește DJ-ul.
+
+Pentru a realiza acest lucru, folosim intrarea **key input** (sau sidechain):
+
+- Semnalul care va fi atenuat (de ex. muzica) este trimis în intrarea principală a ducker-ului.
+- Semnalul de comandă (de ex. vocea) este trimis în intrarea _key input_.
+
+Ori de câte ori vocea depășește pragul ducker-ului, muzica va fi atenuată.
+Aplicațiile de ducking folosesc întotdeauna această configurație de tip semnal comandat / semnal de comandă.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/21-3.jpg"
+    alt="Figura 22-3"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 21-3:</p>**Configurația de ducking (semnal procesat
+  / semnal de comandă).** Semnalul care urmează să fie atenuat este trimis în
+  intrarea principală a ducker-ului, în timp ce semnalul care declanșează
+  efectul este trimis în intrarea *key input* (sidechain). Dacă muzica este
+  semnalul atenuat (*ducked signal*), iar vocea este semnalul de comandă
+  (*ducking signal*), de fiecare dată când vocea depășește pragul ducker-ului,
+  muzica va fi atenuată.
+</div>
+
+**Atacul, release-ul și funcțiile avansate:**
+
+După cum se observă în procesare, reducerea câștigului asupra muzicii se aplică treptat.
+Acest lucru se datorează timpilor de **attack** și **release**, care previn apariția zgomotelor de tip „clic”:
+
+- **Attack-ul** determină cât de repede este atenuat semnalul procesat (muzica).
+- **Release-ul** determină cât de repede revine semnalul la nivelul său normal.
+
+Dacă în timpul atacului muzica încă interferează cu vocea, sau dacă la finalul muncii vocale revenirea muzicii este prea vizibilă, scurtarea timpilor de attack și release poate provoca clicuri deranjante.
+Aici intervine funcția **look-ahead** (anticiparea): ducking-ul începe și se termină puțin mai devreme, permițându-ne să setăm timpi muzicali mai naturali.
+De asemenea, parametrul **hold** oferă un control suplimentar asupra comportamentului ducker-ului odată ce semnalul din sidechain scade sub prag.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/21-4.jpg"
+    alt="Figura 22-4"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 21-4:</p>**Atenuarea muzicii în raport cu vocea
+  (Ducking).** Graficul de sus arată muzica înainte de atenuare, prezentată fără
+  variații de nivel pentru simplificare. Graficul din mijloc arată vocea care
+  declanșează efectul de *ducking*. Graficul de jos arată muzica după atenuare,
+  folosind o valoare a parametrului *range* de –6 dB. Liniile cu săgeți indică
+  punctele în care vocea depășește pragul (*threshold*), reprezentând momentele
+  în care reducerea de câștig (*gain reduction*) a ducker-ului începe să crească
+  și să scadă.
+</div>
+
+**Ducker real versus Compresor folosit ca ducker:**
+
+Așa cum s-a menționat, compresoarele sunt adesea utilizate pe post de ducker.
+Este important de subliniat diferența dintre un ducker dedicat și un compresor folosit în acest scop:
+
+- **La un ducker:** Cantitatea de atenuare este **fixă** (dictată de _range_), indiferent cât de tare este semnalul de comandă.
+- **La un compresor:** Cantitatea de atenuare **variază** în funcție de cât de mult depășește semnalul din sidechain nivelul pragului.
+  Aceasta înseamnă că, pe măsură ce vocea oscilează ca volum, nivelul de atenuare aplicat muzicii va oscila și el continuu.

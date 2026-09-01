@@ -1,0 +1,96 @@
+---
+title: 'Salvare și restaura parametrii unui plug-in audio'
+description: 'Salvare și restaura parametrii unui plug-in audio'
+order: 18
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Tutorialul prezent arată cum se pot salva și restaura parametrii unui plug-in audio (cum ar fi un potentiometru/slider de Gain) folosind structura **XML** și clasa `AudioProcessorValueTreeState` din cadrul framework-ului **JUCE**.
+
+---
+
+### Pasul 1: Inițializarea stării în Constructor (`PluginProcessor.cpp`)
+
+În primul rând, trebuie să asociezi starea arborelui de valori (`ValueTreeState`) cu un identificator (un nume de etichetă XML).
+
+1. Deschide fisierul `PluginProcessor.cpp`.
+2. În constructor, **după** ce ai creat și adăugat toți parametrii (de exemplu, slider-ul de gain), inițializează obiectul `state`:
+
+```cpp
+// Asigură-te că linia se află DUPĂ definirea/adăugarea parametrilor
+audioProcessor.treeState.state = juce::ValueTree("SavedParams");
+
+```
+
+---
+
+### Pasul 2: Implementarea Salvării Stării — `getStateInformation`
+
+Această metodă este apelată automat de către DAW (Ableton, FL Studio, Logic etc.) atunci când utilizatorul salvează proiectul.
+
+1. Caută metoda `getStateInformation (MemoryBlock& destData)` în `PluginProcessor.cpp`.
+2. Creează un element XML din starea parametrilor și convertește-l în format binar pentru DAW:
+
+```cpp
+void NewProjectAudioProcessor::getStateInformation (MemoryBlock& destData)
+{
+    // 1. Creează un obiect XML bazat pe structura curentă a parametrilor
+    std::unique_ptr<XmlElement> xml (parameters.state.createXml());
+
+    // 2. Copiază structura XML în blocul de memorie binară al DAW-ului
+    copyXmlToBinary (*xml, destData);
+}
+
+```
+
+---
+
+### Pasul 3: Implementarea Restaurării Stării — `setStateInformation`
+
+Această metodă este apelată de DAW când proiectul salvat este redeschis, pentru a reîncărca valorile anterioare.
+
+1. Caută metoda `setStateInformation (const void* data, int sizeInBytes)` în `PluginProcessor.cpp`.
+2. Extrage XML-ul din datele binare și aplică-l înapoi asupra parametrilor:
+
+```cpp
+void NewProjectAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+{
+    // 1. Reconstruiește elementul XML din datele binare primite
+    std::unique_ptr<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+
+    // 2. Verifică dacă XML-ul există și are eticheta corectă ("SavedParams")
+    if (xmlState.get() != nullptr)
+    {
+        if (xmlState->hasTagName (parameters.state.getType()))
+        {
+            // 3. Restaurează starea parametrilor din XML
+            parameters.state = ValueTree::fromXml (*xmlState);
+        }
+    }
+}
+
+```
+
+---
+
+### Pasul 4: Eliminarea Valorilor Implicite Hardcodate (Foarte Important!)
+
+Pentru ca valorile salvate în XML să nu fie suprascrise la pornirea plug-in-ului cu o valoare fixă:
+
+1. În **`PluginProcessor.cpp`**, comentează sau șterge liniile care setează o valoare inițială fixă în constructor (ex: `gain = -5.0f`).
+2. În **`PluginEditor.cpp`**, comentează sau șterge liniile din constructor care setează valoarea inițială a slider-ului (ex: `gainSlider.setValue(-5.0)`).
+
+---
+
+### Pasul 5: Testare și Verificare
+
+1. Compilează și construiește proiectul (**Build**).
+2. Deschide plug-in-ul într-un DAW (ex: Ableton Live).
+3. Modifică valoarea potentiometrului (de exemplu, setează-l la `-29.08 dB`).
+4. Salvează proiectul în DAW și închide-l.
+5. Redeschide proiectul: potentiometrul își va păstra poziția salvată (`-29.08 dB`).
+
+{/* am ramas https://www.youtube.com/watch?v=MwtJCG_o6W8&list=PLLgJJsrdwhPxa6-02-CeHW8ocwSwl2jnu&index=19 */}
+
+{/* Juce Tutorial 18- Using a Gain Ramp to Eliminate Sound Artifacts */}
