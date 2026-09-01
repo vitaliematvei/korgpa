@@ -1,0 +1,62 @@
+---
+title: 'In practica'
+description: 'In practica'
+order: 3
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Deși descrierile tehnice pot părea destul de complexe, utilizarea principală a expanderelor în mixaj este foarte simplă: **o alternativă mai fină pentru gate-uri**.
+
+Gate-urile au tendința de a fi intruzive, mai ales din cauza tranziției bruște dintre procesare și neprocesare.
+Un expander, datorită raportului său (ratio), oferă o tranziție mult mai treptată.
+Indiferent dacă urmărim o atenuare mare sau mică, expander-ul oferCorect: oferă rezultate mai fluide.
+Ideea este că, în timp ce un semnal procesat cu un gate sare direct de la un nivel la altul atunci când trece pragul, un semnal procesat cu un expander **alunecă** lin între niveluri.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/20-4.jpg"
+    alt="Figura 20-4"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 20-4:</p>Gate versus expander. În rândul de sus,
+  atât gate-ul, cât și expander-ul sunt folosite pentru a atenua drastic
+  semnalul de intrare. În timp ce gate-ul comută instantaneu între o atenuare
+  mare și lipsa atenuării, expander-ul alunecă lin între cele două. Chiar și
+  atunci când se folosește o valoare mică a parametrului range (rândul de jos),
+  aceeași natură progresivă a expander-ului oferă un efect mult mai puțin
+  intruziv.
+</div>
+
+Această natură progresivă are un efect important: la un gate, timpii de _attack_ și _release_ sunt folosiți deseori pentru a îndulci acțiunea bruscă a procesării.
+La un expander, această responsabilitate îi revine raportului (ratio), lăsând _attack_-ul și _release_-ul să se ocupe strict de aspectele muzicale ale dinamicii semnalului.
+
+**Limitări și scenarii de utilizare:**
+
+- **Atenuări mari (Large Ranges):** Dacă obiectivul este reducerea completă la tăcere a semnalelor sub prag, doar un gate poate garanta acest lucru.
+  Expander-ul face semnalele foarte slabe neauzibile, dar cele aflate imediat sub prag s-ar putea încă auzi.
+  Pentru a le atenua, trebuie crescut raportul.
+  Însă, cu cât raportul este mai mare, cu atât expander-ul se comportă mai mult ca un gate, pierzându-și tranziția fină.
+  Din acest motiv, expanderele sunt mai potrivite pentru atenuări moderate.
+- **Accentunarea treptată:** Dacă un gate ar putea vorbi, ar spune: _„Dacă e peste pragul meu, îl las să treacă; dacă e sub prag, îl atenuez.”_ Dacă un expander ar vorbi, ar spune: _„Dacă e sub pragul meu, îl atenuez, iar cu cât e mai încet, cu atât îl atenuez mai mult.”_
+- **Păstrarea detaliilor:** Spre deosebire de gate, care atenuează în mod egal tot ce scade sub prag, expander-ul păstrează mai bine detaliile mai tari (cele aflate imediat sub prag) și reduce mai mult detaliile foarte slabe.
+
+Această abordare este ideală atunci când vrem să scoatem în evidență elementele principale atenuând fundalul fără a-i distruge caracterul natural — de exemplu, când vrem să adăugăm viață și dinamică unui loop de tobă plat.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/20-5.jpg"
+    alt="Figura 20-5"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 20-5:</p>Atenuarea treptată prin utilizarea unui
+  expander. Acest tip de expansiune ne permite să păstrăm mai multe dintre
+  detaliile puternice aflate sub prag și mai puține din detaliile cu un nivel
+  foarte scăzut.
+</div>

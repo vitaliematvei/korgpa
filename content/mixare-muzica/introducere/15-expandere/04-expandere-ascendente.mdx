@@ -1,0 +1,76 @@
+---
+title: 'Expanderele ascendente (Upward Expanders)'
+description: 'Expanderele ascendente (Upward Expanders)'
+order: 4
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+Motivele pentru care expanderele ascendente sunt atât de greu de găsit sunt cu adevărat surprinzătoare.
+Atât cu ajutorul compresoarelor, cât și al gate-urilor, putem face semnalele puternice și mai puternice, dar trebuie să urmăm o cale ocolită: să facem mai încet ce se află sub prag (threshold), iar apoi să ridicăm nivelul întregului semnal (prin _make-up gain_).
+
+Expanderele ascendente sunt concepute direct pentru a face semnalele puternice și mai puternice, ceea ce le transformă în instrumentul ideal pentru:
+
+- Accentuarea atacului natural al instrumentelor;
+- Accentuarea sau revitalizarea tranzienților;
+- Reconstruirea dinamicii pierdute;
+- Adăugarea de energie, claritate (_snap_) sau impact (_punch_).
+
+O curbă de transfer a unui expander ascendent cu un raport de 0.5:1 (un număr sub-unitar ce indică comportamentul ascendent, deși unii producători îl vor nota ca 1:2) arată că, pentru o creștere de 20 dB a intrării peste prag, ieșirea crește cu 40 dB.
+Cu aceste setări specifice, un semnal de intrare care ajunge la 0 dB ar ieși la +40 dB.
+Evident, acest lucru ar duce la o distorsiune severă (_hard clipping_) sau la suprasolicitarea majorității sistemelor.
+
+În practică, raporturile utilizate în expansiunea ascendentă sunt foarte blânde și rareori coboară sub 0.8:1.
+Cu toate acestea, dacă semnalul de intrare atinge 0 dB, ieșirea va depăși această limită.
+Prin urmare, controlul nivelului de ieșire (_output level_) este folosit frecvent pentru a reduce nivelul general.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/20-6.jpg"
+    alt="Figura 20-6"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 20-6:</p>**Un expander ascendent.** Semnalele
+  aflate sub pragul setat (threshold) rămân la același nivel, în timp ce
+  semnalele care depășesc pragul devin mai puternice în funcție de setările
+  raportului (ratio). Cu setările prezentate în această ilustrație, orice semnal
+  de intrare care depășește –20 dB va trece peste limita de 0 dB la ieșire și ar
+  putea suprasolicita sistemul (producând distorsiuni/clipping).
+</div>
+
+**Comportamentul parametrilor și al câștigului:**
+
+În cazul expansiunii ascendente, nu mai vorbim despre reducere de câștig (_gain reduction_), ci despre **creștere de câștig** (_gain increase_):
+
+- **Attack-ul** controlează cât de repede poate crește accentuarea câștigului.
+- **Release-ul** determină cât de repede scade această accentuare.
+
+Dacă procesăm un premier (_snare_) și pragul este setat să capteze atacul, un _attack_ mai scurt înseamnă păstrarea unei părți mai mari din atacul natural, iar un _release_ mai scurt înseamnă procesarea unei porțiuni mai mici din ceea ce urmează după el.
+
+Atât funcția de _attack_, cât și cea de _release_ tind să fie mult mai transparente la expanderele ascendente decât la un compresor, deoarece, în majoritatea cazurilor, expander-ul lucrează în direcția semnalului, nu împotriva lui.
+În ciuda dominanței compresoarelor și gate-urilor, expanderele ascendente oferă o alegere mult mai avantajoasă atunci când scopul este de a face ceva să sune mai tare.
+Atât compresoarele, cât și gate-urile sunt concepute pentru a reduce câștigul; expanderele ascendente sunt concepute pentru a-l crește.
+
+Dacă vrem să accentuăm impactul unei tobe mari (_kick_), expansiunea ascendentă va oferi cele mai naturale rezultate, deoarece pur și simplu întărește un atac deja aflat în creștere.
+Expanderele ascendente sunt, cel mai probabil, cel mai potrivit instrument atunci când vine vorba de a face semnalele audio mai puternice.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/20-7.jpg"
+    alt="Figura 20-7"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 20-7:</p>**Efectul timpilor de attack și release
+  asupra expansiunii ascendente.** Cu cât *attack*-ul este mai scurt, cu atât
+  mai rapid este amplificat semnalul care depășește pragul, având ca rezultat un
+  efect mai pronunțat. Un *release* lung poate fi folosit pentru a accentua
+  stingerea naturală (*decay-ul*) a sunetului.
+</div>
+
+{/* am ramas 21 Duckers .392 */}

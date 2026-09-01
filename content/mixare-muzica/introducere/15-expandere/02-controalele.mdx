@@ -1,0 +1,66 @@
+---
+title: 'Controale Expandere'
+description: 'Controale Expandere'
+order: 2
+category: 'Dinamica'
+level: 'Incepator'
+---
+
+**Se spune despre un expander că face semnalele încetinite și mai încetinite.
+** Raportul (ratio), la fel ca la compresoare, este exprimat prin notația intrare-ieșire.
+Se poate observa că, la un raport de 1:2, o scădere de 20 dB sub prag (threshold) la intrare are ca rezultat o scădere de 40 dB la ieșire.
+Din punct de vedere vizual, porțiunea de semnal care se află sub prag este „întinsă” în jos pentru a fi atenuată.
+
+Este interesant de remarcat că, la un raport de 1:100, funcția de transfer a expander-ului arată ca un **gate** (poartă de zgomot).
+Într-adevăr, un gate este adesea un expander cu un raport foarte mare, iar majoritatea procesoarelor sunt de tip expander/gate, în loc să fie exclusiv una sau alta.
+În mod obișnuit, avem un control care ne permite să reglăm raportul între 1:1 și 1:100.
+Pe unele echipamente hardware, un comutator va schimba un gate într-un expander cu un raport fix, adesea 1:2.
+
+Raportul de expansiune este adesea notat ca 2:1 în loc de 1:2.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/20-2.jpg"
+    alt="Figura 20-2"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 20-2:</p> Functie de transfer al unui expander la
+  diferite ratio
+</div>
+Acest lucru se face din rațiuni de comoditate, deși nu respectă notația standard
+„intrare-ieșire”. În acest context, un raport de expansiune de 1:8 este mai mare
+decât un raport de 1:2.
+
+**Parametri și caracteristici cheie:**
+
+- **Soft-knee:** Expanderele oferă rareori opțiunea de _soft-knee_, ceea ce înseamnă că tranziția între procesare și neprocesare la nivelul pragului poate fi destul de bruscă.
+- **Attack și Release:** La fel ca la compresoare, o cale de a reduce aceste artefacte este utilizarea timpilor de _attack_ și _release_.
+  Nivelul de reducere a câștigului (gain reduction) este determinat de prag și raport, iar _attack_-ul și _release_-ul încetinesc modificările acestei reduceri:
+- O schimbare de la –40 dB la 0 dB va fi încetinită de **attack**.
+- O schimbare de la 0 dB la –40 dB va fi încetinită de **release**.
+- Nici _attack_-ul, nici _release_-ul nu au legătură directă cu setarea pragului, ci doar încetinesc variațiile de reducere a câștigului.
+
+- **Funcția Hold:** Foarte frecventă, aceasta poate fi implementată în două moduri:
+- _Tip compresor:_ Modifică rata de release, astfel încât reducerea câștigului începe foarte lent.
+- _Tip gate:_ „Îngheață” reducerea câștigului pe durata perioadei de hold, imediat ce semnalul a scăzut sub prag.
+
+- **Range (Atenuarea maximă):** Definește cantitatea maximă de atenuare aplicată semnalului.
+  De exemplu, un _range_ de –20 dB înseamnă că semnalul nu va fi atenuat niciodată cu mai mult de 20 dB.
+  <div className="my-4 flex justify-center">
+    <img
+      src="/images/mixing/20-3.jpg"
+      alt="Figura 20-3"
+      className="h-auto w-9/10 max-w-xs"
+    />
+  </div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 20-3:</p>Funcția Range pe un expander. Linia gri
+  indică curba unei atenuări simple de 20 dB, care stabilește limita inferioară
+  (plafonul maxim de atenuare) pentru efectul de expansiune. Cu rezultanta
+  reprezentată de curba raportului (linia neagră), cantitatea maximă de atenuare
+  nu va depăși niciodată 20 dB.
+</div>
