@@ -1,0 +1,32 @@
+---
+title: 'Multitap delay'
+description: 'Multitap delay'
+order: 11
+category: 'Delay'
+level: 'Incepator'
+---
+
+Mecanismul de feedback, în ciuda utilizării sale pe scară largă, are unele limitări: ecourile sunt spațiate la intervale regulate, nivelul lor scade într-un mod previzibil, iar conținutul lor în frecvență este corelat.
+Spunem că fiecare ecou depinde de ecoul care îl precede.
+Uneori avem o idee foarte clară despre numărul exact de ecouri pe care le dorim, care ar trebui să fie nivelul lor sau unde ar trebui să fie panoramate și ne dorim control complet asupra spațierii și conținutului lor în frecvență.
+Un _multitap delay_ este conceput pentru a oferi un astfel de control precis.
+
+Convertirea unui tape delay standard într-un multitap delay ar presupune adăugarea, să zicem, a șapte capete de redare (fiecare fiind considerat un _tap_ sau un punct de captare), oferindu-ne posibilitatea de a poziționa fiecare capăt la o anumită distanță față de capul de înregistrare și asigurând o ieșire separată pentru fiecare.
+Acestea sunt cerințe destul de greu de realizat pentru un dispozitiv mecanic, dar nu există nicio problemă în implementarea delay-urilor multitap în domeniul digital.
+Figura 22.10 prezintă plugin-ul PSP 608 (un delay cu opt puncte de captare / _taps_).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/22-10.jpg"
+    alt="Figura 22-10"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 22-10:</p>Delay ping-pong pur
+</div>
+
+Avem control individual asupra temporizării fiecărui ecou (glisierele orizontale), amplificării (_gain_), poziției de panoramare (_pan_), trimiterii de feedback și filtrării.
+
+Multitap delay-ul permite un control precis asupra fiecărui ecou în parte.

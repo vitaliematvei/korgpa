@@ -1,0 +1,61 @@
+---
+title: 'Delay-ul cu modulare și feedback'
+description: 'Delay-ul cu modulare și feedback'
+order: 9
+category: 'Delay'
+level: 'Incepator'
+---
+
+Figura 22.6 prezintă plugin-ul Digidesign Mod Delay II în varianta sa mono.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/22-6.jpg"
+    alt="Figura 22-6"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 22-6:</p>Digidesign DigiRack Mod Delay II
+</div>
+
+Plugin-ul oferă funcționalitatea standard a unui DDL: amplificarea semnalului de intrare (_input gain_), raportul dintre semnalul procesat și cel neprocesat (_wet/dry mix_), un filtru trece-jos (LPF), timpul de delay setat în milisecunde, adâncimea și rata de modulare, precum și controlul de feedback.
+Filtru LPF este plasat în interiorul buclei de feedback pentru a simula atenuarea frecvențelor înalte specifică benzilor magnetice.
+În cazul plugin-ului Mod Delay II, comutatorul de fază inversează pur și simplu faza semnalului de intrare, nu pe cea a semnalului din bucla de feedback.
+
+Parametrul de adâncime (_depth_) este exprimat de obicei în procente și determină intervalul de variație al timpului de delay.
+De exemplu, la un timp de delay de 600 ms, o adâncime de 100% înseamnă o diferență de 600 ms între cel mai scurt și cel mai lung delay, ceea ce va rezulta într-un timp de delay cuprins în intervalul 300–900 ms.
+Merită menționat că, cu cât timpul de delay este mai mare, cu atât efectul parametrului _depth_ va fi mai accentuat — în timp ce o adâncime de 50% aplicată la 6 ms înseamnă o diferență de doar 3 ms, aceeași adâncime de 50% aplicată la 600 ms va genera o diferență de 300 ms.
+Rata de modulare (_rate_) poate fi exprimată în Hz, dar poate fi și sincronizată cu tempoul piesei.
+Există o legătură strânsă între setările de adâncime și cele de rată: cu cât adâncimea este mai mare, cu atât rata trebuie să fie mai mică pentru ca efectul să nu sune ciudat sau nefiresc.
+
+Sunt de remarcat și controalele legate de tempo din Figura 22.6, care reprezintă o funcționalitate extrem de comună a delay-urilor digitale.
+
+În esență, în loc să setezi timpul de delay direct în milisecunde, acesta este stabilit pe baza valorii unei note muzicale.
+Pe lângă valorile obișnuite, cum ar fi pătrimile (notele doimi/pătrimi etc.), pot exista și opțiuni pentru triolete sau note cu punct.
+Deseori, o pătrime cu punct va apărea ca `1/4D`, iar o doime în triolet va apărea ca `1/2T`.
+Însă funcționalitatea cu adevărat utilă a DDL-urilor este capacitatea lor de sincronizare cu tempoul (_tempo-sync_) — odată stabilită durata unei note, timpul de delay se va modifica automat în funcție de schimbările de tempo ale piesei.
+În acest fel, pe măsură ce piesa încetinește, timpul de delay se prelungește.
+La o unitate de delay digitală hardware, acest lucru necesită adesea o sincronizare bazată pe MIDI clock.
+Plugin-urile, pe de altă parte, se sincronizează nativ cu tempoul variabil al sesiunii din DAW.
+În cazurile în care muzicienii nu au înregistrat după metronom (_click_), un proces de mapare a tempoului (_tempo-mapping_) poate asocia schimbările de tempo pe rigla de tempo a proiectului.
+
+Pornind de la funcțiile de bază prezentate în Figura 22.6, delay-urile pot include mult mai multe caracteristici și controale.
+Unul dintre modelele mai avansate — PSP 84 — este prezentat în Figura 22.7. Printre funcționalitățile sale se numără linii de delay separate pentru canalele stânga și dreapta, o sursă de modulare cu forme de undă selectabile și faze relative de modulare stânga/dreapta, un filtru rezonant cu trei moduri selectabile, un control de saturație (_drive_) pentru a simula saturația benzilor analogice și chiar un reverb integrat.
+În plus, diferitele blocuri componente pot fi configurate într-un mod modular, tipic sintetizatoarelor.
+De exemplu, secțiunea de modulare poate afecta atât viteza de redare din buffer, cât și frecvența de tăiere a filtrului.
+Funcțiile complexe ale plugin-ului PSP 84 îl fac capabil să producă o varietate mult mai largă de efecte bazate pe timp decât simplele delay-uri.
+Cu toate acestea, cel puțin o parte din aceste caracteristici se regăsesc frecvent și în alte linii de delay.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/22-7.jpg"
+    alt="Figura 22-7"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 22-7:</p>The PSP 84.
+</div>

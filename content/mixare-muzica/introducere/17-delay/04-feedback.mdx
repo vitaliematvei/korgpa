@@ -1,0 +1,39 @@
+---
+title: 'Feedback-ul (Reacția)'
+description: 'Feedback-ul (Reacția)'
+order: 4
+category: 'Delay'
+level: 'Incepator'
+---
+
+Folosind configurația discutată până acum, fără aplicarea unui feedback, copia întârziată ar produce un singur ecou atunci când este amestecată cu semnalul original.
+Scopul nostru este adesea crearea de ecouri repetitive, fie pentru a simula reflexiile din spațiile mari, fie ca efect creativ.
+Există o cale foarte simplă de a realiza acest lucru, care presupune doar redirecționarea semnalului de redare înapoi la capul de înregistrare (Figura 22.3).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/22-3.jpg"
+    alt="Figura 22-3"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 22-3:</p>Tape delay cu buclă de feedback.
+</div>
+
+Se creează astfel o buclă de feedback în care fiecare ecou întârziat revine la capul de înregistrare, fiind apoi întârziat din nou.
+Presupunând un timp fix de delay de 100 ms, tiparul ecoului va include repetiții la 100, 200, 300, 400, 500 ms și așa mai departe.
+
+Un control de feedback determină nivelul de atenuare (sau uneori chiar de amplificare) aplicat ecourilor repetitive.
+Dacă acest control atenuează, să zicem, cu 6 dB, fiecare ecou va fi cu 6 dB mai încet decât ecoul precedent, iar repetițiile vor scădea în intensitate în timp.
+Dacă nivelul de feedback este setat la 0 dB sau mai mult, ecourile vor deveni treptat mai puternice până când banda se saturează (chiar și setarea de 0 dB produce un astfel de efect, deoarece fâșâitul benzii sau semnalul de intrare provoacă o creștere a nivelului când sunt amestecate cu ecourile).
+Astfel de ecouri amplificate sunt folosite ca efect creativ, însă la un moment dat nivelul de feedback trebuie redus din nou la atenuare, altfel ecourile vor continua la nesfârșit, generând un sunet din ce în ce mai distorsionat.
+
+Probabil ai observat comutatorul de fază amplasat înaintea controlului de nivel al feedback-ului.
+Acest comutator inversează faza semnalului care trece prin bucla de feedback (la unele unități, acest lucru se obține prin feedback negativ).
+Primul ecou are faza inversată în comparație cu semnalul de intrare.
+Însă, odată ce acest ecou este întârziat din nou și trece prin buclă ca al doilea ecou, faza sa este inversată din nou, devenind în fază cu semnalul de intrare.
+În esență, faza se comută la fiecare ecou, astfel încât ecourile impare sunt întotdeauna cu faza inversată față de semnalul de intrare, în timp ce ecourile pare sunt în fază.
+Timpii de delay foarte scurți provoacă filtrare în pieptene (_comb filtering_) și pot modifica sesizabil conținutul armonic al materialului.
+Inversarea fazei semnalelor care trec prin bucla de feedback modifică această interacțiune de filtrare în pieptene — uneori în bine, alteori în rău.
