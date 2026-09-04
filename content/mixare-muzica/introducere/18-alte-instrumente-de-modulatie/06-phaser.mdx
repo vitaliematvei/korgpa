@@ -1,0 +1,50 @@
+---
+title: 'Phasing (Efectul de Phaser)'
+description: 'Phasing (Efectul de Phaser)'
+order: 6
+category: 'Delay'
+level: 'Incepator'
+---
+
+_Flanging_-ul și _phasing_-ul sunt efecte înrudite; ele sună foarte similar, dar sunt diferite.
+Un efect de _phasing_ veritabil nu poate fi obținut prin folosirea unui delay.
+În schimb, phaser-ele utilizează o serie de filtre trece-tot (_all-pass filters_).
+Aceste filtre, în loc să modifice amplitudinea unor frecvențe specifice, le modifică faza.
+Când semnalul original și cel procesat sunt combinate, rezultatul este o serie de vârfuri și atenuări de-a lungul spectrului de frecvență.
+Totuși, spre deosebire de _flanging_, aceste vârfuri și atenuări nu sunt organizate în serii armonice (vezi Figura 23.4).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/23-4.jpg"
+    alt="Figura 23-4"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 23-4:</p>**Răspunsul în frecvență generat de un
+  phaser de ordinul șase.** Vârfurile și atenuările nu se află într-o relație
+  armonică. Pe măsură ce efectul este modulat, acest tipar nu se extinde și nici
+  nu se contractă; el pur și simplu se deplasează mai jos sau mai sus în
+  frecvență.
+</div>
+
+În general, sunt necesare două filtre trece-tot pentru a crea o singură atenuare (_dip_).
+Deseori, phaser-ele folosesc un număr par de filtre, unde un ordin patru creează două atenuări, un ordin șase creează trei și așa mai departe.
+Cu cât ordinul este mai mare, cu atât efectul este mai puternic.
+Poate fi inclusă și o buclă de feedback care, la fel ca în cazul unui flanger, va produce un efect mai rezonant și mai pronunțat.
+
+La fel ca _flanging_-ul, _phasing_-ul este un efect ușor de recunoscut, deși este, în general, mai subtil.
+Pe lângă chitarele electrice, poate fi aplicat pe diverse alte instrumente pentru a crea mișcare ciclică sau poate fi introdus în anumite secțiuni ale piesei pentru a adăuga dinamică.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/23-5.jpg"
+    alt="Figura 23-5"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 23-5:</p>Logic Phaser plugin
+</div>
