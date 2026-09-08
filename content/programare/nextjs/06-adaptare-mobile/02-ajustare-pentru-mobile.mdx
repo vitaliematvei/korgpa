@@ -1,0 +1,114 @@
+---
+title: 'Ajustarea designului pentru mobil'
+description: 'Ajustarea designului pentru mobil'
+order: 2
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Am văzut că site-ul nostru nu arată 100% perfect, dar este cinstit să spunem că se putea și mai rău!
+
+Pentru un design care nu a fost creat având în minte o abordare _mobile-first_, a ieșit destul de bine — deși cred că a fost mai mult noroc decât intenție.
+Din fericire, restul paginilor nu necesită prea multe modificări; hai să vedem ce trebuie să facem pentru ca site-ul nostru să arate mai acceptabil în următoarea demonstrație.
+
+**Corectarea modului portret pentru mobil**
+
+Pentru a rezolva problemele de stilizare pe dispozitivul mobil ales, urmează acești pași:
+
+1. Mai întâi, creează un fișier numit `mobile.css` în directorul `\src\styles`.
+2. Apoi, deschide fișierul `_app.js` din folderul `\pages` și adaugă această linie sub ultima instrucțiune de import:
+
+```javascript
+import '../styles/mobile.css';
+```
+
+Asigură-te că această linie este plasată sub cea pentru `globals.css` — este necesar ca ea să se aplice după ce încărcăm toate stilurile de bază din acel fișier.
+
+3. Acum trebuie să adăugăm stilurile noastre — deschide `mobile.css` și adaugă următorul cod:
+
+```css
+@media (max-width: 414px) {
+  html {
+    display: flex;
+    width: 100%;
+  }
+  footer > div:nth-child(1) {
+    padding: 30px;
+  }
+  .product-detail-container {
+    margin: 60px;
+  }
+  .cart-wrapper {
+    top: 190px;
+    width: 100%;
+    min-height: 2000px;
+  }
+  @keyframes movemobile {
+    0% {
+      transform: translateY(-40%);
+    }
+    100% {
+      transform: translateY(0%);
+    }
+  }
+  .cart-container {
+    min-height: 500px;
+    width: 100%;
+    animation-name: movemobile;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    display: flex;
+    flex-direction: column;
+  }
+}
+```
+
+4. Salvează și închide fișierul. În continuare, deschide un terminal Node.js și navighează în folderul proiectului.
+5. La linia de comandă, introdu `npm run dev`, apasă _Enter_, apoi accesează `http://localhost:3000` în browser.
+6. Odată ce aplicația rulează, apasă `Ctrl+Shift+I`, apoi `Ctrl+Shift+M` (sau `Cmd+Shift+I`, `Cmd+Shift+M` pe Mac) pentru a activa modul _Responsive Mode_ din Chrome.
+7. Selectează _Pixel 5_ din lista derulantă — dacă totul a mers bine, ar trebui să vedem noul design actualizat ca în Figura 6-7. Ce-i drept, încercarea de a citi textul în acea ultimă captură de ecran va fi o provocare! Nu-ți face griji, totuși, pentru că nu este un lucru critic — cel mai important punct aici este că paginile noastre arată acum ceva mai bine, iar elementele sunt așezate corect în pagină.
+
+Ironic este că nu am avut nevoie de prea mult cod suplimentar pentru a remedia stilizarea; a trebuit doar să aplicăm o mână de modificări.
+Acest lucru ridică o întrebare importantă, așa că, înainte de a o explora, hai să analizăm rapid și mai în detaliu schimburile efectuate.
+
+**Înțelegerea modificărilor efectuate**
+
+Atunci când adaptăm designul pentru diferite dispozitive, există întotdeauna riscul de a fi nevoiți să facem modificări semnificative în cod — de data aceasta, însă, am avut noroc!
+Chiar dacă am început cu versiunea de desktop și am adaptat-o pentru mobil, am avut nevoie doar de câteva ajustări.
+
+Am început prin adăugarea unui fișier CSS pentru suprascrierea stilurilor (_overrides_) — există un motiv pentru asta, asupra căruia voi reveni mai târziu — înainte de a adăuga o mână de stiluri pentru a corecta diverse elemente din site, a căror poziționare fusese afectată de trecerea la mobil.
+
+Punctul critic de reținut este că am împachetat toate modificările de stil într-o interogare media (_media query_) destinată dispozitivelor cu o lățime maximă a ecranului de 414px.
+Aș fi putut alege oricare alta dintre diferitele lățimi de ecran (cum ar fi 360px sau 390px), dar având în vedere că Pixel 5 are o lățime de 393px, am vrut să mă asigur că modificările noastre se aplică corect la punctul de întrerupere (_breakpoint_) ales, lăsând și o mică marjă de siguranță.
+
+De asemenea, am modificat modul în care este afișat coșul de cumpărături — designul original nu se extindea pe toată înălțimea și era mai degrabă potrivit pentru desktopuri decât pentru dispozitive mobile.
+Odată aplicat noul design, am repornit serverul de dezvoltare înainte de a verifica modificările în Chrome (folosind _Responsive Mode_) și am confirmat că acestea sunt afișate conform așteptărilor în browser.
+
+Ok — până aici, toate bune.
+Avem un design funcțional, potrivit pentru un dispozitiv mobil și ceva mai plăcut din punct de vedere estetic.
+Păstrează aceste idei în minte, deoarece vreau să-ți pun două întrebări:
+
+1. Ar trebui să abordăm și modul orizontal (_landscape_)?
+2. Având în vedere că nu a trebuit să facem multe modificări pentru a ne adapta designul, am putea integra aceste ajustări direct în stilurile de bază, astfel încât să nu fie nevoie să folosim suprascrieri (_overrides_)?
+
+Două întrebări interesante, sunt sigur că ești de acord!
+Deocamdată, totuși, ține a doua întrebare în minte — îi vom răspunde spre sfârșitul capitolului.
+Există un motiv pentru asta, pe care îl vei înțelege pe măsură ce actualizăm restul designurilor!
+
+Prima întrebare ridică câteva puncte importante pe care ar trebui să le luăm în considerare.
+Așa că, fără altă introducere, hai să trecem la treabă și să vedem dacă putem oferi un răspuns la prima întrebare.
+
+**Ar trebui să abordăm modul orizontal?**
+
+Când proiectăm pentru dispozitive mobile, înclinația naturală ar fi să ne adaptăm atât pentru modul portret, cât și pentru cel panoramă (_landscape_), nu-i așa?
+Până la urmă, nu avem de unde să știm în ce mod preferă vizitatorii noștri să-și folosească dispozitivul, așa că trebuie să fim pregătiți pentru orice — cu siguranță vor exista câțiva oameni care vor dori să facă lucrurile diferit…
+
+Aici intervine dilema noastră: adaptarea atât pentru modul orizontal, cât și pentru cel portret este esențială, cel puțin pentru tablete.
+Nu sunt la fel de sigur în privința telefoanelor mobile; deși este posibil să ne adaptăm ambelor moduri, nu prea am văzut mulți oameni accesând un site în modul panoramă de pe un mobil.
+Singura cale sigură de a răspunde la această dilemă este să ne asigurăm că avem un sistem bun de analiză (_analytics_) configurat, care să ne arate modul în care oamenii ne accesează site-ul; acest lucru ne va spune dacă există o cerere suficientă pentru a include modificări dedicate modului orizontal pe telefoane.
+
+Deocamdată, însă, nu voi actualiza site-ul nostru pentru a include suport pentru modul panoramă pe telefoane mobile.
+Bănuiesc că majoritatea oamenilor ne vor accesa site-ul în modul portret și, având în vedere că aceasta este o aplicație demonstrativă, ne putem întoarce oricând la acest aspect mai târziu, dacă lucrurile se schimbă!
+
+{/* am ramas Adapting for Tablets 167 */}

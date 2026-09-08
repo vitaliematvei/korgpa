@@ -1,0 +1,53 @@
+---
+title: 'Analiza detaliată a modificărilor de cod'
+description: 'Analiza detaliată a modificărilor de cod'
+order: 8
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Dacă nu ai mai lucrat cu Sass până acum, la o primă vedere ar putea părea că trebuie să parcurgem mulți pași pentru a-l configura și a-l pune la treabă în mediul nostru de lucru.
+Nu-ți face griji, însă — unii dintre acești pași sunt acțiuni unice, pe care nu va trebui să le repetăm.
+Pentru a înțelege mai bine ce vreau să spun, hai să analizăm în detaliu modificările pe care le-am făcut.
+
+Am început mai întâi prin instalarea Sass și prin adăugarea unei configurări în fișierul `next.config.js`.
+Această setare adaugă proprietatea `sassOptions` pentru a-i indica compilatorului Sass ce folder conține fișierele sursă folosite la compilarea codului.
+Apoi, am creat un fișier de index pentru fișierele noastre sursă Sass — aici am adăugat o instrucțiune `@use` pentru pagina „Despre noi” (_about_), pe care o folosim ca exemplu.
+În același timp, a trebuit să modificăm fișierul `_app.js` pentru a include noua referință către acest fișier index, care va importa automat toate fișierele Sass din proiect.
+
+Următoarea parte a demonstrației a fost cea mai importantă.
+Am transferat o copie a regulilor din foaia de stil (_stylesheet_) originală în noile noastre foi de stil individuale.
+De asemenea, a trebuit să comentăm codul original, astfel încât site-ul să nu încerce să compileze două versiuni ale aceluiași cod!
+
+Odată finalizat acest transfer, am rulat o previzualizare pentru a ne asigura că totul funcționează conform așteptărilor și că nu apar modificări vizuale.
+Cu toate acestea, diferența se poate observa în consola browserului, unde acum importăm fișiere Sass în aplicația noastră demonstrativă.
+
+Mergem mai departe: în cadrul acestui exercițiu am convertit un singur fișier, dar în realitate putem folosi exact același proces pentru a împărți foaia de stil în mai multe fișiere mai mici.
+Pentru a face acest lucru, ar trebui doar să creăm noi fișiere sursă (de exemplu, `navbar.scss`), să copiem stilurile corespunzătoare și să adăugăm o instrucțiune `@use` în fișierul index al foilor de stil.
+Dacă am face asta, am avea o listă de importuri în fișierul index care ar arăta cam așa:
+
+```scss
+@use 'navbar'; /* bara de navigare */
+@use 'marquee'; /* secțiunea "S-ar putea să-ți placă" */
+@use 'cart'; /* coșul principal și mini-coșul */
+@use 'shop'; /* pagina magazinului */
+@use 'tabs'; /* tab-urile din pagina de produs */
+@use 'contact'; /* formularul de contact */
+@use 'perfect-message'; /* componenta "Ocazii Perfecte" - pagina principală */
+@use 'success-cancel'; /* paginile de Succes și Anulare */
+@use 'email-signup'; /* componenta de abonare prin email de pe pagina principală */
+@use 'footer'; /* subsolul paginii / footer */
+@use 'may-like'; /* componenta de produse recomandate */
+@use 'payment-icons'; /* pictogramele pentru metodele de plată */
+@use 'homepage'; /* stilurile pentru pagina principală */
+@use 'product-page'; /* pagina produsului */
+```
+
+Pare mult, dar reține că acum facem referire la fișiere mai mici, ceea ce le face mult mai ușor de gestionat — stilurile sunt izolate (_scoped_) pentru componenta sau pagina respectivă, nu aplicate global pe întregul site!
+
+Un ultim detaliu — am presupus că ai deja o anumită familiaritate cu Sass și, în special, cu Dart Sass.
+Dacă dorești să afli mai multe despre utilizarea Sass, poți consulta cartea mea despre Dart Sass, publicată de editura Apress.
+
+---
+
+Ați dori să ajustăm vreun termen tehnic (de exemplu, să păstrăm anumiți termeni în engleză precum _stylesheet_ sau _scoped_) sau aveți nevoie de ajutor cu configurarea Sass în Next.js?

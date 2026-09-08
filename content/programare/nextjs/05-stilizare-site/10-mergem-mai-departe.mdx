@@ -1,0 +1,86 @@
+---
+title: 'Mergem mai departe'
+description: 'Mergem mai departe'
+order: 10
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Pe parcursul acestui capitol, am explorat câteva metode pe care le putem folosi pentru a ne stiliza site-ul, cum ar fi CSS-ul clasic, Sass sau CSS Modules.
+Totuși, nu avem cum să ignorăm faptul că unii dintre voi ar putea prefera utilizarea unui instrument de tip CSS-in-JS, precum Tailwind, sau chiar un instrument ca PostCSS.
+
+Nu este nimic în neregulă cu aceste instrumente — sunt opțiuni perfect valide, dar probabil mai potrivite pentru site-uri mai mari, unde izolarea stilurilor (_scoping_) este mai importantă.
+În același timp, configurarea PostCSS va necesita ceva efort; îl putem folosi pentru a efectua tot felul de sarcini dincolo de simpla compilare a stilurilor, cum ar fi adăugarea prefixelor de furnizor (_vendor prefixes_), așa că trebuie să ne asigurăm că profităm la maxim de el dacă decidem să mergem pe această cale.
+
+În cele din urmă, depinde de tine să decizi ce vrei să folosești; este important să alegi un instrument sau o metodă care se potrivește situației tale, cunoștințelor existente și oricăror limitări de mediu.
+Având în vedere acest lucru, hai să facem o scurtă trecere în revistă a convertirii unui instrument la o abordare CSS-in-JS, pentru a vedea cum am putea adapta baza noastră de cod.
+Voi folosi Tailwind pentru exemplul următor, dar aceleași principii se aplică și altor instrumente precum Emotion sau Styled Components.
+Pentru a converti componenta `DemoBanner` la Tailwind, ar trebui să facem următoarele:
+
+1. Mai întâi, instalăm Tailwind într-un terminal Node.js folosind această comandă:
+
+```bash
+npm install -D tailwindcss
+
+```
+
+2. Apoi, va trebui să creăm un fișier de configurare Tailwind executând comanda:
+
+```bash
+npx tailwindcss init
+
+```
+
+3. Odată ce fișierul de configurare este pregătit, va trebui să îl actualizăm pentru a ne detecta noua componentă:
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ['./components/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+4. În continuare, va trebui să adăugăm importurile Tailwind CSS în `globals.css`, astfel:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+5. Într-un terminal Node.js, va trebui să pornim procesul de build Tailwind CLI pentru a scana după clasele Tailwind:
+
+```bash
+npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
+
+```
+
+6. În cele din urmă, va trebui să actualizăm componenta pentru a folosi clase Tailwind în loc de stiluri CSS standard — am evidențiat codul afectat în acest extras:
+
+```jsx
+const DemoBanner = () => {
+  return (
+    <div className="bg-black text-white text-center pt-10">
+      <span>This is a demo store - no orders will be accepted</span>
+    </div>
+  );
+};
+```
+
+7. Ca parte a actualizării componentei `DemoBanner`, va trebui să eliminăm vechile stiluri din `global.css`, astfel încât să nu le importăm în foaia de stil actualizată:
+
+```css
+.demo-banner-container {
+  background-color: #000000;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+```
+
+În acest moment, salvăm și închidem tot ce este deschis, apoi rulăm procesul obișnuit `npm run dev` pentru a reconstrui site-ul — dacă totul este în regulă, ar trebui să avem un demo funcțional cu Tailwind.
+Ideea esențială de aici este că nu ar trebui să te simți obligat să folosești un framework precum Tailwind — depinde de tine să alegi instrumentul potrivit care se potrivește nevoilor tale; dacă asta înseamnă să folosești o foaie de stil unică în stil clasic, fie și așa!
