@@ -1,0 +1,60 @@
+---
+title: 'Reverberațiile prin convoluție (de eșantionare / _sampling_)'
+description: 'Reverberațiile prin convoluție (de eșantionare / _sampling_)'
+order: 21
+category: 'Reverb'
+level: 'Incepator'
+---
+
+Încă din anii '70, diverse persoane au cochetat cu ideea de a capta caracteristicile de reverberație ale unui spațiu acustic pentru a le putea aplica ulterior pe orice tip de înregistrare.
+Ceea ce atunci părea un vis imposibil a devenit o realitate odată cu noul mileniu, tehnologia DSP fiind acum suficient de rapidă pentru a gestiona numărul uriaș de calcule în timp real cerut de un astfel de proces.
+
+Eșantionarea reverberației se realizează de regulă prin plasarea unei perechi de microfoane într-o încăpere și înregistrarea răspunsului camerei (_room response_) la un impuls foarte scurt, cum ar fi cel produs de un pistol de start.
+Deoarece este dificil să generezi un impuls perfect, o metodă alternativă constă în redarea unui semnal de tip _sine sweep_ (glissando sinusoidal) prin difuzoare.
+Sunetul direct poate fi eliminat din înregistrare, lăsând doar reverberația.
+Răspunsul la impuls (_Impulse Response_ — IR) astfel obținut este încărcat într-o reverberație prin convoluție, care îl analizează și construiește o matrice matematică complexă folosită apoi de algoritmul de convoluție.
+Fiecare sunet trecut prin această unitate va genera o reverberație extrem de fidelă spațiului original.
+
+Un astfel de emulator se poate baza pe două tipuri de convoluție:
+
+- **În domeniul timpului** (_pure convolution_)
+- **În domeniul frecvenței** (_convolution or Fourier-based_)
+
+Ambele oferă același rezultat, însă eficiența lor diferă în funcție de situație.
+Dacă s-ar folosi convoluția pură în domeniul timpului, un răspuns la impuls cu o durată de 6 secunde la o rată de 44,1 kHz ar necesita aproximativ 23 de miliarde de operații matematice pe secundă — echivalentul puterii oferite de un procesor de 2,2 GHz.
+Este evident cât de solicitant poate deveni un astfel de proces.
+Ca regulă generală, cu cât răspunsul la impuls original este mai scurt, cu atât este necesară mai puțină putere de procesare.
+
+**Popularitate și utilizare în industrie**
+
+Reverberațiile prin convoluție se bucură de o popularitate tot mai mare în prezent, permițându-ne să integrăm în mixaj acustica unor locații exotice.
+Pentru industria cinematografică, aceasta este o unealtă cu adevărat revoluționară — inginerii pot înregistra reverberația din orice spațiu de filmare și o pot aplica ulterior în postproducție.
+Pentru mixajul muzical, deși contribuția acusticii Taj Mahal-ului într-o producție rock modernă este discutabilă, pachetele de impulsuri furnizate de producători includ și spații uzuale, ideale pentru orice piesă.
+În plus, multe răspunsuri la impuls pot fi descărcate de pe internet, unele fiind gratuite.
+
+Calitatea înregistrării impulsului depinde direct de performanța echipamentelor folosite, un factor vital pentru obținerea unor rezultate naturale.
+Este unanim acceptat că un impuls bine înregistrat produce o simulare extrem de credibilă, care egală poziția celor mai bune emulatoare algoritmice sau chiar o depășește.
+
+Aplicațiile nu se limitează doar la reproducerea spațiilor acustice reale.
+Sunt disponibile răspunsuri la impuls colectate de pe echipamente vintage legendare, cum ar fi EMT 140 sau EMT 250.
+De asemenea, se pot obține efecte fascinante dacă în loc de un impuls real se încarcă o înregistrare scurtă obișnuită.
+
+**Limitări și flexibilitate**
+
+Principala problemă a reverberațiilor prin convoluție este că toate proprietățile acustice, așa cum au fost ele captate în timpul înregistrării, rămân „imprimate” în fișierul IR și pot fi modificate ulterior doar într-o mică măsură fără a compromite calitatea.
+De exemplu, nu se mai poate schimba distanța dintre sursa sonoră și ascultător sau setările folosite pe echipamentul hardware în momentul eșantionării.
+
+Multe pluginuri de convoluție includ doar un număr redus de controale (cum ar fi anvelope simple de amplitudine și filtre) pentru a oferi un minim de flexibilitate.
+Pentru rezultate naturale, mulți producători furnizează variante multiple de înregistrări ale aceluiași spațiu, realizate cu configurații diferite de microfoane.
+În general, reverberațiile prin convoluție oferă cele mai bune rezultate atunci când fișierul IR rămane nemodificat.
+Din acest motiv, utilizarea lor poate fi o loterie:
+
+- Dacă impulsul pur se potrivește din start, va suna excelent;
+- Dacă nu se potrivește, ajustările ulterioare îl pot adapta la mixaj, dar îi pot afecta calitatea sonoră.
+
+La fel ca la reverberația algoritmică, alegerea presetului inițial este crucială.
+
+> **Punct cheie:** Reverberațiile prin convoluție de calitate pot produce rezultate excepțional de naturale, însă consumă o putere mare de procesare și sunt, de regulă, lipsite de flexibilitate.
+
+Ironia face ca, având acum acces la această tehnologie, mulți ingineri de sunet să considere vechile reverberații algoritmice mult mai interesante și mai potrivite atât pentru sarcini creative, cât și practice.
+Deși convoluția este superioară în simularea fidelă a spațiilor naturale, reverberațiile algoritmice rămân opțiunea preferată în numeroase aplicații de mixaj.

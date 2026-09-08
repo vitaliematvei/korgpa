@@ -1,0 +1,92 @@
+---
+title: 'Emulatoarele digitale (Algorithmic Reverbs)'
+description: 'Emulatoarele digitale (Algorithmic Reverbs)'
+order: 20
+category: 'Reverb'
+level: 'Incepator'
+---
+
+Până acum am discutat despre reverberații naturale și mecanice.
+Inventarea reverberației digitale îi este atribuită lui Manfred Schroeder, pe atunci cercetător la Bell Laboratories, care în 1961 a demonstrat un sistem simplu de reverberație digitală.
+A fost nevoie de timp pentru ca ideile sale să se transforme într-un echipament comercial palpabil, însă odată cu creșterea performanței cipurilor DSP și scăderea prețului acestora, emulatoarele digitale au preluat definitiv controlul în industrie.
+Tot compania EMT, de această dată cu ajutorul firmei americane Dynatron, a lansat în 1976 prima unitate de reverberație digitală comercială din lume — **EMT 250**.
+Aceasta dispunea de controale de bază (cum ar fi _pre-delay_ și timpul de _decay_) și putea genera efecte suplimentare de _delay_ și _chorus_.
+
+O reverberație digitală nu este doar o colecție densă de _delay_-uri simple, deoarece acestea ar provoca o colorare excesivă a sunetului direct și un răspuns în frecvență dezechilibrat.
+Există numeroase arhitecturi interne pentru reverberațiile digitale, diferențiate prin componentele folosite și prin modul în care acestea sunt conectate.
+La cel mai profund nivel, emulatoarele digitale sunt implementate prin funcții matematice executate pe cipuri DSP interne.
+Pentru a le distinge de reverberațiile digitale cu convoluție (_convolution reverbs_), aceste tipuri de efecte sunt numite astăzi **reverberații algoritmice**.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/24-2.jpg"
+    alt="Figura 24-2"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 24-2:</p>
+
+**Diagrama de blocuri a unei reverberații.** (a) Designul original de reverberație creat de Schroeder (1961).
+Arhitecturile digitale ulterioare sunt mult mai complexe, după cum se poate observa în (b): algoritmul de placă (_plate program_) al procesorului Lexicon PCM91 (1998).
+
+</div>
+
+**Scurtături, putere de calcul și arhitectură**
+
+Niciun emulator digital nu va putea produce o reverberație complet identică cu cea creată într-o încăpere reală.
+Acest lucru se datorează complexității imense a spațiului fizic:
+
+- Există mii de reflecții individuale de procesat;
+- Frecvențe diferite se propagă și difractă în moduri diferite;
+- Materialele absorb și difuzează sunetul în mod diferit;
+- Aerul în sine modifică sunetul pe măsură ce acesta îl traversează.
+
+Din acest motiv, producătorii trebuie să apeleze la „scurtături” de calcul.
+Cu cât au la dispoziție o putere de procesare mai mare, cu atât trebuie să facă mai puține compromisuri, iar reverberația devine mai realistă.
+Cu toate acestea, deși cipurile DSP din anii '70 și '80 erau mult mai slabe, multe echipamente hardware din acea eră sunt considerate și astăzi repere de calitate (_state of the art_), dovedind că arhitectura și designul algoritmului sunt esențiale.
+Deoarece fiecare producător de top folosește o arhitectură proprie și secretă, fiecare aparat are o amprentă sonoră distinctă.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/24-3.jpg"
+    alt="Figura 24-3"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 24-3:</p>Eventide Reverb TD
+</div>
+
+**Consumul de resurse și evoluția pluginurilor**
+
+În anii '90, când au apărut primele pluginuri în timp real, procesoarele aveau o putere de calcul redusă și puteau rula doar câteva efecte simultan.
+Astăzi, majoritatea inginerilor se bazează exclusiv pe procesorul calculatorului pentru toate sarcinile de mixaj.
+Totuși, un plugin de reverberație de înaltă calitate poate consuma o parte semnificativă din resursele CPU, motiv pentru care mulți producători folosesc încă procesoare dedicate — fie sub formă de unități hardware externe, fie ca plăci de expansiune DSP interne.
+
+**Flexibilitate și control**
+
+Deoarece reverberațiile algoritmice nu au limitări fizice sau mecanice, ele oferă o multitudine de parametri care permit ajustarea fină a aproape fiecărei proprietăți a sunetului.
+Acest lucru le face cele mai flexibile și versatile unelte din arsenalul de mixaj.
+Principalul lor dezavantaj rămâne faptul că emulatoarele de înaltă calitate sunt costisitoare, atât ca preț de achiziție, cât și ca resurse de procesare necesare.
+
+Reverberațiile digitale algoritmice reprezintă cel mai utilizat tip de reverberație actual, oferind un control total asupra parametrilor, dar putând necesita o putere substanțială de procesare în funcție de complexitatea lor.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/24-4.jpg"
+    alt="Figura 24-4"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 24-4:</p>
+</div>
+**Telecomanda LARC** (*Lexicon Alphanumeric Remote Control*) pentru procesorul
+Lexicon 480L; unitatea de reverberație propriu-zisă este montată în rack și este
+de obicei ascunsă vederii în studiouri. Deși lansat în 1986, modelul 480L este
+considerat și astăzi de către mulți drept unul dintre cele mai bune emulatoare
+de reverberație din lume.
