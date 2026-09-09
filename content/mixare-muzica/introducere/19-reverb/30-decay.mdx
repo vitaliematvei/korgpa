@@ -1,0 +1,43 @@
+---
+title: 'Timpul de scădere (_Decay time_)'
+description: 'Timpul de scădere (_Decay time_)'
+order: 30
+category: 'Reverb'
+level: 'Incepator'
+---
+
+Cât timp îi ia reverberației să dispară?
+În acustică se folosește o unitate de măsură numită **RT60**, care măsoară timpul necesar ca reverberația dintr-o încăpere să scadă cu 60 dB.
+În termeni practici, 60 dB reprezintă diferența dintre un sunet foarte puternic și unul care este abia audibil.
+Această măsurătoare este folosită și de procesoarele de reverb pentru a determina „lungimea” efectului.
+Din punct de vedere științific, timpul de scădere ar trebui măsurat în raport cu sunetul direct, dar unele pluginuri îl raportează la nivelul primei reflexii timpurii.
+În natură, o cameră mică și cu un grad mare de absorbție va avea un timp de scădere de aproximativ 200 ms, în timp ce o arenă uriașă poate avea o durată de scădere de circa 4 secunde.
+
+Timpul de scădere oferă indicii despre dimensiunea spațiului — încăperile mai mari au timpi de scădere mai lungi, deoarece distanța dintre suprafețe este mai mare și este nevoie de mai mult timp pentru ca reflexiile să se atenueze.
+De asemenea, _decay time_-ul ne oferă o idee despre cât de fermi sau reflectorizanți sunt pereții încăperii — plăcile ceramice vopsite reflectă mai multă energie sonoră comparativ cu vata minerală.
+În procesoarele digitale, timpul de scădere este determinat în mare măsură de dimensiunea selectată a încăperii.
+
+Este de așteptat să întâlnim un timp de scădere mai lung într-un algoritm de tip _Church_ (biserică) decât într-unul de tip _Small Room_ (cameră mică).
+Un _decay_ mai lung creează o ambianță mai densă și mai grea, în timp ce un _decay_ scurt oferă senzația de sunet adunat și precis (_tight_).
+De asemenea, un timp de scădere mai lung înseamnă o reverberație mai puternică ca volum, care va provoca mai multă mascare și posibile probleme de inteligibilitate.
+În cazul vocilor, există riscul ca reverberația unui cuvânt să se suprapună peste cuvântul următor.
+Acest fenomen este mult mai pronunțat în mixajele aglomerate și rapide, unde intervalele de timp dintre sunete sunt mici.
+Dacă se aplică prea mult reverb într-un mixaj și dacă timpul de _decay_ este prea lung, spunem că mixul este „înecat” (_washed out_) în reverb.
+
+În multe cazuri — în special când efectul este aplicat pe instrumente de percuție — timpul de scădere ar trebui să aibă sens din punct de vedere ritmic.
+De exemplu, este logic ca reverberația unei tobe mici (_snare_) să se stingă înainte de lovitura următoare a tobei mari (_kick_).
+Acest lucru va „elibera scena” pentru tobă mare și va reduce posibila mascare.
+Nu are sens să intrăm în calcule matematice rigide aici — urechea este un judecător muzical mult mai bun decât orice calculator, mai ales când vine vorba de senzația ritmică.
+În plus, reverberația poate deveni inaudibilă cu mult înainte de a se stinge cu adevărat.
+
+Reverberația tobei mici este frecvent automatizată pentru a se potrivi cu densitatea mixajului; un truc des întâlnit este folosirea unui reverb mai scurt pe _snare_ în timpul refrenului, unde mixul are nevoie de mai multă energie și atac.
+Deoarece reverberația tinde să înmoaie sunetele, poate fi mai potrivit un reverb mai lung pe strofe.
+Unii ingineri de sunet automatizează reverberația tobei mici și în funcție de valorile de notă interpretate — un _decay_ mai lung pentru pătrimi și un _decay_ mai scurt (sau chiar fără reverb) pentru șaisprezecimi.
+
+De asemenea, merită reținut că un pre-delay mai lung va amâna stingerea generală a efectului — mărirea pre-delay-ului combinată cu scurtarea _decay_-ului poate avea ca rezultat un reverb per ansamblu mai prezent în mixaj.
+În ceea ce privește volumul, mulți ingineri consideră că un _decay_ scurt și mai tare este mai eficient decât unul lung și încet.
+
+> Timpii lungi de _decay_ pot crește efectul de mascare și pot afecta claritatea.
+> Când reverberația este folosită ca efect special, în special pe percuții, trebuie adaptată ritmic la piesă.
+
+{/* am ramas Room size .450 */}

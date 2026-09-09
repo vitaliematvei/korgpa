@@ -1,0 +1,58 @@
+---
+title: 'Pre-delay-ul (Întârzierea inițială)'
+description: 'Pre-delay-ul (Întârzierea inițială)'
+order: 25
+category: 'Reverb'
+level: 'Incepator'
+---
+
+Pre-delay-ul este intervalul de timp dintre sosirea sunetului direct și sosirea primei reflexii.
+Cu toate acestea, în cazul anumitor procesoare sau pluginuri de reverb, acest parametru reprezintă decalajul de timp dintre semnalul neprocesat (_dry_) și reverberația târzie.
+
+Pre-delay-ul ne oferă un indiciu clar asupra dimensiunii încăperii: în spațiile mari, pre-delay-ul este mai lung, deoarece reflexiile au nevoie de mai mult timp pentru a parcurge distanța până la pereți și înapoi la ascultător.
+De asemenea, el oferă indicații despre distanța dintre sursa sonoră și ascultător, însă aici lucrurile funcționează invers față de așteptările inițiale: **cu cât sursa este mai aproape de ascultător, cu atât pre-delay-ul este mai lung**.
+Acest fenomen are loc deoarece distanța relativă dintre sunetul direct și cel reflectat scade pe măsură ce sursa se depărtează de ascultător (Figura 24.7).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/24-7.jpg"
+    alt="Figura 24-7"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 24-7:</p>
+**Distanța și pre-delay-ul.** 
+Atunci când ascultătorul este mai aproape de sursa sonoră, distanța relativă pe care o parcurge sunetul direct comparativ cu prima reflexie este mai mare, ceea ce duce la un timp de pre-delay mai lung.
+
+</div>
+
+Această proprietate este utilizată des în practică atunci când avem nevoie de reverb, dar nu vrem să împingem elementul în spatele mixului — soluția este simpla mărire a pre-delay-ului.
+Pre-delay-ul este exprimat de obicei în milisecunde (ms), iar pentru un rezultat natural, creierul nostru are nevoie ca această valoare să rămână sub 50 ms.
+Cu toate acestea, se folosesc uneori și timpi mai lungi.
+
+> Un timp de pre-delay mai lung ajută la menținerea instrumentului în fața mixului (în prim-plan).
+
+Timpul de pre-delay determină, de asemenea, momentul în care reflexiile încep să se amestece cu sunetul direct.
+Reflexiile provocate de o încăpere reală sunt mult mai complexe decât cele produse de un procesor digital.
+Procesoarele de înaltă calitate gestionează mai bine acest aspect, însă reflexiile digitale au o tendință mai mare de a colora sunetul original comparativ cu cele naturale.
+Astfel, reflexiile digitale pot provoca efectul de _comb filtering_ (filtrare în pieptene) și alte efecte secundare atunci când se combină cu semnalul original.
+Cu cât se amestecă mai repede, cu atât acest efect negativ va fi mai pronunțat.
+
+Trebuie reținut că până și un sunet scurt de tobă mică (_snare_) poate dura ușor 80 ms înainte de a intra în faza de scădere (_decay_).
+Dacă reflexiile timpurii se amestecă cu sunetul direct chiar în primele milisecunde (așa cum se întâmplă des în natură), timbrul sonor se poate distorsiona.
+Mărim timpul de pre-delay tocmai pentru a minimiza acest efect.
+Din același motiv, reflexiile timpurii pot fi mascate de semnalul original.
+Deoarece aceste reflexii timpurii ne oferă cele mai multe informații despre proprietățile spațiului, creșterea pre-delay-ului le poate scoate din "zona de mascare", oferind o percepție mai clară a detaliilor psihoacustice.
+
+O altă problemă legată de valorile mici ale pre-delay-ului este inteligibilitatea — dacă efectul se amestecă prea devreme cu sunetul direct, poate blura semnalul, afectând claritatea și definiția.
+Acest lucru este esențial la procesarea vocilor, unde textul trebuie să rămână clar și ușor de înțeles.
+
+În schimb, un pre-delay foarte lung poate crea un spațiu sonor sesizabil între sunetul original și efect.
+Acest lucru va separa reverberația de semnalul _dry_, făcând-o să apară decalat în spatele sunetului original și producând un efect nenatural sau dezechilibre ritmice.
+În mod normal, căutăm o valoare a pre-delay-ului care să evite distorsionarea timbrului fără a crea decalaje de timp deranjante.
+Cu toate acestea, timpii lungi de pre-delay sunt folosiți uneori intenționat pentru efecte creative sau ritmice.
+
+> Un pre-delay prea scurt poate altera timbrul, în timp ce unul prea lung poate crea un decalaj audibil.
+> Scopul este să găsim un echilibru care evită aceste probleme, menținând în același timp claritatea și inteligibilitatea sursei.

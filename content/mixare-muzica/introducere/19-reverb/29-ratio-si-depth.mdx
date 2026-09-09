@@ -1,0 +1,50 @@
+---
+title: 'Raportul dintre semnalul direct și reverb în percepția profunzimii'
+description: 'Raportul dintre semnalul direct și reverb în percepția profunzimii'
+order: 29
+category: 'Reverb'
+level: 'Incepator'
+---
+
+Reverb-ul este principalul instrument pe care îl folosim pentru a adăuga profunzime (_depth_) unui mixaj.
+Pentru a înțelege cum poate fi utilizat cel mai bine, este important să înțelegem mai întâi ce se întâmplă în natură.
+
+Legea inversului pătratului (_inverse square law_) definește modul în care nivelul sunetului scade în raport cu distanța parcursă.
+De exemplu, dacă la o distanță de 1 m față de un difuzor sunetul are un nivel de 60 dB SPL, la 5 m distanță nivelul va scădea cu 14 dB (ajungând la 46 dB SPL), iar la 10 m va scădea cu 20 dB (ajungând la 40 dB SPL).
+Este clar că, cu cât ascultătorul este mai departe de sursa sonoră, cu atât nivelul sunetului direct va fi mai mic.
+
+Însă sunetul direct este doar prima componentă a sunetului emis de sursă.
+Reverberația reprezintă o colecție extrem de densă de reflexii, iar deși fiecare reflexie individuală își pierde din nivel, însumarea tuturor reflexiilor are ca rezultat un sunet relativ puternic.
+În plus, pe măsură ce sunetul ricoșează repetat de pe pereți, este ca și cum toate suprafețele încăperii s-ar transforma într-o singură sursă sonoră uriașă care emite reverberație; în aceste condiții, indiferent de locul în care se află ascultătorul în cameră, reverberația va avea aproximativ același nivel, deoarece îndepărtarea de un perete ne aduce mai aproape de altul.
+De dragul simplității, putem considera că o anumită încăpere are o reverberație la un nivel constant de 43 dB SPL.
+
+Dacă un ascultător din această cameră stă la 1 m de difuzor, va auzi sunetul direct la 60 dB SPL și reverberația la 43 dB SPL.
+Cu cât ascultătorul se îndepărtează mai mult de difuzor, cu atât sunetul direct devine mai încet, dar nivelul reverberației rămâne același.
+Altfel spus, **cu cât ascultătorul este mai departe, cu atât scade raportul dintre sunetul direct și reverberație**.
+
+La o distanță de 5 m de difuzor, ascultătorul va auzi sunetul direct și reverberația la niveluri egale.
+Numim distanța la care are loc această egalitate **distanță critică** (_critical distance_).
+Dincolo de distanța critică, reverberația va fi mai tare decât sunetul direct, ceea ce poate afecta claritatea și inteligibilitatea.
+Deoarece sunetul direct este în continuare primul care ajunge la ascultător, creierul îl va folosi în continuare pentru a evalua distanța până la sursă, dar numai până la o anumită limită.
+
+Raportul dintre semnalul direct și cel reverberat (_direct-to-reverberant ratio_) este folosit frecvent de inginerii de sunet — în special de cei care lucrează cu orchestre — pentru a determina profunzimea percepută a sursei sonore captate de o pereche de microfoane stereo.
+
+În etapa de mixaj, reducem raportul dintre semnalul neprocesat (_dry_) și efectul de reverb pentru a plasa instrumentele mai în spatele mixului.
+La fel ca în natură, inteligibilitatea și definiția pot avea de suferit dacă nivelul reverb-ului devine mai mare decât cel al semnalului _dry_.
+Trebuie adăugat că volumul perceput al reverberației depinde, de asemenea, de timpul de scădere (_decay time_) și de densitatea acesteia.
+
+> Poziționarea pe axa profunzimii (față-spate) în timpul mixajului se obține cel mai frecvent prin reglarea raportului de volum dintre semnalul _dry_ și reverb.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/24-9.jpg"
+    alt="Figura 24-9"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 24-9:</p>
+  **Distanța critică** (*Critical distance*) reprezintă nivelul relativ al sunetului direct și al reverberației în raport cu distanța dintre sursa sonoră și ascultător. Distanța la care sunetul direct și reverberația reflectată au niveluri egale se numește **distanță critică**.
+
+</div>

@@ -1,0 +1,64 @@
+---
+title: 'Reflexiile timpurii (Early Reflections - ER)'
+description: 'Reflexiile timpurii (Early Reflections - ER)'
+order: 26
+category: 'Reverb'
+level: 'Incepator'
+---
+
+La scurt timp după sunetul direct, primele reflexii încep să ajungă la ascultător [traseul (b) din Figura 24.6].
+Majoritatea reflexiilor timpurii ricoșează doar din una sau două suprafețe și sosesc la intervale relativ lungi (câteva milisecunde).
+De aceea, creierul nostru le identifică ca sunete distincte, legate de semnalul original.
+Reflexiile timpurii sunt indispensabile pentru a oferi creierului informații despre caracteristicile spațiului și despre distanța dintre sursă și ascultător.
+Un model fidel de reflexii timpurii este obligatoriu dacă se dorește o simulare naturală, iar modificarea acestui parametru poate îmbunătăți considerabil sau poate distruge realismul reverb-ului.
+Reverb-urile pe arcuri (_spring_) sau pe placă (_plate_) nu au reflexii timpurii distincte din cauza dimensiunilor lor reduse, motiv pentru care nu excelează în redarea informațiilor spațiale.
+
+Treptat, tot mai multe reflexii ajung la ascultător, iar densitatea lor crește până când nu mai pot fi distinse ca ecouri separate.
+În funcție de proprietățile încăperii, reflexiile timpurii pot apărea în primele 100 ms după sunetul direct.
+Este important de reținut că reflexiile timpurii din primele 35 ms se încadrează în zona Haas; prin urmare, creierul nostru le percepe într-un mod ușor diferit.
+În plus, aceste reflexii foarte rapide sunt ușor mascate de sunetul direct.
+Așa cum am menționat anterior, putem mări timpul de pre-delay pentru a le face mai clare.
+
+> Reflexiile timpurii oferă creierului cele mai multe informații privind proprietățile spațiului și contribuie masiv la realismul profunzimii sonore.
+
+Nivelul (volumul) reflexiilor timpurii sugerează cât de mare este încăperea — într-o cameră mai mare, pereții sunt mai departe de ascultător, astfel că reflexiile parcurg distanțe mai mari și vor fi mai slabe ca volum.
+Materialele suprafețelor afectează de asemenea intensitatea reflexiilor.
+De exemplu, reflexiile provenite de la o podea din beton vor fi mai tari decât cele produse de o podea acoperită cu mochetă.
+
+În ceea ce privește percepția profunzimii, nivelul reflexiilor timpurii poate avea din nou un efect opus așteptărilor inițiale.
+Deși, cu cât ascultătorul este mai departe de sursa sonoră, cu atât sunetul reflectat parcurge o distanță mai lungă, ceea ce contează aici este diferența dintre distanța parcursă de sunetul direct și cea parcursă de sunetul reflectat.
+O sursă sonoră apropiată va avea un traseu direct foarte scurt, dar un traseu reflectat lung.
+Cu cât sursa se îndepărtează de ascultător, cu atât mai mică devine diferența dintre cele două trasee.
+În practică, cu cât sursa și ascultătorul sunt mai departe unul de celălalt, cu atât mai apropiate ca volum vor fi sunetul direct și cel reflectat — sau, altfel spus, reflexiile timpurii vor fi relativ mai tari.
+Reflexiile timpurii mai puternice indică o distanță mai mare între sursă și ascultător.
+
+Fiind cel mai aproape de sunetul neprocesat (_dry_), reflexiile timpurii sunt principala cauză a distorsionării timbrale și a efectului de _comb filtering_ (filtrare în pieptene).
+Una dintre cele mai mari provocări în proiectarea procesoarelor de reverb este obținerea unor reflexii timpurii care să nu coloreze negativ sunetul _dry_.
+Uneori, atenuarea sau eliminarea completă a reflexiilor timpurii poate oferi rezultate mai bune și un timbru mai curat.
+Această tehnică funcționează bine și pe înregistrări de ansamblu, cum ar fi un cor — într-o biserică reală, fiecare cântăreț generează propriul model de reflexii timpurii, iar rezultatul cumulativ este des, dar nedefinit.
+Totuși, eliminarea reflexiilor timpurii poate duce la o localizare slabă în spațiu și la o profunzime vagă, fiind nepotrivită când se caută un sunet natural.
+
+În cele din urmă, există un truc prin care pot fi adăugate doar reflexiile timpurii peste un semnal _dry_.
+Această metodă poate reda viață înregistrărilor "uscate" într-un mod foarte transparent și cu mai puține efecte secundare.
+Explicația constă în folosirea delay-urilor pentru a deschide sunetul și a-i oferi spațialitate.
+Algoritmii buni de reflexii timpurii creează modele de delay complexe care nu colorează sonoritatea, oferind o senzație sporită de spațiu.
+Trucul funcționează pe orice tip de material audio, dar este deosebit de eficient pe chitări electrice cu distors.
+
+> Reflexiile timpurii pot altera timbrul semnalului original. Pentru aplicații mai puțin naturale, mascarea sau atenuarea lor poate fi benefică.
+> Pe de altă parte, uneori folosirea exclusivă a reflexiilor timpurii poate face minuni.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/24-8.jpg"
+    alt="Figura 24-8"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 24-8:</p>
+Iată traducerea și adaptarea textului în limba română:
+
+**Model posibil de reflexii într-o încăpere reală**
+
+</div>
