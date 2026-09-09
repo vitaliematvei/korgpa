@@ -1,0 +1,56 @@
+---
+title: 'Detalierea modificărilor (_Breaking Apart the Changes_)'
+description: 'Detalierea modificărilor (_Breaking Apart the Changes_)'
+order: 5
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Cu acestea rezolvate, să privim mai de aproape modificările pe care le-am făcut — mai întâi am adăugat un `import` pentru funcția `DefaultSEO` din modulul `next-seo`, înainte de a crea blocul `<DefaultSeo>`.
+
+În interiorul acestui bloc, am setat parametrii `title`, `description` și `twitter` — observă că i-am setat cu un text diferit de cel pe care l-am pune pe un site de producție!
+Ar putea arăta puțin ciudat, dar există un motiv întemeiat: îl putem folosi ca o verificare pentru a vedea dacă textul este transmis corect, așa cum am făcut la pasul 7.
+Acest lucru înseamnă că, dacă nu suprascriem setările, textul implicit va pătrunde automat în toate componentele de tip pagină din site-ul nostru.
+Nu se va propaga automat și în componentele obișnuite, dar aceasta este cealaltă parte a provocării noastre — o vom remedia mai târziu în acest capitol.
+
+Okey — să mergem mai departe și să vedem modalitățile prin care ne putem personaliza configurația.
+Am menționat funcționalități precum datele structurate și suportul pentru Open Graph — dar ce-ar fi dacă am face și unele dintre etichetele din paginile noastre mai dinamice?
+Sunt sigur că vor exista ocazii în care vom dori să includem numele produselor în etichetele noastre;
+vom explora acest lucru în curând.
+Pentru moment, să reluăm câteva dintre modalitățile prin care ne putem actualiza configurația înainte de a analiza în detaliu unele dintre cele mai utilizate etichete pentru modulul nostru `next-seo`.
+
+---
+
+**Actualizarea configurației noastre (_Updating Our Configuration_)**
+
+Până acum, am trecut prin procesul de configurare a modulului `next-seo` și am explorat modul în care am putea suprascrie setările implicite în codul nostru.
+Toate acestea sunt bune și frumoase, dar — ce se întâmplă dacă ajungem să avem o mulțime de setări pe care trebuie să le transmitem componentei, în special dacă trebuie să folosim aceleași valori în mai multe locuri?
+
+Există un răspuns la această problemă spinoasă — putem folosi un fișier de configurare.
+Modulul `next-seo` suportă utilizarea unui fișier `next-seo.config.js` în care putem pune toate intrările implicite.
+Acest lucru menține codul curat — trebuie doar să adăugăm intrări acolo unde se suprascrie o intrare specifică în codul nostru.
+Hai să vedem ce implică acest lucru și să explorăm câteva dintre setările pe care le putem adăuga în configurația actualizată.
+
+---
+
+#### **TRECEREA LA UN FIȘIER DE CONFIGURARE**
+
+Pentru a trece la utilizarea unui fișier de configurare, urmează acești pași:
+
+1. Mai întâi, trebuie să creăm fișierul de configurare — pentru aceasta, deschide un fișier nou în editorul tău și adaugă următorul cod:
+
+```javascript
+export default {
+  openGraph: {
+    type: 'website',
+    locale: 'en_IE',
+    url: '[https://www.url.ie/](https://www.url.ie/)',
+    siteName: 'SiteName',
+  },
+  twitter: {
+    handle: '@handle',
+    site: '@site',
+    cardType: 'summary_large_image',
+  },
+};
+```

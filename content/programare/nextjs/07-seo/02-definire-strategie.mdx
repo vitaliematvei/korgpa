@@ -1,0 +1,54 @@
+---
+title: 'Definirea strategiei noastre (Defining Our Strategy)'
+description: 'Definirea strategiei noastre (Defining Our Strategy)'
+order: 2
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Crearea unei strategii ar trebui să fie destul de simplă, chiar și pentru SEO — la urma urmei, viziunea noastră este să vedem SEO configurat pe site, cu etichetele corespunzătoare la locul lor și paginile optimizate acolo unde este posibil.
+Cu toate acestea, pentru noi nu va fi chiar atât de simplu — lasă-mă să-ți explic ce vreau să spun:
+
+Trebuie să admit că nu sunt nicidecum un expert SEO, așa că ne vom concentra pe mecanica modului în care introducem etichetele (_tags_) în site-ul nostru, și nu pe faptul dacă acestea sunt cele mai potrivite pentru pagina respectivă.
+Până la urmă, rulăm doar un _Proof of Concept_ (dovadă a conceptului), așa că vor mai fi lucruri de făcut înainte de a le putea lansa în producție — pentru moment, este mai important să ne asigurăm că putem pune etichetele la locul lor.
+
+Aceasta nu este singura noastră provocare — la momentul redactării, Next.js tocmai a lansat recent versiunea 13.2.
+De obicei, nu sunt un adept al menționării versiunilor specifice în text, dar în cazul nostru există un motiv întemeiat pentru a o face:
+
+- **Înainte de versiunea 13**, adăugam în mod obișnuit etichete în secțiunea `<head>` din `Layout.jsx`, lucru care funcționa foarte bine; de asemenea, puteam injecta date structurate în același timp.
+- **Odată cu apariția versiunii 13**, Next.js a decis (inițial) să folosească componenta `head.js`. Ca componentă, funcționa în același mod ca `next/head` și înlocuia metoda tradițională de adăugare manuală a etichetelor.
+- **Cu toate acestea**, opțiunea `head.js` a fost depreciată în versiunea 13.2 și cel mai probabil va fi eliminată până la tipărirea acestei cărți.
+  În locul ei, ar trebui să folosim soluția recomandată, care este funcția `generateMetadata()`, însă aceasta funcționează doar pentru componente bazate pe server (_Server Components_), nu și pentru pagini clasice.
+
+Aceste mici particularități nu ne vor ușura deloc munca!
+Asta înseamnă că trebuie să folosim o combinație de metode pentru a injecta etichete în site-ul nostru.
+Componenta `next-seo` va funcționa excelent pentru pagini, dar va trebui să adăugăm un cod personalizat, deoarece funcția `generateMetadata()` nu va funcționa pentru noi: nu folosim TypeScript, ceea ce înseamnă că modificările nu vor fi preluate pe site-ul nostru.
+
+Situația nu este ajutată nici de lipsa unei documentații solide și a unor exemple clare pentru această nouă funcție, deși sperăm că acest lucru se va schimba în timp.
+
+Având în vedere toate aceste potențiale obstacole, iată strategia pe care o vom folosi:
+
+- **Nu vom oferi suport pentru folderul `app**`introdus în versiunea 13 — acesta (la momentul scrierii) este încă experimental și inutil pentru proiectul nostru. 
+A reprezentat o oarecare dilemă, deoarece am fi putut folosi`app`și funcția`generateMetadata()`.
+  Nu sunt un fan al utilizării funcționalităților experimentale, mai ales dacă nu au (încă) prea multă documentație disponibilă.
+  În schimb, vom folosi o combinație de metode pentru a prelua datele: acest lucru este probabil mai puțin curat, dar mai de încredere.
+- **Trebuie să ne asigurăm că nu apare nicio duplicare** în etichetele din `<head>`.
+- **Ne vom concentra pe o configurare rapidă**, dar vom reveni ulterior pentru a explora ce opțiuni putem adăuga într-o a doua etapă.
+- **`next-seo` are o mulțime de opțiuni** — vom folosi suficiente pentru a pune site-ul în mișcare, dar vom acoperi și câteva dintre opțiunile pe care le putem folosi pentru a rafina configurarea.
+- **Vom folosi modulul (_plug-in_) `next-seo` ori de câte ori este posibil**, dar vom avea nevoie de cod personalizat pentru a face paginile dinamice să funcționeze.
+
+S-ar putea să nu începem cu cea mai bună abordare, dar lucrul grozav este că acest lucru ne oferă un motiv să iterăm și să îmbunătățim configurarea.
+Există câteva arii pe care ne putem concentra pentru a pune la punct configurarea inițială; acestea includ:
+
+- Adăugarea unei configurări implicite și exportarea într-un fișier de configurare personalizat.
+- Suprascrierea opțiunilor — cum putem personaliza configurația?
+- Adăugarea suportului pentru date structurate (sau JSON-LD) și etichete Open Graph.
+
+În același timp, vom arunca o privire asupra altor opțiuni SEO disponibile, precum și asupra unora dintre etichetele meta comune pe care le-am putea folosi atunci când lucrăm cu SEO într-un mediu Next.js.
+
+Okey — destulă pălăvrăgeală: hai să trecem la treabă!
+Prima sarcină este să punem la punct o configurație SEO de bază;
+pentru a face asta, vom folosi modulul `next-seo`.
+Disponibil la [https://github.com/garmeeh/next-seo](https://github.com/garmeeh/next-seo),
+îl putem folosi pentru a adăuga etichete de bază în secțiunea `<head>` a site-ului nostru și ca bază pentru opțiuni suplimentare, cum ar fi etichetele Open Graph și datele structurate.
+Acest modul este foarte simplu de configurat, așa că hai să intrăm în detalii în cadrul următoarei noastre demonstrații.

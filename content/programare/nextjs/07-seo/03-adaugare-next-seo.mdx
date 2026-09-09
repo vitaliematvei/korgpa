@@ -1,0 +1,60 @@
+---
+title: 'ADĂUGAREA NEXT-SEO'
+description: 'ADĂUGAREA NEXT-SEO'
+order: 3
+category: 'NextJS'
+level: 'Incepator'
+---
+
+**Adăugarea SEO implicit pe site-ul nostru (_Adding Default SEO to Our Site_)**
+
+Modulul este disponibil imediat, fără a necesita aproape nicio configurare. Înainte de a face asta, merită să ne uităm la ce am introdus deja manual — există câteva etichete prezente pe care le-am adăugat când am creat `Layout.jsx` (pe care le putem vedea în Figura 8-1).
+
+Hai să îmbunătățim acest lucru prin instalarea modulului `next-seo`, pe care îl vom folosi pe parcursul acestui capitol pentru a ne seta etichetele SEO.
+
+---
+
+#### **ADĂUGAREA NEXT-SEO**
+
+Pentru a configura suportul SEO de bază pentru site-ul nostru, urmează acești pași:
+
+1. Mai întâi, pornește o sesiune de terminal Node.js, apoi schimbă directorul de lucru în zona proiectului nostru.
+2. În linia de comandă, introdu `npm install next-seo -D`, apoi apasă _Enter_ pentru a instala modulul `next-seo`.
+3. Acum putem adăuga componenta — vom începe cu pagina principală (_homepage_). Deschide fișierul `index.js` din directorul `\src\pages`, apoi găsește linia care începe cu `const Home = () => (`.
+4. Imediat sub ea, adaugă un fragment React de deschidere (`<>`) și apoi apelul către `NextSeo`, astfel încât codul de început al componentei să arate așa:
+
+```jsx
+const Home = () => (
+  <>
+    <NextSeo
+      title="Macaron Magic"
+      description="Great tasting home-made macarons"
+    />
+
+```
+
+5. Derulează până la sfârșit, iar chiar înainte de paranteza de închidere `);` adaugă o etichetă de închidere a fragmentului React (`</>`):
+
+```jsx
+    </div>
+  </>
+);
+
+```
+
+6. Salvează și închide fișierul. Deschide un terminal Node.js, iar în linia de comandă schimbă directorul de lucru în zona proiectului nostru.
+7. Introdu `npm run dev` și apasă _Enter_ pentru a porni serverul de dezvoltare Next.js.
+   Așteaptă ca serverul să pornească, apoi accesează `http://localhost:3000` în browser.
+   Apasă `Shift+Ctrl+I` (pe Windows) sau `Shift+Cmd+I` (pe Mac) pentru a deschide consola browserului.
+
+Perfect — acum avem o configurație SEO de bază la locul ei!
+
+#### Înțelegerea celor întâmplate (Understanding What Happened)
+
+Pentru prima sarcină din acest capitol, am început cu ceva simplu — instalarea modulului next-seo în site-ul nostru.
+
+Acesta utilizează procesul obișnuit npm install, care este la fel ca pentru toate celelalte module bazate pe npm; apoi am adăugat un apel către modul, căruia i-am transmis parametrii title și description. Singurul pas rămas de finalizat a fost să pornim site-ul local și să confirmăm că browserul a randat blocul NextSEO nou adăugat în antetul (header) site-ului nostru.
+
+Odată cu instalarea și configurarea modulului nostru, am început să adăugăm suport SEO.
+Cu toate acestea, există o mică problemă: acesta apare pe o singură pagină!
+Nu vrem să duplicăm manual această configurare pe fiecare pagină în parte, chiar dacă avem doar câteva pagini, așa cum este cazul site-ului nostru. Ce putem face?

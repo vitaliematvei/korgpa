@@ -1,0 +1,127 @@
+---
+title: 'Cizelare site'
+description: 'Cizelare site'
+order: 3
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Am pus totul la punct — site-ul nostru funcționează: avem produse în magazin și le putem vinde, deci mai lipsește ceva?
+
+În această etapă, sunt sigur că da: înainte de a ne putea testa site-ul, avem o oportunitate excelentă de a lua în considerare afișarea și finisarea experienței utilizatorului (_UX_).
+Îmi vin în minte câteva subiecte pentru a începe; ce-ar fi să adăugăm acea pagină de anulare (_cancel page_) care lipsea pentru Stripe sau să animăm conținut, cum ar fi un buton actualizat de adăugare în coș (_add-to-cart_)?
+
+Sunt câteva lucruri pe care le putem face, dar înainte de a intra în detalii, există un lucru pe care ar trebui să-l facem mai întâi: să facem un inventar al situației actuale și să vedem dacă există ceva de curățat pe site înainte de a adăuga noi funcționalități.
+
+---
+
+**Analiza situației actuale (_Taking Stock_)**
+
+Pe parcursul acestei cărți, am adăugat multe funcționalități noi, ne-am conectat la un sistem de gestionare a conținutului (_CMS_) pentru partea de _back-end_ și putem procesa vânzări prin intermediul site-ului (deși doar în scop de testare, așa cum sunt sigur că înțelegi!).
+
+Deci, ce urmează? Acum ar fi un moment excelent să facem o evaluare — cum arată site-ul nostru? Știu că nu suntem încă gata de lansarea în producție; mai urmează și altele, cum ar fi adăugarea optimizării SEO, suportul pentru mai multe limbi și funcționalitățile de testare (toate acestea vor fi acoperite în capitolele viitoare).
+Chiar dacă acest site este un demo, ar trebui să ne asigurăm că este ordonat — am eliminat, de exemplu, comentariile redundante sau fișierele media de care nu mai avem nevoie?
+Ce zici de componente — sunt toate etichetate corect?
+Avem toate produsele pe care le dorim în sistemul CMS din _back-end_ (adică în Sanity)?
+
+Acestea pot părea întrebări ciudate, dar există un motiv serios: în timp ce documentam și construiam site-ul demo pentru această carte, am întâlnit situații în care știam că va trebui să curăț sau să rezolv mici „mici erori” (_buggettes_) din cod care nu ar fi bine să ajungă în producție.
+În loc să mă las distras, am ținut o listă cu ele, pregătit să le rezolv în acest capitol.
+Putem aplica mai multe corecții, așa că hai să intrăm în detalii și să vedem ce am găsit.
+
+---
+
+**Curățarea bazei de cod (_Tidying Up the Codebase_)**
+
+Pentru prima noastră sarcină, vom rezolva câteva probleme pe care le-am găsit în timp ce cream demo-ul pentru această carte — niciuna nu este critică și, într-adevăr, clienții nici măcar nu le vor observa pe unele dintre ele!
+Cu toate acestea, remedierea lor este esențială pentru a menține o bază de cod sănătoasă.
+Hai să vedem detaliile.
+
+> **Notă:** Este posibil să fi rezolvat deja unele dintre aceste erori sau poate că nu le-ai întâlnit: nu contează.
+> Ideea critică aici este să te încurajăm să te uiți la orice este stricat sau nu funcționează 100% și să vezi dacă îl poți repara.
+
+#### **CORECTAREA ERORILOR / BUG-URILOR**
+
+Pentru a remedia erorile găsite în timpul dezvoltării, urmează acești pași:
+
+1. Mai întâi, deschide fișierul `Minicart.jsx` din directorul `\src\components`. Redenumește `Cart` în eticheta de deschidere și în eticheta de export de la sfârșitul fișierului în `MiniCart`.
+   Salvează și închide fișierul.
+2. Apoi, deschide `\components\index.js` și adaugă această instrucțiune la sfârșitul listei:
+
+```javascript
+export { default as MiniCart } from './MiniCart';
+```
+
+3. De asemenea, trebuie să redenumim numele din eticheta de deschidere și din export pentru componenta `PaymentIcons`. Deschide `PaymentIcons.jsx` din directorul `\src\components` și redenumește ambele instanțe ale cuvântului `Footer` în `PaymentIcons`.
+4. Salvează și închide toate fișierele deschise.
+5. În continuare, șterge fișierul `favicon.ico` din folderul `\public` — aceasta este versiunea de când am creat structura inițială a site-ului, pe care o vom înlocui.
+6. Extrage o copie a acestor fișiere și foldere din codul sursă descărcabil care însoțește această carte și salvează-le în folderul `\public`: folderul `favicon`, `site.webmanifest` și `browserconfig.xml`.
+7. În timp ce mă documentam pentru această carte, am întâlnit următoarea eroare:
+
+```text
+next-dev.js?3515:32 Warning: Prop `id` did not match. Server: "react-tabs-56" Client: "react-tabs-4"
+at li
+at Tab (webpack-internal:///./node_modules/react-tabs/esm/components/Tab.js:47:62)
+
+```
+
+8. Pentru a o rezolva, deschide `Info.jsx` din directorul `\src\components`, apoi adaugă acest cod imediat sub instrucțiunea de `import` pentru React:
+
+```javascript
+import dynamic from 'next/dynamic';
+const Tabs = dynamic(
+  import('react-tabs').then((mod) => mod.Tabs),
+  { ssr: false },
+);
+```
+
+9. În continuare, elimină `Tabs` din linia de import inițială, astfel încât să rămâi cu:
+
+```javascript
+import { Tab, TabList, TabPanel } from 'react-tabs';
+```
+
+10. Salvează și închide fișierul `Info.jsx`.
+11. Apoi, deschide `Cart.jsx` — avem un avertisment care apare în consolă și care se referă la lipsa unei etichete `key` pentru fiecare element din coș:
+
+```text
+next-dev.js?3515:32 Warning: Each child in a list should have a unique "key" prop.
+Check the render method of `Cart`. See https://reactjs.org/link/warning-keys for more information.
+
+```
+
+12. Adaugă eticheta `key={item._id}`, așa cum este evidențiat mai jos:
+
+```jsx
+{cartItems.length >= 1 &&
+  cartItems.map((item) => (
+    <div className="product" key={item._id}>
+      <button
+
+```
+
+13. Salvează și închide fișierul. Deschide un terminal Node.js și asigură-te că directorul de lucru pointează către folderul proiectului nostru.
+14. În linia de comandă, introdu `cd sanity` pentru a naviga în folderul Sanity și apasă _Enter_.
+15. Pentru a porni serverul Sanity, introdu `sanity dev`, apasă _Enter_, apoi accesează `http://localhost:3333` când ți se solicită.
+16. Analizează cu atenție înregistrările — avem toate câmpurile listate și date valide în ele? Trebuie să ne asigurăm că ceea ce este afișat în Shopify se potrivește cu ce se află în Sanity. Altfe, vom avea probleme cu date lipsă!
+17. Presupunând că totul este în regulă la ultimul pas, salvează și închide toate fișierele rămase deschise, pornește un terminal Node.js, apoi schimbă directorul de lucru în zona proiectului nostru.
+18. În linia de comandă, introdu `npm run dev` și apasă _Enter_, apoi accesează `http://localhost:3000` în browserul tău. Asigură-te că totul arată așa cum arăta înainte de a face modificările și că poți naviga pe pagini fără probleme.
+
+Excelent — poate că am finalizat câteva sarcini disparate în diferite părți ale site-ului, dar era de așteptat: punctul critic aici este că ne-am luat timpul necesar pentru a verifica site-ul, a repara erorile imediate și a ne asigura că totul este pregătit pentru următoarea etapă, care va consta în adăugarea unor funcționalități noi. Înainte de a face asta, să acordăm un moment pentru a revizui modificările făcute în ultimul demo, astfel încât să înțelegem cum se integrează ele în ansamblu.
+
+---
+
+**Explicarea corecțiilor aplicate (_Exploring the Fixes Applied_)**
+
+Wow — a fost destul de mult de curățat! Oricine ar putea crede că nu am fost atenți la modul în care am construit lucrurile și, în anumite privințe, ar avea dreptate. Cu toate acestea, eu nu privesc lucrurile așa — aș spune că, fiind vorba despre un _Proof of Concept_ (dovadă a conceptului), lucrurile nu vor fi perfecte din prima. În schimb, este o ocazie excelentă de a rafina ceea ce avem, pentru a face codul mai solid înainte de orice plan de a crea o versiune de producție adecvată. Având în vedere acest lucru, să analizăm modificările pe care le-am făcut pentru a înțelege cum vor ajuta la îmbunătățirea bazei noastre de cod.
+
+Am început mai întâi cu componentele `MiniCart` și `PaymentIcons` — în ambele cazuri, aceste icoane/componente aveau etichete de deschidere incorecte, chiar dacă păreau să funcționeze bine! Le-am modificat pentru a fi redenumite corect în cod și am adăugat un apel către `MiniCart` din fișierul de tip _barrel_ `index.js`.
+
+Apoi, am adăugat câteva fișiere manifest care lipseau și am schimbat fișierul `favicon`; primele generau o eroare 404 în browser (adică fișiere lipsă), iar ultimul era încă fișierul original creat la generarea proiectului de bază, pe care trebuia să îl actualizăm.
+
+Următoarele două sarcini abordate s-au referit la avertismentele afișate în consola browserului. Prima a fost o eroare de _Hydration_ în React, unde exista o diferență între modul în care browserul pre-randa arborele React pentru componenta `Tabs` și codul generat pe server; acest lucru era desincronizat cu DOM-ul, rezultând conținut neașteptat. A doua problemă îți este probabil mai familiară dacă ai mai lucrat cu React — de fiecare dată când creăm liste, trebuie să adăugăm atribute `key`. Acest lucru este necesar pentru ca React să poată identifica corect dacă elementele sunt adăugate sau eliminate și ordinea în care ar trebui afișate.
+
+Am încheiat apoi prin verificarea sistemului CMS Sanity — în timp ce mă documentam pentru această carte, am observat situații în care unele elemente nu păreau să existe în baza de date din _back-end_. O verificare rapidă a configurării noastre CMS ne va ajuta să identificăm produsele lipsă; dacă este cazul, le putem adăuga astfel încât magazinul nostru să aibă numărul corect de articole la afișare.
+
+Ca ultim pas, am pornit site-ul în browser pentru a ne asigura că totul este afișat ca înainte și că modificările noastre nu au avut un efect negativ asupra aplicației.
+
+Excelent — să trecem la următoarea sarcină. Vom vedea ce putem adăuga pentru a ne personaliza site-ul, dar înainte de a face asta, vreau să ating un mic punct care merită menționat: duplicarea din foaia de stil `global.css`.

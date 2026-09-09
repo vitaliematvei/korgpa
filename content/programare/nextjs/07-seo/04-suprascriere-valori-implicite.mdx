@@ -1,0 +1,65 @@
+---
+title: 'Setarea și suprascrierea valorilor implicite (_Setting and Overriding Defaults_)'
+description: 'Setarea și suprascrierea valorilor implicite (_Setting and Overriding Defaults_)'
+order: 4
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Avem nevoie de o alternativă mai bună — intră în scenă `DefaultSEO`.
+Aceasta este o funcție disponibilă în cadrul aceluiași modul `next-seo` pe care tocmai l-am folosit, funcționând similar cu funcția `NextSEO`, dar cu o singură diferență.
+Face exact ceea ce promite: o putem folosi pentru a crea o configurație SEO implicită pe toate paginile în mod automat; dacă este necesar, putem suprascrie această configurație oferind valori specifice acolo unde avem nevoie, pe fiecare pagină în parte.
+Hai să intrăm în detalii și să privim mai de aproape.
+
+---
+
+#### **SUPRASCRIEREA SETĂRILOR IMPLICITE**
+
+Pentru a seta o configurație SEO implicită, pregătită pentru a fi suprascrisă la nevoie, urmează acești pași:
+
+1. Mai întâi, oprește serverul de dezvoltare Next.js dacă acesta rulează — acest pas este critic pentru a reconstrui paginile pentru această demonstrație.
+2. Apoi, deschide fișierul `_app.js` din directorul `\src\pages`, iar apoi adaugă acest `import` înainte de apelurile către foile de stil:
+
+```javascript
+import { DefaultSeo } from 'next-seo';
+```
+
+3. Derulează puțin în jos și caută eticheta de deschidere `return (`.
+   Imediat dedesubt, adaugă acest cod — observă că eticheta de închidere a acestui bloc trebuie să fie plasată înainte de apelul către `<StateContext>`:
+
+```jsx
+<>
+  <DefaultSeo
+    title="Next SEO Example"
+    description="Next SEO este un modul care face gestionarea SEO mai ușoară în proiectele Next.js."
+    twitter={{
+      handle: "@handle",
+      site: "@site",
+      cardType: "summary_large_image",
+    }}
+  />
+
+```
+
+4. Mergi la sfârșitul componentei, apoi adaugă eticheta de închidere a fragmentului React, astfel încât codul tău să arate așa:
+
+```jsx
+    </StateContext>
+  </>
+);
+}
+
+```
+
+5. Salvează și închide fișierul. Deschide un terminal Node.js, iar în linia de comandă schimbă directorul de lucru în zona proiectului nostru.
+6. Introdu `npm run dev` și apasă _Enter_ pentru a porni serverul de dezvoltare Next.js. Așteaptă ca serverul să pornească, apoi accesează `http://localhost:3000`. Apasă `Shift+Ctrl+I` (pe Windows) sau `Shift+Cmd+I` (pe Mac) pentru a deschide consola browserului. Dacă extinzi eticheta `<head>`, poți vedea eticheta `title` nou adăugată, așa cum este afișat în Figura 8-3.
+7. Dacă navighezi la o altă pagină (cum ar fi pagina _Despre_), poți verifica din nou consola browserului apăsând `Shift+Ctrl+I` (pe Windows) sau `Shift+Cmd+I` (pe Mac). Dacă extinzi eticheta `<head>`, vei vedea intrările afișate ca în Figura 8-4.
+8. Observi cum etichetele sunt ușor diferite?
+   Am suprascris o parte din etichete pentru primul exemplu prin specificarea propriei noastre versiuni; în al doilea exemplu, folosim etichetele implicite setate în `_app.js`.
+
+> **Notă:** M-am concentrat pe implementarea și funcționarea etichetelor SEO; există o oportunitate bună de a muta blocul `<DefaultSeo.../>` într-o componentă proprie dacă considerăm că este potrivit.
+> Merit de menționat că acest lucru probabil nu ne va aduce un câștig de performanță; este mai degrabă util pentru a face conținutul fișierului `_app.js` mai ușor de citit!
+
+Perfect — odată cu configurarea SEO de bază la locul ei, suntem gata să trecem la treabă și să începem cu adevărat să ne personalizăm setările... sau putem?
+
+Dacă te uiți mai atent la captura de ecran din Figura 8-4, vei observa sper că încă mai avem eticheta originală `<title>` afișată dinainte de a instala `next-seo` pentru prima dată. Dacă includem această etichetă, ne putem aștepta ca ea să suprascrie configurarea noastră din `next-seo`. A venit timpul să ne asigurăm că acest lucru nu se întâmplă și să eliminăm complet acea etichetă veche `<title>`!
