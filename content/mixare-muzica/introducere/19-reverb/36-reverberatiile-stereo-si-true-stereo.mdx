@@ -1,0 +1,34 @@
+---
+title: 'Reverberațiile stereo și True Stereo'
+description: 'Reverberațiile stereo și True Stereo'
+order: 36
+category: 'Reverb'
+level: 'Incepator'
+---
+
+Algoritmul original de reverberație digitală propus de Schroeder era capabil de procesare _mono-in / mono-out_ (o intrare mono / o ieșire mono).
+O decadă mai târziu, Michael Gerzon a proiectat prima reverberație _stereo-in / stereo-out_.
+Procesoarele cu intrare stereo suportă, evident, și configurația comună _mono-in / stereo-out_, însă, deoarece multe echipamente hardware folosesc algoritmi diferiți pentru intrările mono față de cele stereo, este necesară selectarea manuală a modului de intrare.
+Pluginurile software se autoconfigurează în acest sens.
+
+Nu toate procesoarele de reverberație care acceptă un semnal stereo procesează canalele din stânga și din dreapta în mod individual.
+Unele procesoare însumează semnalul stereo în mono, fie chiar la intrare, fie într-o etapă intermediară (cum ar fi după procesarea reflexiilor timpurii).
+Dacă un reverb transformă semnalul în mono la interior, panoramarea canalului de pe care trimitem semnalul (_stereo send_) nu se va reflecta în poziționarea spațială a efectului — reverberația generată rămânând identică, indiferent cum este panoramat semnalul sursă.
+Un procesor care menține procesarea stereo separată pe tot parcursul traseului este cunoscut sub numele de **True Stereo** (stereo veritabil).
+
+Implementarea unei reverberații stereo necesită un conținut diferit al reflexiilor pe canalul din stânga față de cel din dreapta.
+Este un lucru obișnuit ca cele două canale să nu fie coerente în fază, motiv pentru care ascultarea reverberației în solo va face adesea ca un indicator de fază (_phase meter_) să devieze spre zona negativă.
+Aceste diferențe de fază au ca rezultat o reverberație extrem de spațioasă, ce pare să treacă dincolo de limita fizică a difuzoarelor și să ne înconjoare.
+Dezavantajul acestor diferențe de fază este compatibilitatea mono redusă (_flimsy mono-compatibility_).
+Unele procesoare oferă controale dedicate pentru lățimea stereo — cu cât o reverberație este mai stereofonică, cu atât va părea mai spațioasă.
+
+---
+
+**Termeni tehnici cheie:**
+
+- **Mono-in / Stereo-out** → Intrare mono / ieșire stereo
+- **True Stereo** → Stereo veritabil (procesare complet separată pe canalele stânga/dreapta)
+- **Sum to mono / Summing** → Însumare în mono (combinarea canalelor stânga și dreapta)
+- **Phase-coherent / Phase differences** → Coerență de fază / diferențe de fază
+- **Phase meter** → Indicator (metru) de fază
+- **Mono-compatibility** → Compatibilitate mono (cum sună efectul când este ascultat pe un singur difuzor)

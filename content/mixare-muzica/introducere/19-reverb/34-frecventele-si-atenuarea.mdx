@@ -1,0 +1,84 @@
+---
+title: 'Frecvențele și atenuarea (_Damping_)'
+description: 'Frecvențele și atenuarea (_Damping_)'
+order: 34
+category: 'Reverb'
+level: 'Incepator'
+---
+
+Tratamentul de frecvență poate avea loc în trei puncte de pe traseul semnalului de reverberație:
+
+- **Pre-reverb** — unde eliminăm de obicei frecvențele nedorite ce pot afecta sunetul final al reverberației.
+- **Damping (Atenuare)** — tratamentul de frecvență integrat în algoritmul de reverberație, legat de proprietățile naturale ale spațiului simulat.
+- **Post-reverb** — unde aplicăm egalizarea (EQ) pe semnalul de ieșire al reverberației pentru a-l integra corect în mixaj.
+
+Unele procesoare permit ajustarea în toate cele trei puncte.
+Altele oferă doar parametrul de _damping_, folosit ca o alternativă la egalizarea post-reverb.
+Dacă procesorul nu oferă egalizare pre sau post, un EQ dedicat poate fi inserat manual pe traseu: într-un software DAW, acest lucru presupune adăugarea unui plugin de EQ înainte sau după reverberație (pe canalul Aux).
+În domeniul analogic, este necesară conectarea (_patching_) unui EQ între ieșirea Aux Send și intrarea reverberației.
+Inserarea unui EQ după reverberație este rareori necesară, deoarece majoritatea procesoarelor includ un control de frecvență pe ieșire.
+
+---
+
+### **Egalizarea Pre-Reverb**
+
+Egalizarea pre-reverb implică de obicei filtre de tip _pass_ (Trece-Sus/Trece-Jos) sau _shelving_.
+Frecvențele joase pot produce un sunet de reverberație lung și bubuit (_boomy_), care înfundă și murdărește mixajul.
+Un filtru HPF (High-Pass Filter / Trece-Sus) plasat înaintea reverberației previne acest lucru prin eliminarea joaselor — cum ar fi cele provocate de tobă mare (_kick_).
+De asemenea, frecvențele înalte pot genera o coadă de reverberație stridentă și deranjantă; un EQ de tip _shelving_ plasat pre-reverb rezolvă această problemă.
+
+---
+
+### **Parametrul Damping (Atenuarea în timp)**
+
+_Damping_-ul se ocupă cu comportamentul frecvențelor în timp.
+Frecvențele înalte sunt absorbite ușor: este nevoie de 76 mm de spumă acustică pentru a elimina frecvențele de peste 940 Hz, dar de o capcană de bași (_bass trap_) adâncă de 1 metru pentru a trata o frecvență de 94 Hz.
+Frecvențele înalte sunt absorbite și de aerul în sine, în special la parcurgerea distanțelor mari în spații vaste.
+Reverberația naturală a unui spațiu absorbant își pierde frecvențele înalte mult mai rapid decât pe cele joase, rezultând un conținut tot mai redus de înalte pe măsură ce sunetul se stinge.
+
+S-ar putea crede că un EQ static de tip _shelving_ (pre sau post) obține același efect, însă acest tratament rigid se găsește doar pe procesoarele ieftine.
+O simulare superioară se obține prin plasarea filtrelor direct în rețeaua de _delay_ a algoritmului, obținându-se atenuarea dorită a frecvențelor treptat, în timp.
+
+Parametrul _damping_ reprezintă de obicei raportul dintre timpul general de stingere (_decay time_) și timpul de stingere al unei frecvențe specifice.
+Concret: un _decay time_ de 4 secunde și un raport de _HF damping_ (atenuare înalte) de 0.5 înseamnă că frecvențele înalte se vor stinge în 2 secunde.
+Raportul poate fi și mai mare de 1, caz în care frecvențele specifice se sting mai lent.
+Unele procesoare oferă control suplimentar prin setarea unei frecvențe de _crossover_ ajustabile.
+Dacă un procesor are un singur control numit „damping”, acesta este cel mai probabil un control pentru înalte (HF), fiind cel mai des utilizat.
+
+---
+
+### **Aplicații practice pentru HF și LF Damping**
+
+- **HF Damping (Atenuarea frecvențelor înalte):**
+- Procesoarele digitale produc reverberații mai strălucitoare decât spațiile reale. Atenuarea înaltelor oferă un rezultat mai natural sau ajută la simularea unei camere cu multe materiale absorbante.
+- Sibilanțele vocilor (sunetele „s”/„ș”) pot persista pe coada de reverberație, devenind deranjante.
+- Zgomotele generate de sinteza FM sau _ring modulation_, sunetul de aer captat la instrumentele de suflat (cum e trompeta), distorsiunile, cinelele stridente sau atacul chitarei acustice pot rămâne pe coada reverberației, adăugând murdărie.
+  HF Damping remediază aceste probleme.
+
+- **LF Damping (Atenuarea frecvențelor joase):**
+- Se aplică pentru a simula spații cu materiale ce absorb mai mult joasele decât înaltele, cum este lemnul.
+- Este util când avem nevoie de o reverberație pe joase doar pentru un impact inițial. Aplicarea LF Damping va subția reverberația în timp, prevenind înfundarea constantă a mixajului.
+
+---
+
+### **Egalizarea Post-Reverb și Percepția Sunetului**
+
+Egalizarea post-reverb ajută la potrivirea efectului în mixaj, reverberația fiind un sunet lung care ocupă spațiu frecvențial și poate interfera cu alte semnale.
+
+Modul în care frecvențele modifică percepția asupra reverberației:
+
+- **Frecvențele înalte** oferă prezență și strălucire (_sparkle_), utilizate deseori pentru efecte stilizate. În schimb, atenuarea înaltelor creează o reverberație transparentă, discretă, caldă sau întunecată (ex: solo-urile calde de chitară). De asemenea, reducerea înaltelor accentuează senzația de distanță.
+- **Frecvențele joase** fac reverberația mai masivă, mai impresionantă și mai caldă. Amplificarea lor prin _low-shelving_ accentuează aceste efecte (cu cât sunt mai multe joase, cu atât spațiul pare mai mare). Reducerea sau filtrarea joaselor subțiază reverberația și o face mai puțin intruzivă.
+
+---
+
+**Termeni tehnici cheie:**
+
+- **Pre-reverb / Post-reverb** → Înainte / după procesarea de reverberație
+- **Damping** → Atenuare / amortizare progresivă a frecvențelor în timp
+- **HPF (High-Pass Filter)** → Filtru Trece-Sus (taie frecvențele joase)
+- **Shelving EQ** → Egalizator de tip Shelf (amplifică sau atenuează în linie dreaptă toate frecvențele peste sau sub un prag)
+- **Decay time** → Timp de stingere / rezonanță
+- **Crossover frequency** → Frecvență de separare / de tăiere
+- **HF Damping / LF Damping** → Atenuarea frecvențelor înalte (High Frequency) / joase (Low Frequency)
+- **Sibilance** → Sibilanță (accentuarea consoanelor fluierate, ex: S, Ș)

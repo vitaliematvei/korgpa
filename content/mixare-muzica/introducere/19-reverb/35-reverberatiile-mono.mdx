@@ -1,0 +1,56 @@
+---
+title: 'Reverberațiile Mono'
+description: 'Frecvențele și atenuarea (_Damping_)'
+order: 35
+category: 'Reverb'
+level: 'Incepator'
+---
+
+O practică comună în înregistrarea tobelor implică folosirea unui singur microfon de cameră (_room mic_) pe lângă microfoanele stereo de deasupra (_overheads_).
+Deși microfonul de cameră este poziționat mai departe de setul de tobe — captând astfel mai multă reverberație decât microfoanele de overhead —, este interesant de observat cum înregistrarea stereo a overhead-urilor poate suna mai spațioasă, mai naturală și mai bogată în reverberație.
+
+Există mai mulți factori care limitează realismul unei reverberații mono.
+Unul dintre ei este **efectul de mascare**, în care sunetul direct acoperă reflexiile timpurii.
+Un truc vechi folosit pentru a rezolva această problemă consta în panoramarea reverberației într-o parte diferită față de sunetul direct.
+Totuși, deși această tehnică poate crea un efect interesant, ea sună nerealist.
+
+Marea problemă a unei reverberații mono este că nu reproduce comportamentul direcțional al unui spațiu natural, unde reflexiile ajung la urechile noastre din toate direcțiile.
+Un tipar de reflexii care lovește ascultătorul din unghiuri diferite va suna întotdeauna mai realist decât unul care vine dintr-o singură poziție fixă.
+Deși o pereche de monitoare de studio poate simula doar o șeimime din spațiul din jurul nostru (și asta doar pe o singură dimensiune), trecerea la o reverberație stereo aduce o îmbunătățire uriașă.
+
+---
+
+### **Când și de ce se folosesc reverberațiile Mono**
+
+Comportamentul stereofonic este esențial pentru reproducerea unei reverberații veridice.
+Cu toate acestea, poate fi surprinzător faptul că reverberațiile mono sunt utilizate destul de des în mixaj:
+
+1. **Ca efect creativ / stilistic distinct.**
+2. **Când lățimea (_width_) unei reverberații stereo devine dăunătoare.**
+
+**Exemplu practic:**
+Avem două chitare cu distors, panoramate extrem stânga-dreapta (_hard pan_), și vrem să le adăugăm profunzime sau puțină viață.
+Dacă trimitem ambele chitare către o singură reverberație stereo, vom umple întregul panoramă stereo cu conținut bogat în armonice, scăzând claritatea altor instrumente din mixaj și estompând localizarea exactă a celor două chitare.
+
+În loc de o reverberație stereo, putem trimite fiecare chitară către propriul ei plugin de **reverberație mono**, panoramând semnalul procesat (_wet_) exact în aceeași poziție cu semnalul direct (_dry_).
+Deși reverberația mono nu va simula un spațiu natural 3D, ea va oferi adâncime și viață chitarelor fără să înfunde imaginea stereo.
+
+> **Sfat tehnic:** Când ai nevoie de un semnal mono dintr-o reverberație stereo, este de obicei mai bine să folosești **un singur canal** (stânga sau dreapta) decât să inserezi un plugin stereo și să-i pui ambele canale pe centru (_summing to mono_).
+> Din cauza diferențelor de fază dintre canalul stâng și cel drept specifice algoritmilor de reverb, însumarea lor poate crea probleme de anulare de fază.
+
+---
+
+**Sumar:**
+Reverberațiile mono sunt folosite fie ca efect special, fie atunci când lățimea unei reverberații stereo este nedorită și riscă să aglomereze panorama stereo.
+
+---
+
+**Termeni tehnici cheie:**
+
+- **Overheads / Room mic** → Microfoane de deasupra tobelor / microfon de ambient (cameră)
+- **Direct sound / Dry signal** → Sunet direct / semnal neprocesat
+- **Wet signal** → Semnal procesat (cu efect)
+- **Masking effect** → Efect de mascare
+- **Panorama / Panning** → Poziționarea sunetului în câmpul stereo (stânga/dreapta)
+- **Hard pan** → Panoramare extremă (100% stânga sau 100% dreapta)
+- **Phase differences** → Diferențe de fază (care pot duce la anulări de frecvență)
