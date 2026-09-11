@@ -1,0 +1,52 @@
+---
+title: 'Reverberații de tip Gate și Neliniare'
+description: 'Emulatoare de reverberație cu sursă mobilă'
+order: 40
+category: 'Reverb'
+level: 'Incepator'
+---
+
+Reflexiile dintr-o cameră reală pot crește și se pot atenua ca amplitudine într-un mod foarte diferit față de cele produse de un emulator de reverberație.
+În timp ce pentru majoritatea emulatoarelor cea mai puternică reflexie este prima, modelul de reflexii din anumite spații poate continua să crească o perioadă înainte de a atinge amplitudinea maximă — echivalentul etapei de atac (_attack_) dintr-un anvelopat de dinamică.
+În plus, nivelul reflexiilor dintr-o cameră reală fluctuează, spre deosebire de scăderea liniară a nivelului reflexiilor din unele emulatoare de reverberație.
+Forma anvelopatului reverberației este importantă pentru o simulare naturală, iar unele emulatoare oferă controale dedicate în acest sens.
+Inginerii de sunet pot folosi diverse instrumente pentru a face ca stingerea (_decay_) reverberațiilor să fie mult mai puțin naturală.
+Deși acest lucru poate afecta impresia de naturalism, o astfel de reverberație neliniară poate avea un impact sonor mult mai puternic.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/24-14.jpg"
+    alt="Figura 24-14"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 24-14:</p>**Stingerea reverberației.** (a) O
+  stingere liniară a reverberației. (b) O stingere simplă a reverberației de tip
+  *gate*. (c) O stingere care mai întâi scade lent, iar apoi coboară brusc.
+</div>
+
+Stingerea reverberației este elementul pe care îl sculptăm cel mai frecvent.
+Cea mai simplă metodă de a o modula este introducerea unui compresor după reverberație.
+Adesea, compresorul este setat la un prag (_threshold_) moderat, o rată de compresie (_ratio_) moderată și un atac rapid.
+Pentru forme de stingere cu adevărat agresive, timpul de revenire (_release_) poate fi setat la minim pentru a genera un efect de pompaj (_pumping_); pentru rezultate mai subtile, timpul de revenire poate fi crescut.
+
+Cea mai celebră reverberație neliniară este **gated reverb** (reverberația cu poartă de zgomot).
+Legenda spune că a fost descoperită din greșeală în timpul sesiunilor de înregistrare pentru al treilea album al lui Peter Gabriel.
+Este consacrată în special prin utilizarea ei pe piesa „In the Air Tonight” a lui Phil Collins.
+În cea mai simplă formă a sa, reverberația de tip _gate_ se obține prin introducerea unei porți de zgomot (_gate_) după reverberație și setarea pragului acesteia astfel încât să se deschidă la explozia inițială de reverberație.
+De regulă, se folosesc un atac și un _release_ rapide, alături de o setare de menținere (_hold_) ajustată ritmic. Această configurație nu modifică forma curbei de stingere până în ultimele ei etape — pe durata perioadei de _hold_, stingerea reverberației rămâne neschimbată (Figura 24.14b). O rațiune pentru aplicarea unei astfel de porți pe reverberație este legată de faptul că, în cazul semnalelor uscate (_dry_) susținute, reverberația are tendința de a...
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/24-15.jpg"
+    alt="Figura 24-15"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 24-15:</p>Fluxul schematic al semnalului pentru o
+  reverberație de tip gate „îmbunătățită”.
+</div>

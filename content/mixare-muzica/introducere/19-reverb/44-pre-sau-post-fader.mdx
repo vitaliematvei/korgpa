@@ -1,0 +1,31 @@
+---
+title: 'Pre-sau post-fader?'
+description: 'Pre-sau post-fader?'
+order: 44
+category: 'Reverb'
+level: 'Incepator'
+---
+
+Așa cum s-a menționat anterior, reverberațiile conectate ca _insert_ sunt _pre-fader_ (cu puține excepții).
+Atunci când sunt conectate ca trimitere auxiliară (_aux send_), putem alege între o trimitere _pre-fader_ sau _post-fader_.
+O trimitere _post-fader_ este, de asemenea, _post-cut_ (sau _post-mute_).
+În mod similar, o trimitere _pre-fader_ este _pre-cut_ (_pre-mute_).
+
+Principiul de bază din spatele utilizării trimiterilor _post-fader_ este că nivelul semnalului uscat (_dry_) și nivelul reverberației sunt legate direct — când nivelul semnalului uscat crește, crește și nivelul reverberației.
+În practică, uneori ajustarea faderului s-ar putea să nu ducă la schimbarea dorită a nivelului reverberației, fiind necesară o ajustare suplimentară direct pe reverberație.
+O trimitere _post-fader_ este absolut necesară dacă se folosește automatizarea de nivel sau de mutare (_mute_) — când facem _fade-out_ sau punem pe _mute_ semnalul uscat, ne dorim ca și reverberația să scadă în volum sau să fie oprită simultan.
+
+Un alt aspect este legat de utilizarea frecventă a funcției de _solo_ distructiv în timpul mixajului.
+Să presupunem că avem vocea și chitara trimise ambele către o reverberație de ambianță.
+Acea reverberație este setată pe _solo safe_ pentru a nu fi oprită atunci când ascultăm alte instrumente în _solo_.
+Dacă trimiterea pentru chitară este _pre-fader_ și punem vocea pe _solo_, reverberația chitarei se va auzi în continuare alături de voce și reverberația acesteia, ceea ce poate fi extrem de deranjant.
+Trimiterile _post-fader_ previn apariția unor astfel de situații.
+
+> Trimiterea de reverberație _post-fader_ este cea mai întâlnită în mixaj și este obligatorie dacă se aplică automatizări de volum sau de _mute_ pe semnalul sursă.
+
+În anumite situații, este nevoie să exportăm (_bounce_) reverberația separat de semnalul ei uscat.
+În multe aplicații software, acest lucru se poate obține prin punerea pe _solo_ a pistei auxiliare de reverberație.
+Totuși, deoarece funcțiile de _solo_ din softuri sunt adesea distructive, acest pas va opri și pista semnalului uscat.
+Pentru ca semnalul uscat să continue să alimenteze bus-ul auxiliar și, implicit, unitatea de reverberație, se poate folosi o trimitere _pre-fader_.
+
+O altă situație în care o trimitere _pre-fader_ poate fi utilă este atunci când pista originală este mixată la un nivel foarte scăzut, iar o trimitere _post-fader_ nu ar oferi un semnal suficient de puternic pentru a produce o reverberație audibilă.

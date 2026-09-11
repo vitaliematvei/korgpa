@@ -1,0 +1,35 @@
+---
+title: 'Actualizarea configurației noastre'
+description: 'Actualizarea configurației noastre'
+order: 6
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Până acum, am parcurs procesul de setare a modulului _next-seo_ și am explorat cum putem suprascrie setările implicite în cod.
+Toate acestea sunt bune și frumoase, dar ce ne facem dacă ajungem să avem o mulțime de setări pe care trebuie să le transmitem componentei, mai ales dacă trebuie să folosim aceleași valori în mai multe locuri?
+
+Există o soluție pentru această problemă spinoasă: putem folosi un fișier de configurație.
+Modulul _next-seo_ suportă utilizarea unui fișier `next-seo.config.js` în care putem pune toate intrările implicite.
+Acest lucru ne păstrează codul curat — trebuie să adăugăm specifice doar acolo unde suprascriem o valoare în cod.
+Haideți să vedem ce implică acest lucru și să explorăm câteva dintre setările pe care le putem adăuga la configurația actualizată.
+
+Pentru a trece la utilizarea unui fișier de configurație, urmați acești pași:
+
+1. Mai întâi, trebuie să creăm fișierul de configurare — pentru aceasta, deschideți un fișier nou în editorul de cod și adăugați următorul cod:
+
+```javascript
+export default {
+  openGraph: {
+    type: 'website',
+    locale: 'en_IE',
+    url: 'https://www.url.ie/',
+    siteName: 'SiteName',
+  },
+  twitter: {
+    handle: '@handle',
+    site: '@site',
+    cardType: 'summary_large_image',
+  },
+};
+```

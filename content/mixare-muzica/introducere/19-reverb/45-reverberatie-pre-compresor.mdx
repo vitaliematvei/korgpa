@@ -1,0 +1,32 @@
+---
+title: 'Trimiterea reverberației pre-compresor'
+description: 'Trimiterea reverberației pre-compresor'
+order: 45
+category: 'Reverb'
+level: 'Incepator'
+---
+
+Rezultate foarte interesante pot fi obținute dacă semnalul uscat (_dry_) este comprimat, dar semnalul trimis către emulatorul de reverberație este preluat înainte ca această compresie să aibă loc.
+Într-o interpretare cu o dinamică vibrantă, o expresivitate crescută este redată prin fraze muzicale mai puternice ca volum.
+O astfel de interpretare poate pune probleme într-un mixaj, necesitând compresie.
+Totuși, dacă semnalul este trimis către unitatea de reverberație înainte de a fi comprimat, dinamica interpretării va declanșa mai multă reverberație în momentele mai intense.
+Acest efect de „automatizare manuală” este cel mai potrivit pentru interpretări cu schimbări dinamice rapide, cum sunt unele execuții vocale.
+
+În timp ce pe o consolă analogică o copie a semnalului necomprimat poate fi oricând preluată direct din ieșirea multipistă (_multitrack return_) sau dintr-un punct de _insert_ aflat înainte de procesare, utilizatorii de software și-ar putea pune întrebări legate de modul în care se poate realiza acest lucru — deoarece o trimitere software (_send_) se află întotdeauna după sloturile de _insert_ (unde este pus compresorul).
+
+Figura 24.17 ilustrează cum se poate obține această rutare în Logic: semnalul uscat este trimis către un bus pe care este inserată reverberația. De reținut că ieșirea pistei de voce nu este setată direct către bus-ul principal de mixaj (_main mix bus_), ci către un alt bus pe care este plasat compresorul.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/24-17.jpg"
+    alt="Figura 24-17"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 24-17:</p>Trimiterea reverberației pre-compresor în
+  Logic.
+</div>
+
+{/* am ramas How loud? How much?  .467 */}

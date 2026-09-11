@@ -1,0 +1,108 @@
+---
+title: 'Dinamizarea titlurilor de pagină'
+description: 'Dinamizarea titlurilor de pagină'
+order: 7
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Până acum, am adăugat etichete pe fiecare pagină din site-ul nostru folosind modulul _next-seo_.
+Deși acest lucru funcționează excelent pentru paginile statice (cum ar fi pagina _About_), avem o problemă în cazul paginilor dinamice.
+
+Problema constă în faptul că modulul _next-seo_ va itera rapid prin fiecare produs din magazinul nostru și va introduce ca etichetă SEO `<title>` cel mai probabil ultimul produs pe care îl procesează.
+Rezultatul direct este că, deși titlul principal din pagina afișată clientului va fi corect, cel din eticheta `<title>` va fi complet greșit!
+
+Există o soluție: calea oficială este utilizarea noii funcții `generateMetadata()`, dar am discutat deja că aceasta nu va funcționa în cazul nostru din cauza structurii proiectului.
+Avem nevoie de o abordare diferită.
+
+Din fericire, putem obține efectul dorit tot cu ajutorul modulului _next-seo_, însă trebuie să iterăm prin fiecare produs și să îl folosim doar pe cel care se potrivește cu URL-ul utilizat pentru produsul nostru.
+Haideți să vedem cum realizăm acest lucru în cadrul următoarei demonstrații.
+
+**ADĂUGAREA NUMELOR DINAMICE**
+
+Pentru a adăuga nume dinamice ca etichete SEO, urmați acești pași:
+
+1. Mai întâi, deschideți `Product.jsx` în editorul de cod.
+   Trebuie să adăugăm o bucată considerabilă de cod, lucru pe care îl vom face pe secțiuni, începând cu importarea modulului SEO și a modulului `useRouter` din Next.js:
+
+```javascript
+import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
+```
+
+2. În continuare, trebuie să adăugăm o funcție ajutătoare (_helper function_) — aceasta va converti numele produsului ales în format _Title Case_ (cu prima literă a fiecărui cuvânt majusculă), pregătit pentru introducerea în titlu.
+   Lăsați o linie liberă, apoi adăugați această funcție:
+
+```javascript
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
+```
+
+3. Apoi, trebuie să selectăm numele corect și să ne asigurăm că se potrivește cu cel afișat în URL.
+   Pentru aceasta, adăugați următorul cod după linia de deschidere a componentei noastre și înainte de instrucțiunea `return`:
+
+```jsx
+const Product = ({ product: { image, name, slug, price } }) => {
+  const { asPath } = useRouter();
+  let seoProductSlug = asPath.split("/")[2];
+  let seoProductName = "";
+
+  if (seoProductSlug != null) {
+    seoProductName = seoProductSlug.replace("-", " ");
+    if (seoProductSlug === slug.current) {
+      seoProductName = toTitleCase(seoProductSlug.replace("-", " "));
+    }
+  }
+
+  return (
+    // ...
+  );
+};
+
+```
+
+4. Acum putem folosi rezultatele acestui cod pentru a crea etichetele noastre dinamice — derulați mai jos până când vedeți parametrul `title` în componenta `NextSeo` și modificați-l astfel:
+
+```jsx
+<>
+  <NextSeo
+    title={`${toTitleCase(seoProductName)} - Macaron Magic`}
+    description="Great tasting home-made macarons"
+  />
+  {/* restul componentei */}
+</>
+```
+
+5. Introduceți `npm run dev` în terminal și apăsați Enter pentru a porni serverul de dezvoltare Next.js.
+   Așteptați ca serverul să pornească, apoi accesați `http://localhost:3000/products/cranberry-clementine`.
+   Apăsați **Shift+Ctrl+I** (pentru Windows) sau **Shift+Cmd+I** (pentru Mac) pentru a deschide consola browserului.
+   Dacă extindeți eticheta `<head>`, puteți vedea intrările create (ca în Figura 8-6).
+6. În continuare, accesați un alt produs din magazin — de exemplu _Chocolate Orange_ — și deschideți Consola pentru Dezvoltatori la fel ca înainte.
+   Dacă extindem eticheta `<head>`, ar trebui să vedem un nume diferit afișat (așa cum se observă în Figura 8-7).
+
+Cheia aici este să ne asigurăm că URL-ul, numele din pagină și eticheta `<title>` se potrivesc perfect — putem oricând optimiza această soluție mai târziu!
+
+Excelent — totul arată mult mai bine acum că avem numele corect al produsului pe fiecare pagină individuală! Lipsa acestei optimizări ne-ar fi dăunat la căutările pe Google — clienții ar fi fost confuzi și probabil ar fi părăsit site-ul dacă nu găseau produsul dorit.
+Lăsând asta la o parte, am făcut câteva modificări importante în acest exercițiu, așa că ar trebui să alocăm câteva minute pentru a revizui codul și a înțelege cum funcționează.
+
+**Analiza modificărilor din cod**
+
+Deși adăugarea modulului _next-seo_ pe site-ul nostru a fost simplă, ne-a lăsat cu o problemă: ce facem cu paginile de produs?
+
+După cum am văzut deja, nu avem pagini fizice individuale pentru fiecare produs, ci folosim un șablon (_template_) pentru a le genera în timpul compilării (_build time_). Este clar că nu putem avea aceleași etichete SEO afișate pe fiecare pagină, altfel ar apărea conflicte!
+
+Pentru a rezolva acest lucru, a trebuit să facem câteva modificări:
+
+- Am instalat mai întâi pachetul `next/router` pentru a folosi hook-ul `useRouter` cu scopul de a determina ce rută a urmat clientul (și, prin urmare, care este URL-ul paginii).
+- În corpul componentei, am adăugat un apel către `asPath` pentru a prelua URL-ul din browser, apoi i-am aplicat `split()` pentru a extrage ultima parte (adică slug-ul paginii).
+- Am verificat dacă această valoare nu este nula — dacă returnează un rezultat valid, verificăm dacă se potrivește cu `slug.current` și reformatăm textul dacă condiția este adevărată.
+- Ulterior, folosim rezultatul ca valoare interpolată în proprietatea `title` pe care o transmitem componentei `<NextSeo>`.
+
+Încheiem prin a verifica dacă titlul apare conform așteptărilor în browser, testând apoi o pagină nouă pentru a confirma că numele afișat este diferit (dar se potrivește în continuare cu produsul randat pe pagină).
+
+Perfect — suntem cu un pas mai aproape de a avea o configurație de bază pregătită pentru SEO. Încă mai sunt lucruri pe care le putem îmbunătăți — unele vor veni cu timpul, dar pentru moment există câteva detalii pe care vreau să le acoperim înainte de a trece la utilizarea **Lighthouse** pentru a ne crește scorurile de SEO, performanță și accesibilitate.
+
+{/* Testing the Site .235 */}

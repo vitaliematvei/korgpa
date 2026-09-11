@@ -1,0 +1,64 @@
+---
+title: 'Emulatoare de reverberație cu sursă fixă'
+description: 'Emulatoare de reverberație cu sursă fixă'
+order: 38
+category: 'Reverb'
+level: 'Incepator'
+---
+
+Majoritatea emulatoarelor digitale de reverberație pot fi privite ca o cameră virtuală în care este simulată o reverberație artificială.
+Cu toate acestea, cele mai multe dintre ele nu oferă posibilitatea de a poziționa sursa sonoră (sau ascultătorul) în această încăpere virtuală.
+Acest lucru se datorează, printre altele, limitărilor de putere de procesare.
+Multe dintre emulatoarele din prezent încă se bazează pe principiile modelului original conceput de Schroeder.
+Pentru simplitate, vom considera că astfel de emulatoare au o poziție fixă atât pentru sursa sonoră, cât și pentru ascultător, motiv pentru care le vom numi reverberații „cu sursă fixă”.
+
+Figura 24.11 ilustrează reflexiile dintr-o cameră reală în care o vioară și o trompetă sunt plasate în fața unei perechi de microfoane stereo.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/24-11.jpg"
+    alt="Figura 24-11"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 24-11:</p>
+  Primele reflexii primare dintr-o cameră reală provenite de la o vioară (V) și
+  o trompetă (T).
+</div>
+
+Prima reflexie care ajunge la microfonul din stânga va fi cea a trompetei, urmată imediat de prima reflexie a viorii.
+
+Când încercăm să simulăm acest scenariu de înregistrare folosind un emulator cu sursă fixă, îi furnizăm un mixaj stereo ce conține atât trompeta, cât și vioara.
+Pentru a reflecta poziția lor din Figura 24.11, trompeta va fi panoramată ușor spre stânga, iar vioara va fi panoramată pe centru.
+Ambele canale ale mixajului stereo vor conține ambele instrumente, deși în proporții de volum diferite.
+
+Figura 24.12 ilustrează ce se întâmplă în interiorul emulatorului de reverberație, unde difuzoarele reprezintă semnalul stereo de intrare, iar microfoanele reprezintă ieșirea stereo.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/24-12.jpg"
+    alt="Figura 24-12"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 24-12:</p>Redarea reflexiilor primare în cadrul
+  unui emulator de reverberație cu sursă fixă.
+</div>
+
+În acest caz, prima reflexie primară (_early reflection_) va fi formată dintr-un mix între trompetă și vioară; de altfel, toate reflexiile vor fi alcătuite dintr-un astfel de mixaj al celor două instrumente.
+
+Un scenariu precum cel din Figura 24.12 — ce amintește puternic de modul în care sunetul este înregistrat în camerele de reverberație acustice — scoate la iveală una dintre marile limitări ale alimentării unui emulator de reverberație cu un mixaj stereo compus.
+Emulatoarele de reverberație sunt incapabile să separe instrumentele dintr-un mix stereo și, prin urmare, nu pot genera un model individual de reflexii pentru fiecare sursă în parte.
+
+Atunci când toate reflexiile provin dintr-un astfel de mixaj stereo, percepția noastră interconectează poziția relativă a diferitelor instrumente.
+O localizare și o profunzime precise pot fi obținute doar dacă fiecare instrument are un tipar de reflexii distinct, necorelat cu cel al celorlalte instrumente.
+Chiar și cele mai mici variații ale reflexiilor între instrumente pot face o diferență uriașă.
+
+O modalitate de a depăși această problemă — de obicei posibilă doar în mediul digital — este trimiterea fiecărui instrument către un emulator separat.
+Fiecare emulator trebuie încărcat cu același program, dar cu mici variații ale parametrilor de la un procesor la altul.
+Aceste diferențe fine vor crea, cel mai probabil, un tipar de reflexie distinct pentru fiecare instrument, fără a risca însă un conflict de ambianță (_ambiance collision_).
+Cu toate acestea, poziția fixă a sursei în camera virtuală poate limita în continuare gradul de realism în localizarea spațială a sunetului.
