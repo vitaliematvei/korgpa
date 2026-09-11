@@ -1,0 +1,190 @@
+---
+title: 'Creare syntezator PART-1'
+description: 'Creare syntezator'
+order: 21
+category: 'JUCE'
+level: 'Incepator'
+---
+
+În JUCE, procesul de sinteză audio polifonică este structurat în jurul clasei principale `juce::Synthesiser` și a două clase dependente:
+
+Acesta este un tutorial pas cu pas, de la zero, pentru crearea unui plugin de tip **Sintetizator Polifonic** în JUCE (C++).
+
+---
+
+1.1 **Pasul 1: Crearea unui proiect nou în Projucer:**
+Setarea Projucer pentru un plugin de sintetizator.
+1.2. Deschide aplicația **Projucer**.
+1.3 Selectează template-ul **Audio Plug-in**.
+1.4 Completează detaliile proiectului:
+
+- **Project Name**: `PolySynth` (sau numele dorit).
+- **Target Platforms**: Alege mediul tău de dezvoltare (ex: Visual Studio 2022, Xcode, CLion sau Makefile).
+
+4. În panoul de configurare a plugin-ului (**Plugin Characteristics**):
+
+- Bifează opțiunea **Plugin is a Synth** (Așteaptă intrări MIDI și generează audio).
+- Bifează opțiunea **Plugin MIDI Input** (Permite primirea mesajelor MIDI).
+- Asigură-te că opțiunea **Plugin Wants MIDI Messages** este activată.
+
+5. Apasă pe butonul **Create...** și salvează proiectul pe disc.
+6. Deschide proiectul în IDE-ul tău făcând click pe pictograma IDE-ului din Projucer.
+
+7. **Pasul 2: Definirea clasei pentru Sunet (SynthSound):**
+   Moștenirea clasei juce::SynthesiserSound.
+   În JUCE, clasa `SynthesiserSound` îi spune sintetizatorului _ce note și ce canale MIDI_ pot fi redate.
+
+8. Poți crea un fișier de antet nou numit `SynthSound.h` sau îl poți defini direct deasupra clasei `SynthVoice`.
+9. Adaugă următorul cod:
+
+```cpp
+#pragma once
+#include <JuceHeader.h>
+
+class SynthSound : public juce::SynthesiserSound
+{
+public:
+    // Returnează true dacă sunetul este activ pe nota MIDI primită
+    bool appliesToNote (int midiNoteNumber) override
+    {
+        return true;
+    }
+
+    // Returnează true dacă sunetul răspunde pe canalul MIDI respectiv
+    bool appliesToChannel (int midiChannel) override
+    {
+        return true;
+    }
+};
+
+```
+
+3. **Pasul 3: Definirea clasei pentru Voce (SynthVoice):**
+   Moștenirea clasei juce::SynthesiserVoice.
+   Clasa `SynthesiserVoice` conține logica efectivă de sinteză.
+   Fiecare notă apăsată va fi atribuită unei instanțe din această clasă.
+
+1. Creează un fișier `SynthVoice.h` și adaugă structura de bază:
+
+```cpp
+#pragma once
+#include <JuceHeader.h>
+#include "SynthSound.h"
+
+class SynthVoice : public juce::SynthesiserVoice
+{
+public:
+    // Verifică dacă această voce poate reda tipul de sunet definit
+    bool canPlaySound (juce::SynthesiserSound* sound) override
+    {
+        return dynamic_cast<SynthSound*>(sound) != nullptr;
+    }
+
+    // Se apelează când este trimis un comandament Note On
+    void startNote (int midiNoteNumber, float velocity,
+                    juce::SynthesiserSound* sound,
+                    int currentPitchWheelPosition) override
+    {
+        // Aici vei seta frecvența generatorului de undă în funcție de midiNoteNumber
+    }
+
+    // Se apelează când se eliberează clapa (Note Off)
+    void stopNote (float velocity, bool allowTailOff) override
+    {
+        // Oprește nota și eliberează vocea
+        clearCurrentNote();
+    }
+
+    void pitchWheelMoved (int newPitchWheelValue) override {}
+    void controllerMoved (int controllerNumber, int newControllerValue) override {}
+
+    // Generează eșantioanele audio pentru blocul curent
+    void renderNextBlock (juce::AudioBuffer<float>& outputBuffer,
+                          int startSample, int numSamples) override
+    {
+        // Aici se va scrie semnalul audio generat în outputBuffer
+    }
+};
+
+```
+
+4. **Pasul 4: Inițializarea Sintetizatorului:**
+   Adăugarea sintetizatorului în PluginProcessor.h și .cpp.
+   Acum conectăm `SynthSound` și `SynthVoice` la obiectul principal de gestionare a plugin-ului.
+
+1. În **`PluginProcessor.h`**:
+
+- Include fișierele create anterior: `#include "SynthVoice.h"`
+- Adaugă instanța `juce::Synthesiser` ca membru privat în clasă:
+
+```cpp
+private:
+    juce::Synthesiser mySynth;
+
+```
+
+2. În **`PluginProcessor.cpp`**:
+
+- În constructorul clasei `PluginProcessor`, adaugă numărul dorit de voci (pentru a seta limita de polifonie) și instanța de sunet:
+
+```cpp
+AudioPluginAudioProcessor::AudioPluginAudioProcessor()
+{
+    // Adăugăm 5 voci (se pot juca maxim 5 note simultan)
+    for (int i = 0; i < 5; ++i)
+    {
+        mySynth.addVoice(new SynthVoice());
+    }
+
+    // Adăugăm sunetul definit
+    mySynth.addSound(new SynthSound());
+}
+
+```
+
+5. **Pasul 5: Setarea Sample Rate-ului:** Sincronizarea ratei de eșantionare în prepareToPlay.
+   Sintetizatorul are nevoie de rata de eșantionare a plăcii audio/DAW-ului pentru a calcula corect frecvențele sunetelor.
+
+În **`PluginProcessor.cpp`**, în metoda `prepareToPlay`:
+
+```cpp
+void AudioPluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+{
+    // Transmiterea ratei de eșantionare către sintetizator
+    mySynth.setCurrentPlaybackSampleRate(sampleRate);
+}
+
+```
+
+6. **Pasul 6: Randarea sunetului în processBlock:** Prelucrarea buffer-ului audio și a evenimentelor MIDI.
+   În metoda `processBlock`, comenzile MIDI primite sunt transmise sintetizatorului, care va umple buffer-ul cu semnalul audio generat.
+
+În **`PluginProcessor.cpp`**, editează metoda `processBlock`:
+
+```cpp
+void AudioPluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
+                                              juce::MidiBuffer& midiMessages)
+{
+    juce::ScopedNoDenormals noDenormals;
+
+    // Curățăm buffer-ul de orice date vechi/reziduale
+    buffer.clear();
+
+    // Sintetizatorul procesează mesajele MIDI și scrie sunetul în buffer
+    mySynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+}
+
+```
+
+---
+
+### Concepte cheie de reținut:
+
+| Concept                      | Rol                                                                                                    |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------ |
+| **`juce::Synthesiser`**      | Dispecerul central. Primește datele MIDI, caută o voce liberă și distribuie sarcinile de redare.       |
+| **`juce::SynthesiserSound`** | Regula de acces (**Ce**). Specifică pe ce canale MIDI sau intervale de clape se aplică un sunet.       |
+| **`juce::SynthesiserVoice`** | Generatorul de sunet (**Cum**). Randează undele audio (sinus, ferăstrău, etc.) la fiecare cadru audio. |
+| **Polifonie**                | Se ajustează prin numărul de instanțe de `SynthVoice` adăugate cu `mySynth.addVoice()`.                |
+
+{/* am ramas https://www.youtube.com/watch?v=kxKEFTQRZPI&list=PLLgJJsrdwhPxa6-02-CeHW8ocwSwl2jnu&index=21 */}

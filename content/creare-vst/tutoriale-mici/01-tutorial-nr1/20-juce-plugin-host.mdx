@@ -1,0 +1,73 @@
+---
+title: 'Juce plugin host'
+description: 'Juce plugin host'
+order: 20
+category: 'JUCE'
+level: 'Incepator'
+---
+
+**JUCE Plugin Host** este un mediu minimalist creat direct de echipa JUCE pentru a testa, mapa semnale audio/MIDI și face debugging pe plug-in-uri VST3/AU fără a fi nevoie să deschizi o stație DAW complexă (cum ar fi Ableton, Cubase sau FL Studio).
+
+---
+
+### Cerințe prealabile
+
+- Un IDE instalat (**Xcode** pentru macOS sau **Visual Studio** pentru Windows).
+- **JUCE Framework** descărcat pe calculator.
+- Pachetul **VST3 SDK** (dacă folosești o versiune mai veche de JUCE care nu îl include implicit).
+
+---
+
+1. **Deschiderea proiectului AudioPluginHost:** Locația nativă din directorul JUCE.
+1. Mergi în folderul unde ai extras framework-ul **JUCE**.
+1. Navighează la calea: `JUCE/extras/AudioPluginHost/`.
+1. Deschide fișierul **`AudioPluginHost.jucer`** folosind aplicația **Projucer**.
+
+1. **Configurarea căilor VST3 SDK (Opțional / Versiuni vechi):** Doar dacă este necesar în Projucer.
+1. În **Projucer**, mergi la meniul de setări (_Global Paths_ sau setările exporter-ului).
+1. Asigură-te că calea către **VST3 SDK** este setată corect pe sistemul tău.
+1. Apasă pe butonul **Save Project and Open in IDE...** (Xcode sau Visual Studio) situat în partea de sus.
+
+1. **Compilarea aplicației Host:** Generarea fișierului executabil.
+1. Odată ce proiectul s-a deschis în IDE (Xcode / Visual Studio), selectează ținta de build ca **Release** sau **Debug**.
+1. Apasă pe **Build / Run** (`Cmd + B` / `Cmd + R` pe Mac sau `Ctrl + Shift + B` pe Windows).
+1. După finalizarea compilării, aplicația **AudioPluginHost** va fi lansată automat sau o poți găsi în folderul `Builds/.../build`.
+
+1. **Configurarea dispozitivelor Audio și MIDI:** Setarea intrărilor și ieșirilor de sunet.
+1. În aplicația **AudioPluginHost**, mergi la meniul **Options** > **Change the Audio Device Settings...**.
+1. Alege **Audio Device Type** (ex. _ASIO_ sau _DirectSound_ pe Windows, _CoreAudio_ pe macOS).
+1. Selectează placa de sunet la **Output Device** și **Input Device**.
+1. Activează dispozitivul MIDI dorit la secțiunea **Active MIDI Inputs** (claviatură/controller MIDI).
+
+1. **Scănarea plug-in-urilor din sistem:** Căutarea efectelor și sintetoarelor VST3/AU.
+1. Mergi în meniul de sus la **Options** > **Edit the List of Available Plug-ins...** (sau apasă comanda rapidă `Cmd + P` / `Ctrl + P`).
+1. În fereastra pop-up, dă click pe butonul **Options** din colțul din stânga/dreapta jos.
+1. Selectează **Scan for new or updated VST3 plug-ins...** (sau formatul dorit: AU/VST).
+1. Navighează și selectează folderul unde ai salvat plug-in-ul tău în curs de dezvoltare (sau folosește directorul implicit de VST3 al sistemului).
+
+1. **Rutarea semnalului pe ecran (Graph Routing):** Conectarea nodurilor audio și MIDI.
+1. Dă **click dreapta** pe zona de lucru (pânză) și selectează plug-in-ul tău proaspăt scanat din listă.
+1. Pe ecran vor apărea mai multe blocuri (noduri):
+
+- **Audio Input** (Ieșirea din microfon/interfață)
+- **MIDI Input** (Semnalul de la claviatura MIDI)
+- **Nodul Plug-in-ului tău**
+- **Audio Output** (Difuzoare / Căști)
+
+3. Trage linii de legătură (cabluri virtuale):
+
+- Conectează **Audio Input** la intrările audio ale plug-in-ului.
+- Conectează **MIDI Input** la intrarea MIDI a plug-in-ului (dacă este un sintetizator/instrument).
+- Conectează ieșirile audio ale plug-in-ului la blocul **Audio Output**.
+
+7. **Deschiderea interfeței grafice (GUI) și testarea:** Interacțiunea cu plug-in-ul.
+1. Fă **dublu click** pe nodul plug-in-ului tău din pânză pentru a-i deschide interfața grafică (GUI).
+1. Cântă la claviatura MIDI sau redă un semnal audio pentru a verifica funcționarea.
+1. Salvează configurația din **File > Save** pentru a nu fi nevoie să refaci conexiunile la următoarea sesiune de debugging.
+
+---
+
+### De ce este util acest flux de lucru?
+
+- **Acuratețe la Debugging:** Îți permite să pui puncte de oprire (_breakpoints_) în cod din Xcode sau Visual Studio, deoarece aplicația Host rulează direct ca proces de testare.
+- **Rapiditate:** Nu mai trebuie să aștepți încărcarea unui DAW complet la fiecare modificare mică de cod.
