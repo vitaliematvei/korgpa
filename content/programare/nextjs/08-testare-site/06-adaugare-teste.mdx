@@ -1,0 +1,140 @@
+---
+title: 'Adăugarea mai multor teste'
+description: 'Adăugarea mai multor teste'
+order: 6
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Când vine vorba de scrierea testelor, este esențial să fim foarte clari cu privire la ceea ce vrem să testăm — este extrem de ușor să pornești de la o idee inițială, dar apoi să te lași luat de val și să ajungi să testezi mai mult decât îți propuseseși!
+Acestea fiind spuse, am câteva idei pentru a începe:
+
+- Testarea procesului de adăugare/eliminare a produselor în și din coș
+- Verificarea existenței tuturor imaginilor cu cardurile de credit
+- Apăsarea pe stelele de evaluare (review) pentru a ne asigura că putem selecta un număr țintă
+
+A doua idee este foarte simplă — de fapt, aceasta ar trebui să se afle în stack-ul de componente, deoarece este o componentă în sine!
+Ultima — apăsarea pe stelele de evaluare — este mai degrabă un test end-to-end (E2E), deoarece, deși am putea monta componenta izolat, clienții vor apăsa pe acele stele în cadrul fluxului lor navigare.
+
+Testul care prezintă cel mai mare interes pentru noi este adăugarea sau eliminarea produselor din coș.
+Acesta include mulți pași, mulți dintre ei similari; de asemenea, putem folosi această ocazie pentru a verifica ce se afișează în coș ca parte din test.
+Haideți să analizăm în detaliu codul necesar pentru acest test.
+
+Pentru această carte, voi parcurge în detaliu testul de adăugare a produselor în coș — celelalte vor fi disponibile în arhiva de cod pe care o puteți descărca și studia în timpul liber.
+
+---
+
+### **ADĂUGAREA UNUI PRODUS ÎN COȘ**
+
+Putem împărți acest test în trei părți distincte:
+
+1. Navigarea către produsul dorit
+2. Adăugarea produsului în coș și setarea cantităților corecte
+3. Verificarea faptului că atât coșul, cât și mini-coșul (minicart) afișează produsul și cantitățile corecte
+
+Pentru a crea testul, urmați acești pași:
+
+1. Mai întâi trebuie să corectăm o eroare în componenta `MiniCart` — aceasta afișează un preț unitar incorect!
+   Pentru a face asta, deschideți fișierul `MiniCart.jsx` și găsiți următoarea linie de cod:
+
+```jsx
+<span>${eUSLocale(totalPrice)}</span>
+```
+
+2. Schimbați linia cu următorul cod, apoi salvați și închideți fișierul:
+
+```jsx
+<span>${eUSLocale(item.price)}</span>
+```
+
+3. În continuare, deschideți un fișier nou în editorul de cod și adăugați următorul bloc — avem mult de adăugat, așa că o vom face pe bucăți, începând cu blocul `describe` și pasul de navigare către site:
+
+```javascript
+describe("Adding Products", () => {
+  it("should navigate to the home page", () => {
+    // Pornim de la pagina principală (index)
+    cy.visit("http://localhost:3000/");
+
+```
+
+4. Lăsați o linie liberă, apoi adăugați aceste linii de cod — acestea dau click pe link-ul **Shop** și verifică dacă ne aflăm pe pagina Magazinului:
+
+```javascript
+// Click pe link-ul Shop
+cy.get('div.navbar > a:nth-child(3)').click(true);
+
+// Noul URL ar trebui să includă "/shop"
+cy.url().should('include', '/shop');
+```
+
+5. Acest pas ne duce pe pagina produsului macaron _Spiced Pumpkin_:
+
+```javascript
+// Click pe produsul Spiced Pumpkin
+cy.get('a[href*="spiced-pumpkin"]').click();
+```
+
+6. Trebuie să mărim cantitatea dorită la 2, așa că testul apasă pe simbolul plus (`+`):
+
+```javascript
+// Creștem cantitatea produsului la 2
+cy.get('span.plus').click();
+```
+
+7. În acest moment, suntem gata ca testul să adauge produsul selectat în coș — apoi verificăm dacă avem două articole în coș:
+
+```javascript
+// Click pe Add to Cart
+cy.get('button.add-to-cart').click();
+
+// Verificăm dacă pictograma coșului arată cantitatea 2
+cy.get('span.cart-item-qty').contains(2);
+```
+
+8. Acest ultim bloc se ocupă de verificarea coșului și a mini-coșului pentru a confirma că detaliile afișate sunt cele așteptate:
+
+```javascript
+    // Deschidem coșul și verificăm detaliile
+    cy.get("span.cart-item-qty").click();
+    cy.get("span.cart-num-items").contains("2 items");
+
+    // Verificăm dacă mini-coșul afișează detaliile relevante
+    cy.get("span.cart-num-items").contains("(2 items)");
+    cy.get("span.item-desc > span").contains("Spiced Pumpkin");
+    cy.get("span.totals").contains("$18.50");
+    cy.get("div.total > h3").contains("$37.00");
+  });
+});
+
+```
+
+9. Rulați testul — dacă totul este în regulă, ar trebui să vedeți un rezultat pozitiv (un test trecut cu succes). Punctul cheie este că obținem indicatorul verde din stânga, care semnalează rularea cu succes a testului.
+10. Odată ce rularea testului s-a încheiat, puteți închide fereastra test runner-ului.
+
+Liniile de mai sus demonstrează un flux complet de navigare.
+Chiar dacă a părut un proces din mai mulți pași, este important de notat că un cumpărător real trece prin exact aceleași etape, așa că trebuie să reflectăm fidel acest traseu în testarea noastră!
+
+---
+
+### **Analiza modificărilor de cod**
+
+Am început prin remedierea unei probleme minore identificate în timpul creării site-ului: am folosit neintenționat `totalPrice` pentru prețul unitar, lucru care afișa o valoare greșită. Din fericire, rezolvarea a fost simplă — am înlocuit variabila cu `item.price`.
+
+Apoi am trecut la construirea testului E2E:
+
+- Am adăugat un bloc `describe()` și o comandă `cy.visit` pentru a naviga pe pagina principală.
+- Am simulat un eveniment de `click` pentru a merge pe pagina magazinului (`/shop`) și am validat noul URL.
+- Am selectat un produs (_Spiced Pumpkin_).
+- Am crescut cantitatea la 2 bucăți și am apăsat pe butonul **Add to Cart**.
+- Am verificat dacă pictograma coșului confirmă prezența celor 2 produse.
+- Am inspectat elementele din componenta mini-cart (`span.totals`, `div.total > h3` etc.) pentru a ne asigura că prețurile parțiale și totale sunt calculate și afișate corect.
+
+În spiritul filozofiei **Kaizen** (îmbunătățire continuă), merită menționat un detaliu de structură HTML: modul în care am creat afișarea de tipul `2 x $18.50` în mini-coș. Datele în sine sunt corecte, dar modul de randare în DOM poate fi optimizat pentru testare. Inițial, intenția a fost să se folosească o aserțiune directă de tipul:
+
+```javascript
+cy.get('span.totals').contains('2 x $18.50');
+```
+
+Cu toate acestea, elementele text (`2`, `x` și `$18.50`) erau separate în trei noduri DOM diferite, făcându-le inaccesibile printr-un singur selector simplu. O ajustare minoră în marcajul HTML al componentei va facilita considerabil scrierea aserțiunilor de testare pe viitor.
+
+Acum că am acoperit testarea end-to-end (E2E), pasul următor este testarea celeilalte fețe a monedei: **testarea componentelor individuale (Component Testing)**.

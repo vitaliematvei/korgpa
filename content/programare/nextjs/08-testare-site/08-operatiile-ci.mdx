@@ -1,0 +1,79 @@
+---
+title: 'Pregătirea pentru rularea în CI (Integrare Continuă)'
+description: 'Pregătirea pentru rularea în CI (Integrare Continuă)'
+order: 8
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Până acum ne-am concentrat pe crearea testelor în mediul local.
+Deși această abordare funcționează excelent în timpul dezvoltării, va veni momentul în care vom dori să trimitem codul în producție.
+
+Ca parte a acestui proces, va trebui să rulăm aceleași teste automat în pipeline-ul de CI/CD, pentru a avea garanția că versiunea care ajunge în producție funcționează corect și nu introduce erori.
+Pentru aceasta, trebuie să executăm două comenzi diferite, în funcție de tipul de teste pe care vrem să le rulăm (E2E sau componente).
+
+Modificările de mai jos presupun rularea Cypress în modul **headless** (fără interfață grafică).
+
+---
+
+### **Pasi de configurare**
+
+1. Deschideți fișierul `package.json` din rădăcina proiectului și localizați linia `"cypress": "cypress open"` din secțiunea `scripts`.
+2. Imediat sub această linie, adăugați următoarele două scripturi:
+
+```json
+"cypress:headless": "cypress run --browser chrome --headless",
+"cypress:component": "cypress run --component"
+
+```
+
+3. Salvați și închideți fișierul. Deschideți un terminal Node.js și navigați în directorul proiectului.
+4. Rulați comanda:
+
+```bash
+npm run cypress:headless
+
+```
+
+Veți vedea testele E2E rulând direct în linia de comandă, fără să se mai deschidă interfața grafică. 5. După ce rularea se încheie, executați:
+
+```bash
+npm run cypress:component
+
+```
+
+Această comandă va executa testele de componente în același mod _headless_. 6. În terminal veți vedea un sumar detaliat al rezultatelor pentru fiecare fișier de test (de exemplu, `demobanner.cy.js`).
+
+Cypress gestionează automat majoritatea configurărilor complexe. Singurul pas necesar din partea noastră a fost adăugarea celor două comenzi în secțiunea `scripts` din `package.json` și executarea lor din consolă. În plus, Cypress generează automat și un fișier video pentru fiecare test rulat (pe care îl puteți găsi listat în raportul din terminal la secțiunea `video`).
+
+---
+
+### **Rezolvarea avertismentului TypeScript (`tsconfig.json`)**
+
+Este posibil ca la rularea testelor în consolă să întâlniți următorul avertisment (_warning_):
+
+> `Couldn't find tsconfig.json. tsconfig-paths will be skipped`
+
+Deși acest avertisment nu afectează rezultatul testelor, prezența lui este ciudată, mai ales dacă proiectul este scris în JavaScript pur, fără TypeScript.
+
+Dacă doriți să eliminați acest avertisment, creați un fișier nou numit `tsconfig.json` în rădăcina proiectului și adăugați următoarea configurație:
+
+```json
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["es5", "dom"],
+    "types": ["cypress", "node"],
+    "baseUrl": "./"
+  },
+  "include": ["**/*.ts", "**/*.js"]
+}
+```
+
+După salvarea fișierului, rularea testelor din linia de comandă se va face fără afișarea acelui avertisment.
+
+**De ce apare această problemă?**
+
+Eroarea apare din cauza suprapunerii proprietății `baseUrl` între Cypress și TypeScript (care au semnificații diferite pentru fiecare instrument în parte) și a lipsei fișierului `tsconfig.json`. Adăugarea unei configurații minimale rezolvă conflictul din consolă.
+
+{/* am ramas Deployment into Production .265 */}

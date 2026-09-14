@@ -1,0 +1,186 @@
+---
+title: 'Adăugarea mai multor teste'
+description: 'Adăugarea mai multor teste'
+order: 7
+category: 'NextJS'
+level: 'Incepator'
+---
+
+**Testarea Componentelor (Component Testing)**
+
+Până acum ne-am concentrat pe testarea end-to-end (E2E) — am folosit această abordare pentru a valida fluxurile principale (_happy paths_) ale site-ului, asigurându-ne că zonele pe care clienții le vor vizita funcționează conform așteptărilor.
+
+A sosit momentul să ne îndreptăm atenția către testarea componentelor izolate. Deși avem componente pe care le putem și ar trebui să le testăm, există câteva particularități (_caveats_) atunci când lucrăm cu componente create în Next.js. Le vom analiza în curând, dar mai întâi să configurăm mediul de testare.
+
+---
+
+### **CONFIGURAREA PENTRU COMPONENT TESTING**
+
+Pentru a pregăti Cypress pentru testarea de componente, urmați acești pași:
+
+1. Deschideți Cypress executând comanda `npm run cypress` într-un terminal Node.js pentru a lansa interfața grafică (GUI).
+2. În fereastra deschisă, dați click pe **Component Testing** pentru a începe configurarea.
+3. Next.js ar trebui să fie deja detectat ca framework. Dați click pe **Next step**.
+4. Interfața va confirma că toate dependențele necesare pentru testarea de componente sunt instalate.
+5. Cypress va afișa lista cu fișierele de configurare create sau actualizate.
+6. Apăsați **Continue** și așteptați finalizarea procesului de inițializare. Când sunteți invitat, alegeți **Chrome ➤ Start Component Testing in Chrome**.
+
+În acest moment, mediul este gata. Puteți minimiza fereastra Chrome deschisă de Cypress; vom începe imediat să adăugăm teste.
+
+---
+
+### **ADĂUGAREA TESTELOR DE COMPONENTE**
+
+Pentru această demonstrație am ales trei componente: `<DemoBanner/>`, `<Info/>` și `<Product/>`. Acestea au fost selectate deoarece nu depind de metode specifice Next.js care se execută exclusiv pe server.
+
+#### **1. Testul pentru componenta `<DemoBanner/>**`
+
+1. Creați un fișier nou numit `demobanner.cy.js` în directorul `\cypress\components`.
+2. Adăugați importul componentei și o constantă pentru textul simulat (_mock_):
+
+```jsx
+import DemoBanner from '../../src/components/DemoBanner.jsx';
+
+const mockText =
+  'This is a demo store - no orders will be accepted or delivered';
+```
+
+3. Adăugați blocul `describe` și pasul de montare a componentei folosind `cy.mount()`:
+
+```jsx
+describe('<DemoBanner />', () => {
+  it('should render and display expected content', () => {
+    cy.mount(<DemoBanner />);
+
+    // Verificăm dacă containerul este vizibil în DOM
+    cy.get('div.demo-banner-container').should('be.visible');
+
+    // Verificăm dacă textul afișat se potrivește cu mockText
+    cy.get('div.demo-banner-container').should('have.text', mockText);
+  });
+});
+```
+
+4. Salvați și închideți fișierul. În interfața Cypress, dați click pe `demobanner.cy.js` pentru a rula testul.
+
+---
+
+#### **2. Testul pentru componenta `<Info/>**`
+
+Acest test este puțin mai complex, deoarece implică simularea unor texte pentru tab-uri de navigație.
+
+1. Creați fișierul `info.cy.js` în `\cypress\components`.
+2. Adăugați următorul cod:
+
+```jsx
+import Info from '../../src/components/Info.jsx';
+
+const mockTextFirstTab = 'Description';
+const mockTextSecondTab = 'Additional Information';
+
+describe('<Info />', () => {
+  it('should render and display expected content', () => {
+    // Montăm componenta Info
+    cy.mount(<Info />);
+
+    // Validăm prezența listei de tab-uri și numărul lor
+    cy.get('div.react-tabs').should('be.visible');
+    cy.get("ul[role='tablist'] > li").should('have.length', 2);
+
+    // Verificăm textul fiecărui tab
+    cy.get("ul[role='tablist'] > li:nth-child(1)").should(
+      'have.text',
+      mockTextFirstTab,
+    );
+    cy.get("ul[role='tablist'] > li:nth-child(2)").should(
+      'have.text',
+      mockTextSecondTab,
+    );
+  });
+});
+```
+
+3. Salvați fișierul și rulați testul din interfata Cypress.
+
+---
+
+#### **3. Testul pentru componenta `<Product/>**`
+
+Aici facem un pas mai departe și simulăm un obiect complet de date (_mock product object_).
+
+1. Creați fișierul `product.cy.js` în `\cypress\components`.
+2. Adăugați structura de date și testul:
+
+```jsx
+import Product from '../../src/components/Product.jsx';
+
+const mockProduct = {
+  _type: 'product',
+  delivery:
+    'We carefully package our macarons and use Royal Mail to post them to you under first class postage. We only deliver to the UK.',
+  details:
+    'Enjoy the taste of our indulgent Chocolate Orange Macarons. Bursting with 100% natural flavours, our perfectly proportioned treats are handcrafted in our kitchen and beautifully packaged for your enjoyment.',
+  image: [
+    {
+      _key: 'ba6786ee0e81',
+      _type: 'image',
+      asset: {
+        _ref: 'image-812a8575cab31a81ea8352e913d173c9244151b7-456x456-jpg',
+      },
+    },
+  ],
+  ingredients:
+    'Ground Almonds (contains nuts) , Icing Sugar, Free Range Egg Whites (contains Eggs), Sugar, Milk Chocolate...',
+  name: 'Chocolate Orange',
+  price: 18.5,
+  sku: 'MACM001',
+  slug: {
+    current: 'chocolate-orange',
+  },
+  weight: '335g',
+};
+
+describe('<Product />', () => {
+  it('should render and display expected content', () => {
+    // Montăm componenta pasându-i datele prin props
+    cy.mount(<Product product={mockProduct} />);
+
+    // Verificăm dacă containerul principal este randat
+    cy.get('div').should('be.visible');
+
+    // Verificăm dacă numele produsului transmis în props apare corect în DOM
+    cy.get('p.product-name:nth-child(2)').should('have.text', mockProduct.name);
+  });
+});
+```
+
+3. Salvați și rulați testul din runner-ul Cypress.
+
+---
+
+### **Ce s-a schimbat față de testele E2E?**
+
+Spre deosebire de testele end-to-end unde foloseam `cy.visit()` pentru a naviga la un URL specific, în Component Testing folosim **`cy.mount()`**.
+
+Procesul constă în:
+
+1. Importul componentei directe React.
+2. Inițializarea și randarea ei izolată în mediul Cypress prin `cy.mount()`.
+3. Executarea aserțiunilor asupra elementelor DOM rezultate (verificarea vizibilității, lungimii listelor sau conținutului text).
+
+---
+
+### **Înțelegerea limitărilor (Next.js & Cypress Component Testing)**
+
+Există o limitare importantă de arhitectură atunci când testăm componente din Next.js direct cu Cypress Component Testing:
+
+> **Limitare Server-Side:** Componentele de tip pagină (sau cele care depind de metode precum `getServerSideProps` ori `getStaticProps`) execută acel cod exclusiv pe server (Node.js runtime). În mediul de Component Testing din browser, aceste metode nu rulează. Încercarea de a monta o astfel de pagină direct va duce la `undefined` pentru datele așteptate prin `props`.
+
+În proiectul nostru, componente precum `<Footer/>` sau `<MiniCart/>` depind de contextul global de stare (`StateContext`) sau componente care apelează date server-side.
+
+**Recomandare / Bune practici:**
+
+- Pentru componente izolate și UI pur (butoane, badge-uri, carduri, tab-uri), folosiți **Component Testing** cu date mock prin props.
+- Pentru pagini întregi Next.js, contexte globale complexe sau componente care depind de API-uri server-side, bazați-vă pe **testarea End-to-End (E2E)** folosind `cy.visit()`. Testând pagina E2E, validați automat și componentele copil împreună cu logica lor de server.
+
+---
