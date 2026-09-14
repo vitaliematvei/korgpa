@@ -1,0 +1,49 @@
+---
+title: 'În spiritul filosofiei Kaizen'
+description: 'În spiritul filosofiei Kaizen'
+order: 5
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Kaizen.
+Sunt șanse mari ca acesta să fie un termen de care nu ați mai auzit până acum — iar dacă am dreptate, aflați că în limba japoneză înseamnă „schimbare în bine” sau „îmbunătățire”.
+
+În sens strict, Kaizen este o metodologie folosită de obicei pentru optimizarea experienței clienților, având la bază piloni precum cunoașterea clientului, împuternicirea oamenilor și transparența.
+Cu toate acestea, putem folosi spiritul Kaizen pentru a ne perfecționa testele.
+
+În timpul cercetării pentru această carte, am găsit un articol despre modul în care putem duce testarea la nivelul următor.
+Unul dintre punctele care mi-au atras atenția a fost **evitarea selecției direct prin clase sau atribute generice din DOM** și folosirea unei alternative mult mai sigure: **atributele de date (`data-*`)**.
+
+Nu mă înțelegeți greșit — nu este nimic incorect din punct de vedere tehnic în modul în care am scris primul test.
+Totuși, există mereu riscul ca alți dezvoltatori să modifice clasele CSS sau structura HTML, ceea ce ar duce la eșuarea testelor!
+Din acest motiv, este recomandat să folosim atribute dedicate pentru testare, astfel încât testul să continue să funcționeze chiar dacă schimbați selectorii vizuali.
+
+Iată cum arată această optimizare:
+
+```javascript
+// Înainte:
+cy.get('a[href*="about"]').click();
+cy.get('div.about-us').contains('About Macaron Magic');
+
+// După (folosind atribute de date):
+cy.get('[data-cy="about"]').click();
+cy.get('[data-cy="about-us"]').contains('About Macaron Magic');
+```
+
+> **Sfat:** Atunci când folosiți selectorul automat din interfața Cypress, acesta va prefera implicit elementele care conțin atribute precum `data-cy`, `data-test` sau `data-testid`.
+> Primul este specific Cypress, dar ultimele două sunt foarte utile dacă lucrați în echipă cu colegi care folosesc alte suite de testare (cum ar fi Jest sau React Testing Library).
+
+De asemenea, aduceți-vă aminte de momentul în care am configurat Cypress și am adăugat valoarea `baseUrl` în fișierul `cypress.config.js`. Am ratat o oportunitate excelentă de a o folosi! În loc să specificăm URL-ul complet în comanda `cy.visit("http://localhost:3000/")`, putem folosi pur și simplu calea relativă `"/"`:
+
+```javascript
+cy.visit('/');
+```
+
+Cypress este suficient de inteligent încât să recunoască faptul că aceasta se referă la adresa definită în `baseUrl`.
+
+Dacă doriți să citiți mai multe despre bunele practici în Cypress, găsiți un ghid excelent pe site-ul oficial: [Cypress Best Practices](https://docs.cypress.io/guides/references/best-practices).
+
+Excelent — am adăugat primul test și am înțeles cum îl putem îmbunătăți. Acum este timpul să adăugăm mai multe teste pentru a mări acoperirea codului (code coverage). Am câteva idei cu care să începem, așa că haideți să le analizăm în detaliu!
+
+{/* am ramas Adding More Tests 245 */}

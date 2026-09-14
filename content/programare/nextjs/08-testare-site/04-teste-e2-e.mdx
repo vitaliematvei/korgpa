@@ -1,0 +1,72 @@
+---
+title: 'Crearea testelor End-to-End (E2E)'
+description: 'Crearea testelor End-to-End (E2E)'
+order: 4
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Când vine vorba de testare, este important să stabilim clar ce tip de teste vrem să realizăm.
+Poate ați auzit de testare unitară, testare de integrare sau — așa cum vom face acum — testare end-to-end (E2E).
+Este ușor să le încurci; deși ne dorim să testăm cât mai mult posibil, uneori putem ajunge să testăm anumite zone ale site-ului într-un mod mai puțin optim!
+
+Pentru primul nostru set de teste ne vom concentra pe testarea E2E.
+Începerea direct cu teste E2E poate părea neobișnuită, deoarece în mod normal am începe cu testarea de componente sau unitară.
+Cu toate acestea, testele E2E tind să fie mai ușor de implementat atunci când folosim Cypress.
+De asemenea, unele dintre componentele noastre ar putea crea mici dificultăți care complică testarea unitară — dar vom reveni asupra acestui aspect mai târziu în capitol.
+
+Există multe modalități de a testa fluxurile utilizatorilor pe site, însă ne vom concentra pe câteva fundamentale pentru început.
+
+> **Notă:** Pentru a rula teste E2E în Cypress, trebuie să aveți pornit serverul de dezvoltare Next.js.
+> Deschideți un terminal, navigați în folderul proiectului și rulați comanda `npm run dev` înainte de a trece la pașii următori.
+
+---
+
+1. **Organizarea fișierelor de test:** Crearea folderului dedicat.
+   Creați un folder numit `e2e` în directorul `\cypress`.
+
+2. **Crearea fișierului de test:** Scrierea primului scenariu de navigare.
+   Creați fișierul `app.cy.js` în folderul `\cypress\e2e` și adăugați următorul cod:
+
+```javascript
+describe('Navigation', () => {
+  it('should navigate to the about page', () => {
+    // Pornim de la pagina principală
+    cy.visit('http://localhost:3000/');
+
+    // Găsim un link care conține "about" în atributul href și dăm click pe el
+    cy.get('a[href*="about"]').click();
+
+    // Noul URL ar trebui să includă "/about"
+    cy.url().should('include', '/about');
+
+    // Noua pagină ar trebui să conțină un div.about-us cu textul specificat
+    cy.get('div.about-us').contains('About Macaron Magic');
+  });
+});
+```
+
+3. **Rularea testului în Cypress:** Selectarea fișierului din fereastra Specs.
+   Salvați fișierul.
+   În interfața Cypress, veți vedea testul afișat în fereastra **Specs**.
+   Faceți click pe `app.cy.js` pentru a lansa executarea.
+
+4. **Verificarea rezultatului:** Confirmarea rezultatului.
+   Cypress va deschide browserul și va rula pașii.
+   Un indicator verde și bifarea pașilor vor confirma că testul a trecut cu succes.
+
+---
+
+**Înțelegerea modificărilor**
+
+Scrierea testelor poate fi o sabie cu două tăișuri — unele teste sunt extrem de simplu de scris, în timp ce altele te pot pune pe gânduri privind cel mai bun mod de verificare.
+Majoritatea dezvoltatorilor vor spune că ar trebui să testăm totul, însă trebuie să fim realiști: nu este întotdeauna posibil!
+
+Primul nostru test a fost simplu — creat mai mult pentru a confirma că mediul Cypress funcționează corect. Am creat folderul `e2e` pentru a ne păstra testele organizate, apoi am scris prima specficație:
+
+1. Instructăm Cypress să acceseze adresa principală (`localhost:3000`).
+2. Identificăm linkul către pagina Despre noi (`/about`) și simulăm un click.
+3. Verificăm schimbarea URL-ului și prezența elementului `div.about-us` cu textul _"About Macaron Magic"_.
+
+Excelent — am finalizat primul nostru test E2E și am configurat Cypress!
+Există și alte teste pe care le putem (și ar trebui) să le facem, dar înainte de a trece la ele, există câteva puncte importante de abordat pentru a îmbunătăți structura testului pe care tocmai l-am creat.

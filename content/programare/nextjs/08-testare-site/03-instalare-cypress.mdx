@@ -1,0 +1,70 @@
+---
+title: 'Instalarea Cypress'
+description: 'Instalarea Cypress'
+order: 3
+category: 'NextJS'
+level: 'Incepator'
+---
+
+1. **Deschiderea terminalului Node.js:** Navigare în proiect.
+   Navigați în directorul rădăcină al proiectului dumneavoastră.
+
+2. **Instalarea pachetului Cypress:** Dependență de dezvoltare.
+   Executați comanda pentru a instala Cypress ca **devDependency**:
+
+```bash
+npm install --save-dev cypress
+
+```
+
+3. **Configurarea scriptului în package.json:**
+   În timp ce se finalizează instalarea, deschideți fișierul `package.json` și adăugați comanda pentru lansarea interfeței Cypress:
+
+```json
+"scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "lint": "next lint",
+  "cypress": "cypress open"
+}
+
+```
+
+4. **Definirea adresei de bază în cypress.config.js:**
+   Salvați `package.json`, apoi deschideți fișierul `cypress.config.js` și adăugați proprietatea **baseUrl** pentru a putea folosi URL-uri relative în teste:
+
+```javascript
+module.exports = defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+      // implementați ascultătorii de evenimente Node aici
+    },
+    baseUrl: 'http://localhost:3000',
+  },
+});
+```
+
+5. **Lansarea interfeței grafice Cypress:**
+   Salvați modificările, reveniți în terminal și rulați comanda:
+
+```bash
+npm run cypress
+
+```
+
+6. **Inițializarea testării E2E:**
+   Cypress își va configura automat mediul și va adăuga fișierele necesare.
+   Selectați opțiunea **Start E2E Testing in Chrome** pentru a începe.
+
+---
+
+**Înțelegerea modificărilor**
+
+Deși Cypress include o suită întreagă de instrumente, instalarea se face printr-o singură comandă npm, fiind adăugat ca `devDependency` (deoarece avem nevoie de el doar în mediul de dezvoltare, nu și în producție).
+
+La prima sa lansare, Cypress rulează un proces automat de configurare și generează o structură inițială de fișiere, cum ar fi `e2e.js` și `commands.js` în folderul `\cypress\support`.
+Adăugarea proprietății `baseUrl` ne permite să scriem căi relative în teste în loc de adrese URL complete (de exemplu, `/cart` în loc de `http://localhost:3000/cart`).
+
+Cypress oferă două tipuri de testare: **component testing** și **end-to-end (E2E) testing**.
+Acum că am parcurs configurarea inițială, suntem gata să trecem la explorarea detaliată a testelor E2E.

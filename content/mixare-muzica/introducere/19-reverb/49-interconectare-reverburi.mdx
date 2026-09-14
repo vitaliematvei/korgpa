@@ -1,0 +1,54 @@
+---
+title: 'Interconectarea reverburilor (Reverb coupling)'
+description: 'Interconectarea reverburilor (Reverb coupling)'
+order: 49
+category: 'Reverb'
+level: 'Incepator'
+---
+
+Uneori combinăm două reverburi pentru a obține un rezultat specific.
+Totuși, acest lucru trebuie făcut cu atenție, altfel pot apărea diverse probleme.
+Termenul **„coupled reverb”** descrie conceptul de „reverb al unui reverb”.
+În viața reală, acest fenomen apare când reverbul dintr-un spațiu ajunge într-o încăpere adiacentă, care își adaugă propria acustică.
+
+Conectarea reverburilor în serie este o preocupare principală atunci când simulăm spații naturale — practic plasează un spațiu în interiorul altui spațiu, crește timpul de reverb (RT60) și poate altera panta naturală de stingere a sunetului (**decay slope**).
+În mixaj, acest efect apare atunci când adăugăm un reverb peste o înregistrare care conține deja spațialitate sau când inserăm două procesoare de reverb în serie.
+
+Înregistrările care conțin deja reverb (dacă nu a fost o intenție artistică clară) îi pot crea mari dificultăți inginerului de mixaj, iar în cazuri extreme pot fi neutilizabile.
+Astfel de piese sunt adesea realizate de ingineri de sunet fără experiență, care aleg să înregistreze un amplificator de chitară sau o clapă electronică cu efectul lor intern de reverb (adesea ieftin și mono).
+Alteori, reverbul imprimat este pur și simplu rezultatul unei încăperi foarte reverberante în care s-a tras.
+Indiferent de cauză, acest reverb rămâne blocat pe pistă, sună adesea „ieftin” și îl pune pe inginerul de mixaj într-o poziție imposibilă.
+
+Merită reținut că **reverbul devine mai perceptibil și mai tare după compresie**.
+Compresia unei voci care conține deja reverb poate livra un nivel constant al semnalului direct, dar va amplifica fluctuant cozile de reverb.
+Deși o înregistrare complet lipsită de spațialitate se poate obține doar într-o cameră anecoică, un inginer de sunet bun va căuta un raport optim între semnalul direct și cel reflectat (**direct-to-reverb ratio**), astfel încât pista să nu creeze limitări la mixaj.
+Cu excepția cazului în care s-a urmărit captarea acusticii mediului, reverbul imprimat pe o înregistrare este ca uleiul pe apă — rareori se amestecă bine.
+
+Cu toate acestea, combinarea a două procesoare de reverb în timpul mixajului poate fi extrem de utilă:
+
+- **Reverb compus (Paralel):** Trimiterea aceluiași semnal către două reverburi conectate în paralel creează o textură mai bogată și mai complexă.
+- **Dual Mono Pan:** Utilizarea a două reverburi mono, panoramate la extremitățile opuse ale câmpului stereo (stânga/dreapta 100%).
+- **Separarea reflexiilor primare și secundare (Early & Late Reflections):**
+  Multe plug-inuri au procesoare separate pentru reflexiile primare (**early reflections**) și coada de reverb (**late reflections**).
+  Unele alimentează coada din reflexiile primare, în timp ce altele le gestionează complet separat.
+  Putem opri modulul slab din fiecare procesor pentru a obține un rezultat hibrid excelent.
+
+Această tehnică funcționează excepțional când folosim un **convolution reverb** (pe bază de impulse response) doar pentru reflexiile primare — acestea oferă un realism fizic incontestabil, dar consumă resurse mari de procesor (CPU) dacă generează și o coadă lungă.
+Alocând reverbului cu convoluție doar sarcina reflexiilor primare, iar coada de reverb o trimitem către un **reverb algoritmic** (mai eficient ca consum de resurse), economisim putere de calcul și obținem un sunet extrem de convingător.
+Procesoarele pot fi conectate în paralel sau în serie, în funcție de dorința de a trimite sau nu reflexiile primare direct în modulul de coadă.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/24-18.jpg"
+    alt="Figura 24-18"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 24-18:</p>
+  **(a)** Configurație de reverb în paralel, în care fiecare procesor generează o componentă diferită a reverbului.
+
+**(b)** Configurație de reverb în serie, în care reflexiile primare (_early reflections_) de la primul procesor alimentează al doilea procesor, care generează exclusiv coada de reverb (_reverberation_).
+
+</div>

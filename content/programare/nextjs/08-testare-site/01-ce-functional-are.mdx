@@ -1,0 +1,42 @@
+﻿---
+title: 'Implementare SEO'
+description: 'Implementare SEO'
+order: 1
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Până acum ne-am concentrat pe construirea site-ului și totul pare să funcționeze conform așteptărilor.
+Dar oare chiar așa este sau există detalii ce necesită ajustări?
+În paginile următoare vom explora modul în care se realizează testarea unitară.
+Abordarea va avea o tematică axată pe e-commerce, având scopul de a ghida cititorul prin pașii necesari pentru a se asigura că site-ul funcționează corect și este optimizat înainte de lansare.
+
+Ne vom concentra pe configurarea suitei de testare și vom începe să creăm primele teste — atât teste de componente, cât și teste end-to-end (E2E), astfel încât să verificăm dacă site-ul se comportă așa cum ar trebui.
+Trebuie să începem de undeva, așa că vom stabili mai întâi așteptările privind modul de testare și tipurile de teste pe care le vom crea în acest capitol.
+
+**Stabilirea așteptărilor**
+
+Când vine vorba de testare, există tentația de a exagera și de a testa absolut totul; dacă am face asta, am umple aproape întreaga carte.
+
+În schimb, trebuie să fim mai selectivi cu privire la testele de pornire.
+Vom configura câteva teste destul de simple pentru a înțelege cum funcționează Cypress, iar ulterior putem explora alte teste pe care să le adăugăm pentru a mări acoperirea codului (code coverage).
+
+Totodată, vom atinge câteva probleme ce ar putea apărea pe parcurs, fiind o ocazie excelentă de a vedea unde am putea aduce îmbunătățiri site-ului înainte de a-l lansa în producție.
+Având toate acestea în minte, am ales să creăm următoarele teste (fără o ordine anume):
+
+- Adăugarea produselor în coș
+- Apăsarea pe stelele de recenzie (review)
+- Accesarea unei pagini alese
+- Randarea componentei cu imaginile cărților de credit
+- Eliminarea produselor din coș
+- Randarea componentei cu pictogramele de plată
+- Simularea (mocking) și randarea componentei cardului de produs (Product card)
+- Afișarea componentei Info (folosită în paginile de produs)
+
+Voi parcurge o parte din aceste teste în carte, însă toate vor fi disponibile în arhiva de cod descărcabilă asociată acestei cărți.
+
+Există un aspect pe care trebuie să îl luăm în considerare: la un moment dat, vom urca codul într-un depozit (repository), pregătit pentru lansare.
+Trebuie să ne asigurăm că orice teste rulăm pot fi executate și din conductele de CI (Continuous Integration).
+Voi împărți acest subiect în două capitole — în acesta vom crea și pregăti toate testele necesare, iar executarea lor în pipeline o vom amâna pentru Capitolul 10, când vom discuta despre lansarea site-ului în producție.
+
+Acestea fiind spuse, să trecem la treabă! Acum că am stabilit ce teste vom crea, să ne îndreptăm atenția către cea mai importantă sarcină: alegerea unei suite de testare pentru site-ul nostru.

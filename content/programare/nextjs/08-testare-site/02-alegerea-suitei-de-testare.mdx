@@ -1,0 +1,29 @@
+---
+title: 'Alegerea suitei de testare'
+description: 'Alegerea suitei de testare'
+order: 2
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Când vine vorba de alegerea unei suite de testare, am putea folosi oricare dintre opțiunile disponibile — precum React Testing Library, Jest, Jasmine sau chiar Enzyme.
+Toate sunt perfect valide și funcționează excelent cu React (care stă la baza Next.js).
+Cu toate acestea, am ales o abordare diferită: **Cypress**.
+
+Disponibilă la adresa `www.cypress.io`, această suită este mai nouă comparativ cu alte alternative consacrate.
+O folosesc de câțiva ani și am fost impresionat de ceea ce oferă.
+Există trei motive principale pentru care a devenit instrumentul meu preferat:
+
+- **Totul într-un singur loc:** Spre deosebire de alte instrumente, Cypress include toate utilitarele de care avem nevoie într-un singur pachet, oferind un strat de comenzi abstractizat.
+  Acest lucru simplifică rularea comenzilor necesare, fără a mai fi nevoie să ne gândim ce pachet specific trebuie importat.
+- **Selectare simplificată a elementelor:**
+  La rularea testelor, identificarea elementelor din DOM poate fi dificilă — deseori ceea ce credem noi că ar trebui selectat nu coincide cu modul în care interpretau alte instrumente.
+  Cypress utilizează Chai-jQuery în fundal, ceea ce ușurează considerabil selectarea elementelor în timpul scrierii testelor.
+- **Compatibilitate și recomandări Next.js:** Echipa Next.js oferă pe site-ul oficial o listă cu câteva instrumente de testare.
+  Deși nu le recomandă în mod exclusiv, aceștia detaliază pașii necesari pentru instalarea fiecăruia.
+  Cypress se numără printre aceste opțiuni, așa că are sens să optăm pentru o soluție agreată de ei, chiar dacă nu este una oficială.
+
+Desigur, dacă aveți deja un instrument preferat, sunteți liberi să îl folosiți.
+Există situații în care, ca dezvoltatori, trebuie să ne adaptăm proceselor existente din cadrul unei echipe sau proiect.
+
+Acestea fiind spuse, să trecem la treabă și să instalăm Cypress!
