@@ -180,11 +180,70 @@ void AudioPluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
 
 ### Concepte cheie de reținut:
 
-| Concept                      | Rol                                                                                                    |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------ |
-| **`juce::Synthesiser`**      | Dispecerul central. Primește datele MIDI, caută o voce liberă și distribuie sarcinile de redare.       |
-| **`juce::SynthesiserSound`** | Regula de acces (**Ce**). Specifică pe ce canale MIDI sau intervale de clape se aplică un sunet.       |
-| **`juce::SynthesiserVoice`** | Generatorul de sunet (**Cum**). Randează undele audio (sinus, ferăstrău, etc.) la fiecare cadru audio. |
-| **Polifonie**                | Se ajustează prin numărul de instanțe de `SynthVoice` adăugate cu `mySynth.addVoice()`.                |
-
-{/* am ramas https://www.youtube.com/watch?v=kxKEFTQRZPI&list=PLLgJJsrdwhPxa6-02-CeHW8ocwSwl2jnu&index=21 */}
+<div class="overflow-x-auto rounded-lg border border-slate-200 shadow-sm dark:border-slate-800">
+  <table class="w-full text-left text-sm text-slate-700 dark:text-slate-300">
+    <thead class="bg-slate-100 text-xs uppercase tracking-wider text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+      <tr>
+        <th scope="col" class="px-6 py-3.5 font-semibold">
+          Concept
+        </th>
+        <th scope="col" class="px-6 py-3.5 font-semibold">
+          Rol
+        </th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+      <tr class="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/50 transition-colors">
+        <td class="whitespace-nowrap px-6 py-4 font-mono font-bold text-slate-900 dark:text-slate-100">
+          juce::Synthesiser
+        </td>
+        <td class="px-6 py-4">
+          Dispecerul central. Primește datele MIDI, caută o voce liberă și
+          distribuie sarcinile de redare.
+        </td>
+      </tr>
+      <tr class="bg-slate-50/50 hover:bg-slate-100/50 dark:bg-slate-900/50 dark:hover:bg-slate-800/50 transition-colors">
+        <td class="whitespace-nowrap px-6 py-4 font-mono font-bold text-slate-900 dark:text-slate-100">
+          juce::SynthesiserSound
+        </td>
+        <td class="px-6 py-4">
+          Regula de acces (
+          <strong class="font-semibold text-slate-900 dark:text-slate-200">
+            Ce
+          </strong>
+          ). Specifică pe ce canale MIDI sau intervale de clape se aplică un
+          sunet.
+        </td>
+      </tr>
+      <tr class="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/50 transition-colors">
+        <td class="whitespace-nowrap px-6 py-4 font-mono font-bold text-slate-900 dark:text-slate-100">
+          juce::SynthesiserVoice
+        </td>
+        <td class="px-6 py-4">
+          Generatorul de sunet (
+          <strong class="font-semibold text-slate-900 dark:text-slate-200">
+            Cum
+          </strong>
+          ). Randează undele audio (sinus, ferăstrău, etc.) la fiecare cadru
+          audio.
+        </td>
+      </tr>
+      <tr class="bg-slate-50/50 hover:bg-slate-100/50 dark:bg-slate-900/50 dark:hover:bg-slate-800/50 transition-colors">
+        <td class="whitespace-nowrap px-6 py-4 font-bold text-slate-900 dark:text-slate-100">
+          Polifonie
+        </td>
+        <td class="px-6 py-4">
+          Se ajustează prin numărul de instanțe de{' '}
+          <code class="rounded bg-slate-200/70 px-1.5 py-0.5 font-mono text-xs text-slate-800 dark:bg-slate-800 dark:text-slate-200">
+            SynthVoice
+          </code>{' '}
+          adăugate cu{' '}
+          <code class="rounded bg-slate-200/70 px-1.5 py-0.5 font-mono text-xs text-slate-800 dark:bg-slate-800 dark:text-slate-200">
+            mySynth.addVoice()
+          </code>
+          .
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

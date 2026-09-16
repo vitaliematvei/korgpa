@@ -1,0 +1,40 @@
+---
+title: 'Pregătirea platformei de găzduire (Hosting)'
+description: 'Pregătirea platformei de găzduire (Hosting)'
+order: 3
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Gândiți-vă înapoi la începutul acestei cărți: vă amintiți cum vorbeam despre furnizorul pe care îl vom folosi pentru a ne găzdui site-ul?
+
+Ei bine, a sosit timpul să trecem la treabă și să ne lansăm site-ul în lumea reală!
+Furnizorul de găzduire pe care îl vom folosi este **Netlify**.
+Am putea folosi și alții (cum ar fi GitHub Pages sau GitLab), dar am vrut să ofer puțină varietate față de ce am folosit în trecut; în plus, știu că Netlify oferă câteva funcționalități foarte interesante, ideale pentru susținerea framework-ului Next.js!
+
+De unde începem? Prima sarcină este să ne urcăm site-ul într-un depozit (_repository_) pe GitHub — Netlify se bazează pe preluarea conținutului direct dintr-un repository.
+Eu prefer să folosesc GitHub, dar puteți folosi la fel de bine servicii precum Bitbucket sau GitLab.
+Găzduirea prin GitHub înseamnă că putem transforma deploy-ul către Netlify într-un proces automat: de fiecare dată când facem _upload_ (_push_), site-ul web va fi actualizat pe Netlify în doar câteva minute.
+
+Pentru site-ul nostru, vom trimite codul pe subdomeniul rădăcină și îl vom conecta la Netlify; de acolo, îi vom atașa un domeniu personalizat.
+Aceasta din urmă nu este o pasă obligatorie, dar ne va permite să vedem cum arată site-ul pregătit pentru clienți!
+Având toate acestea în minte, să analizăm pașii necesari pentru a ne configura și pregăti repozitoriul GitHub.
+Înainte de a trece la cod, există două ipoteze de care trebuie să țineți cont:
+
+- Pentru acest exercițiu, voi presupune că folosim numele de utilizator `nextjsecommerce`; va trebui să vă gândiți la un nume adecvat și să îl înlocuiți unde este cazul.
+- Presupun, de asemenea, că veți crea un cont și un repository noi pentru acest exercițiu; puteți folosi și unul existent, dar acest lucru va complica lucrurile!
+
+Să începem:
+
+1. Vom începe prin a crea un repository nou — pentru aceasta, accesați [https://github.com](https://github.com) și dați click pe **Sign Up** în colțul din dreapta sus.
+2. Urmați instrucțiunile afișate pe ecran, inclusiv adăugarea unei adrese de e-mail (merită!) — asigurați-vă că notați datele folosite pentru cont. După ce ați terminat, autentificați-vă cu noul cont și validați-l.
+3. În continuare, trebuie să creăm repository-ul — dați click pe semnul **+** din colțul din dreapta sus, apoi selectați **New repository**.
+4. Pe ecranul următor, câmpul _Owner_ va fi numele contului vostru; introduceți un nume pentru repository sub forma `<username>/<repository name>`, unde _username_ este numele ales pe GitHub, iar _repository name_ este numele depozitului pe care îl veți folosi.
+5. Dacă doriți să completați o descriere, puteți face acest lucru — nu este obligatoriu pentru acest exercițiu.
+6. Apoi, alegeți **Public** ca tip de repository și bifați căsuța pentru a inițializa depozitul cu un fișier `README`.
+7. Pentru opțiunea _Add .gitignore_, alegeți **Node**, iar la _Add a license_ setați opțiunea pe **MIT**.
+8. Click pe **Create repository** — felicitări! Ați creat un repository gol, similar cu cel din captura de ecran prezentată în Figura 10-1.
+
+Multe dintre etapele parcurse în acest exercițiu nu sunt specifice doar pentru Next.js; putem folosi aceste instrumente (Git și interfața sa grafică GitHub) pentru a crea site-uri utilizând diverse alte framework-uri.
+
+În cazul nostru, am început prin a crea structura de bază a depozitului; am introdus detaliile relevante înainte de a-l inițializa cu fișierele `README` și `.gitignore`. Acest pas ne-a oferit un spațiu de stocare gol, pregătit pentru încărcarea conținutului (pe care o vom acoperi în curând). Totuși, mai întâi există o modificare de configurare pe care vreau să o facem pentru a rezolva una dintre problemele semnalate atunci când ne-am configurat site-ul pentru SEO în Capitolul 8.

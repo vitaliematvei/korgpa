@@ -1,0 +1,100 @@
+---
+title: 'Încărcarea pe platforma de găzduire (Uploading to Our Host)'
+description: 'Încărcarea pe platforma de găzduire (Uploading to Our Host)'
+order: 5
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Acum că ne-am configurat spațiul pentru repository, este timpul să încărcăm codul site-ului nostru.
+Putem face acest lucru în mai multe moduri — de exemplu, prin drag-and-drop direct pe site-ul GitHub, folosind GitHub Desktop (sau alt client grafic) ori folosind linia de comandă.
+
+Pentru această etapă voi folosi linia de comandă — dintr-o preferință pur personală; cândva îmi plăcea să folosesc unelte precum GitHub Desktop, dar acele vremuri au trecut!
+Voi păstra pașii la un nivel destul de general, deoarece tind să folosesc Visual Studio Code cu Git Bash instalat; știu însă că nu toată lumea folosește această combinație.
+
+Dacă doriți să încercați utilizarea VS Code împreună cu Git Bash, Daniel Padua are un articol foarte util pe blogul său despre integrarea Git Bash în VS Code (la adresa `[https://blog.danielpadua.dev/posts/git-bash-with-vscode/](https://blog.danielpadua.dev/posts/git-bash-with-vscode/)`).
+De asemenea, dacă preferați să folosiți o altă combinație existentă pe care o aveți deja, este la fel de bine.
+
+Merg pe presupunerea că aveți Git (și Git Bash) instalat sau o alternativă funcțională care vă permite să trimiteți (_push_) codul. Să trecem la exercițiu.
+
+_Notă:_ Presupun că aveți câteva cunoștințe prealabile despre Git: probabil va trebui să fiți familiarizați cu detaliile comenzilor `git push` și cu rezolvarea conflictelor de interclasare (_merge conflicts_). De asemenea, ar fi bine să faceți o copie de rezervă (_backup_) a site-ului, în cazul în care întâmpinăm probleme!
+
+---
+
+### Pașii pentru încărcarea site-ului pe GitHub:
+
+1. Deschideți un terminal Node.js și asigurați-vă că directorul de lucru este setat pe folderul proiectului.
+2. Apoi, trebuie să generăm o versiune de producție a codului, așa că introduceți comanda `npm run build` și apăsați Enter.
+3. Presupunând că nu apar erori, rulați `npm run start` pentru a confirma că serverul de producție pornește și vă permite să rulați site-ul în browser.
+   *Acest pas nu este obligatoriu, dar este util pentru a ne asigura că site-ul funcționează fără erori. Atât timp cât nu există erori critice, totul va fi în regulă — avertismentele (*warnings*) le putem rezolva pe parcurs, dar erorile blochează procesul de build.*
+4. Trebuie să ne inițializăm repository-ul local astfel încât Git să știe unde să trimită conținutul. Opriți serverul cu `Ctrl+C` (sau `Cmd+C` pe Mac) și rulați comanda de mai jos, înlocuind `<username>` cu numele vostru și `<repo>` cu numele repository-ului:
+
+```bash
+git remote add origin https://github.com/<username>/<repo>.git
+
+```
+
+În acest punct avem puțin de lucru în plus, deoarece trebuie să îmbinăm două proiecte diferite într-unul singur (Git vede noul repository de pe server și proiectul local ca fiind proiecte fără o istorie comună).
+
+5. În linia de comandă, introduceți:
+
+```bash
+git pull origin main --allow-unrelated-histories
+
+```
+
+_Rularea acestei comenzi va genera, cel mai probabil, două erori de conflict de merge pentru `.gitignore` și `README.md` — ambele fișiere există în noul repository de pe GitHub, dar diferă de versiunile noastre locale. Va trebui să rezolvați aceste conflicte înainte de a trece la pasul următor._
+
+> Dacă nu includem opțiunea `--allow-unrelated-histories`, vom primi eroarea: `fatal: refusing to merge unrelated histories`.
+
+6. După ce ați rezolvat conflictele de merge, rulați comanda:
+
+```bash
+git push -u origin main
+
+```
+
+7. Putem adăuga acum toate fișierele în zona de pregătire (_staging_) pentru commit folosind:
+
+```bash
+git add .
+
+```
+
+8. Pregătiți fișierele pentru comitere cu mesajul corespunzător:
+
+```bash
+git commit -m "Initial upload of site"
+
+```
+
+9. După ce ați terminat, trimiteți codul pe GitHub cu comanda:
+
+```bash
+git push -u origin main
+
+```
+
+10. Accesați repository-ul de pe GitHub pentru a confirma că toate fișierele sunt prezente — ar trebui să vedeți o structură similară cu cea din Figura 10-3.
+
+Perfect — acum avem codul urcat pe GitHub! Această demonstrație a fost scurtă, dar este cea mai critică pentru a ne aduce codul pe platforma de găzduire, pregătindu-l pentru vizualizarea finală într-un browser pe Web.
+
+Pentru mulți dintre voi, acești pași sunt deja familiari — comenzile tipice `git add`, `git commit` și `git push` sunt folosite zilnic de către dezvoltatori. Pentru cei mai puțin familiarizați, să analizăm detaliile înainte de a merge la etapa următoare.
+
+---
+
+### Înțelegerea modificărilor în detaliu
+
+Mâna sus — ați întâlnit vreodată o sarcină despre care ați crezut: _„E simplu, o rezolv rapid…”_, iar realitatea a dovedit contrariul?
+
+Încărcarea fișierelor a fost o astfel de sarcină. Intenția inițială a fost să creăm un site local pentru dezvoltare, apoi să trecem la un repository online și să le conectăm astfel încât să putem trimite codul către o sursă principală atunci când este necesar. Din păcate, lucrurile nu au mers exact conform planului: cred că crearea repository-ului la început și clonarea lui ar fi fost o abordare mai bună!
+
+Cu toate acestea, am reușit să creăm repository-ul pe GitHub — pentru a face asta, ne-am creat contul mai devreme în acest capitol. Am generat mai întâi un build de producție de probă pentru a ne asigura că site-ul funcționează conform așteptărilor. Poate nu era neapărat necesar, dar a fost o măsură de precauție înainte de push.
+
+Apoi, i-am spus utilitarului Git să adauge repository-ul la distanță (_remote_) ca fiind `origin`, înainte de a descărca conținutul acestuia în proiectul local. Observați că am folosit opțiunea `--allow-unrelated-histories` pentru a ocoli o eroare care altfel ar fi blocat procesul. A trebuit practic să îmbinăm două proiecte pe care Git le considera complet diferite (site-ul local și repository-ul remote). În același timp, am rezolvat conflictele de merge apărute (în cazul meu au fost două, în jurul fișierelor `.gitignore` și `README.md`).
+
+Având site-ul conectat și conflictele rezolvate, am creat un commit și am trimis codul folosind comenzile standard Git, verificând apoi pe GitHub dacă fișierele au ajuns cu succes.
+
+În acest moment, codul nostru este pe GitHub. Dacă aruncăm o privire în secțiunea **Actions**, s-ar putea să găsim pasul de CI (_Continuous Integration_) pentru sarcina noastră următoare rulate deja în fundal!
+
+Acest pas următor va fi analiza de cod pe care am configurat-o local într-un exercițiu anterior; este una dintre cele două sarcini suplimentare pe care vreau să le finalizăm înainte de a importa site-ul în Netlify. Există un motiv pentru asta pe care îl voi explica imediat, așa că, fără alte amânări, să trecem la analizarea bazei noastre de cod pentru a depista codul neutilizat.

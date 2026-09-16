@@ -1,0 +1,37 @@
+---
+title: 'Rularea analizei de cod (Running the Code Analysis)'
+description: 'Rularea analizei de cod (Running the Code Analysis)'
+order: 6
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Cu noul cod încărcat pe GitHub, de obicei am trece direct la Netlify și am importa site-ul pentru a-l face vizibil tuturor.
+
+Există totuși o mică problemă în această abordare — dar nu vă alarmați, nu este nimic grav! Totul are legătură cu faptul că Netlify oferă un număr limitat de minute de _build_ gratuite în cadrul contului pe care îl vom crea. Asta înseamnă că trebuie să fim atenți la modul în care le consumăm pentru a nu risipi resursele — iar o modalitate de a face asta este să nu conectăm site-ul până nu suntem absolut pregătiți.
+
+Mai există o sarcină suplimentară pe care vreau să o parcurgem înainte de conectarea propriu-zisă: verificarea raportului de analiză a codului.
+
+---
+
+### DEMO – Rularea analizei de cod
+
+Pentru a efectua analiza codului, urmați acești pași:
+
+1. Accesați repository-ul vostru de pe GitHub — autentificați-vă dacă nu ați făcut-o deja.
+2. Dați click pe fila **Actions**, apoi pe **New Workflow** (în meniul din stânga).
+3. Selectați **Workflow Bundle Analysis**, apoi apăsați pe **Run workflow** (butonul din dreapta, din dreptul mesajului pentru declanșatorul `workflow_dispatch`).
+4. Va apărea o fereastră pop-up care solicită numele ramurii (_branch_) pe care se va rula fluxul — asigurați-vă că este selectat `Branch: main`, apoi apăsați **Run workflow**.
+5. Inițial, sarcina va apărea în starea _Queued_ (în așteptare), după care se va schimba în _In progress_ (în desfășurare — Figura 10-4).
+
+---
+
+### Înțelegerea rezultatelor
+
+Monitorizarea dimensiunilor codului, în special ale pachetelor de JavaScript (_JavaScript bundles_), este o sarcină ingrată — de aceea folosim pluginuri care să facă această treabă în locul nostru!
+
+Pachetul `nextjs-bundle-analysis` își face treaba exact așa cum promite: de fiecare dată când facem o modificare în cod care implică JavaScript, va semnala dacă există schimbări în dimensiunea pachetului de care ar trebui să fim conștienți.
+
+În această demonstrație am declanșat acțiunea manual pentru a dovedi că funcționează — totuși, nu vă îngrijorați dacă nu vedeți diferențe spectaculoase! Rularea manuală pe ramura principală (`main`) nu va afișa comparații, deoarece analiza se activează cu adevărat doar atunci când creați un _Pull Request_ (PR) către ramura `main`. În acel moment, veți vedea un jurnal generat de `github-actions` direct în PR, similar cu cel prezentat în Figura 10-5.
+
+{/* am ramas Linking to Netlify .278 */}

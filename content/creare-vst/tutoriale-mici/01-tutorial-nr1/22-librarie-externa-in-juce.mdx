@@ -1,0 +1,105 @@
+---
+title: 'Librărie externă de C++'
+description: 'Librărie externă de C++'
+order: 22
+category: 'JUCE'
+level: 'Incepator'
+---
+
+Acest tutorial explică pas cu pas cum să integrezi și să folosești o librărie externă de C++ (în exemplu: librăria de sinteză audio **Maximilian**) într-un proiect de **JUCE**.
+
+---
+
+### Cerințe preliminare
+
+- **Projucer** și mediu de dezvoltare C++ (ex: Xcode pe macOS sau Visual Studio pe Windows).
+- Librăria **JUCE** instalată.
+
+---
+
+1. **Descărcarea librăriei externe:** Obținerea fișierelor din GitHub.
+   Descarcă librăria (în cazul de față, Maximilian) direct din GitHub sub formă de fișier `.zip` sau prin linia de comandă/terminal:
+
+```bash
+cd Desktop
+git clone https://github.com/micknoise/MAXIMILIAN.git
+
+```
+
+2. **Curățarea fișierelor inutile:** Evitarea conflictelor de compilare.
+   Librăriile externe conțin adesea fișiere de care nu ai nevoie într-un proiect JUCE (exemple, fișiere audio, drivere audio alternative precum PortAudio/RTAudio).
+
+1. Creează un folder numit `Maximilian` în locația ta de librării.
+1. Copiază fișierele din repozitoriu în el.
+1. Șterge directoarele/fișierele redundante:
+
+- Folderele cu **exemple** (`examples`).
+- Fișierele legate de alte API-uri audio: `rt-audio`, `port-audio`, `player.cpp`.
+- Fișierele demonstrative `.wav` sau `.txt`.
+- _Notă:_ Dacă întâmpini erori de redefinire la compilare, șterge și directoarele secundare opționale (cum ar fi `maxiSynths`).
+
+3. **Configurarea proiectului în Projucer:** Linkarea căilor către fișiere.
+   Deschide **Projucer** și creează un proiect nou de tip **Audio Application** (de ex. denumit `LibTest`).
+
+1. **Adăugarea căii de căutare (Header Search Paths):**
+
+- Mergi la secțiunea **Exporters** din Projucer.
+- Selectează exportatorul tău (ex. Xcode sau Visual Studio).
+- În setările de _Debug_ / _Release_, găsește câmpul **Header Search Paths**.
+- Trage folderul `Maximilian` direct în acest câmp pentru a adăuga calea completă.
+
+2. **Adăugarea fișierelor în arborele proiectului:**
+
+- În Projucer, mergi la **File Explorer**.
+- Trage folderul `Maximilian` direct în folderul `Source` al proiectului.
+
+3. Apasă pe **Save Project and Open in IDE** pentru a deschide mediul de dezvoltare.
+
+4. **Includerea fișierului Header:** Importul librăriei în codul C++.
+   În mediul de dezvoltare (Xcode / Visual Studio):
+
+5. Deschide fișierul `MainComponent.cpp`.
+6. Adaugă directiva de includere în partea de sus a fișierului:
+
+```cpp
+#include "maximilian.h"
+
+```
+
+3. Compilează proiectul pentru a verifica dacă totul este linkat corect fără erori de compilare.
+
+4. **Generarea semnalului audio (Exemplu practic):** Crearea unui oscilator Sinus.
+   Pentru a testa funcționarea librăriei, instanțiază un oscilator și procesează semnalul în buffer-ul audio:
+
+5. Adaugă un oscilator în `MainComponent.cpp`:
+
+```cpp
+maxiOsc testOsc; // Oscilator din librăria Maximilian
+
+```
+
+2. În funcția `getNextAudioBlock(const AudioSourceChannelInfo& bufferToFill)` [[10:01](https://www.youtube.com/watch?v=wEDr-gJxc_I&t=601)]:
+
+```cpp
+// Obținem pointerii pentru canalul Stânga (0) și Dreapta (1)
+auto* leftSpeaker = bufferToFill.buffer->getWritePointer(0, bufferToFill.startSample);
+auto* rightSpeaker = bufferToFill.buffer->getWritePointer(1, bufferToFill.startSample);
+
+// Iterăm prin buffer-ul audio
+for (int sample = 0; sample < bufferToFill.numSamples; ++sample)
+{
+    // Generăm un val sinusoidal de 440 Hz
+    float wave = testOsc.sinewave(440);
+
+    // Trimitem valul audio către ambele difuzoare
+    leftSpeaker[sample] = wave;
+    rightSpeaker[sample] = wave;
+}
+
+```
+
+---
+
+{/* am ramas https://www.youtube.com/watch?v=wEDr-gJxc_I&list=PLLgJJsrdwhPxa6-02-CeHW8ocwSwl2jnu&index=22 */}
+
+{/* uce Tutorial 21- Using External Libraries in Juce (Maximilian Etc) */}

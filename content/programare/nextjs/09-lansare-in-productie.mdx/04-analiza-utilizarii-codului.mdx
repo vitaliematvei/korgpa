@@ -1,0 +1,66 @@
+---
+title: 'Analiza utilizării codului'
+description: 'Analiza utilizării codului'
+order: 4
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Amintiți-vă (dacă mai puteți — știu, pare că a trecut ceva timp!) de Capitolul 8, unde am discutat despre configurarea SEO.
+Unul dintre lucrurile pe care am spus că ar trebui să le facem este să rulăm o analiză a codului nostru pentru a ne asigura că nu includem un exces de JavaScript pe care ar trebui altfel să îl eliminăm din proiect!
+
+Am putea face acest lucru manual, dar o opțiune mai bună — cel puțin pentru a evidenția unde avem cod în plus — este automatizarea.
+Din fericire, putem folosi o acțiune GitHub terță (_GitHub Action_) pentru a ne ajuta în acest sens: este creată de HashiCorp (creatorii framework-ului Terraform) și este disponibilă la `[https://github.com/hashicorp/nextjs-bundle-analysis](https://github.com/hashicorp/nextjs-bundle-analysis)`.
+Este extrem de simplu de instalat, deși trebuie să o facem în două etape — să o vedem pe prima, care constă în instalarea locală pentru generarea fișierului de configurare.
+
+_Notă:_ Deși acest GitHub Action este un pachet terț, el împachetează analizorul oficial de pachete (_bundle analyzer_) furnizat de Vercel (al cărui cod sursă îl puteți vedea pe GitHub la repository-ul oficial `next.js`).
+
+---
+
+### Adăugarea acțiunii de analiză a codului în GitHub
+
+Pentru a configura GitHub Action pentru Bundle Analyzer, urmați acești pași:
+
+1. Deschideți un terminal Node.js și asigurați-vă că setați directorul de lucru în folderul proiectului.
+2. În linia de comandă, introduceți următoarea comandă și apăsați Enter:
+
+```bash
+npx -p nextjs-bundle-analysis generate
+
+```
+
+3. Pachetul vă va adresa câteva întrebări, prima fiind dacă doriți să instalați pachetele necesare — tastați **Y** sau apăsați Enter când vi se solicită:
+   `nextjs-bundle-analysis`
+4. Lăsați-l să se instaleze; va urma o serie de întrebări, dintre care una va fi _„Would you like to set up a performance budget?”_ — selectați **Y** (pentru Yes).
+5. Următoarea întrebare este: _„What would you like the maximum javascript on first load to be (in kb)?”_ — apăsați Enter pentru a accepta valoarea implicită de **350**.
+6. Pachetul va afișa apoi întrebarea: _„If you exceed this percentage of the budget or filesize, it will be highlighted in red.”_ — apăsați Enter pentru a selecta valoarea implicită de **20**.
+7. La ultima întrebare, _„If a page’s size change is below the threshold (in bytes), it will be considered unchanged (0)”_, apăsați din nou Enter: valoarea va fi setată la cea implicită (**0**).
+8. Pachetul va crea automat un director `.github/workflows` în rădăcina proiectului și va adăuga în el un fișier numit `next_bundle_analysis.yml`.
+
+Asta este tot!
+Această procedură ne oferă o configurare standard pentru acțiunea Bundle Analyzer, pe care o putem trimite (_push_) pe GitHub atunci când încărcăm codul mai târziu în acest capitol.
+Înainte de a face asta, vreau să acopăr câteva puncte esențiale care rezultă din acest exercițiu, așa că să aruncăm o privire rapidă asupra codului în detaliu și să vedem ce ar trebui să facem după ce rulăm raportul.
+
+---
+
+### Revizuirea modificărilor efectuate
+
+Analiza dimensiunilor pachetelor de cod (_bundle sizes_) ar trebui să facă parte din fluxul obișnuit de lucru al fiecărui dezvoltator — este esențial să monitorizăm aceste dimensiuni pentru a ne asigura că aplicația nu devine prea greoaie!
+Din fericire, pluginul folosit în demonstrația anterioară a făcut ca procesul de instalare și configurare să fie foarte simplu.
+
+Acesta ne-a adresat o serie de întrebări pentru a genera fișierul de configurare dintr-un singur pas: confirmarea setării unui buget de performanță, modul de evidențiere vizuală și dimensiunea maximă permisă pentru JavaScript la prima încărcare (_first load_).
+
+După ce am răspuns, pluginul a generat fișierul `next_bundle_analysis.yml` în directorul `.github/workflows`, gata de a fi încărcat la următorul `push` către GitHub. Îl vom putea testa de îndată ce finalizăm acel pas mai târziu în acest capitol.
+
+Ca o paranteză, merită menționat că pluginul are un API care ne permite să îl folosim programatic — am putea, de exemplu, să îl integrăm în fișierul `next.config.js` folosind variabile de mediu. Nu este un lucru pe care trebuie să îl facem neapărat pe site-ul nostru (cel puțin nu acum), dar pentru a vă face o idee despre cum ar arăta, iată un exemplu:
+
+```javascript
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+module.exports = withBundleAnalyzer({});
+```
+
+Să mergem mai departe: având repository-ul pregătit și analizorul de bundle gata de acțiune, ne vom concentra pe următoarea sarcină:
+încărcarea codului în repository. Va trebui să parcurgem câțiva pași pentru a îmbina (_merge_) proiectul local cu cel de pe GitHub într-unul singur — totul va deveni clar în demonstrația următoare!

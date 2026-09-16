@@ -1,0 +1,23 @@
+---
+title: 'Parcurgerea ultimilor pași'
+description: 'Parcurgerea ultimilor pași'
+order: 2
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Ne apropiem cu pași repezi de momentul în care vom dori să ne încărcăm codul pe platforma de găzduire.
+Așadar, înainte de a face asta, merită să facem o verificare finală pentru a ne asigura că totul este așa cum ne așteptăm și că nu ne-au scăpat detalii nerezolvate, apeluri de tip `console.log` sau cod eronat care nu ar trebui să se afle în depozitul nostru de cod (_repository_).
+
+Esențial este să ne amintim că site-ul nostru este o demonstrație de concept (_proof of concept_), așa că nu va fi perfect — dar asta nu contează.
+Ar trebui totuși să arate curat și ordonat: nimănui nu-i place să vadă intrări de `console.log` în codul de producție și nu are niciun rost să încărcăm fișiere care nu mai sunt necesare, nu-i așa?
+
+- **Analizați cu atenție baza de cod (_codebase_):** Există ceva ce pare neordonat sau care nu este folosit deloc?
+- **Rulați comanda `npm run build`:** Căutați să vedeți ce rezultate generați la final. Apare vreun avertisment (_warning_)? De exemplu, știu că există câteva avertismente legate de utilizarea etichetelor standard `<img>`; ar fi mai bine să folosim componenta `<Image>`, dar aceasta nu este o eroare critică (_breaking issue_), ci ceva asupra căruia putem reveni dacă lansăm proiectul în producție.
+- **Verificați imaginile:** Există imagini pe care doriți să le înlocuiți sau cărora ar trebui să le optimizați dimensiunea?
+- **Corectați greșelile de ortografie:** Acesta este un moment excelent pentru a verifica textul. Chiar dacă site-ul este o demonstrație de concept, o greșeală de ortografie poate umbri calitatea muncii depuse!
+- **Gestionați codul comentat:** Dacă ați lăsat bucăți de cod comentate „pentru mai târziu”, acum este momentul potrivit să decideți dacă le ștergeți sau le mutați în afara proiectului pentru a le păstra în siguranță.
+
+Aceasta este una dintre acele etape în care curățenia va fi specifică fiecărui site în parte — nu există un răspuns corect sau greșit, dar așa cum spun mereu: _„un site curat reflectă o minte organizată!”_.
+
+Când sunteți gata să mergeți mai departe, să trecem la pregătirea platformei de găzduire, gata să ne primească codul.

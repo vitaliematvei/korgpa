@@ -1,0 +1,35 @@
+﻿---
+title: 'Lansarea în producție (Deployment into Production)'
+description: 'Lansarea în producție (Deployment into Production)'
+order: 1
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Of – a sosit momentul să ne lansăm magazinul în producție și să le dăm acces clienților!
+Acest pas poate părea înfricoșător, deoarece suntem pe cale să le arătăm clienților munca noastră, dar nu vă faceți griji: Next.js face ca lansarea site-urilor în producție să fie un proces foarte simplu.
+
+Pe parcursul acestui capitol, vom parcurge pașii necesari pentru a ne pregăti site-ul de lansare înainte de a-l publica și de a-l face accesibil tuturor pe Web.
+În același timp, vom analiza codul din perspectiva performanței (în special fișierele JavaScript neutilizate!) și vom adăuga o notă profesională prin configurarea unui nume de domeniu personalizat pentru site-ul nostru.
+Trebuie să începem de undeva, așa că vom porni de la câteva ipoteze cheie pentru procesul nostru.
+
+---
+
+### Stabilirea unor ipoteze de lucru
+
+Pentru ca proiectul nostru să funcționeze corect când vine vorba de lansarea în producție, a trebuit să iau în calcul câteva ipoteze — unele sunt absolut necesare, în timp ce altele țin de preferințele personale.
+Să le analizăm:
+
+- **Păstrarea codului pe GitHub:** Acesta este un proiect de tip _proof-of-concept_ (demonstrație de concept), așa că găzduirea pe GitHub este suficientă pentru moment.
+  Cu toate acestea, vă recomand să alegeți o opțiune mai sigură doar pentru a vă proteja codul sursă!
+- **Preferințe personale de lucru:** Mi-am bazat alegerile din acest capitol pe propriile preferințe — asta nu înseamnă că trebuie să le folosiți neapărat, dar reprezintă o opțiune de luat în calcul dacă nu aveți deja o soluție.
+  Esențialul este să analizați de ce aveți nevoie pentru a publica propria versiune a site-ului în producție, adaptată la circumstanțele voastre, precum și uneltele sau procesele necesare pentru îndeplinirea acestui scop.
+- **Costuri potențiale:** Lansarea în producție poate implica costuri de găzduire sau pentru înregistrarea unui domeniu.
+  Trebuie să luăm în calcul acest aspect și să ne asigurăm că am înregistrat din timp tot ce avem nevoie, cum ar fi numele de domeniu (dacă alegem să folosim unul).
+  Platforme precum Netlify (pe care o vom folosi în acest capitol) oferă planuri gratuite, însă acestea s-ar putea să nu fie suficiente pentru nevoile estimate!
+
+Acestea sunt doar câteva dintre lucrurile de care trebuie să ținem cont când suntem gata să ne lansăm site-ul în producție.
+Cu siguranță vor mai apărea și altele, așa că este bine să le avem mereu în vedere.
+
+Înainte de a ajunge la lansarea propriu-zisă, ar trebui totuși să îndeplinim o sarcină crucială: o verificare finală a site-ului nostru.
+Ați putea spune că acesta este un lucru care ar trebui făcut...
