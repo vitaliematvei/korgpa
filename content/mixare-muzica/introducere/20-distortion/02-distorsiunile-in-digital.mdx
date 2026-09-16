@@ -1,0 +1,48 @@
+---
+title: 'Problema distorsiunii în domeniul digital'
+description: 'Problema distorsiunii în domeniul digital'
+order: 2
+category: 'Distortion'
+level: 'Incepator'
+---
+
+Deseori, distorsiunea produsă într-un sistem analogic este mai muzicală decât cea generată într-un sistem digital.
+Motivul derivă din faptul că sistemele analogice nu au o limită de frecvență fixă, așa cum au cele digitale.
+Cea mai înaltă frecvență pe care o poate procesa un sistem digital se numește **frecvența Nyquist** și este întotdeauna egală cu jumătate din rata de eșantionare (_sample rate_).
+
+Problema sistemelor digitale este că orice conținut generat în interiorul lor care depășește frecvența Nyquist se „oglindește” (_reflectă_) înapoi în banda audio.
+De exemplu, să presupunem că avem un sistem care lucrează la o rată de eșantionare de 44,1 kHz.
+Cea mai înaltă frecvență permisă de acest sistem este de 22,05 kHz (frecvența Nyquist).
+
+Dacă distorsionăm o undă sinusoidală de 8 kHz, distorsiunea armonică rezultată va include:
+
+- **Armonica a doua:** 16 kHz (relație de octavă cu frecvența fundamentală)
+- **Armonica a patra:** 32 kHz (de asemenea, în relație de octavă)
+
+Deoarece armonica de 32 kHz depășește frecvența Nyquist (22,05 kHz), ea se va oglindi înapoi în jurul acesteia, rezultând o frecvență de **aliasing** la 12,1 kHz (22,05 - (32 - 22,05) = 12,1kHz).
+Această frecvență nouă nu are o relație armonică cu fundamentala de 8 kHz, generând un sunet strident și neplăcut (_harsh_).
+Pe același principiu, orice armonică rezultată din distorsie care trece de frecvența Nyquist creează frecvențe de aliasing sub ea.
+Într-un sistem analogic nu se întâmplă așa ceva — orice conținut armonic peste 20 kHz devine pur și simplu inaudibil.
+
+---
+
+### Soluții și compromisuri în domeniul digital
+
+**1. Utilizarea ratelor de eșantionare mai mari**
+Putem minimiza fenomenul de aliasing prin creșterea ratei de eșantionare a proiectului:
+
+- La o rată de **88,2 kHz**, frecvența Nyquist devine **44,1 kHz**.
+- Armonica de 32 kHz nu mai suferă aliasing (este sub limita Nyquist) și rămâne inaudibilă.
+- Chiar și componentele care suferă aliasing se vor reflecta, în primă fază, în domeniul inaudibil (între 20 kHz și 44,1 kHz).
+  Doar frecvențele care depășesc 68,2 kHz s-ar mai reflecta înapoi în banda audibilă (0 - 20 kHz).
+
+**Dezavantajul:** Procesarea a dublu de eșantioane înseamnă, în teorie, înjumătățirea puterii de procesare a procesorului (CPU).
+În practică, consumul de resurse poate fi chiar mai mare, deoarece unele pluginuri necesită un volum semnificativ mai mare de calcule pentru a rula la rate mari.
+
+**2. Oversampling intern (Upsampling & Downsampling)**
+Dezvoltatorii de pluginuri de calitate rezolvă problema aliasing-ului direct în structura algoritmilor prin **oversampling**:
+
+1. **Upsampling:** Chiar dacă proiectul are 44,1 kHz, pluginul multiplică intern rata de eșantionare (ex. 4×, ajungând la 176,4 kHz). Frecvența Nyquist internă devine **88,2 kHz**.
+2. **Procesare:** Se aplică saturarea/distorsiunea. Armonicele create pot depăși frecvența Nyquist originală (22,05 kHz), dar rămân sub noua limită de 88,2 kHz.
+3. **Filtrare LPF:** Se aplică un filtru trece-jos (_Low-Pass Filter_) anti-aliasing de foarte bună calitate, care taie tot ce depășește 20 kHz.
+4. **Downsampling:** Semnalul este adus înapoi la rata de eșantionare a proiectului (44,1 kHz), complet curățat de armonicele problematice care ar fi generat aliasing în banda audibilă.

@@ -1,0 +1,41 @@
+---
+title: 'Reducerea de biți (Bit Reduction / Bitcrushing)'
+description: 'Reducerea de biți (Bit Reduction / Bitcrushing)'
+order: 8
+category: 'Distortion'
+level: 'Incepator'
+---
+
+Eșantionatoarele digitale (_samplers_) apărute la începutul anilor '80 aveau specificații modeste comparativ cu cele din prezent — pe lângă ratele scăzute de eșantionare, ele erau proiectate pe 8 biți (iar mai târziu pe 12 biți).
+Chiar și astăzi, sunetul specific de 8 biți este foarte căutat în genuri precum hip-hop, unde mulți producători apreciază textura _lo-fi_ a eșantioanelor de tobă.
+
+Când am discutat despre mixerele software în Capitolul 11, am menționat importanța tehnicii de **dither**, care elimină distorsiunea cauzată de reducerea rezoluției în biți.
+Fără surprindere — ca în multe alte situații din mixaj unde căutăm tocmai sunetul „imperfect din punct de vedere tehnic” —, reducerea de biți poate avea un efect extrem de atractiv.
+
+În esență, un procesor de reducere a biților (_bitcrusher_) pur și simplu scade adâncimea de biți (_bit depth_) a semnalului digital:
+
+- Deși în interiorul software-ului DAW semnalul audio rămâne reprezentat pe 32-bit float, valorile eșantioanelor sunt quantizate (_rotunjite_) la treptele specifice rezoluției țintă.
+- De exemplu, o reducere la **1 bit** va genera doar valori extreme de 1.0 și –1.0 (deși, în practică, majoritatea procesoarelor permit și valoarea 0.0).
+
+Acest proces generează **distorsie de quantizare** (_quantization distortion_) — cu cât adâncimea de biți țintă este mai mică, cu atât distorsia devine mai puternică.
+Evident, pentru că ne dorim această distorsie, **nu se aplică dither**.
+
+La fel ca în cazul eșantioanelor de tobă, reducerea de biți poate fi utilizată pentru a oferi o amprentă _lo-fi_ diferitelor instrumente sau ca un efect creativ radical în mix.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/25-3.jpg"
+    alt="Figura 25-3"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 25-3:</p>**Logic BitCrusher**
+
+Acest plugin combină **reducerea de biți** (_bit reduction_), **distorsiunea de clipping cu trei moduri** și **sub-eșantionarea digitală** (_downsampling_).
+
+În această captură de ecran, este utilizată doar reducerea la **3 biți**.
+Pe afișaj pot fi observate cele opt trepte de quantizare care afectează o formă de undă sinusoidală.
+
+</div>

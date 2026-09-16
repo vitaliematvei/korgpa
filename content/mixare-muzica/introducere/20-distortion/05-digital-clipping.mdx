@@ -1,0 +1,34 @@
+---
+title: 'Clipping-ul digital'
+description: 'Clipping-ul digital'
+order: 5
+category: 'Distortion'
+level: 'Incepator'
+---
+
+Dintre toate tipurile de distorsie, clipping-ul digital este probabil cel mai puțin atractiv pentru ureche.
+Limitarea dură (_harsh limiting_) a semnalului audio care depășește pragul de **0 dBFS** într-un sistem digital poate produce un sunet extrem de neplăcut, mai ales dacă noul conținut armonic generat suferă și fenomenul de **aliasing**.
+
+Există mai multe tipuri de clipping digital, iar diferențele depind de modul în care sistemul tratează semnalele ce depășesc limita maximă permisă:
+
+- **Sistemele cu virgulă mobilă (_floating-point_):** Pe majoritatea acestor sisteme, valorile care depășesc limita sunt pur și simplu tăiate (_trimmed_) la cea mai mare valoare posibilă — o limitare dură clasică (_hard-limiting_).
+- **Sistemele pe numere întregi (_integer notation_):** Diferitele reprezentări pot produce rezultate ciudate.
+  Semnalele care depășesc limita se pot reflecta (_alias_) în jurul celei mai mari valori de eșantion, pot fi mutate direct la baza gamei de valori (_displaced to the bottom_) sau pot fi decalate peste linia de zero (_zero-crossing displacement_).
+
+În general, clipping-ul tinde să producă cel mai agresiv tip de distorsie.
+
+Unele pluginuri încearcă să imite sunetul de clipping al echipamentelor analogice prin adăugarea unor procesări suplimentare pe lângă clipping-ul digital de bază (cum este și cazul efectului _Clip Distortion_ din Figura 25.1).
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/25-1.jpg"
+    alt="Figura 25-11"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-1">Figura 25-11:</p>Logic Clip Distortion plugin
+</div>
+Merită menționat controlul **„Mix”**, care ne permite să dozăm și să combinăm
+semnalul curat (_dry_) cu cel distorsionat (_wet_).
