@@ -1,0 +1,60 @@
+---
+title: 'Adăugarea unui nume de domeniu'
+description: 'Adăugarea unui nume de domeniu'
+order: 9
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Această ultimă modificare pentru variabilele de mediu înseamnă că avem, în sfârșit, un site funcțional, accesibil online pentru oricine îi cunoaște adresa. Există totuși o problemă: URL-ul pe care trebuie să îl folosească vizitatorii nu este tocmai cel mai prietenos, nu-i așa?
+
+Desigur, acest lucru este de așteptat din moment ce folosim un serviciu gratuit pentru găzduire — există anumite limitări. În acest punct trebuie să decidem: vrem un domeniu personalizat sau rămânem cu URL-ul oferit implicit de Netlify?
+
+Înainte să vă speriați: **nu este obligatoriu** să înregistrați un nume de domeniu! Acesta aduce doar o notă mai profesională site-ului, dar aplicația va funcționa perfect și fără el, folosind adresa furnizată de Netlify. Dacă totuși vrem să înregistrăm unul, există câteva aspecte de luat în considerare:
+
+- **Costul:** În funcție de opțiunile alese, înregistrarea unui domeniu implică, cel mai probabil, un cost. Dacă vrei să lansezi site-ul în producție, vei avea nevoie de un URL mai bun decât cel generat de Netlify — ba chiar ar putea fi nevoie să iei în calcul o găzduire dedicată, deoarece GitHub nu este ideal în acest scenariu.
+- **Durata:** Pe ce perioadă vrei să înregistrezi domeniul? Netlify funcționează pe bază de reînnoire anuală, ceea ce este excelent pentru un startup la început de drum, dar pe viitor ai putea lua în calcul o perioadă mai lungă. Acest lucru ar putea necesita mutarea pe un alt provider de găzduire.
+- **Disponibilitatea:** Asigură-te că numele dorit este liber! Deși am ales să înregistrez domeniul prin Netlify, numele original `[www.macaronmagic.com](https://www.macaronmagic.com)` era deja ocupat. Era disponibil când am început documentarea pentru această carte, dar din neatenție nu l-am rezervat la timp. Nu este o tragedie, deoarece am putut ajusta ușor numele în `macaron-magic.com`. Este o lecție importantă: pregătește mereu alternative în cazul în care numele dorit este luat.
+
+Presupunând că vrem să înregistrăm un domeniu și că reînnoirea anuală este convenabilă pentru moment, avem la dispoziție mai multe metode:
+
+- Lăsăm Netlify să înregistreze domeniul nou, împreună cu certificatul SSL și configurarea serverelor DNS (nameservers).
+- Dacă deținem deja un domeniu, putem delega administrarea lui către Netlify.
+- Înregistrăm domeniul pe cont propriu și îl configurăm manual — opțiune ideală dacă vrem să folosim un domeniu sau subdomeniu existent și să avem control complet.
+
+Preferința mea este să las Netlify să înregistreze domeniul și să configureze serverele de nume automat, din câteva motive:
+
+- Nu sunt un expert în DNS: configurarea zonelor DNS poate fi complicată uneori, așa că este mai simplu să lăsăm platforma să se ocupe de asta.
+- Domeniul poate costa puțin mai mult, dar merită diferența de preț, deoarece Netlify generează automat certificat SSL, NS-uri și tot ce este necesar.
+- Fiind un site demonstrativ, dacă va fi nevoie, pot renunța la el pe viitor sau îl pot muta pe o găzduire dedicată.
+
+Ideea principală este că decizia depinde de nevoile tale. Opțiunile alese de mine se potrivesc proiectului meu, dar este esențial să alegi varianta care se pliază cel mai bine pe cerințele tale.
+
+Gata cu vorba: să trecem la treabă și să înregistrăm domeniul pentru site!
+
+---
+
+**ADĂUGAREA UNUI DOMENIU PERSONALIZAT**
+
+Pentru a înregistra numele de domeniu, urmează acești pași:
+
+1. Mai întâi trebuie să modificăm domeniul menționat în cod. În cazul meu, fiind vorba de o modificare de un singur caracter (adăugarea cratimei), am ales să fac modificarea direct pe GitHub. Îți recomand totuși să faci asta printr-un **Pull Request (PR)** dacă numele tău este complet diferit!
+2. Autentifică-te în contul tău Netlify pe [www.netlify.com](https://www.google.com/search?q=https%3A%2F%2Fwww.netlify.com).
+3. Mergi la pagina de domenii a echipei tale (**Team's domains**), apoi selectează **Add or register domain**.
+4. Introdu numele de domeniu pe care vrei să îl înregistrezi și apasă pe **Verify** — dacă l-ai verificat deja, ar trebui să apară ca fiind disponibil. În caz contrar, va trebui să încerci alt nume.
+5. Dacă domeniul este liber, ți se va afișa prețul de achiziție — acesta este valabil pentru primul an, dar reînnoirea din anul doi ar putea avea un tarif mai mare. Dacă ești de acord cu suma, apasă pe **Register domain name** pentru a autoriza plata și a finaliza înregistrarea. _Notă: dacă nu ai un card salvat în Netlify, ți se va cere să adaugi datele de plată înainte de procesare._
+6. În ecranul următor, vei fi întrebat dacă dorești ca Netlify să creeze înregistrări DNS pentru alte servicii (cum ar fi adresele de email). Pentru moment, apasă pe **Continue** — le poți adăuga ulterior dacă va fi cazul. Apasă pe **Done** când termină.
+7. Netlify va înregistra domeniul, va crea zona DNS și va emite un certificat HTTPS de tip wildcard pentru site. Mai avem un singur pas: să asociem domeniul cu proiectul nostru din Netlify. Pentru asta, apasă pe **Sites**, apoi selectează numele site-ului tău.
+8. Intră în **Site settings** ➤ **Domain settings**.
+9. Apasă pe **Add a domain** în caseta _Production domains_ pentru a adăuga domeniul proaspăt înregistrat.
+10. Introdu numele de domeniu fără `www` la început și apasă pe **Verify**.
+11. Netlify va confirma că domeniul este deja înregistrat pe platformă, așa că apasă pe **Add domain**.
+12. Odată adăugat, va fi necesară o actualizare a propagării DNS pe serverele Netlify, proces ce poate dura puțin. În interfață va apărea confirmarea acelei actualizări DNS.
+
+În acest punct trebuie să avem puțină răbdare — eu am putut accesa site-ul pe noul domeniu în aproximativ o oră de la înregistrare, dar propagarea completă poate dura până la 24 de ore! Când domeniul este pregătit, mesajul _„Awaiting Netlify DNS”_ va fi înlocuit de o bifă verde.
+
+Acum putem răsufla ușurați! Site-ul este live și funcțional — chiar dacă este doar un proof of concept. Poate fi accesat printr-un domeniu personalizat ales de noi, configurat și securizat pentru următorul an. Avem suficient timp să îl actualizăm sau să îl lansăm oficial în producție.
+
+Deși din punct de vedere tehnic au fost doar câțiva pași de parcurs, cea mai importantă parte a fost alegerea numelui și a metodei de înregistrare. Folosind Netlify, majoritatea configurațiilor tehnice complexe au fost gestionate automat în fundal.
+
+Netlify s-a ocupat de serverele de nume (nameservers), de crearea înregistrărilor DNS și de securizarea site-ului prin certificatul SSL. Noi a trebuit doar să alegem un nume potrivit, să fim de acord cu costul și să asociem domeniul cu proiectul.

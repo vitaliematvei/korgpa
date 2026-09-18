@@ -1,0 +1,49 @@
+---
+title: 'Conectarea la Netlify'
+description: 'Conectarea la Netlify'
+order: 7
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Cu puțină ezitare, pot spune că acesta este aproape ultimul pas major pentru a ne pune site-ul live.
+
+Până acum am configurat repozitoriul și am încărcat conținutul — totul este pregătit pentru a realiza conexiunea cu Netlify.
+Acest ultim pas ar trebui făcut doar atunci când suntem cu adevărat mulțumiți de starea codului; odată ce totul arată bine, putem trece la treabă.
+Eu parcurg procesul acum pentru această carte, dar îți recomand să nu o faci până nu verifici că totul funcționează și că ești gata să lansezi proiectul în producție.
+
+Poți spune că sunt paranoic, dar 5-10 minute de verificări acum te pot scuti de multe dureri de cap mai târziu!
+
+Dacă suntem 100% pregătiți, să trecem la treabă și să vedem ce presupune lansarea codului în producție. Ca reminder: eu folosesc GitHub pentru găzduire — dacă folosești alt furnizor Git (cum ar fi GitLab), adaptează pașii în consecință.
+
+---
+
+**Conectarea repozitoriului GitHub la Netlify**
+
+Pentru a conecta site-ul la Netlify, urmează acești pași:
+
+1. Intră pe [www.netlify.com](https://www.google.com/search?q=https%3A%2F%2Fwww.netlify.com), apasă pe **Log In** și alege furnizorul unde ai contul Git (în cazul meu, GitHub).
+2. Ți se va cere autorizarea pentru ca Netlify Auth să îți acceseze contul — apasă pe **Authorize netlify** și urmează instrucțiunile de pe ecran.
+3. Odată finalizat pasul, Netlify îți va pune trei întrebări scurte (de exemplu, scopul utilizării) — răspunde cum consideri potrivit.
+4. Apasă pe **Continue to deploy**. În ecranul „Deploy your first project”, apasă pe **Deploy with GitHub**, apoi pe **Authorize Netlify** pentru a ajusta permisiunile necesare găzduirii.
+5. Apasă pe **Install** pentru a configura Netlify — introdu parola repozitoriului dacă ți se solicită.
+6. În ecranul „Let’s deploy your project”, selectează numele repozitoriului tău, apoi apasă pe **Deploy XXXXX to Netlify** (unde XXXXX este numele repozitoriului).
+7. După câteva momente, vei ajunge pe panoul de control (dashboard) al proiectului — lasă-i câteva minute să proceseze deploy-ul.
+8. Netlify va afișa mesajul „Deploy success!” când build-ul este gata — apasă pe **Dismiss** pentru a închide notificarea.
+9. Afișarea ecranului de confirmare este indicatorul că site-ul este gata de vizualizat.
+
+Dacă accesezi `[https://app.netlify.com/sites/XXXXX/deploys](https://app.netlify.com/sites/XXXXX/deploys)`, vei vedea lista tuturor deploy-urilor — va apărea statusul **Published** pentru cele reușite sau o eroare dacă procesul a eșuat.
+
+Acum putem răsufla ușurați: site-ul nostru este live pe internet (să sperăm că nimeni nu va crede că este un magazin real de pe care poate cumpăra produse!). Totuși, nu ne putem relaxa complet, deoarece componentele care folosesc variabile din fișierul `.env` nu vor funcționa încă. Mai avem puțin de lucru acolo, dar înainte de asta, să analizăm mai detaliat pașii parcurși.
+
+---
+
+**Analiza modificărilor**
+
+Unul dintre avantajele platformei Netlify este că tot procesul de conectare se face prin interfața grafică (GUI), fără a fi nevoie să rulezi comenzi în terminal.
+
+A fost nevoie doar de câțiva pași pentru autorizare și configurare, iar Netlify s-a ocupat automat de restul. De asemenea, a detectat automat că folosim un site Next.js și a adaptat procesul de build corespunzător.
+
+Un mic dezavantaj este că integrarea cu baza de date Sanity și plățile prin Stripe nu vor funcționa în acest moment — dar este un comportament normal. Ambele depind de variabile de mediu (`environment variables`). Trebuie doar să le importăm în panoul Netlify pentru a le restabili funcționalitatea. Din fericire, este un proces simplu pe care îl vom parcurge în următoarea demonstrație.
+
+Dacă vrei să vezi versiunea mea de site creată pentru această carte, o poți accesa la: `[https://flourishing-kheer-17fc1f.netlify.app/](https://flourishing-kheer-17fc1f.netlify.app/)`.

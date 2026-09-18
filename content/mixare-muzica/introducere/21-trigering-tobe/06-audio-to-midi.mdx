@@ -1,0 +1,56 @@
+---
+title: 'Conversia din Audio în MIDI'
+description: 'Conversia din Audio în MIDI'
+order: 6
+category: 'Drum trigering'
+level: 'Incepator'
+---
+
+Anumite aplicații ne permit să convertim semnalul audio în date MIDI.
+În Logic, pista audio individuală este mai întâi analizată _offline_, iar după configurarea diverselor setări, se creează o nouă regiune MIDI cu note ce reprezintă fiecare lovitură de tobă.
+Avantajul conversiei audio-to-MIDI este că putem ulterior modifica mult mai ușor fiecare lovitură în parte, fie ca nivel de volum, fie ca încadrare pe ritm (_timing_).
+Digital Performer oferă o conversie foarte similară, dar care are loc în timp real prin intermediul unui plugin numit Trigger.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/26-2.jpg"
+    alt="Figura 26-2"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-2">Figura 26-1:</p>
+  Conversia „Audio to Score” din Logic. Pista de sus arată înregistrarea
+  originală de tobă mare (_kick_), fereastra plutitoare afișează caseta de
+  dialog „Audio to Score” cu opțiunile sale de configurare, iar pista de jos
+  arată pista MIDI rezultată, după ce toate notele au fost transpuse în C1.
+</div>
+
+După ce semnalul audio este convertit în MIDI, pista poate alimenta fie un sampler, fie un instrument software (_VSTi_).
+Există diverse instrumente software concepute special pentru tobe, extrem de utile pentru _drum triggering_.
+Unul dintre acestea este Toontrack EZdrummer.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/26-3.jpg"
+    alt="Figura 26-3"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-2">Figura 26-4:</p>MOTU Trigger plugin
+</div>
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/26-4.jpg"
+    alt="Figura 26-4"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-2">Figura 26-4:</p>Toontrack EZdrummer. Acest sampler de tobe multi-stratificat (_multilayer_) include diverse seturi de tobe, oferind posibilitatea de a selecta tobe individuale în cadrul fiecărui kit. Acest tip de software este extrem de util în procesul de _drum triggering_.
+
+</div>

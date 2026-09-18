@@ -1,0 +1,26 @@
+---
+title: 'Utilizarea Variabilelor de Mediu'
+description: 'Utilizarea Variabilelor de Mediu'
+order: 8
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Unul dintre lucrurile de care trebuie să ținem cont când lucrăm într-un mediu serverless este utilizarea token-urilor — vor exista ocazii în care va trebui să apelăm API-uri terțe, așa cum am făcut cu Sanity și Stripe.
+Pentru ca acestea să funcționeze în mediul nostru de producție, trebuie să folosim variabile de mediu (`environment variables`).
+Deși local putem face acest lucru folosind un fișier `.env`, această abordare nu va funcționa la fel odată ce publicăm site-ul.
+Fără o modificare, ambele API-uri vor înceta să funcționeze — ceea ce este ultimul lucru pe care ni-l dorim când lansăm proiectul!
+
+Pentru a rezolva această problemă, trebuie să creăm aceste variabile direct în panoul Netlify pentru a înlocui fișierul `.env`, astfel încât să le putem referenția similar cu modul în care am făcut-o local.
+Acest lucru va face ca atât Sanity, cât și Stripe să funcționeze exact așa cum ne așteptăm — să trecem la treabă și să vedem cum se face asta în următoarea demonstrație.
+
+---
+
+**ADĂUGAREA VARIABILELOR DE MEDIU**
+
+Pentru a adăuga variabilele de mediu pentru site-ul nostru, urmează acești pași:
+
+1. Mai întâi, autentifică-te pe platforma Netlify, apoi mergi la **Site settings** ➤ **Environment Variables**. Apasă pe **Add a variable** ➤ **Import from a .env file**.
+2. Deschide fișierul `.env` din mediul tău local, apoi copiază și lipește întregul său conținut în caseta de text de sub titlul _Import environment variables_.
+3. Odată lipit conținutul, apasă pe **Import variables**.
+4. Perfect — presupunând că totul a mers bine, accesul la Sanity și Stripe a fost restaurat, iar site-ul va funcționa acum corect pe Netlify. A fost o modificare mică, dar extrem de importantă: am adăugat cele patru variabile în secțiunea _Environment Variables_ a contului nostru Netlify, permițând celor două API-uri să funcționeze în continuare pe site.

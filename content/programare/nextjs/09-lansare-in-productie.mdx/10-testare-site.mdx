@@ -1,0 +1,72 @@
+---
+title: 'Testarea site-ului'
+description: 'Testarea site-ului'
+order: 10
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Acum că avem site-ul configurat (și accesibil printr-un domeniu personalizat, dacă ai ales să adaugi unul), este timpul pentru o ultimă sarcină — trebuie să îl testăm!
+
+Știu că am efectuat testarea în Capitolul 9, dar încă merită să facem o verificare finală.
+Aceasta ne va asigura cel puțin că site-ul funcționează corect, mai ales dacă am adăugat un nume de domeniu.
+Este important de menționat că proiectul este încă un _proof of concept_ (demonstrație de concept), așa că nu este forma finală — orice testare facem va fi axată în principal pe confirmarea faptului că putem finaliza o achiziție fără probleme.
+
+Pentru a ne ajuta în acest sens, putem face ceva util: am creat teste folosind Cypress în Capitolul 9, pe care trebuia să le rulăm manual.
+Acum că avem un repozitoriu funcțional, putem merge un pas mai departe și să automatizăm rularea lor folosind un **GitHub Action** creat direct de dezvoltatorii Cypress.
+Să vedem cum putem face asta în următoarea demonstrație.
+Pentru această modificare, s-ar putea să fie nevoie să o trimiți printr-un Pull Request (PR) dintr-un branch separat — voi presupune că știi deja cum să faci asta sau că ai fluxul de lucru pregătit.
+Ne vom concentra pe esența modificării: fișierul YAML în sine.
+
+---
+
+**AUTOMATIZAREA TESTELOR ÎN PIPELINE-URI DE CI**
+
+Pentru a adăuga GitHub Action-ul necesar rulării testelor Cypress, urmează acești pași:
+
+1. Mai întâi, deschide un fișier nou în editorul tău de cod și adaugă următorul bloc de cod, salvându-l ca `cypress.yml` în folderul `.github/workflows`:
+
+```yaml
+name: Cypress Tests
+on: push
+jobs:
+  cypress-run:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Instalează dependențele NPM, le salvează în cache
+      # și rulează toate testele Cypress
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          build: npm run build
+          start: npm start
+```
+
+2. Fă un Pull Request (PR) pentru el — ca parte din acest proces, vei vedea cum testele pornesc automat, iar o bifă verde va apărea odată ce au fost finalizate cu succes.
+
+Ca demonstrație, aceasta a fost probabil una dintre cele mai scurte din carte! Este însă o adăugare excelentă, deoarece nu mai trebuie să ne facem griji privind lansarea manuală a testelor atunci când trimitem modificări (push) în repozitoriu pe viitor. Ne oferă acea doză suplimentară de încredere și înseamnă că orice teste viitoare adăugate vor rula automat la fiecare push.
+
+Pentru a implementa modificarea, am creat fișierul `cypress.yml`, care conține comenzi YAML pentru a declanșa și rula pipeline-ul nostru. Mai întâi îi dăm un nume, urmat de directiva `on: push` pentru a rula doar la trimiterea codului. Urmează platforma pe care rulați, adică `ubuntu-22.04` (Ubuntu 22). Acțiunea folosește `actions/checkout@v3` pentru a deschide mai întâi codul, înainte de a instala toate dependențele și de a rula testele pe build-ul de producție al site-ului (`npm run build`). Desigur, trebuie să pornim site-ul folosind `npm start` — altfel testele nu vor avea pe ce să ruleze.
+
+Afișarea rezultatelor este detaliată; merită să derulezi în jos dacă vrei să vezi detaliile, în special dacă acțiunea indică o eroare la rulare.
+
+---
+
+**Rezumat**
+
+A fost un drum lung, dar avem un site funcțional!
+
+Pe parcursul acestui capitol am parcurs câțiva pași critici. Aceștia funcționează ca o etapă de hotar ce confirmă lansarea site-ului, iar activitatea de dezvoltare se poate muta acum pe mentenanță, extindere sau adăugarea de noi funcționalități. Am învățat multe, și deși unele aspecte acoperite pot diferi în propriile tale proiecte e-commerce create cu Next.js, există teme centrale comune în procesul de lansare. Să facem o scurtă recapitulare a ceea ce am învățat în acest capitol:
+
+- Am început prin stabilirea unor ipoteze cheie privind modul în care ne vom publica site-ul — multe s-au bazat pe preferințe personale, așa că acestea se pot schimba în funcție de cerințele tale.
+- Am pregătit repozitoriul GitHub înainte de a încărca codul și de a finaliza analiza inițială a acestuia.
+- Am conectat site-ul la Netlify și am verificat dacă afișează pagina corect.
+- Am adăugat un nume de domeniu personalizat pentru a oferi o notă profesională proiectului.
+- Ca ultim pas, am implementat un al doilea GitHub Action pentru a rula automat testele Cypress create anterior în carte, oferindu-ne certitudinea că site-ul funcționează conform așteptărilor în browser.
+
+Am acoperit o mulțime de informații utile! Dar acesta nu este sfârșitul — mai am două proiecte pe care vreau să le parcurgem, dar care pot fi aplicate după ce site-ul a rulat o perioadă. Primul dintre ele este să-i oferim o notă internațională: este timpul să scot dicționarul și să aflu cum se traduce „macaron” în alte limbi.
+
+{/* am ramas Project: Adding International Support .293 */}
