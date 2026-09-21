@@ -1,0 +1,36 @@
+﻿---
+title: 'Autentificarea accesului'
+description: 'Autentificarea accesului'
+order: 1
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Ar putea părea ciudat să abordăm autentificarea atât de târziu în carte, dar există un motiv întemeiat pentru asta – autentificarea nu înseamnă doar să recunoști cine este utilizatorul, ci și să te asiguri că acesta are acces valid la o secțiune restricționată a site-ului.
+Aceasta poate deschide porțile către oferirea unui serviciu mult mai personalizat, însă avem nevoie mai întâi de un site funcțional!
+
+Pentru cel de-al doilea dintre cele două proiecte ale noastre, voi explora pașii necesari pentru a seta un punct de pornire pentru autentificare și voi analiza câteva idei pe care le-am putea implementa odată ce sistemul de autentificare este configurat.
+Însă trebuie să începem de undeva, așa că vom stabili mai întâi așteptările cu privire la ce vom realiza în acest capitol.
+
+**Pregătirea cadrului**
+
+Autentificarea este un subiect vast, iar în acest capitol putem spera doar să zgâriem suprafața!
+Există numeroase modalități de a autentifica accesul, de la un simplu nume de utilizator și o parolă până la autentificarea prin servicii precum Google, Facebook și altele.
+
+Dacă administrăm un site de comerț electronic de nivel corporativ, s-ar putea să avem deja un sistem de autentificare adecvat.
+Totuși, pentru un site mic ca al nostru, nu vom avea resursele umane necesare pentru a gestiona manual conturile de utilizator, așa că trebuie să ne bazăm pe opțiuni terțe (_third-party_) pentru a reduce din sarcină.
+
+Având în vedere acest lucru, trebuie să creăm o soluție ceva mai realistă ca dimensiune – pentru acest capitol, vom folosi următoarele puncte ca bază pentru soluția noastră:
+
+- Pentru acest proiect, voi folosi o copie a site-ului, pe care o voi numi `macaronmagic-nextauth` – acest pas nu este strict necesar, dar din moment ce facem modificări, este mai degraba o măsură de precauție!
+  Va fi o copie a site-ului din proiectul original construit în Capitolele 1-10, deci va conține tot codul existent.
+- Voi folosi pachetul `next-auth` pentru a asigura autentificarea (disponibil la adresa `[https://github.com/nextauthjs/next-auth](https://github.com/nextauthjs/next-auth)`) și îl voi configura cu acces prin GitHub.
+  Având în vedere că rulăm un site demonstrativ, această opțiune este suficientă pentru a dovedi că sistemul funcționează; când vom trece în producție, cel mai probabil vom dori să folosim alte opțiuni, cum ar fi Facebook sau Google.
+- Nu vom deplasa (_deploy_) această modificare în producție, ci o vom trata ca pe o modalitate de a înțelege ce am avea de făcut dacă am trimite-o pe mediul _live_.
+  Cu toate acestea, spre sfârșitul capitolului voi trece în revistă câteva detalii despre cum putem publica această modificare.
+- Un lucru pe care ar trebui absolut să îl luăm în considerare atunci când trecem în producție – dacă preluăm informații de la furnizori terți, cum ar fi Stripe, putem face acest lucru într-un mod care să nu intre în conflict cu randarea pe server (_server-side rendering_) oferită de Next.js?
+
+Mă voi întoarce la ultimul punct la sfârșitul capitolului – acesta ridică câteva întrebări cruciale pe care trebuie să le luăm în considerare atunci când autentificăm accesul.
+
+Regulă – având toate acestea clarificate, să trecem la treabă!
+Prima sarcină este să înregistrăm o aplicație pentru acces OAuth în GitHub, astfel încât să o putem folosi pentru a autentifica accesul.

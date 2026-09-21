@@ -1,0 +1,91 @@
+---
+title: 'Înregistrarea unui cont GitHub OAuth'
+description: 'Înregistrarea unui cont GitHub OAuth'
+order: 2
+category: 'NextJS'
+level: 'Incepator'
+---
+
+OAuth este un protocol de autentificare care folosește tokenuri de securitate între consumatori și furnizorii de servicii, permițându-ne să ne dovedim identitatea — fără a ne divulga parolele!
+Este perfect pentru nevoile noastre: deși vom folosi GitHub pentru moment, am putea utiliza Facebook sau Google ca furnizori de servicii.
+
+Primul pas este să înregistrăm o aplicație OAuth, astfel încât GitHub să înțeleagă cine suntem – să intrăm direct în temă și să vedem în detaliu cum se face acest lucru.
+
+Pentru a înregistra o aplicație GitHub OAuth, urmează acești pași:
+
+1. Mai întâi, accesează `[https://github.com/settings/developers](https://github.com/settings/developers)`, apoi dă clic pe **New OAuth app** pentru a înregistra o aplicație nouă.
+2. Pe pagina următoare, adaugă următoarele detalii:
+
+   <div class="w-full overflow-x-auto rounded-lg border border-slate-200 shadow-sm dark:border-slate-800">
+     <table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
+       <thead class="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wider text-slate-700 dark:border-slate-800 dark:bg-slate-900/50 dark:text-slate-400">
+         <tr>
+           <th scope="col" class="px-6 py-3.5 font-semibold">
+             Câmp
+           </th>
+           <th scope="col" class="px-6 py-3.5 font-semibold">
+             Valoare de introdus
+           </th>
+         </tr>
+       </thead>
+       <tbody class="divide-y divide-slate-200 bg-white dark:divide-slate-800 dark:bg-slate-950">
+         <tr class="transition-colors hover:bg-slate-50/80 dark:hover:bg-slate-900/40">
+           <td class="whitespace-nowrap px-6 py-4 font-semibold text-slate-900 dark:text-slate-100">
+             Application Name
+           </td>
+           <td class="px-6 py-4">
+             Introdu un nume pentru a o identifica în lista ta – denumirea
+             exactă nu este critică.
+           </td>
+         </tr>
+         <tr class="transition-colors hover:bg-slate-50/80 dark:hover:bg-slate-900/40">
+           <td class="whitespace-nowrap px-6 py-4 font-semibold text-slate-900 dark:text-slate-100">
+             Homepage URL
+           </td>
+           <td class="px-6 py-4">
+             <code class="rounded bg-slate-100 px-2 py-1 font-mono text-xs font-medium text-slate-800 dark:bg-slate-800 dark:text-slate-200">
+               http://localhost:3000
+             </code>
+           </td>
+         </tr>
+         <tr class="transition-colors hover:bg-slate-50/80 dark:hover:bg-slate-900/40">
+           <td class="whitespace-nowrap px-6 py-4 font-semibold text-slate-900 dark:text-slate-100">
+             Authorization callback URL
+           </td>
+           <td class="px-6 py-4">
+             <code class="rounded bg-slate-100 px-2 py-1 font-mono text-xs font-medium text-slate-800 dark:bg-slate-800 dark:text-slate-200">
+               http://localhost:3000/api/auth/callback
+             </code>
+           </td>
+         </tr>
+         <tr class="transition-colors hover:bg-slate-50/80 dark:hover:bg-slate-900/40">
+           <td class="whitespace-nowrap px-6 py-4 font-semibold text-slate-900 dark:text-slate-100">
+             Enable Device Flow
+           </td>
+           <td class="px-6 py-4">Lasă nebifat / neschimbat.</td>
+         </tr>
+       </tbody>
+     </table>
+   </div>
+
+3. Dă clic pe **Register application**, apoi dă clic pe **Generate a new client secret** pe pagina următoare.
+4. Ți se va cere să te autentifici – fă-o folosind datele de conectare ale contului tău.
+5. Copiază atât **Client ID-ul**, cât și **Client Secret-ul** și salvează-le într-un loc sigur – vom avea nevoie de ambele în demonstrația următoare.
+6. Se va deschide o fereastră similară cu cea din Figura 12-1.
+7. Dă clic pe aplicație pentru a o vedea în lista de aplicații OAuth (Figura 12-1).
+
+Înregistrarea aplicației a fost simplă; am acoperit câteva puncte importante în această demonstrație, așa că să analizăm mai îndeaproape modificările făcute și cum se integrează ele în ansamblu.
+
+**Analiza modificărilor efectuate**
+
+Această demonstrație poate că a fost scurtă, dar joacă un rol critic în procesul de autentificare – fără ea, nu putem autoriza niciun acces folosind GitHub ca furnizor de identitate.
+
+Este o modalitate excelentă de a accesa date protejate fără a furniza parole, fie și într-o capacitate limitată. Standardul este, de asemenea, open source, ceea ce înseamnă că putem adăuga alți furnizori mai târziu – voi reveni asupra acestui aspect la sfârșitul capitolului.
+
+Deocamdată, ce am realizat? Am creat o aplicație în GitHub care conține detaliile paginii principale a site-ului nostru și URL-ul de _callback_ – acesta din urmă fiind adresa URL către care GitHub va redirecționa utilizatorii după ce s-au autentificat cu succes pe site-ul nostru. Este important de menționat că acesta nu va exista ca un URL fizic, ci ca unul virtual – folosim fișierul `[...nextauth].js` ca _placeholder_ pentru a crea acel URL – în mod similar cu ceea ce am făcut pentru produsele noastre mai devreme în carte.
+
+În același timp, a trebuit să generăm și un _client secret_ – îl folosim pe acesta împreună cu _Client ID-ul_ furnizat de GitHub pentru a autentifica utilizatorii atunci când încearcă să se conecteze pe site.
+
+Păstrarea unei copii a acelui _secret_ într-un loc sigur este esențială – GitHub nu îți permite să revii pentru a-l revedea și va trebui să generezi un _secret_ nou dacă îl pierzi pe cel original!
+
+Regulă – să mergem mai departe: având aplicația OAuth configurată, este timpul să trecem la următoarea sarcină: instalarea suportului pentru aceasta pe site-ul nostru.

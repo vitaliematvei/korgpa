@@ -1,0 +1,105 @@
+---
+title: 'Afișarea opțiunilor de conectare'
+description: 'Afișarea opțiunilor de conectare'
+order: 4
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Răspunsul simplu la această ultimă întrebare este „nu putem” – cel puțin nu în acest moment! Trebuie să implementăm o funcționalitate care să ne permite să ne conectăm și să ne deconectăm prin intermediul unor linkuri explicite și să afișăm un mesaj de întâmpinare dacă suntem autentificați.
+Din fericire, `next-auth` face ca acest lucru să fie o floare la ureche folosind obiectul `useSession` – să vedem cum realizăm asta în cadrul următoarei noastre demonstrații.
+
+Pentru a modifica interfața (UI) astfel încât să vedem când suntem conectați sau deconectați, urmează acești pași:
+
+1. Mai întâi, deschide fișierul `DemoBanner.jsx` – avem câteva modificări de făcut, așa că să începem prin importarea a trei funcții din pachetul `next-auth/react`:
+
+```jsx
+import React from 'react';
+import { useSession, signIn, signOut } from 'next-auth/react';
+```
+
+2. În pasul următor, trebuie să destructurăm valorile de care avem nevoie din `useSession()` – pe care le putem folosi pentru a identifica cine este autentificat. Adaugă această linie imediat sub definirea componentei noastre, urmată de două funcții pentru conectare și deconectare:
+
+```jsx
+const DemoBanner = () => {
+  const { data: session } = useSession();
+
+  const handleSignin = (e) => {
+    e.preventDefault();
+    signIn();
+  };
+
+  const handleSignout = (e) => {
+    e.preventDefault();
+    signOut();
+  };
+
+```
+
+3. Derulează puțin mai jos, imediat după tagul de închidere `span` al textului din banner – adaugă acest bloc de cod, care adaugă un mesaj de întâmpinare și opțiunea de deconectare pentru orice utilizator autentificat:
+
+```jsx
+<span>
+  {session && (
+    <>
+      <img src={session.user.image} alt="" />
+      <p>Welcome, {session.user.name ?? session.user.email}</p>
+      <a href="#" onClick={handleSignout} className="btn-signin">
+        Sign out
+      </a>
+    </>
+  )}
+
+```
+
+4. Lasă o linie liberă după blocul anterior, apoi adaugă acest cod – acesta se ocupă de cazul în care utilizatorul nu este autentificat pe site:
+
+```jsx
+  {!session && (
+    <>
+      <p>Welcome</p>
+      <a href="#" onClick={handleSignin} className="btn-signin">
+        Sign in
+      </a>
+    </>
+  )}
+</span>
+
+```
+
+5. Deschide fișierul `globals.css` din directorul `src/styles`, apoi adaugă aceste stiluri:
+
+```css
+/* MODIFICĂRI PENTRU AUTENTIFICARE */
+.demo-banner-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.demo-banner-container > span:nth-child(2) {
+  display: flex;
+}
+
+.demo-banner-container > span:nth-child(2) > img {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.demo-banner-container > span:nth-child(2) > p {
+  margin-right: 15px;
+}
+
+.demo-banner-container > span:nth-child(2) > a {
+  border-left: 2px solid #ffffff;
+  padding-left: 15px;
+}
+```
+
+6. Salvează și închide toate fișierele deschise. Revino în terminalul Node.js, introdu comanda `npm run dev` și apasă Enter pentru a reporni serverul de dezvoltare Next.js.
+7. Deschide browserul la adresa aplicației; vei vedea ecranul din Figura 12-2, unde avem acum opțiunea de a ne conecta pe site.
+8. Dă clic pe butonul de autentificare și finalizează conectarea prin GitHub – vei vedea numele tău apăpărând în banner, alături de opțiunea de deconectare (Figura 12-3).
+
+Perfect – arată mult mai bine! Acum avem o opțiune adecvată pentru conectare și deconectare, care ne și recunoaște: avem chiar și o imagine de profil.
+
+Codul pentru această funcționalitate este relativ simplu, deși poate părea puțin complex la prima vedere – funcționăm pe baza identificării unei sesiuni valide și a deciziei dacă să afișăm numele de utilizator sau un salut generic. Există câteva sfaturi valoroase în acest cod la care ar trebui să ne uităm mai atent, așa că să intrăm în detalii și să analizăm modificările făcute.

@@ -1,0 +1,72 @@
+---
+title: 'Instalarea și configurarea NextAuth'
+description: 'Instalarea și configurarea NextAuth'
+order: 3
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Având aplicația OAuth pregătită, este timpul să trecem la următoarea sarcină – trebuie să instalăm pachetul `next-auth` și să îl configurăm pentru a fi utilizat pe site-ul nostru.
+Procesul necesită câțiva pași, așa că, fără alte introduceri, să trecem la treabă și să vedem ce avem de făcut în cadrul următoarei demonstrații.
+
+**INSTALAREA NEXTAUTH**
+
+Pentru a instala și configura NextAuth, urmează acești pași:
+
+1. Deschide un terminal Node.js și navighează în directorul noului nostru proiect.
+2. La linia de comandă, tastează `npm i next-auth` și apasă Enter pentru a instala pachetul `next-auth`.
+3. După finalizarea instalării, comută în editorul tău de text și creează un fișier nou.
+4. În acest fișier, adaugă următorul cod:
+
+```env
+GITHUB_ID=<Client ID-ul tău de GitHub, din primul exercițiu>
+GITHUB_SECRET=<Client Secret-ul tău de GitHub, din primul exercițiu>
+NEXTAUTH_URL=http://localhost:3000
+
+```
+
+5. Salvează fișierul sub numele `.env.local` în rădăcina proiectului (_root_).
+6. Deschide fișierul `_app.js` și adaugă următoarea linie sub lista de importuri din partea de sus a fișierului:
+
+```javascript
+import { SessionProvider } from 'next-auth/react';
+```
+
+7. Derulează puțin mai jos și modifică codul existent pentru a include tagurile `<SessionProvider>`, astfel:
+
+```jsx
+<SessionProvider session={pageProps.session}>
+  <StateContext>
+    <Layout>
+      <Toaster />
+      <Component {...pageProps} />
+    </Layout>
+  </StateContext>
+</SessionProvider>
+```
+
+8. Într-un fișier nou, adaugă codul de mai jos și salvează-l cu numele `[...nextauth].js` în directorul `src/pages/api/auth`:
+
+```javascript
+import NextAuth from 'next-auth';
+import GitHubProvider from 'next-auth/providers/github';
+
+const options = {
+  providers: [
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    }),
+  ],
+};
+
+export default (req, res) => NextAuth(req, res, options);
+```
+
+9. Salvează și închide toate fișierele deschise.
+10. Revino în terminalul Node.js, introdu comanda `npm run dev` și apasă Enter pentru a reporni serverul de dezvoltare Next.js.
+11. Când serverul este pregătit, accesează în browser adresa `http://localhost:3000/api/auth/signin` și dă clic pe **Sign in with GitHub**.
+12. GitHub îți va cere să autorizezi accesul – urmează instrucțiunile afișate pe ecran.
+13. Odată autorizat, vei fi redirecționat înapoi pe pagina principală a site-ului – acum ești autentificat.
+
+Acesta este un pas important înainte – avem acum configurate elementele de bază pentru autentificare, astfel încât să putem implementa o secțiune securizată pe site-ul nostru. Pentru a ajunge aici, am configurat pachetul `next-auth` și am făcut câteva modificări în codul sursă: să ne luăm un moment pentru a analiza în detaliu modificările efectuate.

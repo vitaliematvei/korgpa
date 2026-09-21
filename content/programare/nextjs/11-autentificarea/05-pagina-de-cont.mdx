@@ -1,0 +1,177 @@
+---
+title: 'Afișarea opțiunilor de conectare'
+description: 'Afișarea opțiunilor de conectare'
+order: 4
+category: 'NextJS'
+level: 'Incepator'
+---
+
+**Adăugarea paginii de cont**
+
+Majoritatea site-urilor de comerț electronic au o zonă securizată în care clienții își pot vizualiza detaliile contului, cum ar fi achizițiile, numele de utilizator și adresa de livrare. Această zonă protejată va fi, în mod implicit, securizată cu acces SSL, dar va necesita și autentificare – la urma urmei, nu ne dorim ca utilizatorii neautorizați să se conecteze și să vadă detalii pe care nu ar trebui să le acceseze!
+
+Există mai multe modalități de a configura un acces autentificat – având în vedere dimensiunea site-ului nostru, putem folosi metode deja incluse în pluginul `next-auth` din demonstrația anterioară.
+
+Fișierele pentru această demonstrație vor fi toate disponibile în codul sursă descărcabil al acestei cărți.
+
+Configurarea accesului securizat la o pagină va necesita câteva modificări în mai multe componente din site-ul nostru – să intrăm în detalii și să analizăm pașii necesari pentru a-l implementa.
+
+---
+
+### ADĂUGAREA ACCESULUI SECURIZAT
+
+Pentru a adăuga o zonă accesibilă doar prin autorizare, urmează acești pași:
+
+1. Mai întâi, creează un fișier nou și salvează-l cu numele `DisplayProfile.jsx` în directorul `\src\components`.
+2. Trebuie să adăugăm o bucată considerabilă de cod în această componentă, așa că o vom face pe secțiuni – începând cu importurile:
+
+```jsx
+import React from 'react';
+import { useSession, signIn } from 'next-auth/react';
+```
+
+3. Lasă o linie liberă, apoi adaugă tagul de deschidere al componentei, alături de o constantă și un handler de evenimente:
+
+```jsx
+function DisplayProfile() {
+  const { data: session } = useSession();
+
+  const handleSignin = (e) => {
+    e.preventDefault();
+    signIn();
+  };
+
+```
+
+4. Urmează partea principală a componentei – adaugă următorul bloc de cod, care se va ocupa de afișarea detaliilor corecte dacă clientul este autentificat:
+
+```jsx
+  return (
+    <>
+      <div className="display-profile">
+        {session && (
+          <>
+            <div>
+              <div className="profile-image">
+                <img src={session.user.image} alt="" />
+              </div>
+              <div className="profile-details">
+                <h3>{session.user.name}</h3>
+                <p>Email: {session.user.email}</p>
+              </div>
+            </div>
+          </>
+        )}
+
+```
+
+5. De asemenea, trebuie să acoperim cazurile în care un client nu este autentificat – pentru asta, adaugă următorul bloc de cod, urmat de exportul final:
+
+```jsx
+        {!session && (
+          <>
+            <a href="#" onClick={handleSignin} className="btn-signin">
+              Ne pare rău - această pagină este rezervată doar membrilor. Te rugăm să te conectezi pentru a-ți vedea detaliile.
+            </a>
+          </>
+        )}
+      </div>
+    </>
+  );
+}
+
+export default DisplayProfile;
+
+```
+
+6. Pentru a finisa această componentă, adaugă această linie în `\src\components\index.js` – acest lucru va facilita importarea ei în paginile noastre:
+
+```javascript
+export { default as DisplayProfile } from './DisplayProfile';
+```
+
+7. Acum putem folosi această componentă – creează un fișier nou numit `account.js` și salvează-l în directorul `\src\pages`.
+8. În interiorul acestei componente, adaugă următoarele linii – avem mai întâi un import, urmat de partea principală a componentei, care va afișa structura markup și va apela componenta `DisplayProfile`:
+
+```jsx
+import { DisplayProfile } from 'src/components';
+
+const Account = () => {
+  return (
+    <>
+      <div className="your-account">
+        <p>Contul tău</p>
+      </div>
+      <DisplayProfile />
+    </>
+  );
+};
+
+export default Account;
+```
+
+9. Un detaliu elegant va fi să ne asigurăm că linkul **Account** este vizibil în `NavBar` doar atunci când utilizatorul este conectat – pentru asta, deschide `NavBar.jsx` și adaugă acest import la lista din partea de sus:
+
+```jsx
+import { useSession } from 'next-auth/react';
+```
+
+10. În pasul următor, adaugă această linie imediat după tagul de deschidere al componentei:
+
+```jsx
+const { data: session } = useSession();
+```
+
+11. Derulează puțin mai jos, apoi adaugă această linie imediat după ultimul tag `<Link...>` din lista de linkuri:
+
+```jsx
+{
+  session && <Link href="/account">Account</Link>;
+}
+```
+
+12. Mai avem o modificarea importantă de adăugat, adică stilizarea – deschide `globals.css` și adaugă aceste reguli:
+
+```css
+.your-account {
+  width: 70%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.your-account p {
+  margin: 40px 0 0 0;
+  font-family: 'Oswald', sans-serif;
+  font-size: 42px;
+}
+
+.display-profile {
+  width: 60%;
+  margin: 20px auto 50px auto;
+  text-align: center;
+}
+
+.display-profile div:nth-child(1) {
+  display: flex;
+}
+
+.profile-image {
+  margin-right: 20px;
+}
+
+.profile-image img {
+  width: 100px;
+  height: 100px;
+}
+
+.profile-details {
+  text-align: left;
+  border-left: 1px solid #dcdcdc;
+  display: block;
+  padding-left: 15px;
+  min-height: 200px;
+}
+```
+
+13. Salvează și închide toate fișierele deschise. Apoi, revino în terminalul Node.js, introdu comanda `npm run dev` și apasă Enter pentru a reporni serverul de dezvoltare Next.js.
+14. Deschide browserul (asigură-te că ești conectat) și navighează la `http://localhost:3000/account`. Ar trebui să vezi ecranul din Figura 12-4, unde preluăm și afișăm detaliile de bază ale sesiunii noastre active.
