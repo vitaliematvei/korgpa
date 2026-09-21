@@ -1,0 +1,117 @@
+---
+title: 'Configurarea suportului pentru regiuni (_locales_)'
+description: 'Configurarea suportului pentru regiuni (_locales_)'
+order: 3
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Pentru prima sarcină, trebuie să îi spunem framework-ului Next.js că site-ul nostru va oferi conținut pentru mai multe regiuni lingvistice.
+Vom face acest lucru folosind proprietatea de configurare `i18n` în fișierul `next.config.js`.
+În același timp, vom adăuga o pagină de test pentru a confirma că URL-ul se modifică conform așteptărilor, alături de un meniu derulant (_drop-down_) pentru comutarea între limbi.
+
+### Adăugarea suportului pentru regiuni
+
+Pentru a configura suportul inițial pentru diferite țări/limbi, opriți mai întâi serverul de dezvoltare Next.js dacă rulează, apoi urmați acești pași:
+
+1. **Oprirea serverului:** Opriți serverul de dezvoltare dacă este pornit. Deoarece modificăm fișierele de configurare Next.js, este necesară o repornire a serverului pentru ca schimbările să aibă efect.
+2. **Configurarea `next.config.js`:** Deschideți fișierul `next.config.js` în editor și adăugați liniile evidențiate înainte de paranteza de închidere:
+
+```javascript
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // ... celelalte opțiuni existente
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'nl-NL'],
+  },
+};
+
+module.exports = nextConfig;
+```
+
+3. **Crearea paginii de test:** Faceți o copie a fișierului `about.js` și salvați-o sub numele `test.js` — o vom folosi pentru a verifica dacă comutarea de limbă funcționează. Deschideți `test.js` și adăugați următorul import în partea de sus a fișierului:
+
+```javascript
+import { useRouter } from 'next/router';
+```
+
+4. **Preluarea regiunii curente:** Cu importul realizat, trebuie să extragem limba/regiunea curentă (_locale_).
+   Adăugați această linie înainte de instrucțiunea `return (`:
+
+```javascript
+const About = () => {
+  const { locale } = useRouter();
+
+  return (
+    // ...
+
+```
+
+5. **Afișarea regiunii în interfață:** Adăugați linia de mai jos imediat după `<p>About Macaron Magic</p>`:
+
+```jsx
+<div className="about-us">
+  <p>About Macaron Magic</p>
+  <p>Hello world: {locale}</p>
+
+```
+
+6. **Actualizarea componentei NavBar:** Trebuie să facem modificări într-un ultim fișier — deschideți `NavBar.jsx` și adăugați același import pentru `useRouter`:
+
+```jsx
+import { useStateContext } from '../../context/StateContext';
+import { useRouter } from 'next/router';
+```
+
+7. **Adăugarea handler-ului de comutare:** Câteva linii mai jos (după destructurarea apelului `useStateContext()`), adăugați inițializarea router-ului și funcția de gestionare a evenimentului:
+
+```javascript
+const router = useRouter();
+
+const handleLocaleChange = (event) => {
+  const value = event.target.value;
+  router.push(router.route, router.asPath, {
+    locale: value,
+  });
+};
+```
+
+8. **Actualizarea primului link (`Home`):** Pentru a folosi aceste facilități, trebuie să modificăm apelurile către `<Link>`.
+   Vom face asta pentru primele două, fiind suficient pentru a vedea efectul (puteți replica procesul și pentru celelalte două, dacă doriți). Modificați prima linie `<Link...>` astfel:
+
+```jsx
+<Link href="/" className={router.asPath === '/' ? 'active' : ''}>
+  Home
+</Link>
+```
+
+9. **Actualizarea celui de-al doilea link (`About`):** În mod similar, schimbați al doilea apel către `<Link...>`:
+
+```jsx
+<Link href="/about" className={router.asPath === '/about' ? 'active' : ''}>
+  About
+</Link>
+```
+
+10. **Adăugarea meniului derulant (_Select_):**
+    Ca o ultimă modificare, adăugați selectorul de limbă în JSX:
+
+```jsx
+      {showCart && <Cart />}
+    </div>
+  </div>
+  <select onChange={handleLocaleChange} value={router.locale}>
+    <option value="en">English</option>
+    <option value="nl-NL">Nederlands</option>
+  </select>
+</div>
+);
+};
+
+```
+
+11. **Salvarea fișierelor:** Salvați și închideți toate fișierele modificate.
+    Deschideți terminalul în directorul proiectului.
+12. **Testarea în browser:** Introduceți `npm run dev` și apăsați _Enter_ pentru a porni serverul de dezvoltare.
+    Așteptați inițializarea, apoi accesați în browser `http://localhost:3000/test`. Dacă totul a mers bine, veți vedea pagina cu două adăugiri noi: meniul derulant din dreapta antetului și mesajul „Hello world: ...” afișat sub titlul principal.

@@ -1,0 +1,44 @@
+---
+title: 'Conversia între MS și LR'
+description: 'Conversia între MS și LR'
+order: 2
+category: 'Alte instrumente'
+level: 'Incepator'
+---
+
+Conversia de la LR la MS este simplă: canalul _mid_ (centru) este jumătate din suma canalelor stâng și drept, în timp ce canalul _side_ (latură) este jumătate din diferența dintre stânga și dreapta.
+Atunci când se efectuează o astfel de conversie, semnalul _mid_ este trimis pe canalul stâng, iar semnalul _side_ pe cel drept.
+Conversia inversă, de la MS la LR, este și mai simplă: canalul stâng este suma dintre _mid_ și _side_, în timp ce canalul drept este diferența dintre ele.
+
+Exprimate matematic, ecuațiile sunt:
+
+- M = (L + R)/2
+- S = (L - R)/2
+- L = M + S
+- R = M - S
+
+Putem realiza această conversie pe orice consolă de mixaj sau secvențiator audio (DAW), însă procesul este anevoios și consumă mult timp.
+Din fericire, există pluginuri specializate care fac această conversie automat.
+
+Observând ecuațiile de mai sus, conversia de la LR la MS este foarte similară cu cea de la MS la LR, singura diferență fiind că la conversia LR → MS trebuie să atenuăm semnalul cu 6 dB (reducere la jumătate).
+Prin urmare, același plugin poate efectua ambele conversii, fiind posibil doar să fie nevoie să reducem manual nivelul de ieșire al semnalului MS cu 6 dB.
+
+În plus, putem folosi un plugin care procesează doar unul dintre cele două canale.
+În acest fel, putem mai întâi să convertim semnalul din LR în MS, să procesăm fie canalul M, fie canalul S, iar apoi să facem conversia înapoi în LR.
+Figura 27.2 exemplifică acest proces.
+
+<div className="my-4 flex justify-center">
+  <img
+    src="/images/mixing/27-2.jpg"
+    alt="Figura 27-2"
+    className="h-auto w-9/10 max-w-xs"
+  />
+</div>
+
+<div className="mt-2 mb-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-center text-sm text-slate-700">
+  <p className="mb-2">Figura 27-2:</p>
+  **Procesarea MS** Pluginul **+Matrix** de la SoundHack (gratuit) este încărcat în primul slot de insert și convertește semnalul din LR în MS. 
+  Pro Tools oferă modul _multi-mono_, în care un plugin poate procesa canalele stâng și drept în mod individual. 
+  Pluginul **McDSP Analog Channel 1** este încărcat în acest mod pe al doilea slot de insert și afectează doar canalul stâng, care reprezintă semnalul M (_Mid_). Apoi, pe al treilea slot de insert, este încărcat un alt plugin **+Matrix**, de data aceasta convertind semnalul din MS înapoi în LR.
+
+</div>

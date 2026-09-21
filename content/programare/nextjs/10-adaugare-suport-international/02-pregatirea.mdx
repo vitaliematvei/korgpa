@@ -1,0 +1,36 @@
+---
+title: 'Pregătirea este cheia'
+description: 'Pregătirea este cheia'
+order: 2
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Presupunând că vrem să vizăm un public internațional, va trebui să facem câteva modificări site-ului nostru.
+Aceste schimbări nu sunt o muncă de cinci minute — există câteva aspecte pe care trebuie să le luăm în considerare:
+
+- **Structura conținutului:** Modul în care structurăm paginile poate influența organizarea conținutului pe fiecare domeniu și, în final, modul în care clienții accesează site-ul.
+  Există mai multe metode de a face acest lucru, cum ar fi `[www.example.com/fr](https://www.example.com/fr)` sau `fr.example.com`.
+  Noi o vom folosi pe prima pentru proiectul nostru.
+- **Arhitectura Next.js:** Am menționat deja câteva modificări viitoare din Next.js, în special cele legate de folosirea directorului `app`.
+  Deoarece nu l-am implementat încă în proiectul nostru, nu vom acoperi suportul de localizare pentru acesta.
+  Asta nu înseamnă că trebuie să-l ignorăm; dacă îl vom folosi pe viitor, va trebui să ne adaptăm site-ul pentru a permite aceste schimbări.
+  Voi reveni asupra acestui subiect mai târziu în capitol.
+- **Mediu de lucru separat:** Recomand 100% să lucrați pe o copie a site-ului original pentru acest mini-proiect: va trebui să facem destul de multe modificări, așa că este cel mai bine să le facem într-un mediu în care putem remedia orice problemă înainte de a le urca în producție.
+
+Pentru acest capitol, voi folosi o copie a proiectului numită `macaronmagic-lang` pentru a implementa modificările.
+Am ales două limbi pentru implementare: engleza și olandeza.
+Prima este limba mea maternă, așa că modificările țin mai puțin de conținut și mai mult de refacerea codului (_refactoring_).
+A doua? Îmi plac provocările și am învățat puțină olandeză în timpul liber!
+Nu contează ce limbi folosim; avem nevoie de cel puțin încă una pentru ca totul să funcționeze.
+Procesul este identic, indiferent de limbile alese.
+
+Nu ne vom atinge de Stripe deocamdată și nici de conținutul care vine din Sanity — acesta va rămâne în engleză.
+Acest capitol se concentrează pe localizarea conținutului folosind Next.js; datele din Sanity sunt doar text, așa că le putem adăuga oricând.
+
+Vom implementa modificările în două etape:
+
+1. Reconfigurarea site-ului pentru a suporta mai multe regiuni (_locales_) și testarea afișării conținutului diferit în funcție de versiunea de site accesată.
+2. Adăugarea textelor traduse în fișiere JSON; apoi vom uni ambele părți și vom testa pentru a ne asigura că conținutul se afișează în limba corectă pe versiunea corespunzătoare a site-ului.
+
+Vom începe prin configurarea suportului pentru limbile alese direct în site-ul nostru.

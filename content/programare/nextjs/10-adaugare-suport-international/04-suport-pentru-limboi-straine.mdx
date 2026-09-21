@@ -1,0 +1,180 @@
+---
+title: 'Adăugarea suportului pentru limbi străine'
+description: 'Adăugarea suportului pentru limbi străine'
+order: 4
+category: 'NextJS'
+level: 'Incepator'
+---
+
+Cu suportul pentru regiuni (_locales_) activat, este timpul să mergem mai departe și să ne ajustăm codul pentru a afișa textele în limbi diferite.
+
+Next.js nu oferă din start o soluție nativă bazată pe substituenți (_placeholders_) pentru traduceri, așa că va trebui să instalăm pachete dedicate.
+Deși există mai multe opțiuni, am ales să folosim `i18next`.
+Acesta utilizează sub capotă pachetele `react-i18next` și `next-i18next`, pe care trebuie, de asemenea, să le instalăm.
+
+Odată configurate, vom putea adapta codul adăugând marcaje pentru textul tradus — haideți să vedem în detaliu cum facem acest lucru.
+
+### Pași pentru adăugarea suportului lingvistic
+
+Asigurați-vă că serverul de dezvoltare este oprit, apoi urmați acești pași:
+
+1. **Configurarea dependențelor peer:**
+   Mai întâi trebuie să adăugăm pluginurile `next-i18next` și `i18next`.
+   În mod normal am rula `npm i`, însă acestea trebuie instalate ca dependențe de tip _peer_.
+   Deschideți `package.json`, adăugați aceste linii și salvați fișierul:
+
+```json
+"peerDependencies": {
+  "i18next": "^22.4.15",
+  "react-i18next": "^12.2.0",
+  "next-i18next": "^13.2.2"
+}
+
+```
+
+> **Atenție:** La momentul citirii pot fi disponibile versiuni mai noi ale acestor pachete.
+> Actualizați-le corespunzător, însă rețineți că, pentru ca acest exemplu să funcționeze corect, este esențial să le adăugați ca `peerDependencies`, nu ca dependențe standard.
+
+2. Deschideți terminalul și navigați în directorul proiectului.
+3. Rulați comanda `npm install` și apăsați Enter — aceasta va instala pluginurile la versiunile specificate.
+4. **Fișierul de configurare i18n:** Creați un fișier nou numit `next-i18next.config.js` și adăugați următorul bloc de cod:
+
+```javascript
+module.exports = {
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'nl-NL'],
+  },
+  react: { useSuspense: false },
+};
+```
+
+5. Deschideți `next.config.js` și adăugați acest import la începutul fișierului, imediat sub directiva `@type`:
+
+```javascript
+const { i18n } = require('./next-i18next.config');
+```
+
+6. La finalul fișierului `next.config.js`, actualizați exportul pentru a include noua configurare:
+
+```javascript
+  reactStrictMode: true,
+  sassOptions: {
+    includePaths: ["styles"],
+  },
+  i18n,
+};
+
+```
+
+7. **Fișierele de traducere:** Extrageți folderul `locales` din resursele proiectului și copiați-l în directorul `\public`.
+   În interior veți găsi două subfoldere — `en` și `nl-NL` — fiecare conținând două fișiere de test pe care le vom folosi pentru a confirma că traducerile funcționează.
+8. **Configurarea `_app.js`:** Deschideți fișierul `_app.js` și adăugați aceste două importuri:
+
+```javascript
+import { appWithTranslation } from 'next-i18next';
+import nextI18NextConfig from '../../next-i18next.config';
+```
+
+> Al doilea import este extrem de important; fără el veți primi avertismentul/eroarea _"You will need to pass in an i18next instance by using initReactI18next"_, iar traducerile nu se vor afișa.
+
+9. Împachetați componenta exportată `MyApp` și obiectul `nextI18NextConfig` folosind `appWithTranslation`.
+   Modificați instrucțiunea de export de la finalul fișierului:
+
+```javascript
+export default appWithTranslation(MyApp, nextI18NextConfig);
+```
+
+10. **Actualizarea paginii principale:** Deschideți `index.js` din folderul `\src\pages`. Adăugați următoarele importuri în partea de sus:
+
+```javascript
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+```
+
+11. Derulați până jos și adăugați această funcție exportată chiar înainte de linia `export default Home`:
+
+```javascript
+export async function getServerSideProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common', 'test'])),
+    },
+  };
+}
+```
+
+12. **Actualizarea paginii de test:** Deschideți `test.js` și adăugați aceleași două importuri la începutul fișierului:
+
+```javascript
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+```
+
+13. Adăugați inițializarea hook-ului de traducere la începutul componentei:
+
+```javascript
+const About = () => {
+  const { t } = useTranslation("test");
+
+```
+
+14. În blocul `return`, adăugați apelul către funcția de traducere `t("about")`:
+
+```jsx
+return (
+  <div className="about-us">
+    <p>About Macaron Magic</p>
+    <p>{t("about")}</p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris...
+    </p>
+  </div>
+);
+};
+
+```
+
+15. La finalul fișierului `test.js`, adăugați apelul `getServerSideProps` înainte de `export default About`:
+
+```javascript
+export async function getServerSideProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['test'])),
+    },
+  };
+}
+
+export default About;
+```
+
+16. Salvați și închideți toate fișierele.
+17. În terminal, porniți serverul cu `npm run dev`. Accesați `http://localhost:3000/test`. Dacă totul este în regulă, veți vedea textul „About” sub titlul principal.
+18. Schimbați limba din meniul derulant în olandeză: textul se va schimba în „Over” (echivalentul din olandeză pentru „About”). Observați și modificarea URL-ului: va apărea `/nl-NL/test` pentru versiunea în olandeză, în timp ce pentru engleză URL-ul rămâne cel standard, fiind limba implicită.
+
+Deși Next.js oferă suport integrat pentru internaționalizare, configurarea inițială necesită câțiva pași preciși!
+
+---
+
+### Înțelegerea modificărilor efectuate
+
+Adăugarea suportului lingvistic nu este complicată pentru majoritatea paginilor. Deși pot apărea mici blocaje, în general este un proces în trei pași pentru a pregăti o pagină sau o componentă să accepte traduceri.
+
+Înainte de a trece prin acest proces, am parcurs câțiva pași pregătitori:
+
+- Am instalat cele trei pachete necesare pentru gestionarea traducerilor.
+- Am izolat configurarea regiunilor într-un fișier separat (`next-i18next.config.js`) și am importat această configurație în `next.config.js`.
+- În `_app.js`, am împachetat aplicația cu HOC-ul `appWithTranslation` și am pasat obiectul de configurare `nextI18NextConfig`.
+- Am folosit hook-ul `useTranslation()` pentru a înlocui textele statice cu apeluri dinamice precum `{t("shop-now")}` sau `{t("about")}`.
+- Am adăugat funcția `getServerSideProps()` în pagini pentru a încărca fișierele JSON cu traduceri direct de pe server.
+
+**Aspecte importante și posibile capcane:**
+
+- Funcția `getServerSideProps()` funcționează **doar pe pagini**, nu și în interiorul componentelor individuale.
+- Trebuie să adăugăm `getServerSideProps()` pe toate paginile din site; codul va fi similar, diferind doar spațiile de nume (_namespaces_) ale fișierelor JSON incluse.
+- Componentele vor afișa textele traduse doar dacă pagina părinte încarcă corect traducerile pe server.
+
+Acum site-ul nostru suportă regiuni multiple și permite comutarea între engleză și olandeză. Următorul pas este să înlocuim toate textele hardcodate din aplicație cu chei de traducere corespunzătoare.
+
+{/* am ramas Authenticating Access .327 */}
