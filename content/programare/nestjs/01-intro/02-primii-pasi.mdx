@@ -1,140 +1,50 @@
 ---
-title: 'Primii pași'
-description: 'Primii pași'
+title: 'Context istoric'
+description: 'Context istoric'
 order: 2
 category: 'nestjs'
 level: 'Incepator'
 ---
 
-## Primii pași
+Peisajul dezvoltării backend a suferit schimbări radicale încă din primele zile ale web-ului.
+Trecând de la scripturi simple CGI la arhitecturi monolitice și evoluând ulterior către servicii RESTful și microservicii, fiecare etapă a adus propriul set de provocări și soluții.
+NestJS apare ca un framework conceput pentru a răspunde complexității aplicațiilor moderne, oferind un mod structurat de a construi aplicații server-side scalabile, eficiente și robuste.
 
-În acest set de articole vei învăța concepte fundamentale din Nest. Pentru a te familiariza cu componentele de bază ale aplicațiilor Nest, vom construi o aplicație CRUD simplă, ale cărei funcționalități vor acoperi o mare parte din noțiunile introductive.
+NestJS a fost creat de Kamil Myśliwiec și lansat oficial în anul 2017.
+A fost proiectat cu scopul de a le oferi dezvoltătorilor un set de instrumente versatil, ce îmbină capabilitățile Programării Orientate pe Obiecte (POO), ale Programării Funcționale (PF) și ale Programării Funcționale Reactive (PFR).
+Inspirat de Angular, NestJS se bazează pe fundația solidă a limbajului TypeScript, permițându-le programatorilor să scrie un cod mai robust și lipsit de erori.
 
----
+Myśliwiec lucra ca inginer software într-o companie care folosea Angular pentru dezvoltarea frontend.
+Impresionat de arhitectura Angular, el și-a dorit să creeze un framework similar pentru zona de backend.
 
-### Limbajul
+NestJS este construit peste Express, unul dintre cele mai populare framework-uri de Node.js.
+Acesta adaugă o serie de funcționalități care facilitează dezvoltarea de aplicații scalabile și ușor de întreținut, cum ar fi injectarea de dependențe (_dependency injection_), rutarea și componentele de tip _middleware_.
 
-Suntem îndrăgostiți de **TypeScript**, dar înainte de toate — iubim **Node.js**. De aceea, Nest este compatibil atât cu TypeScript, cât și cu JavaScript pur. Nest folosește cele mai recente funcționalități ale limbajului, așa că, pentru a-l utiliza cu JavaScript nativ (_vanilla_), vom avea nevoie de un compilator Babel.
+NestJS a devenit rapid unul dintre cele mai populare framework-uri din ecosistemul Node.js, fiind adoptat de companii mari precum Adidas, GitLab și Decathlon.
 
-În exemplele furnizate vom folosi în principal TypeScript, însă poți comuta oricând blocurile de cod la sintaxa JavaScript pură (este suficient să apeși butonul de schimbare a limbajului din colțul din dreapta-sus al fiecărui fragment de cod).
+- 2016: Crearea framework-ului
+  NestJS este creat de către Kamil Myśliwiec.
 
----
+- 2017: Lansarea oficială (v1.0)
+  A fost lansată prima versiune oficială, NestJS 1.0.
 
-### Cerințe preliminare
+- 2018: Lansarea NestJS 5.0
+  Introduce funcționalități noi, precum suportul pentru TypeScript 3.0 și rutarea asincronă.
 
-Asigură-te că ai instalată pe sistemul tău de operare o versiune de **Node.js (versiune >= 20)**.
+- 2019: Lansarea NestJS 6.0
+  Aduce integrări pentru WebSockets și GraphQL.
 
----
+- 2020: Lansarea NestJS 7.0
+  Adaugă suport pentru TypeScript 4.0 și facilități pentru deployment-uri de tip _serverless_.
 
-### Configurare (Setup)
+- 2021: Lansarea NestJS 8.0
+  Introduce suportul pentru TypeScript 4.3 și emițătoare de evenimente asincrone (_asynchronous event emitters_).
 
-Generarea unui proiect nou este extrem de simplă folosind **Nest CLI**. Cu `npm` instalat, poți crea un proiect Nest nou rulate următoarele comenzi în terminal:
+- 2022: Lansarea NestJS 9.0
+  Introduce suportul pentru TypeScript 4.5 și pipe-uri asincrone (_asynchronous pipes_).
 
-```bash
-$ npm i -g @nestjs/cli
-$ nest new nume-proiect
+- 2023: Lansarea NestJS 10.0
+  Se lansează versiunea 10.0, oferind suport pentru TypeScript 4.8.
 
-```
-
-> **Sfat:** Pentru a crea un proiect nou cu un set mai strict de reguli TypeScript, adaugă flag-ul `--strict` la comanda `nest new`.
-
-Va fi creat directorul `nume-proiect`, se vor instala modulele Node și câteva fișiere de bază (_boilerplate_), iar folderul `src/` va fi populat cu fișierele principale ale aplicației:
-
-```text
-src/
-├── app.controller.spec.ts
-├── app.controller.ts
-├── app.module.ts
-├── app.service.ts
-└── main.ts
-
-```
-
-Iată o scurtă prezentare a acestor fișiere principale:
-
-- **`app.controller.ts`**: Un controller simplu cu o singură rută.
-- **`app.controller.spec.ts`**: Testele unitare pentru controller.
-- **`app.module.ts`**: Modulul rădăcină (_root module_) al aplicației.
-- **`app.service.ts`**: Un serviciu simplu cu o singură metodă.
-- **`main.ts`**: Fișierul de intrare (_entry file_) al aplicației, care folosește funcția principală `NestFactory` pentru a crea o instanță a aplicației Nest.
-
-Fișierul `main.ts` include o funcție asincronă care va inițializa (_bootstrap_) aplicația:
-
-```typescript
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
-}
-bootstrap();
-```
-
-Pentru a crea o instanță a aplicației Nest, folosim clasa `NestFactory`. Aceasta expune câteva metode statice care permit crearea instanței de aplicație. Metoda `create()` returnează un obiect de aplicație ce respectă interfața `INestApplication`. Acest obiect pune la dispoziție o serie de metode descrise în capitolele următoare. În exemplul `main.ts` de mai sus, pornim pur și simplu serverul HTTP, permițând aplicației să aștepte cereri HTTP de la clienți.
-
-> **Notă:** Un proiect generat cu Nest CLI creează o structură inițială care încurajează dezvoltatorii să respecte convenția de a păstra fiecare modul în propriul său director dedicat.
-
-> **Sfat:** În mod implicit, dacă apare o eroare la crearea aplicației, procesul se va opri cu codul `1`. Dacă vrei ca în schimb să arunce o eroare, poți dezactiva opțiunea `abortOnError` (de ex.: `NestFactory.create(AppModule, { abortOnError: false })`).
-
-## Platforma
-
-Nest își propune să fie un framework agnostic față de platformă (_platform-agnostic_). Această independență față de o platformă anume permite crearea de componente logice reutilizabile, de care dezvoltatorii pot profita în mai multe tipuri de aplicații. Din punct de vedere tehnic, Nest poate funcționa cu orice framework HTTP din Node.js, odată ce este creat un adaptor.
-
-Există două platforme HTTP suportate nativ (_out-of-the-box_): **Express** și **Fastify**. O poți alege pe cea care se potrivește cel mai bine nevoilor tale.
-
-- **`platform-express`**: Express este un framework web minimalist și consacrat pentru Node.js. Este o librărie testată în producție (_battle-tested_), care beneficiază de o mulțime de resurse create de comunitate. Pachetul `@nestjs/platform-express` este utilizat în mod implicit. Pentru mulți utilizatori Express este mai mult decât suficient și nu trebuie să facă nicio configurare suplimentară pentru a-l activa.
-- **`platform-fastify`**: Fastify este un framework axat pe performanță ridicată și consum redus de resurse (_low overhead_), creat special pentru a oferi eficiență și viteză maximă.
-
-Indiferent de platforma utilizată, aceasta își expune propria interfață de aplicație. Acestea sunt definite ca `NestExpressApplication`, respectiv `NestFastifyApplication`.
-
-Atunci când pasazi un tip către metoda `NestFactory.create()`, ca în exemplul de mai jos, obiectul `app` va avea disponibile metode specifice exclusiv acelei platforme. Reține însă că **nu este nevoie să specifici un tip** decât dacă intenționezi cu adevărat să accesezi API-ul nativ al platformei din spate.
-
-```typescript
-const app = await NestFactory.create<NestExpressApplication>(AppModule);
-```
-
----
-
-## Rularea aplicației
-
-Odată ce procesul de instalare s-a încheiat, poți rula următoarea comandă în terminalul sistemului tău de operare pentru a porni aplicația și a asculta cererile HTTP de la clienți:
-
-```bash
-$ npm run start
-
-```
-
-> **Sfat:** Pentru a accelera procesul de dezvoltare (compilare de până la 20 de ori mai rapidă), poți folosi builder-ul SWC adăugând flag-ul `-b swc` la scriptul de start: `npm run start -- -b swc`.
-
-Această comandă pornește aplicația, iar serverul HTTP va asculta pe portul definit în fișierul `src/main.ts`. După ce aplicația a pornit, deschide browserul și accesează `http://localhost:3000/`. Ar trebui să vezi mesajul _Hello World!_.
-
-Pentru a urmări modificările din fișiere în timp real, poți rula următoarea comandă:
-
-```bash
-$ npm run start:dev
-
-```
-
-Această comandă va monitoriza fișierele, recompilând și repornind automat serverul la fiecare salvare.
-
----
-
-## Verificarea și formatarea codului (Linting & Formatting)
-
-Interfața Nest CLI face toate eforturile pentru a oferi un mediu de lucru (_workflow_) fiabil și ușor de scalat. Prin urmare, un proiect Nest proaspăt generat vine cu un **linter** și un **formatter** preinstalate (mai exact, `eslint` și `prettier`).
-
-**Sfat:** Nu ești sigur care este diferența dintre un formatter și un linter? Formatter-ele (ex: Prettier) se ocupă doar de stilul și aspectul codului (spații, ghilimele), în timp ce Linter-ele (ex: ESLint) analizează codul pentru a identifica erori de logică sau practici greșite.
-
-Pentru a asigura stabilitate și extensibilitate maximă, Nest folosește pachetele CLI de bază `eslint` și `prettier`. Această configurare permite o integrare curată și nativă în mediile de dezvoltare (IDE-uri) prin intermediul extensiilor oficiale.
-
-Pentru mediile automate de integrare, unde nu se folosește un IDE (cum ar fi serverele de Continuous Integration, Git hooks etc.), proiectul Nest vine cu scripturi `npm` gata de utilizare:
-
-```bash
-# Verifică și corectează automat codul cu ESLint
-$ npm run lint
-
-# Formatează codul cu Prettier
-$ npm run format
-
-```
+NestJS este un framework ce evoluează rapid și este actualizat constant cu noi funcționalități.
+Susținut de o comunitate în plină expansiune care se ocupă activ de mentenanța sa, framework-ul devine tot mai matur de la o zi la alta, rămânând o alegere excelentă pentru construirea de aplicații Node.js scalabile și menținabile.

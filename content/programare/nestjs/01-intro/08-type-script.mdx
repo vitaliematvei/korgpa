@@ -1,0 +1,68 @@
+---
+title: 'Puterea limbajului TypeScript'
+description: 'Puterea limbajului TypeScript'
+order: 8
+category: 'Nestjs'
+level: 'Incepator'
+---
+
+Într-un peisaj în care JavaScript domină dezvoltarea server-side, TypeScript oferă un avantaj unic prin verificarea sa robustă a tipurilor și capabilitățile sale orientate pe obiecte.
+Această secțiune va arăta de ce TypeScript nu este doar o alegere utilă, ci aproape esențială atunci când lucrezi cu NestJS.
+
+### De ce TypeScript?
+
+JavaScript, deși este omniprezent și versatil, lasă de dorit în privința securității tipurilor (_type safety_) și a codului autodocumentat.
+TypeScript, un _superset_ de JavaScript dezvoltat de Microsoft, a fost creat tocmai pentru a rezolva aceste neajunsuri.
+Atunci când este folosit în contextul unui framework server-side precum NestJS, caracteristicile TypeScript strălucesc și mai puternic.
+
+### Valoarea adăugată – Ce oferă TypeScript?
+
+TypeScript aduce tipizarea statică în JavaScript, permițându-ți să definești tipurile de date în timpul compilării (_compile time_).
+Această funcționalitate oferă câteva avantaje cheie:
+
+- **Reducerea erorilor:** Identificarea erorilor de tip în timpul compilării, mai degrabă decât la rulare (_runtime_), poate economisi timp prețios de depanare (_debugging_) și previne potențiale defecțiuni în sistem.
+- **Calitatea codului:** Tipizarea statică duce adesea la un cod mai lizibil și autodocumentat, făcând baza de cod (_codebase_) mult mai ușor de înțeles de către membrii echipei.
+- **Suport excelent în mediile de dezvoltare (IDE):** Mediile de dezvoltare moderne oferă funcționalități superioare de _IntelliSense_ și completare automată (_autocomplete_) atunci când se folosește TypeScript, accelerând și eficientizând procesul de dezvoltare.
+
+_Figura 1.1 explică modul în care funcționează TypeScript.
+Acesta compilează mai întâi fișierele `.ts` prin intermediul compilatorului său, `ts-loader`, iar apoi..._
+
+<figure className="my-6 text-center">
+  <img src="/images/nestjs/1-1.jpg" alt="TypeScript" className="mx-auto" />
+  <figcaption>TypeScript</figcaption>
+</figure>
+
+---
+
+### Secvență de cod – TypeScript în acțiune
+
+Luați în considerare acest cod JavaScript care conține un bug:
+
+```javascript
+// Cod JavaScript
+function add(a, b) {
+  return a + b;
+}
+
+console.log(add(5, '10')); // Rezultat: "510" (concatenare în loc de adunare)
+```
+
+Acum, să vedem cum ne ajută TypeScript:
+
+```typescript
+// Cod TypeScript
+function add(a: number, b: number): number {
+  return a + b;
+}
+
+console.log(add(5, '10'));
+// Eroare de compilare: Argument of type 'string' is not assignable to parameter of type 'number'.
+```
+
+Observați cum TypeScript identifică nepotrivirea de tip încă din faza de compilare, reducând considerabil șansele ca erorile să ajungă în mediul de producție.
+
+---
+
+> ⚒ **Încearcă și tu!**
+> Ce se întâmplă când încerci să compilezi codul TypeScript de mai sus care conține nepotrivirea de tip?
+> Experimentează și notează-ți observațiile.

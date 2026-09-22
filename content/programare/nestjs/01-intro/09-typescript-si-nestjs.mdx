@@ -1,0 +1,41 @@
+---
+title: 'TypeScript și NestJS – o sinergie perfectă'
+description: 'TypeScript și NestJS – o sinergie perfectă'
+order: 9
+category: 'Nestjs'
+level: 'Incepator'
+---
+
+Caracteristicile limbajului TypeScript se aliniază perfect cu principiile NestJS. Iată cum:
+
+- **Decoratori (_Decorators_):** Atât NestJS, cât și TypeScript utilizează decoratori pentru reflectarea metadatelor (_metadata reflection_), ceea ce duce la un cod mai curat și mai bine organizat.
+- **Tipizare strictă:** Aceasta garantează că controller-ele, serviciile și celelalte clase din NestJS sunt robuste și ușor de întreținut.
+- **Modularitate:** Sistemul de spații de nume (_namespaces_) și module din TypeScript ajută la organizarea codului, făcându-l scalabil și aliniindu-se astfel cu arhitectura modulară a NestJS.
+
+---
+
+### Secvență de cod – NestJS cu TypeScript
+
+Să creăm un serviciu simplu NestJS folosind TypeScript:
+
+```typescript
+// Cod TypeScript
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class AppService {
+  getData(): string {
+    return 'Hello, NestJS!';
+  }
+}
+```
+
+În acest fragment de cod, decoratorul `@Injectable()` și tipul de returnare **`: string`** sunt ambele exemple despre modul în care TypeScript îmbunătățește dezvoltarea în NestJS.
+
+Integrând TypeScript, NestJS oferă un mediu de dezvoltare robust, eficient și mult mai puțin predispus la erori.
+Tipizarea statică din TypeScript, suportul avansat oferit de mediile de dezvoltare (IDE) și compatibilitatea cu paradigmele moderne de programare îl fac o parte esențială a ecosistemului NestJS.
+
+Acum că am văzut cum TypeScript ridică la un alt nivel experiența de dezvoltare în NestJS, să aprofundăm framework-ul în sine.
+În secțiunea următoare, vom explora funcționalitățile cheie care fac din NestJS o alegere puternică pentru construirea de aplicații scalabile.
+
+{/* am ramas Key features of NestJS .11 */}
