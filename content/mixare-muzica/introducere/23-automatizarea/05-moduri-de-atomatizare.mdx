@@ -1,0 +1,42 @@
+---
+title: 'Modurile de automatizare (Automation modes)'
+description: 'Modurile de automatizare (Automation modes)'
+order: 5
+category: 'Automatizarea'
+level: 'Incepator'
+---
+
+Motoarele de automatizare pot varia în funcție de modurile, funcțiile și reacția lor la acțiunile utilizatorului.
+Totuși, putem generaliza cu privire la câteva moduri de automatizare tipice întâlnite în multe sisteme.
+Modurile din această listă sunt ilustrate în Figura 28.2.
+
+<figure className="my-6 text-center">
+  <img src="/images/mixing/28-2.jpg" alt="Automatizarea" className="mx-auto" />
+  <figcaption>Cele cinci moduri tipice de automatizare.</figcaption>
+</figure>
+
+- **Off (Oprit)** – datele de automatizare nu sunt nici citite, nici scrise.
+- **Read (Citire)** – automatizarea scrisă anterior este citită, însă noile modificări ale controalelor nu sunt înregistrate.
+- **Touch (Atingere)** – se scriu noi date de automatizare atât timp cât un control este atins; în caz contrar, se citește automatizarea anterioară.
+- **Latch (Blocare)** – automatizarea este scrisă din momentul în care un control este atins și până când redarea se oprește.
+- **Write (Scriere)** – sunt scrise noi informații de automatizare pe tot parcursul redării, suprascriind automatizarea înregistrată anterior.
+  Pentru a preveni suprascrierile nedorite, motoarele de automatizare trec adesea la un alt mod după fiecare pas efectuat în modul de scriere.
+
+În afara momentului în care redarea se oprește, scrierea automatizării se poate opri și dacă modul este comutat înapoi pe _Read_ sau dacă atribuirea de automatizare a canalului respectiv este dezarmată.
+
+Două lucruri se pot întâmpla atunci când scrierea automatizării se oprește în timpul redării: fie controlul sare instantaneu la poziția anterioară de automatizare (ceea ce poate genera zgomote/clicuri), fie glisează lin spre acea poziție.
+Adesea, timpul necesar pentru ca un control să gliseze între cele două poziții este numit _perioadă de potrivire_ (match period).
+
+Un alt mod, cunoscut sub numele de **Trim** sau **Relative (Mod relativ)**, se aplică de obicei exclusiv nivelurilor (fader-e și trimiteri/sends).
+Este util atunci când dorim să ajustăm nivelul a ceea ce a fost scris anterior, modificând pur și simplu nivelurile existente ale automatizării cu numărul de decibeli (dB) cu care mutăm faderul.
+De exemplu, dacă faderul este coborât de la -6 la -12 dB, toate evenimentele de automatizare din timpul pasului de scriere ar scădea cu 6 dB.
+Adesea, sistemele oferă posibilitatea de a aplica această modificare relativă de-a lungul întregii piese.
+
+Automatizarea este adesea unul dintre ultimele lucruri pe care le facem într-un mixaj.
+După înregistrarea automatizării pentru un anumit control, orice ajustare ulterioară poate necesita un efort suplimentar, deoarece trebuie să modificăm informațiile complete de automatizare în loc să mutăm pur și simplu poziția controlului.
+Acest lucru poate fi deosebit de enervant dacă dorim să modificăm nivelul unor piste după ce am scris deja automatizarea de volum.
+Exact această problemă a urmărit să o rezolve modul _trim_, însă chiar și acesta poate fi uneori greoi.
+
+O soluție elegantă la această problemă a fost menționată anterior: putem insera un plugin de câștig (gain plugin) și îl putem folosi pentru a efectua orice automatizare de nivel.
+Astfel, faderul pistei ar rămâne liber pentru ajustări globale de volum.
+O altă soluție este trimiterea mai multor instrumente către un grup audio și automatizarea nivelului grupului în loc să o facem pe pistele originale.
