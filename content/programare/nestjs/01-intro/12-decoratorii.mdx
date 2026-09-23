@@ -1,0 +1,45 @@
+---
+title: 'Decoratori (Decorators)'
+description: 'Decoratori (Decorators)'
+order: 12
+category: 'Nestjs'
+level: 'Incepator'
+---
+
+Decoratorii reprezintă o caracteristică puternică în NestJS, care poate fi folosită pentru a modifica comportamentul claselor, al metodelor și al proprietăților.
+Decoratorii sunt declarați folosind simbolul `@`, urmat de numele decoratorului.
+
+În NestJS sunt disponibile mai multe tipuri de decoratori, fiecare având un scop specific.
+Printre cei mai întâlniți decoratori se numără următorii:
+
+- **`@Injectable`:** Acest decorator este utilizat pentru a marca o clasă ca fiind injectabilă. Aceasta înseamnă că respectiva clasă poate fi injectată în alte clase utilizând injecția de dependențe.
+- **`@Controller`:** Acest decorator este utilizat pentru a marca o clasă ca fiind un controler. Controlerele sunt responsabile cu gestionarea cererilor și răspunsurilor HTTP.
+- **`@Get`:** Acest decorator este utilizat pentru a marca o metodă ca fiind un _endpoint_ GET. Punctele finale de tip GET sunt utilizate pentru a prelua date de pe server.
+- **`@Post`:** Acest decorator este utilizat pentru a marca o metodă ca fiind un _endpoint_ POST. Punctele finale de tip POST sunt utilizate pentru a crea date pe server.
+- **`@Put`:** Acest decorator este utilizat pentru a marca o metodă ca fiind un _endpoint_ PUT. Punctele finale de tip PUT sunt utilizate pentru a actualiza date pe server.
+- **`@Delete`:** Acest decorator este utilizat pentru a marca o metodă ca fiind un _endpoint_ DELETE. Punctele finale de tip DELETE sunt utilizate pentru a șterge date de pe server.
+
+Vom avea mai mult timp să îi revedem în mod practic pe parcursul aprofundării laturii practice a cărții.
+
+**Beneficii**
+
+Iată cele mai importante beneficii pe care le obținem când folosim decoratorii:
+
+- **Reflectarea metadatelor:** Atașarea cu ușurință de metadate la clase/funcții.
+- **Cod mai curat:** Mai puțin cod repetitiv (_boilerplate_) și un cod mai declarativ.
+- **O vizibilitate și o citibilitate a codului îmbunătățite:** Decoratorii fac ușor de înțeles scopul unei clase, al unei metode sau al unei proprietăți.
+- **Flexibilitate crescută a codului:** Decoratorii pot fi utilizați pentru a modifica comportamentul claselor, metodelor și proprietăților în timpul execuției (_runtime_).
+- **Mentenabilitate îmbunătățită a codului:** Decoratorii pot fi folosiți pentru a centraliza modificările aduse comportamentului claselor, metodelor și proprietăților.
+- **Duplicare redusă a codului:** Decoratorii pot fi utilizați pentru a evita duplicarea codului care modifică comportamentul claselor, metodelor și proprietăților.
+
+**Fragment de cod**
+
+În exemplul următor, am folosit câțiva decoratori integrați (_built-in_) din NestJS:
+
+```typescript
+@Get('profile')
+async getProfile(@Req() request: Request) {
+  return this.usersService.find(request.userId);
+}
+
+```

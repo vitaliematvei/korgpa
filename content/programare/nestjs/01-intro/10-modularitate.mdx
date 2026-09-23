@@ -1,0 +1,83 @@
+---
+title: 'Caracteristicile cheie ale NestJS'
+description: 'Caracteristicile cheie ale NestJS'
+order: 10
+category: 'Nestjs'
+level: 'Incepator'
+---
+
+NestJS nu este doar un alt framework oarecare; este un ecosistem complet pentru construirea de aplicații server-side scalabile, ușor de mentinut și robuste.
+Acesta încorporează o serie de caracteristici care facilitează dezvoltarea rapidă fără a sacrifica calitatea.
+Să explorăm aceste caracteristici cheie.
+
+**Modularitate**
+
+NestJS este un framework modular, ceea ce înseamnă că aplicațiile sunt organizate în module.
+Modulele sunt unități de cod auto-conținute care pot fi importate și exportate după cum este necesar.
+Acest lucru facilitează găsirea și înțelegerea codului, reutilizarea codului și construirea de aplicații scalabile.
+
+Există două tipuri de module în NestJS:
+
+- **Module rădăcină (Root modules):** Modulul rădăcină este modulul principal pentru aplicația ta.
+  El importă toate celelalte module din aplicație și inițializează aplicația.
+- **Module de funcționalitate (Feature modules):** Modulele de funcționalitate sunt module care conțin cod pentru o anumită caracteristică a aplicației tale.
+  Ele pot fi importate și exportate după cum este necesar, ceea ce face ușoară reutilizarea codului și construirea de aplicații scalabile.
+
+Modulele NestJS sunt organizate într-o structură de tip arbore.
+Modulul rădăcină se află în vârful arborelui, iar modulele de funcționalitate sunt imbricate sub acesta.
+Acest lucru facilitează localizarea și înțelegerea codului din aplicație.
+
+De asemenea, modulele NestJS sunt slab cuplate (loosely coupled).
+Aceasta înseamnă că modulele nu depind strâns unele de altele.
+Acest lucru face ca aplicațiile să fie ușor de testat și de întreținut, simplificând totodată modificarea sau actualizarea modulelor fără a afecta alte module din aplicație.
+
+Modularitatea din NestJS este o funcție puternică ce facilitează construirea de aplicații scalabile, ușor de întreținut și testabile.
+
+Iată beneficiile modularității în NestJS:
+
+- **Cod decuplat:** Modulele încurajează separarea responsabilităților (separation of concerns), ducând la un cod mai ușor de întreținut.
+- **Reutilizabilitate:** Poți construi o singură dată și folosi în mai multe părți ale aplicației sau chiar în proiecte diferite.
+- **Scalabilitate îmbunătățită:** Modulele pot fi scalate independent, ceea ce face ușor de scalat aplicația în funcție de nevoi.
+- **Testabilitate îmbunătățită:** Fiind slab cuplate, modulele sunt mai ușor de testat.
+- **Mentenabilitate îmbunătățită:** Modulele facilitează efectuarea de modificări în aplicație fără a afecta alte secțiuni ale acesteia.
+
+Mai jos este prezentată o definiție tipică a unui modul într-o aplicație NestJS.
+Aceasta este o parte integrantă a framework-ului care permite modularizarea funcționalităților.
+Să analizăm codul și să îl descompunem:
+
+```typescript
+@Module({
+  imports: [UsersModule, OrdersModule],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
+```
+
+Iată o explicație pas cu pas a codului anterior:
+
+- **Decoratorul `@Module({...})`:** În NestJS, decoratorii sunt funcții speciale care oferă metadate despre clasa pe care o decorează.
+  Aici, `@Module` este un decorator care îi spune lui NestJS că `AppModule` este un modul.
+
+Proprietățile din cadrul decoratorului `@Module` sunt următoarele:
+
+- **`imports`:** Aceasta este o listă (array) unde enumeri alte module de care acest modul are nevoie.
+  În fragmentul de cod, `AppModule` necesită `UsersModule` și `OrdersModule`. Acestea ar putea fi module care gestionează datele utilizatorilor, respectiv datele comenzilor.
+- **`controllers`:** Controlerele gestionează cererile primite și returnează răspunsuri către client.
+  În acest fragment este listat `AppController`, indicând faptul că acest modul îl folosește pentru a gestiona anumite rute și acțiuni.
+- **`providers`:** Furnizorii pot fi multe lucruri în NestJS – servicii, repository-uri, fabrici (factories) și așa mai departe.
+  Ei gestionează adesea logica și manipularea datelor în culise.
+  Aici, `AppService` este listat ca furnizor, putând fi responsabil pentru o anumită logică de business sau preluare de date.
+
+Vom analiza acest aspect mai în detaliu în Capitolul 3.
+
+- **`export class AppModule {}`:** Aceasta este declarația clasei `AppModule`. În sine, această clase nu face prea multe lucruri. Cu toate acestea, combinată cu decoratorul `@Module`, îi oferă lui NestJS informațiile de care are nevoie pentru a înțelege structura și dependențele aplicației.
+
+Modulele din NestJS vă permit să vă organizați aplicația în secțiuni logice și funcționale.
+Pe măsură ce aplicația crește, veți avea mai multe controlere, furnizori și chiar alte module.
+Organizarea lor folosind module asigură urmărirea facilă a tuturor acestor părți, făcând aplicația mai ușor de întreținut și de scalat.
+
+❓ **Sarcină interactivă**
+
+Încearcă să creezi un nou modul pentru gestionarea produselor într-o aplicație de comerț electronic (e-commerce).
+Ce controlere, furnizori și servicii ai putea avea nevoie?

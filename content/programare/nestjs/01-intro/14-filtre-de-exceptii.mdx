@@ -1,0 +1,75 @@
+---
+title: 'Filtre de excepții (Exception filters)'
+description: 'Filtre de excepții (Exception filters)'
+order: 14
+category: 'Nestjs'
+level: 'Incepator'
+---
+
+NestJS oferă un strat dedicat pentru a gestiona excepțiile în mod uniform în întreaga aplicație.
+Când folosim filtrele de excepții, obținem:
+
+- **Gestionare centralizată a erorilor:** Gestionarea erorilor într-un singur loc.
+- **Răspunsuri personalizate:** Crearea unor mesaje de eroare prietenoase pentru utilizator.
+
+**Fragment de cod**
+
+Combinând funcționalitățile de injecție de dependențe și de decoratori pe care le-am văzut anterior, iată un exemplu de filtru de excepții într-o aplicație NestJS.
+Aceste filtre pot fi importate dintr-o bibliotecă integrată NestJS sau pot fi personalizate de către dezvoltator:
+
+```typescript
+@Catch(NotFoundException)
+export class NotFoundExceptionFilter implements ExceptionFilter {
+  catch(exception: NotFoundException, host: ArgumentsHost) {
+    const ctx = host.switchToHttp();
+    const response = ctx.getResponse();
+    const status = exception.getStatus();
+    response.status(status).json({
+      statusCode: status,
+      message: 'Not Found!',
+    });
+  }
+}
+```
+
+NestJS dispune de un strat integrat pentru gestionarea excepțiilor, permițându-le dezvoltatorilor să captureze și să gestioneze excepțiile într-o manieră uniformă în cadrul întregii aplicații.
+Acest cod specific demonstrează cum se utilizează filtrele de excepții în acest scop.
+
+Iată o detaliere a codului:
+
+- **Adnotare – `@Catch(NotFoundException)`:**
+- Acesta este un decorator furnizat de NestJS.
+- Indică faptul că filtrul este conceput special pentru a captura excepții de tipul `NotFoundException`.
+- Ori de cîte ori o excepție `NotFoundException` este aruncată în cadrul aplicației, acest filtru o va captura și va executa logica din interiorul metodei `catch`.
+
+- **Declarația clasei – `NotFoundExceptionFilter`:**
+- Această clasă implementează interfața `ExceptionFilter` din NestJS.
+- Prin implementarea acestei interfețe, garantăm că această clasă va conține o metodă numită `catch` care respectă o anumită structură.
+
+- **Metoda `catch`:**
+- Aici are loc gestionarea efectivă a excepției.
+- Primește doi parametri:
+- `exception`: Excepția care este capturată, în acest caz o instanță de `NotFoundException`.
+- `host`: O instanță de `ArgumentsHost`, care oferă acces la argumentele metodei care a generat excepția.
+
+- **Schimbarea contextului – `host.switchToHttp()`:**
+- Această linie este folosită pentru a prelua contextul HTTP în care a fost generată excepția.
+- Cu ajutorul ei, puteți obține acces atât la obiectul de cerere (_request_), cât și la cel de răspuns (_response_) din ciclul HTTP.
+
+- **Preluarea răspunsului – `ctx.getResponse()`:**
+- Această metodă preia obiectul de răspuns HTTP, permițând manipularea răspunsului trimis către client.
+
+- **Preluarea stării excepției – `exception.getStatus()`:**
+- Deoarece `NotFoundException` este o excepție HTTP, aceasta poartă cu sine un cod de stare (_status code_).
+  Această metodă preia acel cod de stare.
+
+- **Setarea răspunsului:**
+- Metoda de stare a obiectului de răspuns setează codul de stare HTTP pentru răspuns.
+- Metoda `json` trimite apoi un răspuns JSON către client, conținând codul de stare dat și mesajul de eroare „Not Found!”.
+
+Acest cod demonstrează un filtru de excepții personalizat în NestJS care capturează `NotFoundException` și trimite înapoi către client un mesaj de eroare JSON consistent și prietenos.
+Acest lucru nu doar că îmbunătățește gestionarea erorilor în aplicație, dar asigură și o experiență mai bună pentru utilizator.
+
+❓ **Chestionar (Quiz)**
+
+Cum ai modifica filtrul pentru a gestiona o excepție de tip `BadRequestException`?

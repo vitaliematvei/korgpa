@@ -1,0 +1,49 @@
+---
+title: 'Gărzi (Guards)'
+description: 'Gărzi (Guards)'
+order: 13
+category: 'Nestjs'
+level: 'Incepator'
+---
+
+În NestJS, gărzile joacă un rol important.
+Atunci când construim aplicații profesionale, acestea determină dacă cererea va fi gestionată de către rută, pe baza anumitor criterii sau condiții.
+Aceste condiții pot ține de roluri, de nivelul de permisiuni și așa mai departe, aspecte denumite adesea autorizare.
+
+Gărzile din NestJS sunt clase adnotate cu decoratorul `@Injectable()`.
+Ele trebuie să implementeze interfața `CanActivate` și au acces la contextul de execuție al cererii, ceea ce le face mult mai inteligente decât middleware-ul obișnuit din aplicațiile tradiționale Express.
+
+**Beneficii**
+
+Prin utilizarea gărzilor, obținem:
+
+- **Logică de autorizare centralizată:** Gărzile vă permit să definiți logica de autorizare într-un singur loc, simplificând gestionarea controlului accesului pe mai multe rute.
+- **Politici de securitate reutilizabile:** Odată create, gărzile pot fi reutilizate în diferite controlere sau servicii, promovând reutilizarea codului.
+  Acest lucru este extrem de util atunci când aveți politici de securitate recurente – cum ar fi verificarea autentificării unui utilizator sau a unor anumite roluri – care pot fi aplicate pe mai multe rute fără a rescrie logica.
+- **Securitate îmbunătățită:** Gărzile ajută la consolidarea securității prin controlul accesului chiar de la începutul ciclului de viață al cererii.
+  Ele interceptează cererile primite înainte ca acestea să ajungă la handlerul de rută, asigurându-se că doar cererile autorizate avansează și prevenind astfel accesul neautorizat la resurse sensibile.
+- **Autorizare conștientă de context (Context-aware):** Având acces la contextul de execuție (care include cererea, răspunsul și alte date relevante), gărzile pot efectua verificări de autorizare complexe, sensibile la context.
+  De exemplu, puteți examina anteturile cererii (_headers_), tokenurile sau chiar rolul utilizatorului pentru a lua decizii dinamice privind permiterea sau refuzul accesului.
+- **Integrare cu alte funcționalități:** Gărzile se integrează perfect cu alte caracteristici din NestJS, cum ar fi injecția de dependențe și middleware-ul.
+  Acest lucru permite arhitecturi extrem de flexibile și scalabile, în care gărzile pot colabora cu servicii sau alte componente, făcând stratul de securitate mai ușor de întreținut și mai adaptabil la schimbări.
+
+**Fragment de cod**
+
+Următorul este un exemplu de fragment de cod:
+
+```typescript
+@Injectable()
+export class AuthGuard implements CanActivate {
+  canActivate(
+    context: ExecutionContext,
+  ): boolean | Promise<boolean> | Observable<boolean> {
+    const request = context.switchToHttp().getRequest();
+    return !!request;
+  }
+}
+```
+
+Fragmentul de cod anterior reprezintă un exemplu de gard numită `AuthGuard` și, după cum se poate observa, metoda `canActivate()` preia parametrul `context`.
+Apoi returnăm `true` dacă cererea este prezentă; în caz contrar, returnăm `false`.
+Într-o gardă tipică, funcția `canActivate()` ar trebui să returneze o valoare booleană.
+Atunci când returnează `false`, cererea va fi respinsă; în caz contrar, va fi transmisă mai departe către handlerul de rută.

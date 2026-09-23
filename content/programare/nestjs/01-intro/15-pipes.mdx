@@ -1,0 +1,49 @@
+---
+title: 'Pipe-uri (_Pipes_)'
+description: 'Pipe-uri (_Pipes_)'
+order: 15
+category: 'Nestjs'
+level: 'Incepator'
+---
+
+Pipe-urile reprezintă o funcționalitate puternică în NestJS, utilizată pentru a transforma și valida datele pe măsură ce acestea trec prin aplicație.
+Pipe-urile sunt declarate folosind decoratorul `@Injectable()` _(sau clasa ce implementează `PipeTransform`)_.
+
+În NestJS există numeroase tipuri de pipe-uri, fiecare având un scop specific.
+Printre cele mai comune se numără:
+
+- **Pipe-uri de validare (_Validation pipes_):** Pot fi utilizate pentru a valida datele înainte ca acestea să fie procesate de logica aplicației.
+- **Pipe-uri de transformare (_Transformation pipes_):** Pot fi utilizate pentru a converti datele într-un alt format sau tip de date.
+- **Pipe-uri de jurnalizare (_Logging pipes_):** Pot fi utilizate pentru a înregistra (_log_) datele pe măsură ce trec prin aplicație.
+- **Pipe-uri pentru gestionarea erorilor (_Error-handling pipes_):** Pot fi utilizate pentru a trata erorile ce pot apărea în timpul procesării datelor.
+
+Pipe-urile pot fi înlănțuite pentru a crea comportamente mai complexe.
+De exemplu, secvența următoare definește un pipe simplu care jurnalizează valoarea primită:
+
+```typescript
+// Cod TypeScript
+import {
+  PipeTransform,
+  Injectable,
+  ArgumentMetadata,
+  Logger,
+} from '@nestjs/common';
+
+@Injectable()
+export class MyPipe implements PipeTransform {
+  constructor(private readonly logger: Logger) {}
+
+  transform(value: any, metadata: ArgumentMetadata) {
+    this.logger.log('Valoarea este: ' + value);
+    return value;
+  }
+}
+```
+
+Pipe-urile reprezintă un instrument valoros care ajută la îmbunătățirea flexibilității și mentenanței aplicațiilor NestJS.
+
+### Beneficiile utilizării pipe-urilor în NestJS:
+
+- **Flexibilitate:** Pipe-urile pot fi folosite pentru a manipula datele în diverse moduri, facilitând adaptarea aplicației la cerințe noi.
+- **Mentenanță ușoară:** Pipe-urile pot fi reutilizate și actualizate cu ușurință, ceea ce simplifică întreținerea codului pe măsură ce proiectul evoluează.
+- **Performanță:** Pipe-urile sunt executate în mod asincron, contribuind la optimizarea performanței aplicației.

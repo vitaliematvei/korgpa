@@ -1,0 +1,103 @@
+---
+title: 'Interceptoare (_Interceptors_)'
+description: 'Interceptoare (_Interceptors_)'
+order: 16
+category: 'Nestjs'
+level: 'Incepator'
+---
+
+Interceptoarele vă permit să inspectați și să transformați cererile și răspunsurile HTTP din cadrul aplicației.
+
+Interceptoarele reprezintă o funcționalitate puternică în NestJS, utilizată pentru a intercepta cererile (_requests_) și răspunsurile (_responses_) pe măsură ce acestea trec prin aplicație.
+Interceptoarele sunt declarate folosind decoratorul `@Injectable()` _(și implementează interfața `NestInterceptor`)_.
+
+În NestJS există numeroase tipuri de interceptoare, fiecare având un scop specific.
+Printre cele mai comune se numără:
+
+- **Interceptoare de jurnalizare (_Logging interceptors_):** Pot fi utilizate pentru a înregistra (_log_) cererile și răspunsurile pe măsură ce circulă prin aplicație.
+- **Interceptoare pentru gestionarea erorilor (_Error-handling interceptors_):** Pot fi utilizate pentru a trata erorile care apar în timpul procesării cererilor și răspunsurilor.
+- **Interceptoare de securitate (_Security interceptors_):** Pot fi utilizate pentru a securiza fluxul de cereri și răspunsuri.
+- **Interceptoare de stocare în cache (_Caching interceptors_):** Pot fi utilizate pentru a stoca în cache răspunsurile cererilor.
+
+### Beneficii
+
+Prin utilizarea interceptoarelor obțineți:
+
+- **Programare orientată pe aspecte (_Aspect-Oriented Programming - AOP_):** Separarea preocupărilor transversale (_cross-cutting concerns_), cum ar fi jurnalizarea sau transformarea răspunsurilor.
+- **Flexibilitate:** Modificarea cererilor sau a răspunsurilor în funcție de cerințe.
+
+---
+
+### Secvență de cod
+
+Să analizăm o implementare practică a unui interceptor.
+Următorul fragment de cod prezintă un interceptor de bază care modifică structura răspunsului:
+
+```typescript
+// Cod TypeScript
+import {
+  Injectable,
+  NestInterceptor,
+  ExecutionContext,
+  CallHandler,
+} from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+@Injectable()
+export class TransformInterceptor implements NestInterceptor {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    return next.handle().pipe(map((data) => ({ result: data })));
+  }
+}
+```
+
+În acest interceptor, numit `TransformInterceptor`, datele din răspuns sunt împachetate într-un obiect cu cheia `result`. Acest lucru permite menținerea unei structuri consistente pentru toate răspunsurile din cadrul aplicației.
+
+---
+
+> ⚒ **Încearcă și tu!**
+> Poți modifica interceptorul pentru a înregistra durata fiecărei cereri HTTP?
+> _Indiciu:_ Folosește `Date.now()` pentru a obține marca temporală (_timestamp-ul_) curentă.
+
+```typescript
+import {
+  Injectable,
+  NestInterceptor,
+  ExecutionContext,
+  CallHandler,
+  Logger,
+} from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+@Injectable()
+export class LoggingInterceptor implements NestInterceptor {
+  private readonly logger = new Logger(LoggingInterceptor.name);
+
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    const now = Date.now();
+    return next
+      .handle()
+      .pipe(
+        tap(() => this.logger.log(`Durata cererii: ${Date.now() - now}ms`)),
+      );
+  }
+}
+```
+
+---
+
+### ❓ Întrebări de recapitulare
+
+1. **De ce este modularitatea crucială în NestJS?**
+   _Răspuns:_ Modularitatea permite organizarea codului în blocuri izolate și reutilizabile, ceea ce face aplicația mult mai ușor de scalat, testat și întreținut pe măsură ce crește în complexitate.
+2. **Cum îmbunătățesc pipe-urile validarea datelor în NestJS?**
+   _Răspuns:_ Pipe-urile validează datele de intrare (cum ar fi corpul cererii sau parametrii) înainte ca acestea să ajungă în metodele controller-ului.
+   Dacă datele nu respectă regulile definite, pipe-ul aruncă o excepție automat, oprind procesarea datelor invalide.
+3. **Care este scopul principal al interceptoarelor în NestJS?**
+   _Răspuns:_ Scopul principal este de a adăuga logică suplimentară înainte sau după executarea unei metode din controller (de exemplu, transformarea răspunsului, măsurarea timpului de execuție sau gestionarea cache-ului) fără a modifica codul metodei respective.
+
+---
+
+Am explorat caracteristicile și funcționalitățile fundamentale care fac din NestJS un framework de excepție. În continuare, ne vom concentra pe vastul ecosistem NestJS, analizând bibliotecile și instrumentele care îi extind și mai mult capabilitățile.

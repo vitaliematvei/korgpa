@@ -1,0 +1,43 @@
+---
+title: 'Injecția de dependențe (Dependency injection)'
+description: 'Injecția de dependențe (Dependency injection)'
+order: 11
+category: 'Nestjs'
+level: 'Incepator'
+---
+
+Injecția de dependențe este un șablon de proiectare (design pattern) care ne permite să creăm cod slab cuplat (loosely coupled).
+Codul slab cuplat este acel cod care nu depinde în mod strâns de alte bucăți de cod.
+Acest lucru face ca aplicația să fie mai ușor de testat, de întreținut și de reutilizat.
+
+În NestJS, injecția de dependențe este implementată folosind decoratorul `@Injectable()`.
+Decoratorul `@Injectable()` marchează o clasă ca fiind injectabilă.
+Aceasta înseamnă că respectiva clasă poate fi injectată în alte clase utilizând injecția de dependențe.
+
+Pentru a injecta o dependență într-o clasă, folosim decoratorul `@Inject()`.
+Decoratorul `@Inject()` primește ca argument numele dependenței.
+Dependența va fi injectată în constructorul clasei în momentul în care aceasta este instanțiată.
+
+**Beneficii**
+
+Beneficiile sunt următoarele:
+
+- **Testabilitate:** Facilitează testarea unitară (unit testing), deoarece dependențele pot fi imitate (mocked) cu ușurință.
+- **Cuplaj slab (Loose coupling):** Clasele nu sunt conectate rigid, ci sunt furnizate la nevoie.
+
+Iată un exemplu comun de fragment de cod pentru injecția de dependențe utilizat în NestJS.
+Următorul serviciu va fi injectat într-un modul.
+Vom explora și înțelege cum anume în Capitolul 3:
+
+```typescript
+@Injectable()
+export class UsersService {
+  constructor(private readonly userRepository: UserRepository) {}
+}
+```
+
+❓ **Provocare rapidă**
+
+Refactorizează codul anterior pentru a injecta o altă dependență numită `OrdersRepository`.
+
+Cum ai modifica constructorul?
