@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { notFound, redirect } from 'next/navigation';
+import { notFound, redirect, unstable_rethrow } from 'next/navigation';
 import { evaluate } from '@mdx-js/mdx';
 import * as runtime from 'react/jsx-runtime';
 import { getAllTutorials, getTutorialBySlug } from '@/lib/tutorials';
@@ -116,7 +116,8 @@ export default async function TutorialPage({ params }: TutorialPageProps) {
         </nav>
       </article>
     );
-  } catch {
+  } catch (error) {
+    unstable_rethrow(error);
     notFound();
   }
 }

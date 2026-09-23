@@ -12,9 +12,7 @@ function getStripeClient() {
     throw new Error('Missing STRIPE_SECRET_KEY');
   }
 
-  return new Stripe(secretKey, {
-    apiVersion: '2026-02-25.clover',
-  });
+  return new Stripe(secretKey);
 }
 
 export async function POST(request: NextRequest) {
