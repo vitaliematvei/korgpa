@@ -1,0 +1,172 @@
+---
+title: 'Stateless – baza scalării orizontale'
+description: 'Stateless – baza scalării orizontale'
+order: 5
+category: 'NestJS'
+level: 'Incepator'
+---
+
+O întrebare rapidă:
+
+**Îți amintești ce ai mâncat la prânz acum trei miercuri?**
+
+Nu?
+
+Este în regulă.
+Nici serverul tău nu ar trebui să țină minte astfel de lucruri!
+
+În lumea aplicațiilor web, faptul că un server **nu păstrează informații despre cererile anterioare** este foarte important, mai ales atunci când vrem să scalăm aplicația.
+
+---
+
+## De ce să folosim o arhitectură Stateless?
+
+Imaginează-ți că serverul tău este ca o **rulotă de mâncare foarte eficientă**.
+
+Toată ziua primește comenzi de la clienți și le pregătește.
+
+Dar imaginează-ți că această rulotă începe să țină minte:
+
+- cine a comandat;
+- ce a comandat ultima dată;
+- ce alimente nu poate mânca;
+- dacă preferă burgerul fără castraveți;
+- ce comandă îi place cel mai mult.
+
+În scurt timp, ar avea foarte multe informații de gestionat.
+
+Același lucru se poate întâmpla și cu un server.
+
+### Ce înseamnă Stateless?
+
+**Stateless** înseamnă că serverul nu păstrează în memorie informații despre client între cereri.
+
+De exemplu:
+
+Clientul spune:
+
+> „Vreau să convertesc acest fișier MP3 în WAV.”
+
+Serverul primește cererea, o procesează și răspunde.
+
+La următoarea cerere, serverul nu trebuie să depindă de ceea ce s-a întâmplat în cererea anterioară.
+
+Informațiile necesare pentru procesare sunt transmise din nou sau sunt recuperate dintr-o sursă externă, cum ar fi baza de date, Redis sau storage-ul.
+
+---
+
+## De ce este important pentru scalare?
+
+Aici apare marele avantaj.
+
+Să presupunem că avem un singur server:
+
+```text
+Client
+   ↓
+Server
+```
+
+Dacă avem foarte mulți utilizatori, putem adăuga mai multe servere:
+
+```text
+             ┌── Server 1
+Client ──────┼── Server 2
+             └── Server 3
+```
+
+Acest proces se numește **scalare orizontală**.
+
+Dacă aplicația este Stateless, orice cerere poate ajunge la oricare dintre servere.
+
+De exemplu:
+
+```text
+Cererea 1 → Server 1
+Cererea 2 → Server 3
+Cererea 3 → Server 2
+Cererea 4 → Server 1
+```
+
+Serverele nu trebuie să știe ce server a procesat cererea anterioară.
+
+Acest lucru face scalarea mult mai simplă.
+
+---
+
+## Exemplu simplu în NestJS
+
+```typescript
+import { Controller, Get } from '@nestjs/common';
+
+@Controller('stateless')
+export class StatelessController {
+  @Get()
+  statelessEndpoint(): string {
+    return 'Hello, anonymous human! Enjoy your stateless interaction.';
+  }
+}
+```
+
+În exemplul de mai sus avem un controller simplu și **Stateless**.
+
+Endpoint-ul:
+
+```text
+GET /stateless
+```
+
+returnează întotdeauna același răspuns:
+
+```text
+Hello, anonymous human! Enjoy your stateless interaction.
+```
+
+Nu contează cine face cererea și nu contează ce cerere a fost făcută înainte.
+
+Serverul pur și simplu primește cererea și returnează răspunsul.
+
+---
+
+## Cum ar arăta într-un SaaS?
+
+În proiectul nostru **Audio Converter**, putem avea:
+
+```text
+Client
+   ↓
+Next.js
+   ↓
+NestJS
+   ↓
+Redis / PostgreSQL / Storage
+```
+
+Serverul NestJS nu trebuie să păstreze în memoria proprie toate informațiile despre utilizatori și conversii.
+
+De exemplu, informațiile pot fi păstrate în:
+
+- **PostgreSQL** – utilizatori, conversii, abonamente;
+- **Redis** – joburi, cache și informații temporare;
+- **Storage** – fișierele audio;
+- **JWT** – informații necesare pentru autentificare.
+
+Astfel, putem avea mai multe instanțe NestJS:
+
+```text
+                 ┌── NestJS 1
+Next.js ─────────┼── NestJS 2
+                 └── NestJS 3
+                       ↓
+              PostgreSQL / Redis
+                       ↓
+                    Storage
+```
+
+Dacă utilizatorul trimite o cerere către `NestJS 1`, iar următoarea cerere ajunge la `NestJS 3`, aplicația poate continua să funcționeze normal.
+
+### Ideea principală
+
+**Stateless = serverul nu depinde de memoria unei cereri anterioare.**
+
+Acest principiu este foarte important atunci când vrem să transformăm o aplicație mică într-un sistem care poate suporta **mii sau chiar milioane de cereri**.

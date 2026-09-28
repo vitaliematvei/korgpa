@@ -1,0 +1,241 @@
+---
+title: 'Rețeaua de microservicii – arhitectura bazată pe evenimente'
+description: 'Rețeaua de microservicii – arhitectura bazată pe evenimente'
+order: 7
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Imaginează-ți o petrecere aglomerată, unde toată lumea discută și interacționează.
+
+Acum imaginează-ți că, în loc să mergi direct la fiecare persoană pentru a-i spune ceva, anunți cu voce tare:
+
+> **„Am pizza gratuită!”**
+
+Ai transmis un **eveniment**.
+
+Toți cei interesați de pizza vor reacționa la acest mesaj.
+Nu trebuie să mergi la fiecare persoană în parte.
+
+Aceasta este ideea de bază a unei **arhitecturi bazate pe evenimente (Event-Driven Architecture)**.
+
+---
+
+# De ce evenimente și nu apeluri directe?
+
+Într-o arhitectură tradițională, un serviciu poate face un apel API direct către alt serviciu pentru a-i cere să execute o acțiune.
+
+De exemplu:
+
+```text
+User Service
+     ↓
+Payments Service
+```
+
+`User Service` îi spune direct lui `Payments Service`:
+
+> „Procesează această plată.”
+
+Este simplu, dar cele două servicii devin dependente unul de celălalt.
+
+Dacă `Payments Service` este ocupat sau indisponibil, cererea poate fi întârziată sau poate eșua.
+
+---
+
+## Varianta cu evenimente
+
+În loc să apeleze direct serviciul de plăți, primul serviciu poate publica un eveniment:
+
+> **„Plata a fost inițiată.”**
+
+Acest eveniment poate fi preluat de orice serviciu interesat.
+
+De exemplu:
+
+```text
+                ┌── Payments Service
+                │
+Event ──────────┼── Notifications Service
+                │
+                └── Analytics Service
+```
+
+Serviciul care publică evenimentul nu trebuie să știe exact cine îl va procesa.
+
+---
+
+# Evenimente și listeners
+
+Într-o arhitectură bazată pe evenimente:
+
+1. o parte a aplicației **emite un eveniment**;
+2. alte componente **ascultă acel eveniment**;
+3. atunci când evenimentul este primit, fiecare componentă execută propria logică.
+
+De exemplu, când se creează un utilizator:
+
+```text
+User created
+     ↓
+"user.created"
+     ↓
+ ┌───────────────┬─────────────────┬───────────────┐
+ ↓               ↓                 ↓
+Email          Analytics        Notifications
+```
+
+Un singur eveniment poate declanșa mai multe acțiuni.
+
+---
+
+# Exemplu în NestJS
+
+```typescript
+import { Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+
+@Injectable()
+export class EventsService {
+  constructor(private eventEmitter: EventEmitter2) {}
+
+  triggerEvent(): void {
+    this.eventEmitter.emit('user.created', {
+      // datele evenimentului
+    });
+  }
+}
+```
+
+În acest exemplu folosim `EventEmitter2` din pachetul `@nestjs/event-emitter`.
+
+Când apelăm:
+
+```typescript
+this.eventEmitter.emit('user.created', {
+  // datele evenimentului
+});
+```
+
+aplicația emite evenimentul:
+
+```text
+user.created
+```
+
+Alte componente pot asculta acest eveniment și pot executa acțiuni atunci când acesta apare.
+
+---
+
+# Exemplu în Audio Converter SaaS
+
+Să presupunem că un utilizator încarcă un fișier audio.
+
+Putem avea următorul flux:
+
+```text
+Utilizator
+    ↓
+Upload fișier
+    ↓
+"conversion.created"
+    ↓
+┌──────────────────────┐
+│                      │
+↓                      ↓
+Conversion Worker    Notifications
+│
+↓
+FFmpeg
+│
+↓
+Fișier convertit
+```
+
+Evenimentul poate conține informații precum:
+
+```text
+conversion.created
+{
+  userId,
+  fileId,
+  inputFormat,
+  outputFormat
+}
+```
+
+Worker-ul poate prelua evenimentul și începe conversia.
+
+În același timp, un alt serviciu poate trimite o notificare utilizatorului.
+
+---
+
+# De ce este utilă această arhitectură?
+
+Arhitectura bazată pe evenimente poate face aplicația:
+
+- mai flexibilă;
+- mai ușor de extins;
+- mai rezistentă la creșterea traficului;
+- mai ușor de scalat.
+
+De exemplu, dacă vrem să adăugăm notificări în aplicația noastră, nu trebuie neapărat să modificăm serviciul care face conversia.
+
+Putem doar să adăugăm un listener pentru evenimentul respectiv.
+
+---
+
+# Evenimentele pot declanșa alte evenimente
+
+Un eveniment poate porni o serie de alte acțiuni:
+
+```text
+conversion.created
+        ↓
+conversion.started
+        ↓
+conversion.completed
+        ↓
+file.ready
+        ↓
+notification.sent
+```
+
+Astfel, putem urmări întregul proces al unei conversii.
+
+Într-un capitol dedicat microserviciilor vom vedea cum pot fi procesate aceste evenimente și cum putem păstra datele consistente, chiar dacă evenimentele nu sunt procesate exact în ordinea în care au fost generate.
+
+---
+
+# Ideea principală
+
+Gândește-te la arhitectura bazată pe evenimente ca la o petrecere.
+
+Nu trebuie să mergi la fiecare persoană și să-i spui individual ce s-a întâmplat.
+
+Transmiți un mesaj, iar cei interesați reacționează la el.
+
+Într-o aplicație:
+
+**Serviciul emite un eveniment → serviciile interesate îl ascultă → fiecare își execută propria acțiune.**
+
+Această abordare ne permite să construim sisteme mai **dinamice, flexibile și scalabile**.
+
+---
+
+## Ce am învățat până acum?
+
+Am parcurs câteva principii importante ale unei arhitecturi scalabile:
+
+- design modular;
+- aplicații Stateless;
+- scalarea bazei de date;
+- microservicii;
+- arhitectura bazată pe evenimente;
+- evenimente și listeners.
+
+Aceste concepte nu sunt doar teorie. Le vom folosi treptat în proiecte practice.
+
+În următoarea secțiune vom vedea **cum gestionăm creșterea unei aplicații și cum putem distribui traficul folosind load balancing**.
+
+{/* am ramas Load balancing and horizontal scaling .32 */}

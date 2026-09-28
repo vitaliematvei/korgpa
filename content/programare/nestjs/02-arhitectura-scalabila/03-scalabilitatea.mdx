@@ -1,0 +1,67 @@
+---
+title: 'Cele trei S-uri ale scalabilității'
+description: 'Cele trei S-uri ale scalabilității'
+order: 3
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Hai să analizăm puțin mai în profunzime cele **trei S-uri ale scalabilității**:
+
+### ⚡ 1. Speed — Viteză
+
+**Poate aplicația ta să gestioneze mai multe cereri pe minut pe măsură ce numărul utilizatorilor crește?**
+
+Nimănui nu-i place o aplicație lentă!
+
+Dacă la început ai 10 utilizatori și aplicația răspunde instant, situația se poate schimba atunci când ajungi la 1.000 sau 10.000 de utilizatori.
+
+O aplicație scalabilă trebuie să poată procesa un volum mai mare de cereri fără ca timpul de răspuns să crească foarte mult.
+
+---
+
+### 💾 2. Storage — Stocare
+
+**Poate aplicația să stocheze din ce în ce mai multe date fără să înceapă să aibă probleme?**
+
+Mai mulți utilizatori înseamnă automat **mai multe date**.
+
+În cazul nostru, pentru un SaaS precum **Audio Converter**, utilizatorii pot încărca fișiere audio, iar aplicația trebuie să gestioneze:
+
+- fișierele încărcate;
+- fișierele convertite;
+- informațiile despre conversii;
+- conturile utilizatorilor;
+- istoricul conversiilor;
+- limitele și abonamentele utilizatorilor.
+
+Pe măsură ce aplicația crește, trebuie să avem o strategie bună pentru stocarea și gestionarea acestor date.
+
+---
+
+### 🧩 3. Simplicity — Simplitate
+
+**Poți adăuga cu ușurință funcționalități noi fără să strici ceea ce deja funcționează?**
+
+Utilizatorii vor dori mereu ceva nou și interesant!
+
+Astăzi aplicația poate converti **MP3 → WAV**, iar mâine utilizatorii pot cere:
+
+- MP3 → FLAC;
+- WAV → MP3;
+- AAC → MP3;
+- conversie video → audio;
+- procesare în batch;
+- procesarea mai multor fișiere simultan;
+- conturi Premium;
+- API pentru dezvoltatori.
+
+Dacă arhitectura aplicației este bine proiectată, putem adăuga aceste funcționalități fără să modificăm haotic întregul proiect.
+
+### Pe scurt
+
+O aplicație cu adevărat scalabilă trebuie să poată:
+
+**⚡ procesa mai multe cereri → 💾 gestiona mai multe date → 🧩 adăuga funcționalități noi fără să se strice.**
+
+Acestea sunt cele **trei S-uri ale scalabilității: Speed, Storage și Simplicity**.

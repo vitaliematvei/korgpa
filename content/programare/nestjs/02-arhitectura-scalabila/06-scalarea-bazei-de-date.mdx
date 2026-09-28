@@ -1,0 +1,58 @@
+---
+title: 'Scalarea bazei de date – Sharding, Replication și Partitioning'
+description: 'Scalarea bazei de date – Sharding, Replication și Partitioning'
+order: 6
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Baza de date este una dintre cele mai importante componente ale unei aplicații.
+Ea păstrează datele utilizatorilor, comenzile, fișierele, istoricul și multe alte informații.
+
+Dar, pe măsură ce aplicația crește, și baza de date trebuie să poată gestiona **mai multe date și mai multe cereri**.
+
+Pentru acest lucru există mai multe tehnici, printre care:
+
+- **Sharding** – împărțirea datelor pe mai multe servere;
+- **Replication** – păstrarea unor copii ale datelor pe mai multe servere;
+- **Partitioning** – împărțirea unei baze de date în mai multe părți mai ușor de gestionat.
+
+Vom discuta mai detaliat despre aceste tehnici mai târziu în curs.
+
+---
+
+# Microserviciile și scalabilitatea
+
+Ai auzit probabil expresia:
+
+> **„Divide et impera” – „Împarte și cucerește.”**
+
+Aceasta este ideea de bază din spatele **microserviciilor**.
+
+În loc să avem o singură aplicație mare care face totul, o putem împărți în mai multe servicii mai mici.
+
+De exemplu, pentru **Audio Converter SaaS**, am putea avea:
+
+```text
+Autentificare
+     ↓
+Serviciu utilizatori
+
+Conversii
+     ↓
+Serviciu conversii audio
+
+Plăți
+     ↓
+Serviciu abonamente
+
+Fișiere
+     ↓
+Serviciu stocare
+```
+
+Fiecare microserviciu are **propriul rol** și poate fi scalat independent.
+
+De exemplu, dacă partea de conversie audio primește foarte multe cereri, putem adăuga mai multe instanțe pentru acest serviciu fără să duplicăm neapărat toate celelalte servicii.
+
+Vom avea un capitol dedicat microserviciilor, unde vom analiza mai detaliat această arhitectură și modul în care ne poate ajuta să construim aplicații care pot crește ușor.
