@@ -1,0 +1,149 @@
+---
+title: Editarea etichetelor din baza de date
+order: 14
+description: Editarea etichetelor din baza de date
+category: Songbook
+---
+
+SongBook este o bază de date. Puteți adăuga fiecărei intrări SongBook date de arhivare speciale sau etichete (_tags_), care vă vor ajuta ulterior să găsiți anumite tipuri de piese folosind funcția **SongBook > Book > Filter**.
+
+1. Selectați intrarea SongBook pe care doriți să o editați.
+
+2. Mergeți la pagina **SongBook > Tags**.
+
+   <figure className="my-6 text-center">
+     <img
+       src="/images/songbook/132-1.jpg"
+       alt="Editarea etichetelor din baza de date"
+       className="mx-auto"
+     />
+     <figcaption>Editarea etichetelor din baza de date</figcaption>
+   </figure>
+
+3. Editarea etichetelor din baza de date a intrării SongBook:
+
+<div className="overflow-x-auto my-4">
+  <table className="min-w-full border-collapse border border-gray-200 text-sm">
+    <thead className="bg-gray-100">
+      <tr>
+        <th className="px-4 py-3 text-left font-semibold text-gray-700 border border-gray-200">
+          Etichetă
+        </th>
+        <th className="px-4 py-3 text-left font-semibold text-gray-700 border border-gray-200">
+          Intrare bazată pe Style
+        </th>
+        <th className="px-4 py-3 text-left font-semibold text-gray-700 border border-gray-200">
+          Intrare bazată pe MID
+        </th>
+        <th className="px-4 py-3 text-left font-semibold text-gray-700 border border-gray-200">
+          Intrare bazată pe MP3
+        </th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-gray-200 bg-white">
+      <tr>
+        <td className="px-4 py-3 font-semibold text-gray-900 border border-gray-200 bg-gray-50/50">
+          Genre
+        </td>
+        <td
+          colSpan={3}
+          className="px-4 py-3 text-gray-700 border border-gray-200"
+        >
+          Genul muzical asociat intrării.
+        </td>
+      </tr>
+      <tr>
+        <td className="px-4 py-3 font-semibold text-gray-900 border border-gray-200 bg-gray-50/50">
+          Artist
+        </td>
+        <td
+          colSpan={3}
+          className="px-4 py-3 text-gray-700 border border-gray-200"
+        >
+          Numele artistului piesei asociate intrării.
+        </td>
+      </tr>
+      <tr>
+        <td className="px-4 py-3 font-semibold text-gray-900 border border-gray-200 bg-gray-50/50">
+          Key Info
+        </td>
+        <td
+          colSpan={3}
+          className="px-4 py-3 text-gray-700 border border-gray-200"
+        >
+          Tonalitatea originală a intrării. Primul câmp este Nota de bază
+          (Root), iar al doilea este modul (Major/minor).
+        </td>
+      </tr>
+      <tr>
+        <td
+          rowSpan={2}
+          className="px-4 py-3 font-semibold text-gray-900 border border-gray-200 bg-gray-50/50 align-top"
+        >
+          Tempo/BPM
+        </td>
+        <td
+          colSpan={3}
+          className="px-4 py-3 text-gray-700 border border-gray-200"
+        >
+          Tempo-ul piesei. Acesta se poate schimba dacă resursa asociată include
+          un eveniment de Schimbare de Tempo (Tempo Change).
+          <br />
+          Puteți modifica manual această valoare folosind butoanele{' '}
+          <strong className="font-semibold text-gray-900">TEMPO</strong> de pe
+          panoul de control. Orice modificare va fi afișată doar după salvarea
+          intrării.
+        </td>
+      </tr>
+      <tr className="bg-gray-50/30">
+        <td className="px-4 py-3 text-gray-700 border border-gray-200">
+          Tempo-ul original al Style-ului.
+        </td>
+        <td className="px-4 py-3 text-gray-700 border border-gray-200">
+          Tempo-ul de pornire original al fișierului MID.
+        </td>
+        <td className="px-4 py-3 text-gray-700 border border-gray-200">
+          Întotdeauna zero (Tempo-ul original al piesei MP3).
+        </td>
+      </tr>
+      <tr>
+        <td className="px-4 py-3 font-semibold text-gray-900 border border-gray-200 bg-gray-50/50">
+          Meter Info
+        </td>
+        <td
+          colSpan={3}
+          className="px-4 py-3 text-gray-700 border border-gray-200"
+        >
+          Măsura piesei (Time Signature). Aceasta se poate schimba dacă resursa
+          asociată include un eveniment de Schimbare de Măsură (Meter Change).
+        </td>
+      </tr>
+      <tr>
+        <td className="px-4 py-3 font-semibold text-gray-900 border border-gray-200 bg-gray-50/50">
+          M.Transp.
+          <br />
+          <span className="text-xs text-gray-500 font-normal">
+            (Master Transpose)
+          </span>
+        </td>
+        <td
+          colSpan={3}
+          className="px-4 py-3 text-gray-700 border border-gray-200"
+        >
+          Valoarea Transpunerii Generale (Master Transpose) a piesei. Când
+          intrarea este selectată, Transpunerea Generală a întregului instrument
+          se modifică automat. Valoarea Master Transpose salvată în intrarea
+          SongBook suprascrie orice setare Master Transpose conținută în resursa
+          asociată.
+          <br />
+          Puteți modifica manual această valoare folosind butoanele{' '}
+          <strong className="font-semibold text-gray-900">TRANSPOSE</strong> de
+          pe panoul de control. Orice modificare va fi afișată doar după
+          salvarea intrării.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+4. Atingeți butonul **Write** pentru a salva peste intrarea SongBook existentă.
