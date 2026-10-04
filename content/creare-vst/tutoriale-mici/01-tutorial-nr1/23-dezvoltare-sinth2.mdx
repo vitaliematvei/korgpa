@@ -1,0 +1,139 @@
+---
+title: Creare syntezator PART-2
+description: Creare syntezator
+order: 23
+category: "JUCE"
+level: "Incepator"
+---
+
+## 1. Verificarea Sunetului și Conversia Notei în Frecvență (`SynthVoice`)
+
+Deschide clasa `SynthVoice` pentru a defini ce se întâmplă când este apăsată o tastă MIDI.
+
+### Pasul 1.1: Verificarea compatibilității sunetului (`canPlaySound`)
+
+Pentru a ne asigura că vocea sintetizatorului poate reda sunetul asignat, folosim `dynamic_cast` [[01:51](https://www.youtube.com/watch?v=ddqwAJilnes&t=111)]:
+
+```cpp
+bool canPlaySound (juce::SynthesiserSound* sound) override
+{
+    // Verificăm dacă sunetul primit este de tipul SynthSound
+    return dynamic_cast<SynthSound*>(sound) != nullptr;
+}
+
+```
+
+---
+
+### Pasul 1.2: Calcularea frecvenței și citirea notei (`startNote`)
+
+Când apăsăm o tastă pe claviatură, funcția `startNote` este apelată automat [[03:29](https://www.youtube.com/watch?v=ddqwAJilnes&t=209)]. Aici transformăm numărul notei MIDI (0–127) în frecvență exprimată în Hz folosind clasa `MidiMessage` [[04:37](https://www.youtube.com/watch?v=ddqwAJilnes&t=277)]:
+
+```cpp
+void startNote (int midiNoteNumber, float velocity,
+                juce::SynthesiserSound* sound,
+                int currentPitchWheelPosition) override
+{
+    // Obținem frecvența în Hz corespunzătoare notei apăsate
+    frequency = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber);
+
+    // Afișăm nota în consolă pentru testare/debug
+    std::cout << "Nota MIDI apasata: " << midiNoteNumber << std::endl;
+}
+
+```
+
+---
+
+### Pasul 1.3: Oprirea notei (`stopNote`)
+
+Când eliberăm tasta, resetăm starea notei curente [[07:10](https://www.youtube.com/watch?v=ddqwAJilnes&t=430)]:
+
+```cpp
+void stopNote (float velocity, bool allowTailOff) override
+{
+    // Curățăm nota curentă
+    clearCurrentNote();
+}
+
+```
+
+---
+
+## 2. Configurarea Sintetizatorului în Processor (`PluginProcessor.cpp`)
+
+Mergem în `PluginProcessor.cpp` pentru a configura polifonia (numărul de voci simultane) și rata de eșantionare (sample rate).
+
+### Pasul 2.1: Inițializarea vocilor și sunetelor (Constructor)
+
+În constructorul procesorului curățăm vechile instanțe și adăugăm suport pentru **polifonie cu 5 voci** [[08:52](https://www.youtube.com/watch?v=ddqwAJilnes&t=532)]:
+
+```cpp
+MySynthAudioProcessor::MySynthAudioProcessor()
+{
+    // Resetam vocile si sunetele existente
+    mySynth.clearVoices();
+    mySynth.clearSounds();
+
+    // Adăugăm 5 voci pentru polifonie (putem cânta acorduri de 5 note)
+    for (int i = 0; i < 5; ++i)
+    {
+        mySynth.addVoice(new SynthVoice());
+    }
+
+    // Adăugăm obiectul de sunet
+    mySynth.addSound(new SynthSound());
+}
+
+```
+
+---
+
+### Pasul 2.2: Setarea Ratei de Eșantionare (`prepareToPlay`)
+
+În metoda `prepareToPlay` comunicăm sintetizatorului rata de eșantionare curentă a plăcii de sunet/DAW-ului [[11:56](https://www.youtube.com/watch?v=ddqwAJilnes&t=716)]:
+
+```cpp
+void MySynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+{
+    // Salvăm și setăm sample rate-ul pentru a evita erorile de procesare
+    lastSampleRate = sampleRate;
+    mySynth.setCurrentPlaybackSampleRate(lastSampleRate);
+}
+
+```
+
+---
+
+### Pasul 2.3: Redarea blocului audio și procesarea MIDI (`processBlock`)
+
+În bucla principală de audio callback (`processBlock`), curățăm buffer-ul și trimitem pachetele de date MIDI și audio către sintetizator [[14:28](https://www.youtube.com/watch?v=ddqwAJilnes&t=868)]:
+
+```cpp
+void MySynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
+                                           juce::MidiBuffer& midiMessages)
+{
+    // Curățăm buffer-ul de canale audio de eventuale reziduuri
+    buffer.clear();
+
+    // Randăm următorul bloc de sunet procesând mesajele MIDI de la intrare
+    mySynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+}
+
+```
+
+---
+
+## 3. Testarea Intrării MIDI în JUCE Plugin Host
+
+Pentru a testa codul fără a fi nevoie să încărcăm plugin-ul într-un DAW (cubase, Ableton, FL Studio), putem folosi utilitarul **JUCE Plugin Host** [[10:56](https://www.youtube.com/watch?v=ddqwAJilnes&t=656)]:
+
+1. **Setare Debug Host:** În Xcode / Visual Studio, setează executabilul de lansare ca fiind `Plugin Host` (din fișierele de exemple furnizate de JUCE) [[11:14](https://www.youtube.com/watch?v=ddqwAJilnes&t=674)].
+2. **Selectare Claviatură MIDI:** În JUCE Plugin Host, dă dublu-click pe _MIDI Input_ și bifează claviatura ta USB/MIDI conectată [[18:23](https://www.youtube.com/watch?v=ddqwAJilnes&t=1103)].
+3. **Verificare Consolă:** Apasă tastele pe claviatură. În fereastra de debug/consolă vei vedea numerele notelor MIDI afișate în timp real (de ex. `60` pentru Do din octava centrală) [[17:46](https://www.youtube.com/watch?v=ddqwAJilnes&t=1066)].
+
+---
+
+## Ce urmează?
+
+Ierarhia și fluxul de intrări MIDI sunt acum funcționale. În tutorialul următor se va adăuga **generatorul de semnal (Oscilatorul)** pentru a transforma frecvențele calculate din datele MIDI în unde sonore reale [[19:41](https://www.youtube.com/watch?v=ddqwAJilnes&t=1181)].
