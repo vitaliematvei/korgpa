@@ -1,0 +1,35 @@
+---
+title: ABC-ul strategiilor de caching
+description: ABC-ul strategiilor de caching
+order: 10
+category: 'NestJS'
+level: 'Incepator'
+---
+
+A-ți aminti absolut totul nu este de ajutor; vrei să-ți amintești lucrurile potrivite.
+Iată noțiunile de bază ale diferitelor strategii de caching:
+
+- **Least Recently Used (LRU - Cel mai puțin utilizat recent):** Dacă carnetul tău de notițe este plin, vei șterge notița la care nu te-ai mai uitat de cel mai mult timp.
+- **Time To Live (TTL - Timp de viață):** Post-it-uri cu dată de expirare. După o perioadă stabilită, se autodestrug!
+- **Invalidarea cache-ului (Cache invalidation):** Uneori, notițele tale devin învechite sau incorecte. Va trebui să le înlocuiești cu informații noi și exacte.
+
+---
+
+### Când lucrurile merg prost cu cache-ul – capcane și cum să le eviți
+
+Imaginează-ți că îți notezi lista de cumpărături și apoi uiți să o actualizezi când altcineva cumpără deja laptele.
+Te trezești cu prea mult lapte și fără cafea!
+Caching-ul nu este infailibil.
+Iată câteva capcane frecvente:
+
+- **Informații învechite (Cache staleness):** Situația în care memoria cache conține date depășite și le afișează pe cele vechi.
+- **Substituirea excesivă (Cache thrashing):** Când datele sunt eliminate continuu înainte de a fi apucat să fie folosite, anulând practic tot scopul caching-ului.
+- **Complexitatea cache-ului (Cache complexity):** Când exagerezi și ajungi la o infrastructură de cache complicată și greu de gestionat.
+
+---
+
+**Exercițiu rapid – e timpul să reflectezi asupra cache-ului tău**
+
+Acordă-ți un moment de gândire la ultima aplicație pe care ai construit-o.
+Poți identifica locuri unde implementarea unui cache ar fi îmbunătățit performanța?
+Dar locuri unde caching-ul ar fi putut crea probleme? Notează-le!

@@ -1,0 +1,37 @@
+---
+title: Injectarea dependențelor (Dependency Injection) pentru cuplare slabă (loose coupling)
+description: Injectarea dependențelor (Dependency Injection) pentru cuplare slabă (loose coupling)
+order: 15
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Injectarea dependențelor (DI) este o tehnică prin care un obiect primește dependențele sale de la un furnizor exterior, în loc să le creeze intern.
+Este o tehnică esențială pentru obținerea inversiunii controlului (Inversion of Control - IoC) și promovează o cuplare slabă (_loose coupling_) între componente.
+
+### De ce se bazează NestJS pe Dependency Injection
+
+Întregul ecosistem NestJS gravitează în jurul injectării dependențelor.
+Prin adoptarea DI, NestJS garantează că sistemele sunt modulare, ușor de testat și scalabile.
+Componentele, fie că sunt servicii sau controllere, nu sunt strâns legate între ele, ci interconectate printr-un sistem bine definit.
+
+### Exemplificarea DI în NestJS
+
+Următorul fragment de cod este un exemplu tipic de utilizare a injectării dependențelor în aplicațiile NestJS:
+
+```typescript
+constructor(private readonly myService: MyService) {}
+
+```
+
+Aici, în loc să creeze o instanță a clasei `MyService` direct în interiorul componentei (de exemplu prin `new MyService()`), NestJS o injectează automat.
+Acest lucru asigură că acea componentă nu depinde direct de instanțierea internă a `MyService`.
+
+Figura 2.4 ilustrează modul în care modulele slab cuplate (_loosely coupled_) lucrează împreună pentru a îndeplini o anumită sarcină.
+
+<figure className="my-6 text-center">
+  <img src="/images/nestjs/2-4.jpg" alt="TypeScript" className="mx-auto" />
+  <figcaption>**Module slab cuplate ce funcționează în sinergie**</figcaption>
+</figure>
+
+{/* am ramas The decorator pattern for extending functionality in NestJS .38 */}

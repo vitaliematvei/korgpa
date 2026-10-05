@@ -1,0 +1,30 @@
+---
+title: Pattern-ul Factory (Fabrică) pentru crearea obiectelor
+description: Pattern-ul Singleton pentru gestionarea stării globale
+order: 14
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Acest pattern tratează problema creării obiectelor fără a fi nevoie să specifici clasa exactă a obiectului care va fi creat.
+
+### De ce folosește NestJS pattern-ul Factory
+
+În NestJS, providerii nu se limitează doar la servicii.
+Aceștia pot fi orice: obiecte, șiruri de caractere (`string`), numere și așa mai departe.
+Pentru a oferi această flexibilitate fără a forța dezvoltatorul să scrie cod rigid (_hardcoded_) pentru crearea obiectelor, NestJS folosește pattern-ul Factory.
+
+Iată secvența de cod:
+
+```typescript
+{
+  provide: 'MY_FACTORY_TOKEN',
+  useFactory: (connection: Connection) => {
+    return new MyCustomClass(connection);
+  },
+  inject: [DbConnectionToken],
+}
+
+```
+
+Aici, proprietatea `useFactory` reprezintă un exemplu clar al pattern-ului Factory în acțiune, permițând crearea dinamică de obiecte pe baza dependențelor injectate.

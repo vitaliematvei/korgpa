@@ -1,0 +1,57 @@
+---
+title: Caching-ul în universul NestJS
+description: Caching-ul în universul NestJS
+order: 11
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Având în vedere că această carte pune un accent deosebit pe NestJS, să aruncăm o privire peste un scurt fragment de cod pentru a implementa o strategie simplă de caching într-o aplicație NestJS.
+
+Iată secvența de cod:
+
+```typescript
+// Caching-ul unui răspuns într-un serviciu NestJS
+import { Injectable, CACHE_MANAGER, Inject, CacheStore } from '@nestjs/common';
+
+@Injectable()
+export class AppService {
+  constructor(@Inject(CACHE_MANAGER) private cacheManager: CacheStore) {}
+
+  async cacheThis(): Promise<string> {
+    let value = await this.cacheManager.get('my-key');
+    if (value) {
+      return `From cache: ${value}`;
+    }
+
+    value = 'some expensive operation result';
+    await this.cacheManager.set('my-key', value, { ttl: 600 });
+    return `Processed: ${value}`;
+  }
+}
+```
+
+În fragmentul de cod de mai sus, stocăm în cache rezultatul unei operațiuni costisitoare dintr-un serviciu al unei aplicații NestJS.
+Scopul este de a îmbunătăți performanța prin reducerea necesității de a executa repetat un proces complex.
+
+Iată explicarea detaliată a fiecărei părți din cod:
+
+- **Declarațiile de import (Import statements):** Codul importă `Injectable`, `CACHE_MANAGER`, `Inject` și `CacheStore` din pachetul `@nestjs/common`. Acestea sunt puse la dispoziție de NestJS pentru a facilita injectarea dependențelor și funcționalitatea de caching.
+- **Decorarea serviciului (Service decoration):** Decoratorul `@Injectable()` marchează clasa `AppService` ca fiind un provider (furnizor) ce poate fi gestionat de sistemul de injectare a dependențelor din NestJS. Acest lucru îi permite să fie injectat în controllere sau în alte servicii.
+- **Clasa serviciului (Service class):** `export class AppService` definește o nouă clasă de serviciu numită `AppService`, care va conține logica ce poate fi partajată în întreaga aplicație.
+- **Constructorul și injectarea dependențelor (Constructor and dependency injection):** Constructorul clasei `AppService` folosește decoratorul `@Inject` pentru a injecta managerul de cache. Token-ul `CACHE_MANAGER` îi indică sistemului de injectare a dependențelor din NestJS să furnizeze o instanță de `CacheStore`.
+- **Metoda de operare cu cache (Cache operation method):** `async cacheThis(): Promise<string>` – Această metodă este o funcție asincronă care returnează o promisiune cu un șir de caractere (`string`) odată ce operațiunea este finalizată.
+- În interiorul metodei, se încearcă mai întâi preluarea unei valori din cache folosind cheia `'my-key'`, prin intermediul `this.cacheManager.get('my-key')`.
+- Dacă se găsește o valoare (`if (value)`), înseamnă că rezultatul operațiunii costisitoare este deja salvat în cache. Metoda returnează direct acea valoare prefixată de `From cache:`, indicând faptul că răspunsul a fost servit din memorie.
+
+- **Logica de salvare în cache (Caching logic):** Dacă în cache nu există nicio valoare pentru cheia `'my-key'`, codul simulează o operațiune complexă atribuind șirul `'some expensive operation result'` variabilei `value`. Apoi, salvează această valoare în cache pentru un interval TTL de 600 de secunde.
+- **Returnarea valorii procesate (Return processed value):** După salvarea valorii în cache, metoda returnează un șir de caractere având prefixul `Processed:`, indicând că operațiunea a trebuit să fie procesată dinamic și nu a fost preluată din cache.
+
+Această strategie de caching poate îmbunătăți considerabil performanța aplicației tale, evitând executarea operațiunii costisitoare la fiecare apelare a metodei `cacheThis`. În schimb, returnează rezultatul precalculat din cache ori de câte ori este disponibil, economisind timp și resurse de calcul.
+
+---
+
+Am acoperit ce înseamnă caching-ul, de ce este util, cum funcționează și chiar cum arată pus în practică în codul NestJS.
+Înțelegerea conceptului de caching este esențială pentru construirea sistemelor scalabile, legându-se direct de discuțiile noastre despre principiile arhitecturii scalabile și load balancing.
+
+În continuare, ne vom scufunda în **design pattern-uri** care îți vor securiza și mai mult aplicațiile NestJS pentru o scalare eficientă.

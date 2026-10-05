@@ -1,0 +1,44 @@
+---
+title: Echilibrarea sarcinii (Load balancing) și scalarea orizontală
+description: Echilibrarea sarcinii (Load balancing) și scalarea orizontală
+order: 8
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Ai fost vreodată la un concert mare sau la un meci important de fotbal?
+Gândește-te la agenții de circulație sau la personalul de la eveniment care direcționează eficient mulțimea de fani entuziasmați către locurile sau ieșirile lor, fără să creeze haos.
+În arena noastră digitală, acesta este exact rolul unui **load balancer** (echilibrator de sarcină)!
+
+### De ce atâta freamăt în jurul load balancerelor?
+
+Imaginează-ți că aplicația ta găzduiește un mare concert virtual.
+Mii de utilizatori (fani) dau năvală pentru a avea cea mai bună experiență.
+Dacă toți s-ar înghesui la o singură intrare (un singur server), lucrurile ar deveni rapid haotice, nu-i așa?
+
+Un load balancer funcționează ca acel personal ultra-eficient de la eveniment: se asigură că fanii (utilizatorii) sunt distribuiți către mai multe intrări (servere), astfel încât toată lumea să aibă o experiență impecabilă.
+Fie că sunt 100 sau 100.000 de fani, load balancerul garantează că toată lumea se bucură de o seară memorabilă fără să strice petrecerea!
+
+### Echilibrarea este o artă și o știință
+
+Nu este vorba doar despre distribuirea uniformă a sarcinii.
+Un load balancer bun este inteligent: știe care intrări ale serverelor sunt mai puțin aglomerate, care sunt mai aproape de fani și, uneori, chiar care intrări oferă cel mai rapid acces la gustări (datele importante).
+
+### Scalare... cum?
+
+A, ai observat termenul ăsta nou, nu-i așa? **Scalarea orizontală** este ca o clonare de trupe pentru servere.
+În loc să faci un singur server super masiv și puternic (aceasta fiind _scalarea verticală_), pur și simplu îl clonezi.
+Acum ai mai multe servere, toate la fel de capabile să gestioneze cererile fără să fie nevoie să știe unul de treaba celuilalt. Magie!
+
+---
+
+**Exercițiu rapid**
+
+Bun, e timpul pentru un test fulger! 📝 Imaginează-ți experiența ta ideală la un concert.
+Care sunt cele trei calități pe care le-ai dori de la personalul care dirijează traficul?
+Notează-le. Acum, transpune aceste calități la un load balancer. Am atins nota potrivită?
+
+---
+
+Acum că am descoperit ce este echilibrarea sarcinii și importanța ei într-o arhitectură scalabilă, să vorbim despre ceva ce este adesea subestimat: **strategiile de caching** (stocare în memoria cache).
+De ce...

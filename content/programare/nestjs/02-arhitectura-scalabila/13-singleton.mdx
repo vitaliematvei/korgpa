@@ -1,0 +1,28 @@
+---
+title: Pattern-ul Singleton pentru gestionarea stării globale
+description: Pattern-ul Singleton pentru gestionarea stării globale
+order: 13
+category: 'NestJS'
+level: 'Incepator'
+---
+
+În esență, pattern-ul Singleton (instanță unică) garantează că o clasă are o singură instanță și oferă un punct de acces global la această instanță din oricare altă clasă.
+
+### De ce preferă NestJS pattern-ul Singleton
+
+NestJS utilizează intensiv pattern-ul Singleton, în special pentru servicii.
+De ce? Deoarece serviciile gestionează adesea sarcini precum conexiunile la baza de date, memoria cache sau configurarea datelor — operațiuni asupra cărora nu vrei ca mai multe instanțe paralele să interfereze.
+
+### O privire rapidă asupra pattern-ului Singleton în NestJS
+
+Iată secvența de cod:
+
+```typescript
+@Injectable()
+export class MyService {
+  // Acest serviciu va fi instanțiat o singură dată și va fi
+  // partajat între module
+}
+```
+
+Prin utilizarea decoratorului `@Injectable()`, NestJS se asigură că serviciul va fi creat o singură dată pe durata de viață a aplicației și reutilizat oriunde este injectat.
