@@ -1,0 +1,68 @@
+---
+title: Pattern-ul Decorator pentru extinderea funcționalității în NestJS
+description: Pattern-ul Decorator pentru extinderea funcționalității în NestJS
+order: 16
+category: 'NestJS'
+level: 'Incepator'
+---
+
+În domeniul pattern-urilor de proiectare (design patterns), pattern-ul **Decorator** îndeplinește un rol unic: le permite dezvoltatorilor să adauge funcționalități noi obiectelor fără a le modifica structura.
+Acest tip de pattern se încadrează în categoria pattern-urilor structurale, acționând ca un wrapper (înveliș) peste clasele existente.
+
+#### De ce NestJS este construit pe baza pattern-ului Decorator
+
+NestJS folosește decoratori pentru a colecta metadata despre clase, funcții și proprietăți.
+Această metadata poate fi utilizată la runtime pentru o gamă largă de sarcini — fie că este vorba despre configurarea unei rute HTTP, injectarea dependențelor sau stabilirea unui gateway WebSocket.
+Reflexia metadata-ului (metadata reflection) este o piatră de temelie în NestJS și reprezintă motorul extinderii acestui framework.
+
+#### Modularitate și cod curat
+
+Prin utilizarea decoratorilor, NestJS le permite dezvoltatorilor să scrie un cod mai curat și mai modular.
+Decoratorii abstractizează o mare parte din codul repetitiv (boilerplate), permițând axarea pe logica de business.
+Acest lucru sporește citibilitatea și ușurința de întreținere, făcând baza de cod mai ușor de gestionat pe măsură ce aplicația scalază.
+
+#### Funcționalitate extinsă cu intruziune minimă
+
+Decoratorii din NestJS adaugă straturi de funcționalitate codului fără a fi nevoie să modificați logica de bază.
+De exemplu, decoratorul `@Roles()` poate adăuga rapid controlul accesului bazat pe roluri (RBAC) unei metode, fără a necesita modificarea implementării acesteia.
+Natura non-intruzivă a decoratorilor îi face ideali pentru aplicații scalabile.
+
+#### Sistem puternic tipizat
+
+Utilizarea decoratorilor merge mână în mână cu verificarea tipurilor din TypeScript, sporind siguranța tipizării la momentul dezvoltării (development-time type safety).
+De exemplu, decoratorul `@Body()` nu doar că extrage proprietățile din corpul cererii (request body), dar poate impune și restricții de tip dacă este utilizat împreună cu clase DTO (Data Transfer Object).
+
+---
+
+### Decoratorii NestJS în acțiune
+
+Într-un API RESTful, decoratorii `@Controller` și `@Get`/`@Post`/`@Put`/`@Delete` configurează rutele, transformând clasele și metodele în handlere de cereri aproape ca prin magie.
+
+**Exemplu de cod (Code snippet 8):**
+
+```typescript
+@Controller('cats')
+export class CatsController {
+  @Get()
+  findAll() {
+    return 'Returns all cats';
+  }
+}
+```
+
+Acest secvență simplă de cod arată un exemplu de controller care gestionează o cerere GET.
+Datorită decoratorului `@Get`, nu mai este nevoie să specificați ce metadata trebuie să facă parte din cerere, deoarece funcția știe deja acest lucru.
+
+#### Extragerea datelor din cerere (Request payload extraction)
+
+Decoratorii de cerere precum `@Query`, `@Param` și `@Body` simplifică procesul de extragere a parametrilor, a șirurilor de interogare (query strings) și a corpului cererii, făcând metodele din controller mai curate și mai concentrate pe sarcină.
+
+**Exemplu de cod (Code snippet 9):**
+
+```typescript
+@Get('find')
+findCat(@Query('name') name: string) {
+  return `Returns cat with name ${name}`;
+}
+
+```

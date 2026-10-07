@@ -1,0 +1,110 @@
+---
+title: NestJS fără decoratori versus cu decoratori
+description: NestJS fără decoratori versus cu decoratori
+order: 18
+category: 'NestJS'
+level: 'Incepator'
+---
+
+În continuare, vom observa cum ar arăta lucrurile într-o lume ipotetică NestJS fără decoratori și vom compara această abordare cu modul în care decoratorii simplifică procesul de dezvoltare.
+
+#### Rute și controllere
+
+Fără decoratori, configurarea unei rute simple ar implica o abordare mai puțin elegantă, folosind apeluri directe de metode și mapare manuală a rutelor.
+
+**Exemplu de cod (Code snippet 12):**
+
+```typescript
+export class CatsController {
+  constructor(private readonly expressApp: Express.Application) {
+    this.expressApp.get('/cats', this.findAll.bind(this));
+  }
+
+  findAll(req: Request, res: Response) {
+    res.send('Returns all cats');
+  }
+}
+```
+
+Folosind decoratori, procesul este eficientizat, iar citibilitatea codului este îmbunătățită semnificativ,
+așa cum se vede în exemplul de mai jos:
+
+**Exemplu de cod (Code snippet 13):**
+
+```typescript
+@Controller('cats')
+export class CatsController {
+  @Get()
+  findAll() {
+    return 'Returns all cats';
+  }
+}
+```
+
+---
+
+#### Extragerea datelor din cerere (Request payload extraction)
+
+Fără decoratorii de cerere, extragerea parametrilor ar trebui făcută manual, proces ce poate deveni anevoios:
+
+**Exemplu de cod (Code snippet 14):**
+
+```typescript
+export class CatsController {
+  constructor(private readonly expressApp: Express.Application) {
+    this.expressApp.get('/find', this.findCat.bind(this));
+  }
+
+  findCat(req: Request, res: Response) {
+    const name = req.query.name;
+    res.send(`Returns cat with name ${name}`);
+  }
+}
+```
+
+Utilizând un decorator precum `@Query`, simplificăm considerabil procesul de extragere a parametrilor:
+
+**Exemplu de cod (Code snippet 15):**
+
+```typescript
+@Get('find')
+findCat(@Query('name') name: string) {
+  return `Returns cat with name ${name}`;
+}
+
+```
+
+---
+
+#### Injectarea dependențelor (Dependency Injection - DI)
+
+Gestionarea manuală a dependențelor fără decoratori este greoaie și necesită cod suplimentar de inițializare (bootstrap):
+
+**Exemplu de cod (Code snippet 16):**
+
+```typescript
+export class CatsService {
+  private dbConnection: Connection;
+
+  constructor() {
+    // utilizarea unui pattern Singleton
+    this.dbConnection = DatabaseConnection.getInstance();
+  }
+}
+```
+
+**Cu decoratori:**
+
+Utilizând `@Injectable` și `@Inject`, injectarea dependențelor devine un proces elegant și ușor de gestionat:
+
+**Exemplu de cod (Code snippet 17):**
+
+```typescript
+@Injectable()
+export class CatsService {
+  constructor(
+    @Inject('DATABASE_CONNECTION')
+    private dbConnection: Connection,
+  ) {}
+}
+```

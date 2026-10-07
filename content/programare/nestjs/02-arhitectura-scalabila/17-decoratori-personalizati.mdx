@@ -1,0 +1,39 @@
+---
+title: Decoratori personalizați (Custom decorators)
+description: Decoratori personalizați (Custom decorators)
+order: 17
+category: 'NestJS'
+level: 'Incepator'
+---
+
+NestJS permite, de asemenea, crearea de decoratori personalizați, oferind opțiuni nelimitate de extindere.
+De exemplu, ați putea crea un decorator `@Sanitize` care curăță automat datele primite pentru a preveni atacurile de tip SQL injection.
+
+**Exemplu de cod (Code snippet 10):**
+
+```typescript
+export const Sanitize = createParamDecorator(
+  (data: unknown, ctx: ExecutionContext) => {
+    const req = ctx.switchToHttp().getRequest();
+    return sanitize(req.body); // funcție ficțională de sanitizare
+  },
+);
+```
+
+---
+
+### Injectarea dependențelor (Dependency Injection - DI)
+
+Prin intermediul `@Injectable()`, `@Inject()` și a decoratorilor pentru furnizori personalizați (custom providers), NestJS transformă injectarea dependențelor într-un proces elegant și fără bătăi de cap.
+
+**Exemplu de cod (Code snippet 11):**
+
+```typescript
+@Injectable()
+export class CatsService {
+  constructor(
+    @Inject('DATABASE_CONNECTION')
+    private dbConnection: Connection,
+  ) {}
+}
+```

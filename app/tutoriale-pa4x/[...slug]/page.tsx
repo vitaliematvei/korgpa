@@ -75,7 +75,7 @@ export default async function TutorialPage({ params }: TutorialPageProps) {
           </div>
         </header>
 
-        <div className="space-y-4 [&_h1]:text-3xl [&_h1]:font-bold [&_h1]:text-slate-950 [&_h2]:mt-6 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-orange-700 [&_h3]:mt-4 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-slate-900 [&_p]:text-[17px] [&_p]:leading-relaxed md:[&_p]:text-lg [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:py-0.5 [&_li]:text-[17px] [&_li]:leading-relaxed [&_li]:text-slate-800 md:[&_li]:text-lg">
+        <div className="space-y-4 [&_h1]:text-3xl [&_h1]:font-bold [&_h1]:text-slate-950 [&_h2]:mt-6 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-orange-700 [&_h3]:mt-4 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-slate-900 [&_p]:text-[17px] [&_p]:leading-relaxed [&_p_img]:inline-block [&_p_img]:h-6 [&_p_img]:w-auto [&_p_img]:align-middle md:[&_p]:text-lg [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:py-0.5 [&_li]:text-[17px] [&_li]:leading-relaxed [&_li]:text-slate-800 md:[&_li]:text-lg">
           <TutorialContent />
         </div>
 

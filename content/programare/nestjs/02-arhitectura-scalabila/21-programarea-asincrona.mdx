@@ -1,0 +1,30 @@
+---
+title: Ce este programarea asincronă?
+description: Ce este programarea asincronă?
+order: 21
+category: 'NestJS'
+level: 'Incepator'
+---
+
+În cei mai simpli termeni, programarea asincronă permite executarea concomitentă (concursivă) a mai multor operațiuni, dar nu neapărat în același moment exact.
+Într-un model sincron, operațiunile sunt executate una după alta, blocând acțiunile ulterioare până când cea curentă este finalizată.
+Pe de altă parte, programarea asincronă permite ca operațiunile — cum ar fi sarcinile dependente de I/O (I/O-bound) — să fie delegate în fundal, eliberând firul principal de execuție (_main thread_) pentru a gestiona alte sarcini.
+Iată traducerea și adaptarea în limba română:
+
+---
+
+### De ce este importantă asincronia pentru scalabilitate
+
+Într-o aplicație de tip server (server-side), nu vă puteți permite să aveți resurse inactive în timp ce așteptați finalizarea interogărilor către baza de date, a apelurilor API sau a altor operațiuni dependente de I/O (I/O-bound).
+Asincronia se asigură că resursele dumneavoastră sunt utilizate în mod optim.
+
+#### Experiență îmbunătățită pentru utilizator (UX)
+
+Utilizatorilor nu le place să aștepte.
+Programarea asincronă garantează că aplicația rămâne receptivă (responsive) chiar și atunci când execută sarcini de lungă durată.
+Această receptivitate se traduce direct într-o experiență mai bună pentru utilizator.
+
+#### Scalare mai ușoară
+
+Aplicațiile care utilizează eficient programarea asincronă sunt, în general, mai ușor de scalat pe orizontală.
+Prin folosirea optimă a resurselor disponibile, puteți gestiona un număr mai mare de utilizatori fără a fi nevoie să adăugați hardware suplimentar.

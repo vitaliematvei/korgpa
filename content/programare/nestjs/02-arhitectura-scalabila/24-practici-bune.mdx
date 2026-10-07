@@ -1,0 +1,69 @@
+---
+title: Bune practici pentru construirea aplicațiilor scalabile
+description: Bune practici pentru construirea aplicațiilor scalabile
+order: 24
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Pe măsură ce ne apropiem de finalul acestui capitol, este timpul să punem cap la cap toate conceptele discutate.
+Ați explorat arhitectura și pattern-urile de proiectare și chiar ați aprofundat detaliile programării asincrone în NestJS.
+Totuși, a cunoaște toate aceste componente individuale este ca și cum ați avea toate ingredientele pentru un preparat gastronomic — aveți nevoie în continuare de rețetă.
+Prin urmare, să trecem la bunele practici aplicabile care vor servi drept plan de acțiune pentru construirea aplicațiilor scalabile în NestJS.
+
+#### Organizarea codului este esențială
+
+Luați în considerare următoarele bune practici pentru o mai bună organizare a codului:
+
+- **Design modular:** Împărțiți aplicația în module bine definite. NestJS facilitează acest lucru prin sistemul său de module. Păstrarea funcționalităților conexe la un loc simplifică atât dezvoltarea, cât și scalarea.
+- **Cod curat (Clean code):** Importanța scrierii unui cod curat și ușor de întreținut nu poate fi exagerată. Respectați convențiile, fiți consecvenți în denumiri și, mai presus de toate, asigurați-vă că codul este auto-explicativ.
+
+#### Optimizarea stocării și regăsirii datelor
+
+Când lucrați cu seturi mari de date, luați în calcul implementarea următoarelor facilități:
+
+- **Indexarea bazei de date:** Asigurați-vă că bazele de date sunt indexate corespunzător. Indexarea accelerează procesul de regăsire a datelor, făcând astfel aplicația mai rapidă și mai scalabilă.
+
+- **Mecanisme de caching:** Așa cum am discutat anterior, caching-ul este esențial pentru optimizarea performanței.
+  Utilizați strategii de caching pentru a furniza datele accesate frecvent, reducând semnificativ încărcarea bazei de date.
+
+#### Adoptarea arhitecturii de microservicii pentru decuplare
+
+Arhitectura bazată pe microservicii nu este doar un termen la modă; este o bună practică pentru aplicațiile de mare amploare.
+Prin decuplarea diferitelor părți ale aplicației, microserviciile permit componentelor individuale să scaleze în mod independent.
+
+#### Automatizarea testării și a procesului de deployment
+
+Luați în considerare adăugarea următoarelor capacități în viitoarele dumneavoastră aplicații:
+
+- **Integrare continuă (CI/CD):** Configurarea unui flux de integrare și livrare continuă (CI/CD) automatizează procesele de testare și deployment, asigurându-vă că aplicația se află mereu într-o stare gata de lansare.
+- **Testare automatizată:** Investiți în testarea automatizată. Aceasta nu doar că îmbunătățește calitatea codului, dar se asigură și că procesul de scalare nu introduce bug-uri noi.
+
+#### Utilizarea middleware-urilor și a interceptorilor
+
+Integritatea și controlul în NestJS sunt menținute eficient prin middleware-uri și interceptori.
+Aceștia acționează ca puncte ideale de control pentru logare, măsurare sau modificarea cererilor și răspunsurilor — activități adesea cruciale atunci când se scalează o aplicație.
+
+#### Nu neglijați securitatea
+
+Dintre diferitele aspecte de securitate, iată-le pe cele mai comune de luat în considerare:
+
+- **Limitarea ratei de acces (Rate limiting):** Protejați aplicația împotriva abuzurilor prin implementarea limitării de rată pe rutele API-ului.
+- **Validarea și sanitizarea datelor:** Validați și curățați (sanitize) întotdeauna datele de intrare.
+  O aplicație securizată este mai ușor de scalat, deoarece nu trebuie să stingeți constant „incendii” de securitate.
+
+#### Valorificarea echilibrării sarcinii (Load balancing)
+
+Așa cum ați învățat anterior, echilibrarea sarcinii distribuie eficient traficul de rețea primit către mai multe servere.
+Acest lucru asigură o disponibilitate ridicată și fiabilitate, făcând aplicația în mod inerent mai scalabilă.
+
+---
+
+#### Utilizarea metricilor aplicației pentru o imagine de ansamblu
+
+Urmăriți următorii indicatori pentru a obține informații utile despre starea aplicației:
+
+- **Logare și monitorizare (Logging and monitoring):** Monitorizați îndeaproape metricile aplicației. Instrumente precum Grafana și Prometheus vă pot oferi date esențiale pentru scalare.
+- **Metrici de performanță:** Timpii de răspuns, rata erorilor și alți indicatori cheie de performanță (KPI) ar trebui monitorizați pentru a înțelege cât de bine scalează aplicația.
+
+{/* am ramas 3 .49 */}

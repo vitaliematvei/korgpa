@@ -1,0 +1,50 @@
+---
+title: Programarea asincronă în NestJS
+description: Programarea asincronă în NestJS
+order: 22
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Fiind construit pe baza Node.js, NestJS suportă în mod natural pattern-urile asincrone.
+Haideți să vedem cum fructifică NestJS această putere.
+
+#### Utilizarea Promise-urilor și a sintaxei async/await
+
+NestJS încurajează utilizarea Promise-urilor și a sintaxei `async/await` pentru gestionarea elegantă a operațiunilor asincrone.
+De exemplu, să presupunem că aveți un serviciu care preia datele unui utilizator dintr-o bază de date.
+Exemplul de cod 18 arată cum ar arăta implementarea fără sintaxa `async/await`.
+
+**Exemplu de cod (Code snippet 18):**
+
+```typescript
+getUserById(id: string) {
+  return this.database
+    .query(`SELECT * FROM users WHERE id = ${id}`)
+    .then(user => user)
+    .catch(err => {
+      throw new Error(err);
+    });
+}
+
+```
+
+Acum, utilizând sintaxa `async/await`, obținem versiunea prezentată în exemplul de cod 19 de mai jos.
+
+**Exemplu de cod (Code snippet 19):**
+
+```typescript
+async getUserById(id: string) {
+  try {
+    const user = await this.database.query(
+      `SELECT * FROM users WHERE id = ${id}`
+    );
+    return user;
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
+```
+
+Versiunea cu `async/await` nu este doar mai lizibilă, ci și mai ușor de înțeles și de depanat (debugged).

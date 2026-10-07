@@ -1,0 +1,92 @@
+---
+title: Schimbarea punctului de split global
+order: 4
+description: Schimbarea punctului de split global
+category: Editare sunete
+---
+
+Punctul de split global reprezintă atât setarea generală utilizată atunci când nu există un split „local”, cât și un „șablon” de la care se pornește configurarea diferitelor puncte de split locale salvate în **Keyboard Sets**.
+Îl puteți modifica și folosi ca punct principal de split al instrumentului.
+Unele seturi de claviatură (**Keyboard Sets**) pot suprascrie punctul de split global cu punctele lor de split locale memorate.
+
+#### Schimbarea punctului de split global
+
+1. Mergeți la pagina **Global > Mode Preferences > Style**.
+   Ca alternativă, țineți apăsat butonul **SHIFT** și apăsați butonul **STYLE PLAY** pentru a deschide direct pagina **Style**.
+
+   <figure className="my-6 text-center">
+     <img
+       src="/images/pa4x/12-editare-personalizare-sunete/149-1.jpg"
+       alt="TypeScript"
+       className="mx-auto"
+     />
+     <figcaption>Split Global</figcaption>
+   </figure>
+
+2. Atingeți diagrama claviaturii de pe ecran, apoi apăsați pe claviatură cea mai joasă notă a secțiunii **Upper** (mâna dreaptă).
+
+Ca alternativă, atingeți parametrul **Split Point** pentru a-l selecta, apoi folosiți comenzile **VALUE** pentru a alege noul punct de split.
+
+3. Apăsați butonul **EXIT** pentru a reveni la pagina anterioară.
+
+### Punctul de split „Global” și „Local” (sau temporar)
+
+Puteți alege un punct de split „global”, care rămâne neschimbat atunci când selectați un alt Keyboard Set.
+Sau puteți alege un punct de split „local”, adaptat mai bine unui Keyboard Set individual, care se poate modifica odată cu selectarea acestuia.
+
+Punctul de split „local” este doar temporar și devine permanent numai după ce îl salvați (Write) într-un Keyboard Set.
+
+Pentru a schimba tipul punctului de split, bifați sau debifați parametrul Global în fereastra de dialog Split Point.
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/pa4x/12-editare-personalizare-sunete/150-1.jpg"
+    alt="TypeScript"
+    className="mx-auto"
+  />
+  <figcaption>Split Global</figcaption>
+</figure>
+
+<div class="w-full overflow-x-auto rounded-lg border border-slate-200 shadow-sm">
+  <table class="w-full border-collapse bg-white text-left text-sm text-slate-700">
+    <thead class="bg-slate-100 font-semibold text-slate-900 border-b border-slate-200">
+      <tr>
+        <th scope="col" class="px-4 py-3 text-center">
+          Parametru Global
+        </th>
+        <th scope="col" class="px-4 py-3 font-semibold">
+          Tip Split
+        </th>
+        <th scope="col" class="px-4 py-3">
+          Semnificație / Descriere
+        </th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-200">
+      <tr class="hover:bg-slate-50 transition-colors">
+        <td class="px-4 py-3 text-center font-medium text-emerald-600">
+          Bifat (On)
+        </td>
+        <td class="px-4 py-3 font-semibold text-slate-900">Global</td>
+        <td class="px-4 py-3">
+          Lăsați această casetă bifată pentru a folosi punctul de split global.
+          Aceasta este setarea generală de la care puteți porni programarea
+          setărilor locale.
+        </td>
+      </tr>
+      <tr class="hover:bg-slate-50 transition-colors">
+        <td class="px-4 py-3 text-center font-medium text-amber-600">
+          Debifat (Off)
+        </td>
+        <td class="px-4 py-3 font-semibold text-slate-900">Local</td>
+        <td class="px-4 py-3">
+          Această casetă se debifează automat când începeți programarea unui
+          punct de split local în pagina principală (Main). Punctul de split
+          local poate fi salvat într-un Keyboard Set. Folosiți-l atunci când
+          aveți nevoie de un punct de split specific pentru un anumit set de
+          sunete.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
