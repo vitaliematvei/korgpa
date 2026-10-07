@@ -1,0 +1,59 @@
+---
+title: Instalarea Node.js și NestJS
+description: Instalarea Node.js și NestJS
+order: 3
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Pentru a-ți începe parcursul cu NestJS, este esențial să-ți configurezi corect mediul de dezvoltare.
+În această secțiune, te vom ghida prin instalarea ambelor instrumente — Node.js și NestJS —, temelia aplicațiilor solide pe partea de server.
+
+Node.js funcționează ca mediu de rulare (_runtime_) care permite executarea codului JavaScript pe server.
+NestJS îl completează prin simplificarea procesului de proiectare a aplicațiilor Node.js scalabile.
+Împreună, formează un cuplu imbatabil în lumea dezvoltării web moderne.
+
+Iată etapele instalării:
+
+### Pasul 1 – Instalarea Node.js
+
+Dacă ai deja instalat Node.js (versiunea 16 sau o versiune mai nouă), poți trece peste acest pas.
+În caz contrar, să trecem la treabă:
+
+1. **Descarcă Node.js:** Accesează site-ul oficial Node.js ([https://nodejs.org/](https://nodejs.org/)) și obține versiunea cu suport pe termen lung (_Long-Term Support_ – LTS) potrivită pentru sistemul tău de operare.
+2. **Rulează kitul de instalare:** Deschide fișierul descărcat și urmărește instrucțiunile de pe ecran. Acest proces va instala automat atât Node.js, cât și managerul de pachete npm.
+3. **Verifică instalarea:** Confirmă instalarea Node.js și npm verificând versiunile acestora în terminal:
+
+```bash
+node -v
+npm -v
+
+```
+
+---
+
+### Pasul 2 – Instalarea interfeței în linie de comandă NestJS (NestJS CLI)
+
+Pentru a instala NestJS CLI înainte de a începe, trebuie să urmezi acești pași simpli:
+
+1. **Instalează NestJS CLI:** Odată ce ai Node.js instalat, instalează NestJS CLI la nivel global în sistem.
+   Acesta îți oferă instrumente puternice pentru gestionarea aplicațiilor NestJS:
+
+```bash
+npm install -g @nestjs/cli
+
+```
+
+2. **Verifică instalarea:** Asigură-te că CLI-ul s-a instalat cu succes verificându-i versiunea:
+
+```bash
+nest --version
+# sau folosește
+nest info
+
+```
+
+Bravo! Ai pus bazele prin instalarea Node.js și a interfeței NestJS CLI. Primul oferă mediul de rulare, iar cel din urmă îți pune la dispoziție instrumente vitale pentru modelarea aplicațiilor NestJS.
+
+În continuare, vom rafina spațiul tău de lucru prin configurarea npm și TypeScript, pregătindu-l complet pentru dezvoltarea cu NestJS.
+Experiența ta în dezvoltarea aplicațiilor server-side este pe cale să primească un impuls serios!

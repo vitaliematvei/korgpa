@@ -1,0 +1,103 @@
+---
+title: Nașterea unui proiect NestJS
+description: Nașterea unui proiect NestJS
+order: 6
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Acum, haide să creăm primul nostru proiect urmând acești pași simpli:
+
+### Pasul 1 – Pregătirea terenului
+
+Din terminalul tău preferat, navighează în directorul unde dorești să plasezi proiectul NestJS. De exemplu, presupunem că vrem ca proiectul să fie localizat în `Documents/nestjs`.
+
+### Pasul 2 – Dă viață proiectului prin comandă
+
+Invocă puterea NestJS CLI folosind următoarea comandă.
+Înlocuiește `my-nest-app` cu numele care se potrivește cel mai bine cu viziunea ta:
+
+```bash
+nest new my-nest-app
+
+```
+
+Pe măsură ce comanda rulează, NestJS CLI te va întâmpina cu câteva opțiuni: alegerea managerului de pachete preferat și includerea unei aplicații demonstrative de pornire.
+Pentru această aventură, vom alege **yarn** ca in imagine.
+
+<figure className="my-6 text-center">
+  <img src="/images/nestjs/52-1.jpg" alt="img" className="mx-auto" />
+  <figcaption>Creare proiect nestjs</figcaption>
+</figure>
+
+### Pasul 3 – Explorează structura proiectului
+
+Etapa de creare automată a structurii proiectului este finalizată.
+Acum este momentul să intri în „inima” proiectului tău:
+
+```bash
+$ cd my-nest-app
+```
+
+Deschide IDE-ul tău preferat pentru a vedea structura bine organizată pe care **NestJS** o pune la dispoziție.
+
+**Figura 3.2** prezintă, aproximativ, modul în care ar trebui să arate structura proiectului:
+
+<figure className="my-6 text-center">
+  <img src="/images/nestjs/52-2.jpg" alt="img" className="mx-auto" />
+  <figcaption>Structura proiect nestjs</figcaption>
+</figure>
+
+Permite-mi să te ghidez într-un scurt tur al acestui univers digital:
+
+- **`src/`** – centrul proiectului, locul în care se află „sufletul” aplicației. Aici vei găsi modulele, controllerele, providerii și celelalte componente principale ale aplicației, toate construite folosind principiile TypeScript.
+
+- **`dist/`** – rezultatul muncii tale. Aici sunt generate fișierele JavaScript transpuse din codul TypeScript, după ce proiectul este compilat și pregătit pentru rulare.
+
+- **`node_modules/`** – „cutia cu unelte” a proiectului. Aici se află toate pachetele și dependențele de care aplicația are nevoie pentru a funcționa.
+
+- **`test/`** – terenul de testare al aplicației. Aici sunt păstrate testele care verifică dacă aplicația funcționează corect și dacă este suficient de stabilă și rezistentă.
+
+- **`tsconfig.json`** și **`nest-cli.json`** – „regulamentele” proiectului. Aceste fișiere conțin setările și regulile de configurare pentru **TypeScript**, respectiv pentru **NestJS CLI**.
+
+### Pasul 4 – Pornește aplicația de test
+
+Înainte de a merge mai departe, să vedem cum arată aplicația pe care tocmai am creat-o atunci când o pornim.
+Din directorul rădăcină al proiectului, execută următoarea comandă:
+
+```bash
+$ npm run start:dev
+```
+
+Vei observa că aplicația **NestJS** pornește și ascultă pe portul configurat, de obicei **portul 3000**.
+
+Deschide browserul și accesează:
+
+```text
+http://localhost:3000
+```
+
+Acolo vei vedea răspunsul aplicației de test pe care tocmai ai creat-o. Practic, browserul face o solicitare **GET** către API-ul aplicației, iar NestJS returnează răspunsul corespunzător.
+
+### Victorie! 🎉
+
+Ai reușit nu doar să creezi structura unui nou proiect **NestJS**, ci și să-l pornești și să-l vezi funcționând.
+
+De aici înainte urmează lucruri interesante: **module, controllere, provideri și bune practici** care vor transforma treptat proiectul într-o aplicație bine structurată și profesională.
+
+Până acum, am făcut primii pași în călătoria noastră cu **NestJS**:
+
+- am creat cu succes un proiect nou;
+- am înțeles structura inițială a proiectului;
+- am pornit aplicația de test;
+- am verificat că aplicația funcționează în browser.
+
+Acum avem o bază solidă de la care putem continua să construim.
+
+### Ce urmează?
+
+În continuare, vom analiza în detaliu **structura unui proiect NestJS** și vom înțelege rolul fiecărei componente. Vom descoperi cum sunt organizate modulele, controllerele, providerii și celelalte elemente care formează baza aplicației noastre.
+
+**Să descoperim împreună structura din spatele unei aplicații NestJS!**
+
+{/* am ramas Understanding the NestJS project structure .55 */}
