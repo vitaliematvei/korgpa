@@ -1,0 +1,77 @@
+---
+title: Crearea unui modul nou
+description: Crearea unui modul nou
+order: 9
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Arhitectura NestJS îți oferă libertatea de a crea modulele așa cum dorești.
+Poți alege fie să le generezi folosind CLI-ul, fie să le creezi manual.
+Utilizarea CLI-ului vine cu o serie de avantaje, cum ar fi plasarea modulului în directorul potrivit și importarea sa automată în modulul rădăcină (root module), conectând astfel noul modul la întreaga aplicație.
+În continuare este explicat modul în care poți folosi ambele metode.
+
+**Utilizarea NestJS CLI**
+
+Interfața în linie de comandă (CLI), un adevărat briceag elvețian pentru dezvoltatorii NestJS, oferă o comandă extrem de facilă pentru a genera un modul nou:
+
+```bash
+$ nest generate module <nume-modul>
+
+```
+
+Sau în varianta prescurtată:
+
+```bash
+$ nest g mo <nume-modul>
+
+```
+
+Această comandă nu doar că creează fișierul noului modul, dar îl și înregistrează automat în cel mai apropiat modul părinte (sau în `app.module.ts`).
+
+---
+
+**Crearea manuală a unui modul**
+
+Pentru cei care preferă abordarea manuală:
+
+1. Creează un fișier nou numit `<nume-modul>.module.ts`.
+2. Adaugă structura de bază:
+
+```typescript
+import { Module } from '@nestjs/common';
+
+@Module({
+  imports: [],
+  controllers: [],
+  providers: [],
+})
+export class <NumeModul>Module {}
+
+```
+
+3. Importă și înregistrează modulul în modulul părinte dorit (sau în modulul rădăcină).
+
+---
+
+**Momentul deciziei – Când ar trebui să creezi un modul nou?**
+
+O întrebare frecventă este când ar trebui izolat un modul nou.
+Răspunsul constă în **principiul responsabilității unice** (_Single Responsibility Principle - SRP_).
+Dacă o funcționalitate sau un domeniu are o responsabilitate distinctă, care poate funcționa independent sau poate fi privită ca o unitate de sine stătătoare, este candidatul perfect pentru un modul nou.
+
+Gândește-te la gestionarea utilizatorilor (_User Management_), plăți (_Payments_) sau notificări (_Notifications_) — fiecare dintre acestea poate reprezenta un modul separat.
+Am discutat pe larg despre designul modular în primul capitol, așa că nu ezita să îl recitești dacă ai nevoie de o recapitulare.
+
+---
+
+**Quiz / Chestionar**
+
+Răspunde la următoarele întrebări:
+
+- Ce orchestrează modulul rădăcină (_root module_) într-o aplicație NestJS?
+- Care este comanda principală pentru a crea un modul folosind NestJS CLI?
+- Când este momentul ideal pentru a lua în considerare crearea unui modul nou?
+
+> **Notă importantă:**
+> Reține întotdeauna că modulele nu au doar rolul de a separa codul, ci ajută și la crearea unor componente reutilizabile. Un modul bine definit poate fi importat cu ușurință în alt modul sau chiar în alte proiecte NestJS.

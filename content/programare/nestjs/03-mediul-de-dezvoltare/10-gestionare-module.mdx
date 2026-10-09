@@ -1,0 +1,41 @@
+---
+title: Gestionarea modulelor
+description: Gestionarea modulelor
+order: 10
+category: 'NestJS'
+level: 'Incepator'
+---
+
+După ce sunt create, modulele trebuie adesea să interacționeze între ele.
+Fie că partajezi un serviciu între două module sau că configurezi rute, gestionarea relațiilor dintre module este crucială.
+Iată proprietățile decoratorului `@Module()` care ne ajută să gestionăm aceste relații:
+
+- **`imports`:** În decoratorul `@Module()`, tabloul `imports` îi permite unui modul să folosească furnizorii (_providers_) exportați de un alt modul.
+- **`exports`:** Pentru a face furnizorii, gardienii (_guards_) sau filtrele disponibile pentru alte module, folosește tabloul `exports` în decoratorul `@Module()`.
+- **`controllers` și `providers`:** Controllerele definesc rutele și gestionează cererile primite, în timp ce furnizorii încapsulează logica de business.
+  Aceștia sunt declarați în tablourile `controllers`, respectiv `providers`.
+
+În proiectul inițial NestJS avem un exemplu de structură modulară, chiar dacă există un singur modul.
+Iată ce găsim în fișierul `app.module.ts`:
+
+```typescript
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+
+@Module({
+  imports: [],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
+```
+
+Așa cum sugerează acest cod, modulul principal (`AppModule`) funcționează de sine stătător deocamdată și nu are niciun alt modul importat.
+Tabloul `imports` va crește cu siguranță pe măsură ce vom conecta mai multe module la modulul rădăcină (_root module_).
+
+Modulele formează coloana vertebrală arhitecturală a unei aplicații NestJS.
+Cu o înțelegere clară a modului în care se creează și se gestionează, ești pe drumul cel bun spre stăpânirea filozofiei NestJS.
+Pe măsură ce construim aplicația, păstrează mereu în minte natura modulară a framework-ului — aceasta asigură claritate, mentenanță ușoară și scalabilitate.
+
+Ești gata pentru nivelul următor? Să explorăm în detaliu controllerele și lumea lor fascinantă.

@@ -1,0 +1,107 @@
+---
+title: Înțelegerea structurii unui proiect NestJS
+description: Înțelegerea structurii unui proiect NestJS
+order: 7
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Pășind în inima framework-ului NestJS, îi recunoști imediat combinația unică de eleganță și design orientat spre scop.
+Fiecare director și fiecare fișier își are locul și rolul său bine definit.
+Înțelegerea structurii unui proiect NestJS este esențială, nu doar pentru o navigare ușoară, ci și pentru a-i asimila cu adevărat filozofia.
+
+**De ce este importantă structura proiectului în NestJS?**
+
+NestJS se inspiră din limbaje și instrumente mature, fiind strâns aliniat cu designul modular din Angular.
+Această abordare are ca scop menținerea codului ușor de întreținut, scalabil și organizat, permițând dezvoltatorilor — atât începători, cât și experți — să găsească rapid fișierele și să înțeleagă fluxul și relațiile din cadrul aplicației.
+
+Pe măsură ce aplicația crește, structura poate evolua, însă rețineți că rolul fiecărui director este conceput pentru a ne simplifica munca:
+
+**Directorul `src/**`
+
+Fiind de departe cel mai accesat director, `src/` este locul unde are loc întreaga logică.
+Aici se află modulele, controllerele, furnizorii (providers) și logica de bază a aplicației:
+
+- **Module (Modules):** Acestea încapsulează domenii specifice ale aplicației, promovând o separare clară a responsabilităților (separation of concerns).
+  Gândiți-vă la ele ca la secțiuni distincte din aplicație, care pot funcționa independent, dar fac parte din același ansamblu.
+  Conform convenției, toate punctele de intrare ale modulelor trebuie denumite sub forma `*.module.ts`; acest lucru ajută la mentenanță și la lizibilitatea codului.
+- **Controllere (Controllers):** Acestea gestionează cererile HTTP primite și le redirecționează către funcțiile corespunzătoare din servicii.
+  Conform convenției, toate fișierele de tip controller trebuie denumite sub forma `*.controller.ts`.
+- **Furnizori (Providers):** Aceștia reprezintă o combinație de servicii, repositorii, fabrici (factories) și altele.
+  Ei execută logica de business propriu-zisă, menținând controllerele aerisite și concentrate pe rolul lor primar.
+
+<figure className="my-6 text-center">
+  <img src="/images/nestjs/3-5.jpg" alt="img" className="mx-auto" />
+  <figcaption>Folderul src</figcaption>
+</figure>
+
+În prezent, aplicația noastră are un singur modul (modulul principal, `app module`), iar punctul său de intrare este `app.module.ts`.
+Într-o aplicație din lumea reală, vom avea, cel mai probabil, mai multe module.
+Păstrarea tuturor fișierelor într-un singur director (`src/`, așa cum este implicit) poate face ca folderul `src/` să devină greu de întreținut.
+Este recomandat să creați sub-directoare în `src/` și să structurați fiecare modul separat.
+Figura 3.6 ilustrează exemplul unui folder `src/` aglomerat cu mai multe module, comparat cu unul organizat eficient.
+Nu uitați că NestJS ne oferă doar direcția de bază, iar modul exact în care organizăm codul rămâne la alegerea noastră.
+
+<figure className="my-6 text-center">
+  <img src="/images/nestjs/3-6.jpg" alt="img" className="mx-auto" />
+  <figcaption>
+    Separarea modulelor în directoare diferite în cadrul folderului `src/` face
+    ca structura codului să fie mult mai lizibilă.
+  </figcaption>
+</figure>
+
+Pe măsură ce proiectul nostru crește, NestJS ne oferă flexibilitatea de a
+structura folderul `src/`. Cu toate acestea, pentru a rămâne fideli filozofiei
+NestJS și pentru a-i urma structura nativă, putem folosi CLI-ul (interfața în
+linie de comandă) pentru a genera resurse pentru aplicație, astfel încât NestJS
+să se ocupe de plasarea acelor componente în locul potrivit.
+
+Figura 3.6 prezintă două structuri diferite de proiect. Prima arată doar module amestecate și componentele lor grupate împreună în cadrul aceluiași folder `src/`, în timp ce a doua separă responsabilitățile prin gruparea componentelor utilizând NestJS CLI.
+Putem ajunge în final la cea de-a doua structură și puteți observa clar cât de ușor este de întreținut a doua opțiune în comparație cu prima:
+
+În plus — și foarte important —, în folderul `src/` avem punctul principal de intrare în aplicație, adică fișierul `main.ts`.
+În prezent, așa arată acest fișier:
+
+```typescript
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  await app.listen(3000);
+}
+bootstrap();
+```
+
+Acesta este pur și simplu o funcție JavaScript pe care o executăm și care ne permite să setăm un port.
+Când vom ajunge la studiile de caz specifice, vom vedea când, de ce și cum putem îmbunătăți acest fișier inițial pentru a corespunde cerințelor unui anumit proiect.
+
+**Directorul `dist/**`
+
+De fiecare dată când pregătiți aplicația pentru deploy sau când porniți proiectul, codul TypeScript este transpilați în JavaScript, iar rezultatele sunt salvate în directorul `dist/`.
+Aceasta este versiunea aplicației care va fi rulată efectiv și, cel mai probabil, nu o vom modifica sau întreține niciodată manual, deoarece folderul este generat automat la runtime.
+De regulă, acest director este ignorat de Git (`.gitignore`), fiind inutil să fie trimis în repozitoriu.
+
+**Directorul `node_modules/**`
+
+O prezență obișnuită în proiectele Node.js, `node_modules/` este locul unde se află toate dependențele proiectului.
+Fiecare pachet instalat prin npm sau yarn își are propriul loc în acest director.
+
+**Directorul `test/**`
+
+Fidel filozofiei NestJS de a construi aplicații robuste, directorul `test/` este locul unde se află testele unitare și testele End-to-End (e2e).
+Este o dovadă a angajamentului framework-ului față de calitate și fiabilitate.
+Fiecare fișier cu logică de business din folderul `src/` (cum ar fi fișierele de servicii, controllerele etc.) poate avea propriile fișiere de test direct alături de el.
+Pentru testele unitare și de integrare, avem un capitol întreg dedicat testării, pe care îl vom explica în detaliu când vom ajunge la Capitolul 7.
+
+**Fișierele de configurare – `tsconfig.json` și `nest-cli.json**`
+
+Fiecare aplicație necesită un minim de configurare. Fișierul `tsconfig.json` răspunde cerințelor TypeScript, definind regulile și detaliile specifice procesului de transpilare.
+Pe de altă parte, `nest-cli.json` oferă configurările pentru NestJS CLI, ajustând modul în care CLI-ul se comportă și interacționează cu proiectul tău.
+
+Înțelegând și apreciind logica din spatele structurii de directoare din NestJS, te aliniezi la însăși ideologia sa.
+Un proiect bine structurat este asemenea unei biblioteci bine organizate: fiecare carte își are locul ei, iar găsirea lucrurilor de care ai nevoie devine o sarcină simplă și fluentă.
+Cu această înțelegere, nu doar scrii cod; creezi o lucrare bine închegată, în deplină armonie cu filozofia NestJS.
+
+Pe măsură ce avansăm, reține că fiecare componentă din NestJS este proiectată cu un scop clar, reflectând angajamentul framework-ului față de productivitatea dezvoltatorilor și mentenanța aplicațiilor.
+Ești gata să mergem mai departe? Să explorăm în detaliu crearea modulelor, construirea controllerelor și implementarea furnizorilor (providers).

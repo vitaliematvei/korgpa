@@ -1,0 +1,57 @@
+---
+title: Injectarea dependențelor – magia din spatele furnizorilor (providers)
+description: Injectarea dependențelor – magia din spatele furnizorilor (providers)
+order: 13
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Unul dintre cele mai mari avantaje ale NestJS este sistemul său robust de **injectare a dependențelor** (_Dependency Injection - DI_).
+Prin intermediul DI, poți injecta cu ușurință un furnizor în altul, promovând un cod modular și ușor de întreținut.
+Este ca și cum ai avea un ajutor de bucătar (_sous-chef_) pregătit să intervină ori de câte ori este nevoie!
+
+De exemplu, dacă `UserService` are nevoie de funcționalitățile oferite de `DatabaseService`, iată cum poți realiza acest lucru:
+
+```typescript
+import { Injectable } from '@nestjs/common';
+import { DatabaseService } from './database.service';
+
+@Injectable()
+export class UserService {
+  constructor(private readonly databaseService: DatabaseService) {}
+
+  fetchUserData(): string {
+    return this.databaseService.getData('user');
+  }
+}
+```
+
+În exemplul de cod anterior, am injectat capabilitățile lui `databaseService` în clasa `UserService`.
+Această dependență trebuie injectată în constructorul clasei, asigurându-ne astfel că instanța bazei de date va fi disponibilă încă de la inițializarea `UserService`, oriunde avem o instanță a acestui serviciu.
+
+> **Notă importantă:**
+> Reține întotdeauna **principiul responsabilității unice** (_Single Responsibility Principle_). Fiecare furnizor ar trebui să gestioneze o singură funcționalitate distinctă. Acest lucru asigură claritate și ușurință în mentenanță.
+
+---
+
+### Quiz / Chestionar
+
+Răspunde la următoarele întrebări:
+
+- Cum marchezi o clasă ca fiind un furnizor (_provider_) în NestJS?
+- Care este rolul principal al decoratorului `@Injectable()`?
+- Cum injectezi un furnizor în alt furnizor?
+
+**Furnizori personalizați (custom providers) – dincolo de clase**
+
+Deși clasele sunt cele mai frecvente tipuri de furnizori, NestJS nu se limitează doar la ele.
+Prin intermediul furnizorilor personalizați (_custom providers_), poți folosi ca furnizori și valori statice, fabrici (_factories_) și multe altele.
+Aceștia oferă o flexibilitate sporită în gestionarea dependențelor aplicației tale.
+
+Cu acești furnizori iscusiți la locul lor, bucătăria conacului nostru NestJS este plină de viață, pregătind bucate alese (sau, în cazul nostru, executând o logică de business impecabilă).
+Totuși, un conac nu este complet doar cu o bucătărie.
+Pe măsură ce avansăm, vom explora și alte încăperi, fiecare având un rol esențial în crearea unei aplicații NestJS holistice și eficiente.
+
+Următoarea oprire? **Middleware-urile și interceptorii!**
+
+{/* am ramas Handling exceptions with exception filters .67 */}

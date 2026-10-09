@@ -1,0 +1,72 @@
+---
+title: Implementarea furnizorilor (providers) pentru logica de business
+description: Implementarea furnizorilor (providers) pentru logica de business
+order: 12
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Imaginează-ți o bucătărie efervescentă într-un conac impunător.
+Dacă controllerele sunt hangiul de la ușă care întâmpină oaspeții, furnizorii (_providers_) sunt bucătarii iscusiți din culise, pregătind cu meticulozitate și rafinament fiecare preparat.
+În contextul conacului nostru NestJS, furnizorii încapsulează logica de business de bază, asigurându-se că aplicația noastră nu doar arată bine la exterior, ci și funcționează impecabil în interior.
+
+Ești gata să-ți pui bona de bucătar și să prepari o logică de business de excepție? Să începem!
+
+---
+
+### Ce este un furnizor (provider) în NestJS?
+
+În esență, un furnizor în NestJS este o clasă care funcționează ca o sursă de date sau funcționalități — fie că este vorba despre obținerea datelor, executarea unor sarcini specifice sau realizarea oricărei alte acțiuni esențiale pentru aplicație.
+Decorați cu `@Injectable()`, furnizorii reprezintă piatra de temelie a puternicului sistem de **injectare a dependențelor** (_dependency injection_) din NestJS.
+
+---
+
+### Crearea primului tău furnizor
+
+Crearea unui furnizor în NestJS este un proces pe cât de elegant, pe atât de simplu. La fel ca în cazul controllerelor și al modulelor, NestJS îți oferă două modalități de a-ți crea furnizorii:
+
+#### Utilizarea NestJS CLI
+
+Pentru cei care preferă automatizarea:
+
+```bash
+$ nest generate service <nume-serviciu>
+
+```
+
+Varianta prescurtată este următoarea:
+
+```bash
+$ nest g s <nume-serviciu>
+
+```
+
+Această comandă generează rapid un fișier nou de serviciu, pregătit să găzduiască logica ta de business.
+
+#### Construirea manuală a unui furnizor
+
+Pentru artizanii care preferă abordarea manuală:
+
+1. Creează un fișier nou numit `<nume-serviciu>.service.ts`.
+2. Adaugă structura de bază:
+
+```typescript
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class <NumeServiciu>Service {
+  performTask(): string {
+    return 'Se execută sarcina principală!';
+  }
+}
+
+```
+
+3. Asigură-te că imporți și înregistrezi serviciul în cadrul modulului său asociat.
+
+---
+
+Am creat propriul modul, controller și furnizor.
+În esență, aceste trei componente vor fi cel mai probabil elementele indispensabile pentru aplicația ta NestJS.
+
+Acum, haide să pătrundem puțin mai adânc în tiparul de proiectare (_design pattern_) care face NestJS atât de robust: **injectarea dependențelor** (_dependency injection_).

@@ -1,0 +1,31 @@
+---
+title: Crearea și gestionarea modulelor
+description: Crearea și gestionarea modulelor
+order: 8
+category: 'NestJS'
+level: 'Incepator'
+---
+
+NestJS excelează prin arhitectura sa modulară.
+Dacă ai admirat vreodată o clădire bine construită, în care fiecare cameră are un scop precis, exact aceasta este frumusețea pe care NestJS o aduce în lumea dezvoltării backend.
+Acest capitol își propune să te transforme în arhitectul principal al aplicațiilor tale NestJS, așa că haide să explorăm în detaliu arta și știința din spatele modulelor.
+
+**Ce sunt modulele în NestJS?**
+
+În esență, un modul este o clasă decorată cu `@Module()`.
+La fel ca încăperile unei clădiri, modulele încapsulează funcționalități distincte ale aplicației, asigurând o separare clară a responsabilităților (_separation of concerns_).
+Ele joacă un rol crucial în menținerea organizării, scalabilității și lizibilității, făcând mai simplă adăugarea, modificarea sau eliminarea de funcționalități pe măsură ce aplicația evoluează.
+
+**Rolul modulului rădăcină (root module)**
+
+Dintre toate modulele, unul singur se remarcă în mod deosebit: modulul rădăcină (_root module_).
+Gândește-te la el ca la intrarea principală a unei clădiri.
+Modulul rădăcină este locul de unde începe călătoria aplicației, atrăgând alte module și pregătind terenul pentru întreaga structură.
+Importanța sa nu poate fi subestimată; aici se înregistrează modulele, middleware-urile și chiar pachetele terțe, orchestrând întreaga aplicație.
+
+Figura 3.7 arată modul în care sunt structurate modulele în jurul modulului rădăcină (modulul aplicației) și este preluată din documentația oficială NestJS ([https://docs.nestjs.com/](https://docs.nestjs.com/)):
+
+<figure className="my-6 text-center">
+  <img src="/images/nestjs/3-7.jpg" alt="img" className="mx-auto" />
+  <figcaption>Organizarea modulelor în cadrul unei aplicații NestJS</figcaption>
+</figure>

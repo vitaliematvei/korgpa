@@ -1,0 +1,129 @@
+---
+title: Construirea controllerelor pentru gestionarea cererilor
+description: Construirea controllerelor pentru gestionarea cererilor
+order: 11
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Fiecare aplicație web are o ușă de la intrare — un loc în care oaspeții (sau, în cazul nostru, cererile de la clienți) sunt întâmpinați și direcționați către locul potrivit.
+În conacul impunător al aplicației noastre NestJS, controllerele sunt hangiul de la ușă, asigurându-se că fiecare cerere este procesată eficient și direcționată către serviciul corespunzător.
+Dacă ești dornic să proiectezi acești paznici cruciali, ești în locul potrivit.
+Pune-ți centura de siguranță, pentru că urmează să pătrundem adânc în lumea controllerelor!
+
+---
+
+### Ce este un controller în NestJS?
+
+Controllerele din NestJS sunt responsabile de preluarea cererilor primite, procesarea lor și returnarea răspunsurilor către client.
+Acestea sunt decorate de obicei cu `@Controller()` și conțin metode de manipulare (_handler methods_) pentru diferite rute.
+
+---
+
+### Crearea primului tău controller
+
+Crearea unui controller este o sarcină simplă, mai ales dacă ai stăpânit deja modulul! Îl poți genera fie prin CLI, fie manual, așa cum am făcut pentru modul.
+Iată cum:
+
+#### Utilizarea NestJS CLI
+
+La fel ca în cazul modulelor, interfața CLI este aici pentru a ne simplifica viața:
+
+```bash
+$ nest generate controller <nume-controller>
+
+```
+
+Pentru iubitorii de scurtături:
+
+```bash
+$ nest g co <nume-controller>
+
+```
+
+Această comandă creează un fișier nou de controller și îl înregistrează în modulul asociat.
+În plus, generează implicit și un fișier de test alături de controller.
+Opțional, dacă nu dorești crearea fișierului de test, poți adăuga flag-ul `--no-spec` la comandă.
+
+#### Construirea manuală a unui controller
+
+Dacă preferi să lucrezi totul de la zero:
+
+1. Creează un fișier nou numit `<nume-controller>.controller.ts`.
+2. Adaugă structura de bază:
+
+```typescript
+import { Controller, Get } from '@nestjs/common';
+
+@Controller('<nume-ruta>')
+export class <NumeController>Controller {
+  @Get()
+  findAll(): string {
+    return 'Acesta este un răspuns de probă!';
+  }
+}
+
+```
+
+_Acesta este un controller de bază care arată modul în care trebuie să arate o structură minimală în NestJS._
+
+3. Apoi, importă și înregistrează controllerul în modulul respectiv.
+
+---
+
+### Gestionarea cererilor cu ajutorul decoratorilor
+
+NestJS oferă o multitudine de decoratori pentru a face din gestionarea diferitelor tipuri de cereri o sarcină extrem de simplă:
+
+- **`@Get()`:** Folosit pentru gestionarea cererilor de tip GET.
+- **`@Post()`:** Doriți să primiți cereri POST? Aceasta este opțiunea potrivită.
+- **`@Put()`:** Ideal pentru actualizarea resurselor.
+- **`@Delete()`:** Când ceva trebuie șters, folosește acest decorator.
+
+Nu doar că poți specifica tipul cererii, dar poți defini și ruta, transmisiță ca parametru de tip text (_string_), ca în secvența de cod următoare:
+
+```typescript
+@Get('details')
+fetchDetails(): string {
+  return 'Se preiau detaliile pentru tine!';
+}
+
+```
+
+> **Notă importantă:**
+> Fiecare metodă de manipulare (_handler_) dintr-un controller corespunde unei rute specifice, iar scopul ei ar trebui să fie clar și unic.
+> Respectarea acestui principiu asigură scalabilitatea și mentenanța codului.
+
+---
+
+### Quiz / Chestionar
+
+Răspunde la următoarele întrebări:
+
+- Care este rolul principal al controllerelor într-o aplicație NestJS?
+- Ce decorator este utilizat pentru a gestiona cererile de tip DELETE?
+- Cum specifici o rută anume pentru o metodă de manipulare (_handler_)?
+
+---
+
+### Rute dinamice și parametri
+
+Uneori vei dori să proiectezi rute dinamice, cum ar fi preluarea detaliilor unui utilizator pe baza ID-ului său.
+NestJS vine în ajutorul tău — iată cum:
+
+```typescript
+@Get('users/:userId')
+fetchUserDetails(@Param('userId') userId: string): string {
+  return `Detalii pentru utilizatorul cu ID-ul: ${userId}`;
+}
+
+```
+
+Decoratorul `@Param()` extrage partea dinamică din rută, făcând-o accesibilă în interiorul metodei tale.
+
+---
+
+Pe măsură ce îți conturezi aplicația NestJS, reține că controllerele sunt soldații din prima linie, întâmpinând fiecare cerere și asigurându-se că este procesată corespunzător.
+Cu un set robust de controllere, pui temelia unei aplicații reziliente, scalabile și eficiente.
+
+Acum că porțile noastre sunt bine păzite, este timpul să explorăm sălile maiestuoase din interior — serviciile și furnizorii (_providers_) care execută munca grea!
