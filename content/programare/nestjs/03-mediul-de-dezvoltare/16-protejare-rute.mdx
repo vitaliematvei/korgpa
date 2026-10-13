@@ -1,0 +1,53 @@
+---
+title: Gardienii (Guards) – protejarea rutelor
+description: Gardienii (Guards) – protejarea rutelor
+order: 16
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Gardienii (_guards_) sunt străjerii din NestJS care determină dacă o cerere (_request_) poate avansa către gestionarul de rută (_route handler_).
+În NestJS, un gardian va implementa întotdeauna metoda `canActivate`.
+Un gardian de bază arată astfel:
+
+```typescript
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+
+@Injectable()
+export class SampleGuard implements CanActivate {
+  canActivate(context: ExecutionContext): boolean {
+    // Logică pentru a determina dacă cererea ar trebui să
+    // meargă mai departe
+    return true;
+  }
+}
+```
+
+Să analizăm acest cod pas cu pas:
+
+- **Importuri:**
+- Interfața `CanActivate` este contractul care, odată implementat, acționează ca un gardian ce decide dacă permite continuarea cererii.
+- Tipurile `ExecutionContext` și `Injectable` sunt importate din `@nestjs/common`.
+  Acestea ajută la înțelegerea contextului în care este utilizat gardianul și, respectiv, la transformarea clasei noastre într-un furnizor (_provider_).
+
+- **`@Injectable()`:**
+- Decoratorul `@Injectable()` marchează clasa `SampleGuard` ca fiind un furnizor ce poate fi gestionat de sistemul de injectare a dependențelor (DI) din NestJS.
+
+- **Implementarea `CanActivate`:**
+- Clasa `SampleGuard` implementează interfața `CanActivate`.
+  Acest lucru impune definirea metodei `canActivate` în cadrul clasei.
+
+- **Metoda `canActivate`:**
+- Această metodă reprezintă inima gardianului nostru.
+  Ea primește ca argument un obiect `ExecutionContext`, care încapsulează detaliile cererii aflate în desfășurare.
+- Metoda trebuie să returneze o valoare booleană (`boolean`). Dacă returnează `true`, cererea continuă către gestionarul de rută. Dacă returnează `false`, cererea este respinsă.
+- Comentariul `// Logică pentru a determina dacă cererea ar trebui să meargă mai departe` este un loc de rezervă (_placeholder_) unde vei implementa logica de decizie. Aceasta poate include verificarea token-urilor de autentificare, a rolurilor de utilizator și multe altele.
+
+Utilizând gardieni, poți concepe mecanicisme complexe de control al accesului, asigurându-te că fiecare cerere care îți accesează rutele este legitimă și autorizată.
+
+> **Notă:**
+> Conductele (_pipes_) și gardienii (_guards_) sunt subiecte vaste. Le vom explora în detaliu într-un capitol ulterior.
+
+Acum că avem aproape tot ce ne trebuie pentru a construi o aplicație robustă în NestJS, suntem pregătiți să dezvoltăm aplicații reale. Acest lucru este exact ceea ce vom face împreună în următoarele două capitole.
+
+{/* am ramas Advanced Concepts .73 */}

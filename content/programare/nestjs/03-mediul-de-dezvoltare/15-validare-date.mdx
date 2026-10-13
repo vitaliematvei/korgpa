@@ -1,0 +1,52 @@
+---
+title: Validarea datelor cu ajutorul conductelor (Pipes) și al gardienilor (Guards)
+description: Validarea datelor cu ajutorul conductelor (Pipes) și al gardienilor (Guards)
+order: 15
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Conductele (_pipes_) și gardienii (_guards_) sunt precum agenții de securitate vigilenți ai unui club exclusivist, asigurându-se că fiecare oaspete (toate datele, în cazul nostru) îndeplinește criteriile necesare înainte de a intra.
+
+#### Conducte (Pipes) – transformare și validare
+
+Conductele operează în două direcții principale: **transformarea datelor** și **validarea datelor**.
+Prin înlănțuirea mai multor conducte, poți garanta integritatea și uniformitatea datelor în întreaga aplicație.
+
+Consultă următorul exemplu pentru o scurtă prezentare generală:
+
+```typescript
+import { PipeTransform, Injectable, ArgumentMetadata } from '@nestjs/common';
+
+@Injectable()
+export class SamplePipe implements PipeTransform {
+  transform(value: any, metadata: ArgumentMetadata) {
+    // Logica de validare sau transformare se plasează aici
+    return transformedValue;
+  }
+}
+```
+
+Să analizăm acest cod pas cu pas:
+
+- **Importuri:**
+- Interfața `PipeTransform` reprezintă contractul pe care conductele noastre personalizate îl vor respecta.
+- Tipurile `Injectable` și `ArgumentMetadata` sunt importate din `@nestjs/common`.
+  Acestea sunt concepte fundamentale în NestJS care ajută la crearea conductelor și, respectiv, la înțelegerea contextului în care este utilizată conducta.
+
+- **`@Injectable()`:**
+- Decoratorul `@Injectable()` marchează clasa noastră `SamplePipe` ca fiind un furnizor (_provider_) ce poate fi gestionat de sistemul de injectare a dependențelor (DI) din NestJS.
+
+- **Implementarea `PipeTransform`:**
+- Clasa `SamplePipe` implementează interfața `PipeTransform`, ceea ce impune prezența metodei `transform` în interiorul clasei.
+
+- **Metoda `transform`:**
+- Aici are loc întreaga magie. Metoda `transform` primește doi parametri:
+- `value`: Valoarea originală care este procesată.
+- `metadata`: Oferă date descriptive suplimentare (_metadata_) despre argument, cum ar fi tipul acestuia (`'body'`, `'query'`, etc.).
+
+- În interiorul acestei metode poți introduce logica de validare sau transformare.
+  Valoarea `transformedValue` returnată va înlocui valoarea originală în fluxul de date procesat.
+
+Această structură simplă, dar extrem de puternică, facilitează o multitudine de cazuri de utilizare.
+De la conversia șirurilor de text numerice în numere JavaScript reale, până la asigurarea că un payload primit respectă un obiect de transfer al datelor specific (**DTO** – _Data Transfer Object_), posibilitățile oferite de conducte sunt într-adevăr vaste.

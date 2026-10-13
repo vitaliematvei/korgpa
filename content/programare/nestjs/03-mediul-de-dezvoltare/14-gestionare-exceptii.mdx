@@ -1,0 +1,71 @@
+---
+title: Gestionarea excepțiilor cu ajutorul filtrelor de excepții (Exception Filters)
+description: Gestionarea excepțiilor cu ajutorul filtrelor de excepții (Exception Filters)
+order: 14
+category: 'NestJS'
+level: 'Incepator'
+---
+
+### Gestionarea excepțiilor cu ajutorul filtrelor de excepții (Exception Filters)
+
+Imaginează-ți că ești un jongler experimentat care gestionează cu grație multiple sarcini. Cu toate acestea, din când în când, o minge mai poate scăpa. În acele momente avem nevoie de o plasă de siguranță. În universul NestJS, **filtrele de excepții** (_exception filters_) servesc tocmai ca această plasă de siguranță, prinzând elegant orice problemă neprevăzută. În Capitolul 4 vom discuta concepte avansate din NestJS, inclusiv excepțiile, însoțite de exemple practice.
+
+#### Ce sunt filtrele de excepții?
+
+Filtrele de excepții îți oferă un control deplin asupra excepțiilor aruncate (_thrown_) de aplicația ta. Prin extinderea clasei de bază `ExceptionFilter`, poți defini răspunsuri personalizate pentru momentele în care lucrurile nu merg conform planului.
+
+#### Crearea unui filtru de excepții de bază
+
+Să vedem pe scurt cum funcționează acest lucru folosind următorul exemplu:
+
+```typescript
+import {
+  Catch,
+  ArgumentsHost,
+  HttpException,
+  ExceptionFilter,
+} from '@nestjs/common';
+import { Response } from 'express';
+
+@Catch(HttpException)
+export class HttpExceptionFilter implements ExceptionFilter {
+  catch(exception: HttpException, host: ArgumentsHost) {
+    const ctx = host.switchToHttp();
+    const response = ctx.getResponse<Response>();
+
+    response.status(exception.getStatus()).json({
+      message: exception.message,
+      timestamp: new Date().toISOString(),
+    });
+  }
+}
+```
+
+Să analizăm acest cod pas cu pas pentru a înțelege cum funcționează:
+
+- **Importuri:**
+- Importăm `@Catch`, `ArgumentsHost` și `HttpException` din `@nestjs/common`.
+- Obiectul `Response` este preluat din `express`, cadru pe care NestJS îl utilizează sub capotă (_under the hood_).
+
+- **`@Catch(HttpException)`:**
+- Decoratorul `@Catch()` îi indică cadrului NestJS ce excepții ar trebui să prindă filtrul nostru. În acest caz, este configurat să prindă toate excepțiile de tip `HttpException`.
+
+- **Metoda `catch`:**
+- În interiorul filtrului, metoda `catch` este responsabilă de gestionarea propriu-zisă a excepției.
+- Parametrul `exception` ne oferă acces la obiectul excepției care a fost aruncată.
+- Parametrul `host` ne permite să comutăm între diferite contexte. Aici îl folosim pentru a accesa obiectul `Response` din Express-ul de la bază.
+
+- **Construirea răspunsului:**
+- Trimitem un răspuns JSON cu codul de stare al excepției (`response.status(exception.getStatus()).json(...)`) și date suplimentare, cum ar fi mesajul excepției și un marcaj temporal (_timestamp_).
+
+Acest filtru servește ca o fundație solidă. Cu ajutorul lui, orice instanță de tip `HttpException` aruncată va fi transformată într-un format de răspuns mult mai lizibil și standardizat.
+
+În continuare, vom discuta despre validare. Îți amintești regula: _„nu avea niciodată încredere în datele introduse de utilizator”_ (_never trust user input_)?
+
+```
+
+```
+
+```
+
+```
