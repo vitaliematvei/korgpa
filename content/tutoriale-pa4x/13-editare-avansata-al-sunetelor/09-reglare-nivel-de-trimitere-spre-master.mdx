@@ -1,0 +1,41 @@
+---
+title: Reglarea nivelului de trimitere (Send) către efectele de tip Master
+order: 9
+description: Reglarea nivelului de trimitere (Send) către efectele de tip Master
+category: Editare sunete
+---
+
+Puteți regla nivelul semnalului direct (necomutat / _dry_) trimis de la fiecare sunet sau canal către efectele de tip master.
+
+1. Mergeți la pagina **Mixer/Tuning** > **FX Send**.
+   <figure className="my-6 text-center">
+     <img
+       src="/images/pa4x/13-editare-avansata-sunete/173-1.jpg"
+       alt="imagine"
+       className="mx-auto"
+     />
+     <figcaption></figcaption>
+   </figure>
+2. Pe fiecare canal al mixerului, folosiți potendometrene (Master knobs) pentru a controla nivelul semnalului direct (dry) trimis către procesorul de efecte corespunzător (din cadrul grupului FX selectat).
+   <div className="overflow-x-auto my-4 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm">
+     <table className="w-full text-left text-sm border-collapse">
+       <thead>
+         <tr className="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 border-b border-slate-200 dark:border-slate-700">
+           <th className="py-3 px-4 font-semibold">Master 1, 2, 3</th>
+           <th className="py-3 px-4 font-semibold">Semnificație</th>
+         </tr>
+       </thead>
+       <tbody className="divide-y divide-slate-200 dark:divide-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300">
+         <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+           <td className="py-3 px-4 font-mono text-xs font-medium text-slate-900 dark:text-slate-200">
+             0…127
+           </td>
+           <td className="py-3 px-4">
+             Nivelul de trimitere către efect (FX Send) în valori MIDI
+           </td>
+         </tr>
+       </tbody>
+     </table>
+   </div>
+
+{/* am ramas Adjusting the send to the master effects for the Drum Families .174 */}

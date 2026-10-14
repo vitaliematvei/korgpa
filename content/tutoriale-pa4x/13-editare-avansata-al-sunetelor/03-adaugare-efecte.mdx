@@ -1,0 +1,194 @@
+---
+title: Adaugare efecte
+order: 3
+description: Adaugare efecte
+category: Editare sunete
+---
+
+### Procesoarele de efecte (FX)
+
+Pa4X include atât efecte de tip **Insert**, cât și efecte de tip **Master** (termenul „efect” este adesea prescurtat ca **FX**).
+
+- **Efectele de tip Insert (IFX)** sunt atribuite unui singur sunet și procesează întregul semnal care trece prin ele. Cele mai frecvente efecte de tip insert sunt simulatoarele de amplificator, _chorus_ sau _flanger_, pedalele de _overdrive_ și _distortion_, compresoarele etc.
+
+  Efectele insert sunt de tip **pre-fader**, ceea ce înseamnă că nivelul volumului de pe canalul mixerului nu va modifica nivelul semnalului care intră în efect.
+
+- **Efectele de tip Master (MFX)** sunt efecte partajate (folosite în comun) de mai multe sunete diferite, care pot fi mixate în proporții variabile. Cele mai frecvente efecte master sunt efectele de _delay_ și _reverb_ (ecou și reverberație). Efectele master sunt de tip **post-fader**, astfel încât nivelul volumului de pe canalul mixerului va influența și nivelul semnalului care intră în efect.
+
+Fiecare grup de sunete/canale poate fi direcționat către un grup și un număr diferit de efecte.
+
+### Grupurile de efecte pentru Sunete/Canale
+
+<div className="overflow-x-auto my-6 rounded-lg border border-slate-200 shadow-sm">
+  <table className="w-full text-left text-sm text-slate-700 border-collapse">
+    <thead className="bg-slate-100 text-xs uppercase font-semibold text-slate-900 border-b border-slate-200">
+      <tr>
+        <th scope="col" className="px-6 py-3.5 w-1/4">Grup Sunet/Canal</th>
+        <th scope="col" className="px-6 py-3.5 w-1/12 text-center">Grup FX</th>
+        <th scope="col" className="px-6 py-3.5 w-1/3">Efecte Insert (IFX)</th>
+        <th scope="col" className="px-6 py-3.5 w-1/3">Efecte Master (MFX)</th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-slate-200 bg-white">
+      {/* Keyboard */}
+      <tr className="hover:bg-slate-50 transition-colors">
+        <td className="px-6 py-4 font-semibold text-slate-900">
+          Keyboard (Claviatură)
+        </td>
+        <td className="px-6 py-4 font-mono font-bold text-center text-slate-800">
+          B
+        </td>
+        <td className="px-6 py-4">
+          Unul (1), atribuit unui singur sunet.
+        </td>
+        <td className="px-6 py-4">
+          Două (2), partajate între toate sunetele.
+        </td>
+      </tr>
+
+      {/* Accompaniment */}
+      <tr className="hover:bg-slate-50 transition-colors">
+        <td className="px-6 py-4 font-semibold text-slate-900">
+          Accompaniment (Acompaniament)
+        </td>
+        <td className="px-6 py-4 font-mono font-bold text-center text-slate-800">
+          A
+        </td>
+        <td className="px-6 py-4">
+          Până la patru (4), ce pot fi atribuite liber oricărui sunet. Unui singur sunet îi pot fi atribuite cel mult două (2) efecte.
+        </td>
+        <td className="px-6 py-4">
+          Trei (3), partajate între toate sunetele.
+        </td>
+      </tr>
+
+      {/* Drum Families */}
+      <tr className="hover:bg-slate-50 transition-colors">
+        <td className="px-6 py-4 font-semibold text-slate-900">
+          Drum Families (Familii de percuție)
+        </td>
+        <td className="px-6 py-4 font-mono font-bold text-center text-slate-800">
+          A
+        </td>
+        <td className="px-6 py-4 space-y-2">
+          <p>
+            Până la patru (4), ce pot fi atribuite liber oricărei familii de percuție. Unei singure familii îi pot fi atribuite cel mult două (2) efecte.
+          </p>
+          <p className="text-xs text-slate-500">
+            Familiile de percuție pot fi procesate prin propriile efecte Insert. Setul de tobe (Drum Kit) poate fi apoi procesat suplimentar prin efectele Insert ale canalului său.
+          </p>
+          <p className="text-xs text-slate-500 font-medium">
+            Numărul total de efecte Insert disponibile pentru familiile de percuție, Drum Kit și celelalte sunete de acompaniament este de patru (4).
+          </p>
+        </td>
+        <td className="px-6 py-4 space-y-2">
+          <p>
+            Trei (3), partajate între toate sunetele.
+          </p>
+          <p className="text-xs text-slate-500">
+            Familiile de percuție își pot seta propriul nivel de trimitere (send) către efectele Master. La rândul său, setul de tobe (Drum Kit) are propriile niveluri de trimitere.
+          </p>
+        </td>
+      </tr>
+
+      {/* Pad */}
+      <tr className="hover:bg-slate-50 transition-colors">
+        <td className="px-6 py-4 font-semibold text-slate-900">
+          Pad
+        </td>
+        <td className="px-6 py-4 font-mono font-bold text-center text-slate-800">
+          A
+        </td>
+        <td className="px-6 py-4 text-slate-400 italic">
+          —
+        </td>
+        <td className="px-6 py-4">
+          Trei (3), partajate între toate sunetele.
+        </td>
+      </tr>
+
+      {/* MIDI Song */}
+      <tr className="hover:bg-slate-50 transition-colors">
+        <td className="px-6 py-4 font-semibold text-slate-900">
+          MIDI Song (Melodie MIDI)*
+        </td>
+        <td className="px-6 py-4 font-mono font-bold text-center text-slate-800">
+          A
+        </td>
+        <td className="px-6 py-4">
+          Până la patru (4), ce pot fi atribuite liber oricărui sunet. Unui singur sunet îi pot fi atribuite cel mult două (2) efecte.
+        </td>
+        <td className="px-6 py-4">
+          Trei (3), partajate între toate sunetele.
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+
+<p className="text-xs text-slate-500 italic mt-2">
+  * Se aplică melodiilor MIDI create pe un Pa4X sau pe un alt instrument din
+  seria KORG Pa.
+</p>
+
+Puteți atribui procesoarelor de efecte Master orice tip de efecte disponibile, însă am considerat util să le organizăm, de cele mai multe ori, în următorul mod:
+
+<div className="overflow-x-auto my-6 rounded-lg border border-slate-200 shadow-sm">
+  <table className="w-full text-left text-sm text-slate-700 border-collapse">
+    <thead className="bg-slate-100 text-xs uppercase font-semibold text-slate-900 border-b border-slate-200">
+      <tr>
+        <th scope="col" className="px-6 py-3.5 w-1/4">
+          FX Master
+        </th>
+        <th scope="col" className="px-6 py-3.5 w-3/4">
+          Tipul efectului
+        </th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-slate-200 bg-white">
+      <tr className="hover:bg-slate-50 transition-colors">
+        <td className="px-6 py-4 font-mono font-bold text-slate-900">A1</td>
+        <td className="px-6 py-4">
+          Procesor de reverberație (<span className="italic">reverb</span>)
+          pentru sunetele de Acompaniament și Melodie MIDI
+        </td>
+      </tr>
+      <tr className="hover:bg-slate-50 transition-colors">
+        <td className="px-6 py-4 font-mono font-bold text-slate-900">A2</td>
+        <td className="px-6 py-4">
+          Procesor de efecte modulante pentru sunetele de Acompaniament și
+          Melodie MIDI
+        </td>
+      </tr>
+      <tr className="hover:bg-slate-50 transition-colors">
+        <td className="px-6 py-4 font-mono font-bold text-slate-900">A3</td>
+        <td className="px-6 py-4">
+          Procesor de <span className="italic">delay</span> (ecou) pentru
+          sunetele de Acompaniament și Melodie MIDI
+        </td>
+      </tr>
+      <tr className="hover:bg-slate-50 transition-colors">
+        <td className="px-6 py-4 font-mono font-bold text-slate-900">B1</td>
+        <td className="px-6 py-4">
+          Procesor de reverberație (<span className="italic">reverb</span>)
+          pentru sunetele de Claviatură (Keyboard)
+        </td>
+      </tr>
+      <tr className="hover:bg-slate-50 transition-colors">
+        <td className="px-6 py-4 font-mono font-bold text-slate-900">B2</td>
+        <td className="px-6 py-4">
+          Procesor de efecte modulante pentru sunetele de Claviatură (Keyboard)
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### Prezentare generală a efectelor din Pa4X
+
+Pa4X include un procesor multi-efect puternic pentru sunetele interne. Aceste efecte contribuie la conturarea sunetului final al instrumentului, adăugând profunzime și o senzație de spațiu. Instrumentul dispune de până la cinci efecte de tip _insert_ și cinci efecte de tip _master_, către care sunetele pot fi direcționate de pe canalul mixerului intern.
+
+La capătul lanțului audio se află procesoarele **Waves Audio MAXX EQ** și **Master**, utilizate pentru a procesa atât sunetele, cât și melodiile MP3, oferind mai multă forță și rafinament sunetului final livrat publicului.
+
+În plus față de cele de mai sus, Pa4X include și un procesor multi-efect dedicat microfonului, numit **Voice Processor**. Acest efect extraordinar este rezultatul colaborării dintre **KORG** și **TC•Electronic**, a căror tehnologie renumită de procesare a vocii poate fi accesată direct de pe panoul de control al instrumentului, fără a fi nevoie de conectarea unui procesor de efecte extern.
