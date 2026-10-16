@@ -1,0 +1,38 @@
+---
+title: Strategii pentru evitarea și rezolvarea dependențelor circulare în NestJS
+description: Strategii pentru evitarea și rezolvarea dependențelor circulare în NestJS
+order: 9
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Iată câteva strategii pe care NestJS le sugerează pentru a evita dependențele circulare:
+
+- **Referința anticipată (_Forward reference_):** NestJS oferă un mecanism numit `forwardRef()` care vă permite să referențiați clase înainte ca acestea să fie definite, rezolvând astfel problema dependenței ciclice.
+  Utilizând clasele noastre `CatService` și `DogService` din exemplul anterior, iată cum puteți rezolva dependența circulară folosind `forwardRef()`:
+
+```typescript
+// cat.service.ts
+import { Injectable, forwardRef, Inject } from '@nestjs/common';
+import { DogService } from './dog.service';
+
+@Injectable()
+export class CatService {
+  constructor(
+    @Inject(forwardRef(() => DogService))
+    private dogService: DogService,
+  ) {}
+}
+```
+
+Prin această abordare, `DogService` nu mai este importat direct în constructor, ci este referențiat prin intermediul funcției `forwardRef()`, amânând astfel instanțierea sa și rezolvând dependența ciclică.
+
+- **Refactorizarea serviciilor (_Service refactoring_):** Uneori, dependențele circulare indică o problemă de design arhitectural. Luați în considerare refactorizarea serviciilor sau modulelor pentru a adera la Principiul Responsabilității Unice (_Single Responsibility Principle - SRP_). Aceasta poate implica împărțirea unui serviciu sau modul în unități mai mici și mai concentrate, sau reevaluarea relațiilor dintre ele.
+- **Abstractizarea dependențelor (_Dependency abstraction_):** Introduceți un serviciu sau un modul intermediar de care ambele servicii sau module aflate în conflict să poată depinde.
+  Acest intermediar poate abstractiza funcționalitățile comune necesare ambelor părți, eliminând referința ciclică directă.
+
+---
+
+Înțelegând sursele potențiale și provocările dependențelor circulare și valorificând instrumentele și principiile de design oferite de NestJS, dezvoltatorii pot asigura un proces de inițializare a aplicației mai fluid și mai eficient.
+
+{/* am ramas Sharing modules across the application .85 */}

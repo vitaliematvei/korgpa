@@ -1,0 +1,107 @@
+---
+title: Crearea și inițializarea unui modul
+description: Crearea și inițializarea unui modul
+order: 4
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Aprofundând universul modulelor din NestJS, este esențial să înțelegem nu doar rolul acestora, ci și anatomia lor.
+Crearea și inițializarea unui modul nu se rezumă doar la apelarea unui decorator sau adăugarea câtorva linii de cod; este vorba despre înțelegerea diverselor componente care alcătuiesc un modul și modul în care acestea interacționează pentru a asigura funcționarea optimă a acestuia.
+Haideți să descâlcim această structură complexă.
+
+### Anatomia unui modul
+
+Fiecare modul din NestJS este o clasă caracterizată printr-un set de proprietăți, fiecare având un scop distinct.
+Acestea sunt definite folosind decoratorul `@Module()`. Să analizăm acest decorator pentru a-i înțelege proprietățile cheie:
+
+- **`controllers`**: Aici listați setul de controllere definite în modul.
+  Controllerele sunt responsabile de gestionarea cererilor primite (_incoming requests_) și returnarea răspunsurilor către client.
+  În următorul fragment de cod avem un decorator de modul cu un singur controller; rețineți că acest tablou (_array_) poate include mai multe controllere care gestionează diferite cereri HTTP, în funcție de rutele (_paths_) sau metodele (_verbs_) lor:
+
+```typescript
+@Module({
+  controllers: [AppController],
+})
+
+```
+
+- **`providers`**: Acestea sunt entități care pot fi injectate în constructori datorită sistemului de injectare a dependențelor (_Dependency Injection - DI_) din NestJS.
+  Furnizorii (_providers_) pot fi servicii, repozitorii (_repositories_), fabrici (_factories_) și altele.
+  În fragmentul de cod de mai jos avem un exemplu de `AppModule` cu un singur provider, `AppService`:
+
+```typescript
+@Module({
+  providers: [AppService],
+})
+
+```
+
+- **`imports`**: Această proprietate permite modulelor să importe alte module, activând astfel funcționalități partajate.
+  Aceasta garantează că providerii modulului importat devin accesibili în modulul în care sunt importați, așa cum se arată în fragmentul de cod următor:
+
+```typescript
+@Module({
+  imports: [SharedModule],
+})
+
+```
+
+- **`exports`**: Atunci când doriți ca providerii unui modul (sau providerii modulelor importate de acesta) să fie accesibili și partajați în mai multe module, aceștia trebuie exportați folosind proprietatea `exports` a decoratorului `@Module()`, ca în următorul fragment de cod:
+
+```typescript
+@Module({
+  exports: [SharedService],
+})
+
+```
+
+> **Avertisment / Recomandare:** Deși flexibilitatea oferită de aceste proprietăți este extrem de utilă, utilizarea necorespunzătoare poate duce la probleme. De exemplu, omiterea exportării unui serviciu necesar poate duce la erori sau la lipsa funcționalităților dorite într-un alt modul care depinde de el. În general, NestJS va detecta astfel de erori și va notifica dezvoltatorul prin intermediul logurilor.
+
+---
+
+### Primii pași – primul tău modul personalizat
+
+Efectuarea primului pas în crearea unui modul personalizat este atât un moment entuziasmant, cât și unul fundamental în aventura ta cu NestJS.
+Să începem cu un șablon de bază:
+
+```typescript
+import { Module } from '@nestjs/common';
+import { CustomController } from './custom.controller';
+import { CustomService } from './custom.service';
+
+@Module({
+  imports: [],
+  controllers: [CustomController],
+  providers: [CustomService],
+})
+export class CustomModule {}
+```
+
+Aici, clasa noastră `CustomModule` include un controller (`CustomController`) și un serviciu (`CustomService`). În forma actuală, nu există importuri — acest modul este autonom (_self-contained_), nu depinde de niciun alt modul și, de asemenea, nu exportă nimic, asigurându-se că serviciile și controllerele sale rămân unice pentru acest modul.
+
+Când clasa `CustomModule` trebuie să interacționeze cu alte module, situația se schimbă. Să analizăm un scenariu în care depinde de alte două module: `UserModule` și `AuthModule`:
+
+```typescript
+import { Module } from '@nestjs/common';
+import { CustomController } from './custom.controller';
+import { CustomService } from './custom.service';
+import { UserModule } from './user.module';
+import { AuthModule } from './auth.module';
+
+@Module({
+  imports: [UserModule, AuthModule],
+  controllers: [CustomController],
+  providers: [CustomService],
+})
+export class CustomModule {}
+```
+
+În această versiune extinsă, `CustomModule` importă `UserModule` și `AuthModule`. Aceasta înseamnă că acum poate folosi orice servicii sau componente din aceste module importate care au fost exportate în prealabil de către ele. De exemplu, dacă `UserModule` conținea un serviciu de care `CustomModule` avea nevoie, acel serviciu trebuia mai întâi să fie exportat din `UserModule` pentru a fi accesibil aici.
+
+> **Idee cheie (_Key insight_):**
+> Prin importarea altor module, nu doar le conectăm — construim o rețea de dependențe. Această structură interconectată trebuie proiectată cu atenție pentru a evita dependențele circulare (_circular dependencies_) și pentru a garanta că aplicația rămâne scalabilă și ușor de întreținut.
+
+---
+
+Pe măsură ce explorarea arhitecturii modulare din NestJS continuă, devine evident că modulele nu sunt doar simple piese de construcție. Ele sunt componente concepute meticulos, care poartă responsabilitatea definirii și gestionării limitelor și interacțiunilor din cadrul funcționalităților aplicației noastre.

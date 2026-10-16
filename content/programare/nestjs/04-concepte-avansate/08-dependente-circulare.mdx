@@ -1,0 +1,107 @@
+---
+title: Dependențele circulare – bucla pe care nu ți-o dorești
+description: Dependențele circulare – bucla pe care nu ți-o dorești
+order: 8
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Dependențele circulare reprezintă o provocare frecventă, mai ales într-un sistem modular precum NestJS.
+Atunci când sunt lăsate nerezolvate, pot duce la comportamente neașteptate și pot complica procesul de inițializare a modulelor și serviciilor aplicației tale.
+Identificarea și rezolvarea lor devin cruciale pentru a asigura robustetea aplicației.
+
+---
+
+### Identificarea posibilelor dependențe circulare
+
+Primul pas în gestionarea dependențelor circulare este identificarea acestora.
+În mod obișnuit, ele apar atunci când două clase, servicii sau module depind reciproc una de cealaltă.
+Iată un exemplu clasic:
+
+#### Exemplul 1: Interdependența între servicii
+
+```typescript
+// cat.service.ts
+import { Injectable } from '@nestjs/common';
+import { DogService } from './dog.service';
+
+@Injectable()
+export class CatService {
+  constructor(private dogService: DogService) {}
+}
+```
+
+```typescript
+// dog.service.ts
+import { Injectable } from '@nestjs/common';
+import { CatService } from './cat.service';
+
+@Injectable()
+export class DogService {
+  constructor(private catService: CatService) {}
+}
+```
+
+Aici, clasa `CatService` injectează `DogService` în constructorul său, ceea ce înseamnă că depinde de `DogService`.
+În paralel, `DogService` injectează `CatService`, depinzând la rândul său de acesta.
+Această dependență reciprocă creează o referință ciclică.
+Pentru ca framework-ul NestJS să poată instanția `CatService`, are nevoie de o instanță a `DogService`, însă `DogService` nu poate fi instanțiat fără o instanță a `CatService`.
+Această natură ciclică face neclar care dintre ele ar trebui inițializat primul, ducând la un blocaj (_deadlock_) în procesul de inițializare.
+
+---
+
+Un alt scenariu comun apare atunci când modulele depind unele de altele, ca în exemplul următor:
+
+#### Exemplul 2: Interdependența între module
+
+```typescript
+// cat.module.ts
+import { Module } from '@nestjs/common';
+import { DogModule } from './dog.module';
+
+@Module({
+  imports: [DogModule],
+})
+export class CatModule {}
+```
+
+```typescript
+// dog.module.ts
+import { Module } from '@nestjs/common';
+import { CatModule } from './cat.module';
+
+@Module({
+  imports: [CatModule],
+})
+export class DogModule {}
+```
+
+Situația este similară la nivel de modul.
+Clasa `CatModule` importă `DogModule`, ceea ce înseamnă că se bazează pe funcționalități oferite de acesta din urmă.
+În mod reciproc, `DogModule` importă `CatModule`, indicând dependența sa față de primul.
+Această importare reciprocă generează o dependență circulară.
+În timpul procesului de inițializare, framework-ul NestJS se va chinui să determine ce modul ar trebui inițializat mai întâi, deoarece fiecare modul îl așteaptă pe celălalt.
+Această dependență ciclică, la fel ca în exemplul cu serviciile, duce la o ambiguitate în ordinea de inițializare.
+
+---
+
+> **Sfat:**
+> Poți folosi instrumentul [Madge](https://github.com/pahen/madge) pentru a verifica dacă ai o eroare de dependență circulară sau pentru a afla exact unde se întâmplă, folosind următoarele comenzi:
+>
+> ```bash
+> $ npx madge dist/main.js --circular
+> $ npx madge dist/main.js --image graph.png
+>
+> ```
+>
+> Prima comandă va afișa `No circular dependency found!` dacă nu ai nicio dependență circulară în proiect, iar a doua comandă va genera o imagine cu reprezentarea grafică a dependențelor în rădăcina proiectului.
+
+<figure className="my-6 text-center">
+  <img src="/images/nestjs/4-3.jpg" alt="imagine" className="mx-auto" />
+  <figcaption>Nu exista dependente circulare</figcaption>
+</figure>
+
+<figure className="my-6 text-center">
+  <img src="/images/nestjs/4-4.jpg" alt="imagine" className="mx-auto" />
+  <figcaption>Graful aplicației printat de Madge</figcaption>
+</figure>

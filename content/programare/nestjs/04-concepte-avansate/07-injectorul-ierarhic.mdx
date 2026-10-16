@@ -1,0 +1,20 @@
+---
+title: Injectorul ierarhic din NestJS
+description: Injectorul ierarhic din NestJS
+order: 7
+category: 'NestJS'
+level: 'Incepator'
+---
+
+NestJS nu se limitează doar la a folosi injectarea de dependențe (DI), ci o duce la un nivel superior prin intermediul **sistemului său de injectoare ierarhice**.
+Acest sistem funcționează pe mai multe niveluri (_straturi_), asigurându-se că fiecare modul și componentele sale își obțin dependențele de la cel mai apropiat injector, fie că acesta este specific modulului sau global.
+De exemplu, atunci când `ServiceA` solicită o dependență, injectorul verifică mai întâi în cadrul propriului său modul.
+Dacă nu o găsește acolo, urcă în ierarhie analizând modulele părinte, mergând până la modulul rădăcină (_root module_) sau la domeniul global (_global scope_).
+
+Această abordare ierarhică oferă mai multe avantaje:
+
+- **Instanțe delimitate (_Scoped instances_):** Permite existența unor instanțe specifice pentru furnizori (_providers_). Un serviciu poate avea instanțe diferite în module diferite, ceea ce face posibile configurări și comportamente adaptate fiecărui modul în parte.
+- **Modularitate sporită:** Sistemul ierarhic încurajează stabilirea unor granițe clare între module, consolidând astfel modularitatea.
+- **Mecanism de rezervă (_Fallback mechanism_):** Căutarea bazată pe straturi oferă un mecanism integrat de rezervă. Dacă un modul local nu furnizează o dependență, sistemul poate apela automat la un modul părinte sau la domeniul global.
+
+În concluzie, decizia NestJS de a utiliza injectarea de dependențe, completată de injectorul său ierarhic, este una strategică. Aceasta le oferă dezvoltatorilor o experiență fluidă, asigură o structurare optimă a aplicației și sporește în mod nativ testabilitatea și modularitatea. Este greu de imaginat NestJS-ul pe care îl iubیم fără acest orchestrator din umbră.
