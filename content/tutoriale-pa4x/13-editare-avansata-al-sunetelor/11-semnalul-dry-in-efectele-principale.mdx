@@ -1,0 +1,91 @@
+---
+title: Includerea semnalului direct (dry) în efectele principale
+order: 11
+description: Includerea semnalului direct (dry) în efectele principale
+category: Editare sunete
+---
+
+Semnalul direct (sau „dry”) este sunetul brut, fără efecte.
+În mod normal, acesta ar trebui inclus în semnalul care iese din efectele principale (Master FX), pentru a oferi senzația de prezență a sursei sonore.
+
+Acest parametru nu este necesar pentru efectele de tip inserție (Insert FX), deoarece acestea includ întotdeauna semnalul direct.
+
+1. Accesați pagina **Mixer/Tuning > Volume/Pan**.
+2. Selectați sau deselectați caseta **Dry** corespunzătoare sunetului pe care doriți să îl includeți sau să îl excludeți.
+   <figure className="my-6 text-center">
+     <img
+       src="/images/pa4x/13-editare-avansata-sunete/175-1.jpg"
+       alt="imagine"
+       className="mx-auto"
+     />
+     <figcaption></figcaption>
+   </figure>
+
+<div class="overflow-x-auto my-4">
+  <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg shadow-sm">
+    <thead class="bg-gray-100">
+      <tr>
+        <th
+          scope="col"
+          class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+        >
+          Dry
+        </th>
+        <th
+          scope="col"
+          class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+        >
+          Semnificație
+        </th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200 text-sm text-gray-800">
+      <tr class="hover:bg-gray-50 transition-colors">
+        <td class="px-6 py-4 whitespace-nowrap font-semibold text-indigo-600">
+          On
+        </td>
+        <td class="px-6 py-4 leading-relaxed">
+          Semnalul direct este trimis către ieșiri, mixat cu efectele principale
+          (Master FX).
+          <div class="mt-2 text-xs font-mono text-gray-500 bg-gray-50 p-2 rounded border border-gray-100">
+           
+             <figure className="my-6 text-center">
+                <img
+                    src="/images/pa4x/13-editare-avansata-sunete/175-2.jpg"
+                    alt="imagine"
+                    className="mx-auto"
+                />
+                <figcaption></figcaption>
+            </figure>
+          </div>
+        </td>
+      </tr>
+      <tr class="hover:bg-gray-50 transition-colors">
+        <td class="px-6 py-4 whitespace-nowrap font-semibold text-gray-500">
+          Off
+        </td>
+        <td class="px-6 py-4 leading-relaxed">
+          Semnalul direct este eliminat din ieșirile audio, iar acestea vor
+          conține doar semnalul procesat cu efect. În cazul efectelor stereo,
+          semnalul procesat va fi poziționat în continuare în funcție de
+          valoarea Pan (panoramare).
+          <p class="mt-1 text-gray-600 text-xs">
+            Acest mod funcționează similar cu un efect de tip inserție (Insert
+            FX), unde întregul semnal direct este întotdeauna procesat.
+          </p>
+          <div class="mt-2 text-xs font-mono text-gray-500 bg-gray-50 p-2 rounded border border-gray-100">
+              <figure className="my-6 text-center">
+                <img
+                    src="/images/pa4x/13-editare-avansata-sunete/175-3.jpg"
+                    alt="imagine"
+                    className="mx-auto"
+                />
+                <figcaption></figcaption>
+            </figure>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
