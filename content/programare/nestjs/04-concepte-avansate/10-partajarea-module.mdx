@@ -1,0 +1,55 @@
+---
+title: Partajarea modulelor în întreaga aplicație
+description: Partajarea modulelor în întreaga aplicație
+order: 10
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Construirea de aplicații scalabile nu înseamnă doar împărțirea aplicației în module, ci și partajarea eficientă a funcționalităților în diferite părți ale acesteia.
+Aici intervin puterea exporturilor și a modulelor globale din NestJS.
+
+### De ce contează exporturile
+
+Fiecare modul are un context privat.
+Serviciile, controlerele sau orice altă componentă definită într-un modul sunt încapsulate în acesta.
+Cu toate acestea, pot exista situații în care un serviciu sau o componentă trebuie partajată cu alte părți ale aplicației.
+
+Să luăm în considerare un serviciu de jurnalizare (_logging_).
+Acest serviciu poate fi necesar în numeroase alte module pentru a asigura mecanisme de logare consistente.
+
+Fără posibilitatea de a exporta acest serviciu, am ajunge fie să duplicăm serviciul (ceea ce este nefavorabil pentru mentenabilitate și consumul de memorie), fie să mutăm totul într-un singur mega-modul (ceea ce afectează negativ scalabilitatea).
+
+În NestJS, tabloul (`array`) `exports` din metadatele unui modul specifică ce provideri din acel modul trebuie partajați și pot fi utilizați în alte module:
+
+```typescript
+@Module({
+  providers: [LoggingService],
+  exports: [LoggingService],
+})
+export class SharedModule {}
+```
+
+_Concepte avansate – Module, Controlere, Provideri, Filtre de excepții, Pipe-uri, Gărzi (Guards) și Decoratori_
+
+Cu această configurare, orice modul care importă `SharedModule` va avea acces și la `LoggingService`, promovând principiul DRY (_„Don’t Repeat Yourself”_) și gestionarea centralizată a logicii.
+
+---
+
+### Modulele globale – disponibile peste tot
+
+Deși exportul modulelor este foarte util, NestJS duce lucrurile la un nivel superior prin intermediul modulelor globale.
+Odată definit ca global, un modul nu mai trebuie importat în mod explicit în alte module; providerii și controlerele sale devin instantaneu accesibile pretutindeni:
+
+```typescript
+import { Global, Module } from '@nestjs/common';
+
+@Global()
+@Module({
+  providers: [ConfigService],
+  exports: [ConfigService],
+})
+export class ConfigModule {}
+```
+
+Astfel de module globale sunt deosebit de utile pentru serviciile de bază (_core services_), cum ar fi gestionarea configurației, jurnalizarea sau conexiunile la baza de date, care sunt omniprezente în întreaga aplicație.
