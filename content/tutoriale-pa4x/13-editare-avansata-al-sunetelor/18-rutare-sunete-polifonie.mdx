@@ -1,0 +1,66 @@
+---
+title: Programarea rutării sunetelor și a polifoniei
+order: 18
+description: Programarea rutării sunetelor și a polifoniei
+category: Editare sunete
+---
+
+#### Utilizarea sunetelor interne sau externe
+
+De obicei, claviatura, aranjorul și playerele redau sunetele interne.
+
+Totuși, poți alege să le permiți să redea un generator de sunet extern.
+
+1. Mergi la pagina **MENU > Track Control > Mode**.
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/pa4x/13-editare-avansata-sunete/182-1.jpg"
+    alt="imagine"
+    className="mx-auto"
+  />
+  <figcaption />
+</figure>
+
+2. Folosește parametrul **Internal/External** pentru a conecta partea/track-ul corespunzător la generatorul de sunet intern și/sau extern.
+
+<div className="overflow-x-auto my-4">
+  <table className="min-w-full border-collapse border border-gray-300 text-left text-sm text-gray-700">
+    <thead class="bg-gray-100 uppercase text-xs font-semibold text-gray-600">
+      <tr>
+        <th className="border border-gray-300 px-4 py-3">Int/Ext</th>
+        <th className="border border-gray-300 px-4 py-3">Semnificație</th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-gray-200">
+      <tr className="hover:bg-gray-50">
+        <td className="border border-gray-300 px-4 py-3 font-medium text-gray-900">
+          Both (Ambele)
+        </td>
+        <td className="border border-gray-300 px-4 py-3">
+          Partea/track-ul redă atât sunetele interne, cât și un instrument
+          extern conectat la portul MIDI OUT sau USB DEVICE.
+        </td>
+      </tr>
+      <tr className="hover:bg-gray-50">
+        <td className="border border-gray-300 px-4 py-3 font-medium text-gray-900">
+          Internal (Intern)
+        </td>
+        <td className="border border-gray-300 px-4 py-3">
+          Partea/track-ul redă exclusiv sunetele generate de generatorul de
+          sunet intern.
+        </td>
+      </tr>
+      <tr className="hover:bg-gray-50">
+        <td className="border border-gray-300 px-4 py-3 font-medium text-gray-900">
+          External (Extern)
+        </td>
+        <td className="border border-gray-300 px-4 py-3">
+          Partea/track-ul redă doar un instrument extern conectat la portul MIDI
+          OUT sau USB DEVICE. Dispozitivul conectat trebuie să recepționeze date
+          pe canalul MIDI asociat acestei părți/acestui track pe Pa4X.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

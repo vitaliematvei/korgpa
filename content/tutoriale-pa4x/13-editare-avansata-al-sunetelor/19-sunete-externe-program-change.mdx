@@ -1,0 +1,35 @@
+---
+title: Sunete externe și mesaje de schimbare a programului (Program Change)
+order: 19
+description: Sunete externe și mesaje de schimbare a programului (Program Change)
+category: Editare sunete
+---
+
+O parte/un track setat(ă) la starea **External (Extern)** nu poate reda sunetele interne.
+
+În loc de numele sunetului atribuit, pe zona unui track din pagina principală (_Main page_) va fi afișat indicatorul `<E: aaa.bbb.ccc>`:
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/pa4x/13-editare-avansata-sunete/183-1.jpg"
+    alt="imagine"
+    className="mx-auto"
+  />
+  <figcaption></figcaption>
+</figure>
+
+Acest indicator începe cu o notă care precizează că track-ul se află în modul **External** („E”) și continuă cu un șir de date transmise de tip **Control Change** și **Program Change**.
+Acest lucru vă permite să știți ce transmite track-ul respectiv.
+In exemplul următor, **CC#0** reprezintă Control Change 0 (Bank Select MSB), **CC#32** reprezintă Control Change 32 (Bank Select LSB), iar **PC** este Program Change:
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/pa4x/13-editare-avansata-sunete/183-2.jpg"
+    alt="imagine"
+    className="mx-auto"
+  />
+  <figcaption></figcaption>
+</figure>
+
+Atunci când atingeți zona sunetului (_Sound area_), pe ecran va apărea tastatura numerică în locul ferestrei de selectare a sunetului (_Sound Select_).
+Puteți introduce pachetul de comenzi **Control Change / Program Change** prezentat mai sus, separând cele trei valori prin punct (.).

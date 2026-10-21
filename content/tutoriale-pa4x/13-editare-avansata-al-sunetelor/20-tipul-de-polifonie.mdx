@@ -1,0 +1,94 @@
+---
+title: Selectarea tipului de polifonie (Mono, Poly, Drum)
+order: 20
+description: Selectarea tipului de polifonie (Mono, Poly, Drum)
+category: Editare sunete
+---
+
+Sunetele pot fi redate polifonic sau monofonic, ori pot funcționa ca seturi de percuție (_Drum Kits_).
+
+1. Mergi la pagina **MENU > Track Control > Mode**.
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/pa4x/13-editare-avansata-sunete/183-3.jpg"
+    alt="imagine"
+    className="mx-auto"
+  />
+  <figcaption />
+</figure>
+
+2. Folosiți parametrul **Type** pentru a selecta modul de polifonie.
+
+<div className="overflow-x-auto my-4">
+  <table className="min-w-full border-collapse bg-white text-left text-sm text-gray-700 shadow-md rounded-lg overflow-hidden">
+    <thead className="bg-gray-100 text-gray-900 uppercase font-semibold text-xs tracking-wider border-b border-gray-200">
+      <tr>
+        <th className="px-6 py-4 w-1/4">Tip (Type)</th>
+        <th className="px-6 py-4 w-3/4">Semnificație și Comportament</th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-gray-200">
+      <tr className="hover:bg-gray-50 transition-colors">
+        <td className="px-6 py-4 font-bold text-gray-900 align-top">Drum</td>
+        <td className="px-6 py-4 space-y-2 align-top text-gray-600">
+          <p>
+            Pistă de Baterie/Percuție (Drum/Percussion track). Aceasta este
+            atribuită de obicei pistelor de Baterie și Percuție din cadrul
+            Acompanamentului și al pieselor MIDI.
+          </p>
+          <p>
+            Setează un Sunet de Claviatură în modul <strong>Drum</strong> dacă
+            nu dorești ca acesta să fie transpus (se va comporta ca un Kit de
+            Baterie, chiar dacă este un sunet obișnuit). De asemenea, setează-l
+            în modul Drum dacă dorești să ajustezi separat volumul și să setezi
+            o ieșire audio diferită pentru fiecare familie percusivă a unui Kit
+            de Baterie.
+          </p>
+          <p>
+            Kiturile de Baterie nu sunt transpuse niciodată, indiferent de tipul
+            pistei căreia îi sunt atribuite.
+          </p>
+          <p className="text-xs text-amber-600 italic">
+            Notă: Acest parametru nu poate fi editat dacă pista a fost deja
+            setată în modul Drum sau Percussion în modul Style Record.
+          </p>
+        </td>
+      </tr>
+      <tr className="hover:bg-gray-50 transition-colors">
+        <td className="px-6 py-4 font-bold text-gray-900 align-top">Poly</td>
+        <td className="px-6 py-4 align-top text-gray-600">
+          Pistele/părțile de acest tip sunt polifonice, ceea ce înseamnă că pot
+          reda mai multe note în același timp.
+        </td>
+      </tr>
+      <tr className="hover:bg-gray-50 transition-colors">
+        <td className="px-6 py-4 font-bold text-gray-900 align-top">Mono</td>
+        <td className="px-6 py-4 align-top text-gray-600">
+          Pistele/părțile de acest tip sunt monofonice, ceea ce înseamnă că
+          fiecare notă nouă o oprește pe cea precedentă.
+        </td>
+      </tr>
+      <tr className="hover:bg-gray-50 transition-colors">
+        <td className="px-6 py-4 font-bold text-gray-900 align-top">
+          Mono Right
+        </td>
+        <td className="px-6 py-4 align-top text-gray-600">
+          O pistă/parte Mono, cu prioritate atribuită notei din dreapta (cea mai
+          înaltă / acute).
+        </td>
+      </tr>
+      <tr className="hover:bg-gray-50 transition-colors">
+        <td className="px-6 py-4 font-bold text-gray-900 align-top">
+          Mono Left
+        </td>
+        <td className="px-6 py-4 align-top text-gray-600">
+          O pistă/parte Mono, cu prioritate atribuită notei din stânga (cea mai
+          joasă / grave).
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{/* am ramas Quick editing of Drum Kits .185 */}
