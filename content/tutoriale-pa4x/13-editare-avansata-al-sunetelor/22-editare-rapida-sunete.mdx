@@ -1,0 +1,155 @@
+---
+title: Editarea rapidă a sunetelor (Sounds)
+order: 22
+description: Editarea rapidă a sunetelor (Sounds)
+category: Editare sunete
+---
+
+Puteți edita principalii parametri ai sunetelor.
+Aceste modificări vor fi salvate într-un **set de sunete (Sound set)** și nu vor face parte din parametrii interni ai sunetelor (pe care îi puteți edita în modul _Sound Edit_).
+
+### Cum editați sunete
+
+1. Mergeți la pagina **MENU > Track Controls > Sound Edit**.
+
+   <figure className="my-6 text-center">
+     <img
+       src="/images/pa4x/13-editare-avansata-sunete/188-1.jpg"
+       alt="imagine"
+       className="mx-auto"
+     />
+     <figcaption />
+   </figure>
+
+2. Dacă doriți, porniți Stilul sau Melodia (Song) pentru a asculta modificările în timpul redării.
+3. Dacă doriți, puneți pe **Solo** sunetul pe care îl editați, pentru a-l izola de celelalte piese (track-uri).
+4. Folosiți butoanele **Select** pentru a selecta sunetul pe care doriți să îl editați.
+5. Folosiți potențiometrele rotative (knobs) pentru a edita parametrii corespunzători. Toate valorile sunt offset-uri (abateri/valori relative) raportate la valoarea sunetului original.
+
+<div className="overflow-x-auto my-4 rounded-lg border border-slate-300 shadow-sm">
+  <table className="min-w-full border-collapse bg-white text-sm text-left text-slate-700">
+    <thead className="bg-slate-100 font-semibold text-slate-900">
+      <tr>
+        <th scope="col" className="px-4 py-3 border border-slate-300">
+          Parametru de sunet (Sound parameter)
+        </th>
+        <th scope="col" className="px-4 py-3 border border-slate-300">
+          Semnificație (Meaning)
+        </th>
+        <th scope="col" className="px-4 py-3 border border-slate-300">
+          Valoare (Value)
+        </th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-slate-300">
+      <tr className="hover:bg-slate-50">
+        <td className="px-4 py-3 font-medium border border-slate-300 align-middle">
+          Attack
+        </td>
+        <td className="px-4 py-3 text-slate-600 border border-slate-300 align-middle">
+          Timpul de atac. Reprezintă durata în care sunetul crește de la zero
+          (în momentul apăsării clapei) până la nivelul maxim.
+        </td>
+        <td className="px-4 py-3 text-slate-600 border border-slate-300 align-middle">
+          -64 … +63 (offset)
+        </td>
+      </tr>
+      <tr className="hover:bg-slate-50">
+        <td className="px-4 py-3 font-medium border border-slate-300 align-middle">
+          Decay
+        </td>
+        <td className="px-4 py-3 text-slate-600 border border-slate-300 align-middle">
+          Timpul de stingere (decay). Durata necesară trecerii de la nivelul
+          final de Atac la nivelul minim.
+        </td>
+        <td className="px-4 py-3 text-slate-600 border border-slate-300 align-middle">
+          -64 … +63 (offset)
+        </td>
+      </tr>
+      <tr className="hover:bg-slate-50">
+        <td className="px-4 py-3 font-medium border border-slate-300 align-middle">
+          Release
+        </td>
+        <td className="px-4 py-3 text-slate-600 border border-slate-300 align-middle">
+          Timpul de eliberare. Timpul în care sunetul coboară de la faza de
+          susținere (sustain) la zero. Eliberarea este declanșată prin ridicarea
+          de pe clapă.
+        </td>
+        <td className="px-4 py-3 text-slate-600 border border-slate-300 align-middle">
+          -64 … +63 (offset)
+        </td>
+      </tr>
+      <tr className="hover:bg-slate-50">
+        <td className="px-4 py-3 font-medium border border-slate-300 align-middle">
+          Cutoff
+        </td>
+        <td className="px-4 py-3 text-slate-600 border border-slate-300 align-middle">
+          Frecvența de tăiere a filtrului. Determină strălucirea sunetului.
+        </td>
+        <td className="px-4 py-3 text-slate-600 border border-slate-300 align-middle">
+          -64 … +63 (offset)
+        </td>
+      </tr>
+      <tr className="hover:bg-slate-50">
+        <td className="px-4 py-3 font-medium border border-slate-300 align-middle">
+          Resonance
+        </td>
+        <td className="px-4 py-3 text-slate-600 border border-slate-300 align-middle">
+          Folosește rezonanța filtrului pentru a amplifica frecvența de tăiere.
+        </td>
+        <td className="px-4 py-3 text-slate-600 border border-slate-300 align-middle">
+          -64 … +63 (offset)
+        </td>
+      </tr>
+      <tr className="hover:bg-slate-50">
+        <td className="px-4 py-3 font-medium border border-slate-300 align-middle">
+          LFO Depth
+        </td>
+        <td className="px-4 py-3 text-slate-600 border border-slate-300 align-middle">
+          Intensitatea vibrato-ului (LFO).
+        </td>
+        <td className="px-4 py-3 text-slate-600 border border-slate-300 align-middle">
+          -64 … +63 (offset)
+        </td>
+      </tr>
+      <tr className="hover:bg-slate-50">
+        <td className="px-4 py-3 font-medium border border-slate-300 align-middle">
+          LFO Speed
+        </td>
+        <td className="px-4 py-3 text-slate-600 border border-slate-300 align-middle">
+          Viteza vibrato-ului (LFO).
+        </td>
+        <td className="px-4 py-3 text-slate-600 border border-slate-300 align-middle">
+          -64 … +63 (offset)
+        </td>
+      </tr>
+      <tr className="hover:bg-slate-50">
+        <td className="px-4 py-3 font-medium border border-slate-300 align-middle">
+          LFO Delay
+        </td>
+        <td className="px-4 py-3 text-slate-600 border border-slate-300 align-middle">
+          Timpul de întârziere înainte ca vibrato-ul (LFO) să înceapă, după
+          pornirea sunetului.
+        </td>
+        <td className="px-4 py-3 text-slate-600 border border-slate-300 align-middle">
+          -64 … +63 (offset)
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## Setarea portamento-ului (Portamento)
+
+Portamento-ul este o tranziție lină, de tip glisare (alunecare), de la o notă la alta.
+
+▪▪ Bifați casuța **Portamento** pentru a activa portamento-ul, sau debifați-o pentru a-l dezactiva.
+▪▪ Folosiți potențiometrul (knob-ul) **Portamento > Time** pentru a ajusta viteza de glisare.
+
+## Resetarea unei piese (Track)
+
+▪▪ Atingeți butonul **Reset Track** (Resetare piesă) pentru a reseta toate modificările aduse piesei selectate.
+
+## Resetarea tuturor pieselor (sau a familiei)
+
+▪▪ Atingeți butonul **Reset Family** (Resetare familie) pentru a reseta toate valorile modificate.

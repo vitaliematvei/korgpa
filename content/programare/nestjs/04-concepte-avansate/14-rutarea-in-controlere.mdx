@@ -1,0 +1,56 @@
+---
+title: Rutarea de bază în controllere
+description: Rutarea de bază în controllere
+order: 14
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Rutarea este fundamentală pentru controllere.
+Este mecanismul care îi spune aplicației ce metodă dintr-un controller trebuie să gestioneze o anumită cerere HTTP.
+NestJS folosește decoratori pentru a face această rutare declarativă și ușor de înțeles.
+
+În centrul rutării se află handlerele de rute (metodele de tratare a rutelor).
+Acestea sunt metode dintr-un controller care gestionează rute specifice.
+NestJS oferă un set de decoratori — cum ar fi `@Get()`, `@Post()` și alții — care corespund metodelor de cerere HTTP.
+
+Ia în considerare următorul cod:
+
+```typescript
+import { Controller, Get } from '@nestjs/common';
+
+@Controller('users')
+export class CatsController {
+  @Get()
+  findAll() {
+    return 'This action returns all users';
+  }
+}
+```
+
+În exemplul de mai sus, decoratorul `@Get()` fără niciun argument precizează că metoda `findAll()` trebuie să gestioneze cererile `GET` către ruta `/users`.
+
+Dar ce-ar fi dacă ai dori mai multă granularitate?
+Ce-ar fi dacă ai vrea să ai rute separate sub ruta principală `'users'`?
+Aici intervin căile (paths):
+
+```typescript
+import { Controller, Get } from '@nestjs/common';
+
+@Controller('users')
+export class UsersController {
+  @Get('details')
+  findDetails() {
+    return 'Details about users';
+  }
+
+  @Get('images')
+  findImages() {
+    return 'Images of various users';
+  }
+}
+```
+
+În acest exemplu actualizat, decoratorul `@Get('details')` direcționează cererile `GET` pentru ruta `/users/details` către metoda `findDetails()`, în timp ce decoratorul `@Get('images')` direcționează cererile `GET` pentru ruta `/users/images` către metoda `findImages()`.
+
+Folosind căi împreună cu decoratorii de rute, poți organiza și structura rutele aplicației mai eficient, permițând o flexibilitate și o scalabilitate mai mari pe măsură ce aplicația ta crește.

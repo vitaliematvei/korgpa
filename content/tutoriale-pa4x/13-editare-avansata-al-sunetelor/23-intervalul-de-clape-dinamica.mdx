@@ -1,0 +1,87 @@
+---
+title: Programarea intervalului de clape (Key) și de dinamică (Velocity)
+order: 23
+description: Programarea intervalului de clape (Key) și de dinamică (Velocity)
+category: Editare sunete
+---
+
+Puteți programa o zonă de clape și o zonă de viteză (dinamică) pentru fiecare dintre Sunetele de Claviatură (Keyboard Sounds).
+
+- **Intervalul de clape (Key range):** Este util pentru a crea un set de sunete de claviatură care cântă în zone diferite ale claviaturii. De exemplu, puteți avea cornuri franceze (_French Horns_) și instrumente de suflat din lemn (_Woodwinds_) care cântă în zona centrală a claviaturii, în timp ce doar instrumentele de suflat din lemn cântă în zona înaltă.
+- **Intervalul de viteză / dinamică (Velocity range):** Este util pentru a crea un sunet alcătuit din până la trei straturi dinamice (_dynamic layers_), atribuind fiecare dintre Sunetele Superiore (_Upper Sounds_) unei zone de viteză diferite.
+  > _Exemplu:_ Puteți alege _El.Piano 1_ ca sunet _Upper 1_ și _El.Piano 2_ ca sunet _Upper 2_. Apoi, setați _Upper 1_ la `Bottom=0, Top=80` și _Upper 2_ la `Bottom=81, Top=127`. _El.Piano 1_ va suna atunci când cântați mai încet (soft), iar _El.Piano 2_ atunci când cântați mai tare (loud).
+
+### Accesarea paginii Range/Velocity
+
+▪▪ Mergeți la pagina **MENU > Keyboard/Ensemble > Range/Velocity**.
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/pa4x/13-editare-avansata-sunete/190-1.jpg"
+    alt="imagine"
+    className="mx-auto"
+  />
+  <figcaption />
+</figure>
+
+## Setarea intervalului de clape (Key Range)
+
+▪▪ Folosiți parametrii **Top Key** (Clapa superioară) și **Bottom Key** (Clapa inferioară) pentru a seta limitele superioară și inferioară ale zonei de clape a sunetului.
+
+<div className="overflow-x-auto my-4 rounded-lg border border-slate-300 shadow-sm">
+  <table className="min-w-full border-collapse bg-white text-sm text-left text-slate-700">
+    <thead className="bg-slate-100 font-semibold text-slate-900">
+      <tr>
+        <th scope="col" className="px-4 py-3 border border-slate-300">
+          Clapă (Key)
+        </th>
+        <th scope="col" className="px-4 py-3 border border-slate-300">
+          Semnificație (Meaning)
+        </th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-slate-300">
+      <tr className="hover:bg-slate-50">
+        <td className="px-4 py-3 font-medium border border-slate-300 align-middle">
+          C-1 … G9
+        </td>
+        <td className="px-4 py-3 text-slate-600 border border-slate-300 align-middle">
+          Clapa selectată. Valoarea superioară (Top) este întotdeauna mai mare
+          decât valoarea inferioară (Bottom).
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## Setarea intervalului de viteză / dinamică (Velocity Range)
+
+▪▪ Folosiți parametrii **Top Vel.** (Viteza superioară) și **Bottom Vel.** (Viteza inferioară) pentru a seta limitele superioară și inferioară ale zonei de viteză (dinamică) a sunetului.
+
+<div className="overflow-x-auto my-4 rounded-lg border border-slate-300 shadow-sm">
+  <table className="min-w-full border-collapse bg-white text-sm text-left text-slate-700">
+    <thead className="bg-slate-100 font-semibold text-slate-900">
+      <tr>
+        <th scope="col" className="px-4 py-3 border border-slate-300">
+          Viteză / Dinamică (Velocity)
+        </th>
+        <th scope="col" className="px-4 py-3 border border-slate-300">
+          Semnificație (Meaning)
+        </th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-slate-300">
+      <tr className="hover:bg-slate-50">
+        <td className="px-4 py-3 font-medium border border-slate-300 align-middle">
+          0 … 127
+        </td>
+        <td className="px-4 py-3 text-slate-600 border border-slate-300 align-middle">
+          Valoarea vitezei (dinamica atingerii clapei). Valoarea superioară
+          (Top) este întotdeauna mai mare decât valoarea inferioară (Bottom).
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{/* am ramas Editing the Digital Drawbars .191 */}

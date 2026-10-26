@@ -1,0 +1,35 @@
+---
+title: Crearea primului tău controller
+description: Crearea primului tău controller
+order: 13
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Configurarea unui controller în NestJS este simplă.
+Interfața de linie de comandă (CLI) a framework-ului oferă o modalitate convenabilă de a genera unul.
+Iată cum:
+
+```bash
+$ nest generate controller users
+# sau folosește scurtătura
+$ nest g co users
+
+```
+
+Această comandă generează un controller pentru utilizatori, creând fișierul `users.controller.ts` în directorul `users/`.
+Dacă acest director nu există, CLI-ul Nest îl va crea automat pentru tine.
+Iată o privire simplificată asupra conținutului fișierului:
+
+```typescript
+import { Controller } from '@nestjs/common';
+
+@Controller('users')
+export class UsersController {}
+```
+
+Decoratorul `@Controller()` îi spune lui Nest că `UsersController` este un controller și poate gestiona cereri HTTP.
+Argumentul `'users'` specifică faptul că acest controller va gestiona cererile trimise către ruta `/users`.
+
+> **Notă importantă:**
+> În modul în care a fost proiectată arhitectura NestJS, un controller nu ar trebui să existe fără un modul; este necesar un modul `UsersModule`, care va fi apoi conectat la modulul rădăcină (root module), astfel încât rutele create de noi să fie înregistrate în contextul aplicației.

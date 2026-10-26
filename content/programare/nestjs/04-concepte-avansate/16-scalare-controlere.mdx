@@ -1,0 +1,44 @@
+---
+title: Scalarea controllerelor
+description: Scalarea controllerelor
+order: 16
+category: 'NestJS'
+level: 'Incepator'
+---
+
+În lumea NestJS, ca și în cazul oricărui framework backend structurat, menținerea unor controllere suple, axate pe un singur scop și ușor de întreținut devine esențială, în special pe măsură ce aplicația ta crește în amploare.
+Iată câteva strategii care te asigură că acestea gestionează eficient traficul HTTP, fără a deveni voluminoase sau încâlcite:
+
+- **Separarea responsabilităților:** Respectarea principiului responsabilității unice (SRP) poate face o diferență semnificativă. Funcția principală a unui controller ar trebui să fie gestionarea cererilor HTTP și delegarea logicii suplimentare în altă parte.
+  Dacă observi că controllerul tău administrează atât utilizatorii, cât și comenzile acestora, de exemplu, ia în considerare împărțirea lor în `UsersController` și `OrdersController`.
+- **Utilizarea modulelor:** Gândește-te la module ca la containere individuale pentru funcționalități înrudite.
+  Pe măsură ce introduci mai multe controllere, servicii sau alți furnizori în aplicația ta, ia în calcul gruparea acestora folosind module.
+  De exemplu, un modul `UsersModule` poate cuprinde tot ceea ce ține de utilizatori, făcând structura aplicației mai clară și mai modulară.
+- **Middleware și interceptori:** Înainte de a aprofunda caracteristicile avansate din NestJS, este bine să știi că există instrumente disponibile pentru gestionarea sarcinilor comune (cum ar fi logarea, transformarea datelor sau validări minore) fie înainte ca cererea să ajungă la controller, fie imediat după ce acesta o finalizează.
+  Middleware-ul și interceptorii joacă un rol crucial aici, asigurându-se că controllerul nu este împovărat cu responsabilități din afara ciclului cerere-răspuns.
+- **Valorificarea claselor de servicii:** Adevărata putere de menținere a unor controllere suple provine din clasele de servicii.
+  Să presupunem că construiești funcționalități în jurul utilizatorilor.
+  În loc să plasezi logica de preluare, modificare sau ștergere a unui utilizator direct în controller, delegi aceste sarcini către o clasă de servicii.
+  Iată un exemplu simplificat:
+
+```typescript
+@Controller('users')
+export class UsersController {
+  constructor(private usersService: UsersService) {}
+
+  @Get(':id')
+  findUserById(@Param('id') id: string) {
+    return this.usersService.findById(id);
+  }
+
+  // ... alte metode ...
+}
+```
+
+În acest fragment de cod, `UsersController` doar direcționează sarcina de preluare a unui utilizator după ID către `UsersService`.
+Serviciul conține apoi logica efectivă, interogând eventual o bază de date sau efectuând apeluri API. Această separare asigură că controllerele gestionează doar traficul, delegând logica de afaceri către servicii.
+
+În concluzie, scopul este să îți menții controllerele cât mai aerisite cu putință.
+Strategiile menționate mai sus oferă un plan de acțiune în acest sens, asigurându-se că, pe măsură ce aplicația ta crește, structura ei rămâne coerentă, organizată și eficientă. Controllerele ar trebui să acționeze precum niște manageri de trafic, canalizând cererile către serviciile sau furnizorii potriviți care se ocupă de logica de afaceri.
+
+{/* am ramas Refined request handling .93 */}

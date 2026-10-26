@@ -1,0 +1,90 @@
+---
+title: Rute cu parametri
+description: Rute cu parametri
+order: 15
+category: 'NestJS'
+level: 'Incepator'
+---
+
+Aplicațiile web au de-a face adesea cu conținut dinamic, unde datele dorite pot depinde de o anumită variabilă — cum ar fi ID-ul unui element.
+Aici intervin rutele cu parametri.
+În loc să ai endpoint-uri statice precum `/users`, vei avea ceva de genul `/users/:id`, unde `:id` poate fi orice valoare care reprezintă identificatorul unic (UID) al unui utilizator.
+
+Pentru a gestiona astfel de rute dinamice, NestJS introduce decoratorul `@Param`.
+Acest decorator îți permite să extragi parametrii din URL, punându-i la dispoziția metodelor din controller.
+
+#### Introducere în decoratorul `@Param`
+
+Decoratorul `@Param` din NestJS este utilizat pentru a extrage și a lega parametrii rutei de parametrii metodei din controller.
+Atunci când un client trimite o cerere către un URL care conține parametri de rută, NestJS leagă valorile din URL de parametrii metodei folosind acest decorator.
+
+De exemplu, în ruta `/users/:id`, `id` este un parametru de rută.
+Când un client trimite o cerere către `/users/123`, `123` este valoarea parametrului `id`.
+
+Să vedem cum funcționează în practică:
+
+```typescript
+import { Controller, Get, Param } from '@nestjs/common';
+
+@Controller('users')
+export class UsersController {
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return `Această acțiune returnează un utilizator cu ID-ul ${id}`;
+  }
+}
+```
+
+În acest exemplu, se întâmplă următoarele:
+
+- Ruta este definită ca `@Get(':id')`, indicând faptul că se așteaptă un parametru `id` în URL.
+- În interiorul metodei `findOne()`, decoratorul `@Param('id')` este utilizat pentru a extrage parametrul `id` din URL.
+- Valoarea parametrului `id` este apoi legată de argumentul `id` al metodei `findOne()`.
+- Metoda returnează un șir de caractere care include valoarea lui `id`, afișând ID-ul utilizatorului care este preluat.
+
+Acest mecanism permite aplicației tale să răspundă la o multitudine de URL-uri potențiale printr-o singură rută, extrăgând datele necesare chiar din URL.
+
+---
+
+#### Gestionarea mai multor parametri
+
+NestJS permite definirea mai multor parametri în cadrul unei singure rute.
+Să presupunem că vrei să filtrezi utilizatorii după `id`, `sex` și `minAge`, având și posibilitatea unui parametru de interogare opțional, `salary`.
+
+Ruta ar putea arăta cam așa: `/users/:id/:sex/:minAge`.
+
+Iată cum ai putea să o definești și să o gestionezi:
+
+```typescript
+import { Controller, Get, Param, Query } from '@nestjs/common';
+
+@Controller('users')
+export class UsersController {
+  @Get(':id/:sex/:minAge')
+  filterUsers(
+    @Param('id') id: string,
+    @Param('sex') sex: string,
+    @Param('minAge') minAge: number,
+    @Query('salary') salary?: number,
+  ) {
+    return `Se preiau utilizatorii cu ID-ul: ${id}, Sexul: ${sex}, Vârsta minimă: ${minAge} și Salariul: ${salary || 'Nespecificat'}`;
+  }
+}
+```
+
+În exemplul de mai sus, se întâmplă următoarele:
+
+- Ruta `@Get(':id/:sex/:minAge')` specifică trei parametri.
+- Decoratorul `@Param()` este folosit de trei ori, câte o dată pentru fiecare parametru, pentru a le extrage valorile din URL. Nest va lega automat aceste valori; omiterea lor va duce la variabile de tip `undefined` și ar putea compromite logica controllerului.
+- Un parametru de interogare opțional pentru salariu este gestionat folosind decoratorul `@Query('salary')`. Dacă clientul nu furnizează acest parametru de interogare, valoarea va fi implicit `undefined`.
+
+Este important de reținut că în ruta `/users/123/male/2?salary=10000`, avem urmăcoarea corespondență:
+
+- `123` corespunde lui `id`
+- `male` corespunde lui `sex`
+- `2` corespunde lui `minAge`
+- Parametrul de interogare `salary=10000` corespunde lui `salary`
+
+Această versatilitate le permite aplicațiilor NestJS să facă față diversei cerințe de filtrare, sortare și interogare în scenarii din lumea reală.
+
+Cu rute parametrizate, parametri multipli și combinația puternică a decoratorilor `@Param` și `@Query`, NestJS îți oferă flexibilitatea de a concepe rute dinamice pentru o gamă și mai largă de cereri în aplicația ta.
