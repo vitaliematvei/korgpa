@@ -1,0 +1,380 @@
+---
+title: Editarea Drawbar-urilor Digitale (Digital Drawbars)
+order: 24
+description: Editarea Drawbar-urilor Digitale (Digital Drawbars)
+category: Editare sunete
+---
+
+**Digital Drawbars** sunt sunete speciale care emulează orgile clasice cu roți tonale (tonewheel organs).
+Setările pentru Digital Drawbars sunt salvate într-un **Keyboard Set**, în setările stilului (**Style Settings**) sau într-un piesa MIDI (**MIDI Song**), putând fi considerate echivalentul unui preset de orgă.
+
+- Un singur sunet Digital Drawbars poate fi alocat pe claviatură și doar unul singur pentru acompaniament.
+- Un singur sunet Digital Drawbars poate fi alocat pe piesele (track-urile) 1-8 și doar unul singur pe piesele 9-16 ale unui MIDI Song.
+- Puteți aloca același sunet pe piese diferite din cadrul aceluiași bloc (de exemplu, două piese Acc diferite dintr-un Style).
+- De asemenea, puteți folosi blocurile diferite pentru a înregistra manualele (claviaturile) separate ale unei orgi clasice (de exemplu, înregistrați manualul **Upper** pe una dintre piesele 1-8 și manualul **Lower** pe una dintre piesele 9-16).
+
+---
+
+### Selectarea unui sunet Digital Drawbars
+
+**Deschiderea ferestrei Sound Select de pe panoul de control**
+
+- Apăsați unul dintre butoanele **KEYBOARD SOUNDS > SELECT**.
+
+**Deschiderea ferestrei Sound Select de pe ecran**
+
+- În pagina principală (Main page), atingeți numele unuia dintre sunete pentru a deschide fereastra **Sound Select**.
+
+**Alegerea sunetului Digital Drawbars**
+
+1. Folosiți taburile laterale pentru a selecta grupul **Organ**.
+
+   <figure className="my-6 text-center">
+     <img
+       src="/images/pa4x/13-editare-avansata-sunete/192-1.jpg"
+       alt="imagine"
+       className="mx-auto"
+     />
+     <figcaption />
+   </figure>
+
+2. Selectați sunetul DRAWBARS. Pe ecran va apărea pagina Drawbars Setting (Setări Drawbars).
+
+   <figure className="my-6 text-center">
+     <img
+       src="/images/pa4x/13-editare-avansata-sunete/192-2.jpg"
+       alt="imagine"
+       className="mx-auto"
+     />
+     <figcaption />
+   </figure>
+
+3. Dacă doriți să închideți această fereastră, apăsați butonul **EXIT**.
+
+---
+
+### Editarea Drawbar-urilor Digitale
+
+**Accesarea modului de editare Digital Drawbars**
+
+1. În pagina principală (Main page), atingeți sunetul **DRAWBARS** pentru a deschide fereastra **Sound Select**.
+2. Atingeți din nou sunetul **DRAWBARS** selectat pentru a deschide pagina **Drawbars Setting**.
+
+---
+
+### Modificarea registrelor (Footage)
+
+**Modificarea registrelor (conținutul armonic al sunetului) de pe panoul de control**
+
+1. Asigurați-vă că modul slider-elor (**SLIDER MODE**) este setat pe **DRAWBARS**.
+2. Folosiți slider-ele fizice pentru a ajusta drawbar-urile corespunzătoare.
+
+**Modificarea registrelor (conținutul armonic al sunetului) de pe ecran**
+
+- Trageți de slider-ele virtuale de pe ecran pentru a ajusta drawbar-urile corespunzătoare.
+  **Schimbarea setărilor Rotary/Percussion**
+
+**Accesarea paginii Rotary/Percussion**
+
+- În cazul în care nu este deja selectată, atingeți tabul **Rotary/Percussion** pentru a afișa pagina **Rotary/Percussion**.
+  <figure className="my-6 text-center">
+    <img
+      src="/images/pa4x/13-editare-avansata-sunete/193-1.jpg"
+      alt="imagine"
+      className="mx-auto"
+    />
+    <figcaption />
+  </figure>
+
+**Programarea parametrilor Rotary**
+
+**Rotary** adaugă efectul unui difuzor rotativ (difuzor Leslie).
+
+<div class="overflow-x-auto my-4">
+  <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg shadow-sm font-sans">
+    <thead class="bg-gray-800 text-white">
+      <tr>
+        <th
+          scope="col"
+          class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
+        >
+          Parametru Rotary
+        </th>
+        <th
+          scope="col"
+          class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider"
+        >
+          Semnificație
+        </th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200 text-sm text-gray-700">
+      <tr class="hover:bg-gray-50 transition-colors">
+        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+          Rotor On/Off
+        </td>
+        <td class="px-6 py-4">
+          Folosiți acest comutator pentru a porni sau opri difuzorul rotativ.
+        </td>
+      </tr>
+      <tr class="hover:bg-gray-50 transition-colors">
+        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+          Speed Slow/Fast
+        </td>
+        <td class="px-6 py-4">
+          Folosiți acest slider pentru a schimba viteza difuzorului rotativ (de
+          la lent la rapid sau invers).
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+**Programarea parametrilor Percussion**
+
+**Percussion** adaugă un sunet percutant pe faza de atac (attack) a sunetului de orgă.
+
+<div class="overflow-x-auto my-4">
+  <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg text-sm text-left">
+    <thead class="bg-gray-100 font-semibold text-gray-700">
+      <tr>
+        <th scope="col" class="px-4 py-3 border-b">
+          Parametru Percussion
+        </th>
+        <th scope="col" class="px-4 py-3 border-b">
+          Descriere / Semnificație
+        </th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200 bg-white">
+      <tr class="hover:bg-gray-50">
+        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
+          On/Off
+        </td>
+        <td class="px-4 py-3 text-gray-600">
+          Activează sau dezactivează percuția.
+        </td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
+          Harmonic
+        </td>
+        <td class="px-4 py-3 text-gray-600">
+          Selectează armonica percuției (Second / A doua sau Third / A treia).
+        </td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
+          Mode
+        </td>
+        <td class="px-4 py-3 text-gray-600">
+          Dacă este setat pe <strong>All</strong>, atacul de percuție este redat
+          pe toate notele acordului. Dacă este setat pe <strong>1st</strong>,
+          atacul este redat doar pe prima notă apăsată din acord sau dintr-un
+          grup de note ținute apasate. Trebuie să eliberați toate notele pentru
+          a declanșa din nou percuția.
+        </td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
+          Volume
+        </td>
+        <td class="px-4 py-3 text-gray-600">
+          Nivelul volumului pentru sunetul de percuție.
+        </td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
+          Decay
+        </td>
+        <td class="px-4 py-3 text-gray-600">
+          Viteza de atenuare/stingere a percuției (Fast / Rapidă sau Slow /
+          Lentă).
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+**Modificarea setărilor de ton și zgomot (Tone/Noise)**
+
+**Accesarea paginii Tone/Noise**
+
+- Atingeți tabul **Tone/Noise** pentru a afișa pagina corespunzătoare.
+  <figure className="my-6 text-center">
+    <img
+      src="/images/pa4x/13-editare-avansata-sunete/194-1.jpg"
+      alt="imagine"
+      className="mx-auto"
+    />
+    <figcaption />
+  </figure>
+
+**Programarea parametrilor de ton (Tone)**
+
+**Tone** reprezintă forma de undă a drawbar-urilor, care generează timbrul brut al sunetului.
+
+<div class="overflow-x-auto my-4">
+  <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg text-sm text-left">
+    <thead class="bg-gray-100 font-semibold text-gray-700">
+      <tr>
+        <th scope="col" class="px-4 py-3 border-b">
+          Opțiune ton (Tone option)
+        </th>
+        <th scope="col" class="px-4 py-3 border-b">
+          Semnificație (Meaning)
+        </th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200 bg-white text-gray-800">
+      <tr class="hover:bg-gray-50">
+        <td class="px-4 py-3 font-medium text-gray-900 border-r">Mellow</td>
+        <td class="px-4 py-3">O undă sonoră cu un ton mai moale / cald.</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-4 py-3 font-medium text-gray-900 border-r">Hard</td>
+        <td class="px-4 py-3">
+          O undă sonoră cu un ton mai percusiv / puternic (strident).
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+**Programarea parametrului Leakage**
+
+- Creșteți nivelul scurgerilor de semnal (_Leakage_) de la roțile tonale adiacente pentru a face sunetetul mai bogat și mai plin.
+
+**Programarea parametrilor Key On și Key Off**
+
+- Folosiți parametrii **Key On** și **Key Off** pentru a adăuga zgomotul specific generat la apăsarea sau eliberarea clapelor (zgomotul mecanic al tastelor).
+
+---
+
+### Modificarea setărilor Rotary FX
+
+**Accesarea paginii Rotary FX Set**
+
+- Atingeți tabul **Rotary FX Set** pentru a afișa pagina corespunzătoare.
+
+Această pagină vă permite să programați separat volumul rotorului și al goarnei (_horn_), efectele, microfonia (_miking_) și simularea de cabinet.
+
+_Rețineți:_ Parametrii individuali pot fi accesați doar dacă unul dintre efectele de inserție (IFX) sau efectele principale (MFX) are atribuit efectul **Rotary SpeakerOD**. În caz contrar, este posibil ca unii sau toți parametrii de pe această pagină să nu fie accesibili.
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/pa4x/13-editare-avansata-sunete/195-1.jpg"
+    alt="imagine"
+    className="mx-auto"
+  />
+  <figcaption />
+</figure>
+
+**Programarea parametrilor Overdrive**
+
+Simulatorul de overdrive recreaza distorsiunea specifică a unui amplificator, sporind realismul sunetului.
+
+<div class="overflow-x-auto my-4">
+  <table class="min-w-full text-left text-sm text-slate-700 dark:text-slate-200 border-collapse">
+    <thead>
+      <tr class="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 border-b border-slate-300 dark:border-slate-700">
+        <th class="py-3 px-4 font-semibold">Parametru (Overdrive)</th>
+        <th class="py-3 px-4 font-semibold">Semnificație / Descriere</th>
+        <th class="py-3 px-4 font-semibold">Valoare</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="py-3 px-4 font-medium text-slate-900 dark:text-slate-100">
+          Overdrive On/Off
+        </td>
+        <td class="py-3 px-4">
+          Folosiți acest comutator pentru a activa sau dezactiva efectul de
+          overdrive.
+        </td>
+        <td class="py-3 px-4 font-mono text-xs">On, Off</td>
+      </tr>
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="py-3 px-4 font-medium text-slate-900 dark:text-slate-100">
+          Gain
+        </td>
+        <td class="py-3 px-4">Determină gradul de distorsie al sunetului.</td>
+        <td class="py-3 px-4 font-mono text-xs">0…100</td>
+      </tr>
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="py-3 px-4 font-medium text-slate-900 dark:text-slate-100">
+          Tone
+        </td>
+        <td class="py-3 px-4">
+          Setează calitatea tonală (culoarea/timbrul) a efectului de overdrive.
+        </td>
+        <td class="py-3 px-4 font-mono text-xs">0…15</td>
+      </tr>
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+        <td class="py-3 px-4 font-medium text-slate-900 dark:text-slate-100">
+          Level
+        </td>
+        <td class="py-3 px-4">
+          Setează nivelul de ieșire al semnalului cu overdrive (volumul
+          efectului).
+        </td>
+        <td class="py-3 px-4 font-mono text-xs">0…100</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+**Activarea/Dezactivarea Cabinetului (Cabinet On/Off)**
+Puteți folosi comutatorul Cabinet pentru a activa sau dezactiva simulatorul de cabinet.
+Simularea rezonanței cabinetului sporește considerabil realismul, însă o puteți dezactiva pentru o flexibilitate mai mare.
+
+**Programarea microfoanelor (miking) pentru difuzorul Rotary**
+Puteți echilibra rotorul (registrul de bas/frecvențe joase) și goarna (registrul de înalte/frecvențe înalte).
+Poziționarea microfoanelor (miking) contribuie la volumul și prezența difuzoarelor separate.
+
+<div class="overflow-x-auto my-4">
+  <table class="min-w-full divide-y divide-gray-200 text-sm text-left text-gray-700">
+    <thead class="bg-gray-100 text-xs font-semibold uppercase text-gray-700">
+      <tr>
+        <th scope="col" class="px-4 py-3">
+          Parametru Balance/Mic
+        </th>
+        <th scope="col" class="px-4 py-3">
+          Semnificație
+        </th>
+        <th scope="col" class="px-4 py-3">
+          Valoare
+        </th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200 bg-white">
+      <tr>
+        <td class="px-4 py-3 font-medium text-gray-900">Horn/Rotor Balance</td>
+        <td class="px-4 py-3">
+          Balansul de nivel între trompeta de înalte (horn) și rotorul de bași
+          (rotor).
+        </td>
+        <td class="px-4 py-3 whitespace-nowrap">Rotor, 1…99, Horn</td>
+      </tr>
+      <tr>
+        <td class="px-4 py-3 font-medium text-gray-900">Mic Distance</td>
+        <td class="px-4 py-3">
+          Distanța dintre microfon și difuzorul rotativ.
+        </td>
+        <td class="px-4 py-3 whitespace-nowrap">0…100</td>
+      </tr>
+      <tr>
+        <td class="px-4 py-3 font-medium text-gray-900">Mic Spread</td>
+        <td class="px-4 py-3">
+          Unghiul dintre axa microfonului din stânga și cel din dreapta
+          (deschiderea stereo).
+        </td>
+        <td class="px-4 py-3 whitespace-nowrap">0…100</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+**Activarea sau dezactivarea efectelor principale (Master FX)**
+
+Puteți folosi butoanele **FX1** și **FX2** din secțiunea **Master FX** pentru a activa sau dezactiva efectele principale.
