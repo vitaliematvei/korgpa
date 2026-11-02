@@ -1,0 +1,191 @@
+---
+title: Alegerea modului de interpretare a acordurilor (Modul de recunoaștere a acordurilor - Chord Recognition)
+order: 2
+description: Alegerea modului de interpretare a acordurilor (Modul de recunoaștere a acordurilor - Chord Recognition)
+category: Editare style
+---
+
+Poți cânta acordurile în cel mai simplu mod (chiar simplificat) sau în cel mai sofisticat mod.
+Modul în care trebuie cântate acordurile pentru a fi recunoscute depinde de preferințele tale.
+
+1. Accesează pagina **Global > Mode Preferences > Style 1**.
+   Ca alternativă, ține apăsat butonul **SHIFT** și apasă butonul **STYLE PLAY** pentru a deschide direct pagina Style 1.
+   <figure className="my-6 text-center">
+     <img
+       src="/images/pa4x/14-personalizare-style/208-1.jpg"
+       alt="#"
+       className="mx-auto"
+     />
+     <figcaption />
+   </figure>
+2. Alege modul de interpretare a acordurilor utilizând meniul **Chord Recognition** (Recunoașterea Acordurilor).
+   <div class="w-full max-w-4xl mx-auto my-6 overflow-x-auto rounded-lg border border-slate-200 shadow-sm font-sans">
+     <table class="w-full text-left text-sm text-slate-700 border-collapse">
+       <thead class="bg-slate-800 text-xs uppercase tracking-wider text-slate-100 border-b border-slate-700">
+         <tr>
+           <th scope="col" class="px-6 py-3.5 font-semibold">
+             Chord Recognition (Mod de recunoaștere)
+           </th>
+           <th scope="col" class="px-6 py-3.5 font-semibold">
+             Cum se cântă acordurile
+           </th>
+         </tr>
+       </thead>
+       <tbody class="divide-y divide-slate-200 bg-white">
+         <tr class="hover:bg-slate-50 transition-colors">
+           <td class="px-6 py-4 font-mono font-bold text-slate-900 bg-slate-50/50">
+             One Finger
+           </td>
+           <td class="px-6 py-4 space-y-2">
+             <p>
+               Acest mod este disponibil doar când indicatorul{' '}
+               <strong class="text-slate-900">SPLIT</strong> este aprins. Dacă
+               îl dezactivezi, modul va comuta automat pe{' '}
+               <strong class="text-slate-900">Fingered (3 Notes)</strong>.
+             </p>
+             <p>
+               În acest mod, poți compune un acord folosind o tehnică
+               simplificată:
+             </p>
+             <ul class="list-disc pl-5 space-y-1 text-slate-600">
+               <li>
+                 Cântă o singură notă pentru a fi recunoscut un acord major.
+               </li>
+               <li>
+                 Cântă nota fundamentală (root) plus o clapă albă în stânga
+                 pentru un acord de septimă (ex: C3 + B2 pentru C7).
+               </li>
+               <li>
+                 Cântă nota fundamentală plus o clapă neagră în stânga pentru un
+                 acord minor (ex: C3 + Bb2 pentru C minor).
+               </li>
+               <li>
+                 Cântă nota fundamentală plus o clapă albă și una neagră în
+                 stânga pentru un acord minor de septimă (ex: C3 + B2 + Bb2
+                 pentru C min 7).
+               </li>
+             </ul>
+           </td>
+         </tr>
+         <tr class="hover:bg-slate-50 transition-colors">
+           <td class="px-6 py-4 font-mono font-bold text-slate-900 bg-slate-50/50">
+             One Finger Plus
+           </td>
+           <td class="px-6 py-4 space-y-2">
+             <p>
+               Acest mod funcționează la fel ca{' '}
+               <strong class="text-slate-900">One Finger</strong>. Totuși, dacă
+               cânți acorduri complete, le va recunoaște ca și cum ai fi în
+               modul <strong class="text-slate-900">Fingered (3 Notes)</strong>.
+             </p>
+             <p>
+               În acest fel, poți cânta acorduri pe care modul One Finger nu le
+               poate recunoaște.
+             </p>
+           </td>
+         </tr>
+         <tr class="hover:bg-slate-50 transition-colors">
+           <td class="px-6 py-4 font-mono font-bold text-slate-900 bg-slate-50/50">
+             Fingered (1 Note)
+           </td>
+           <td class="px-6 py-4 space-y-2">
+             <p>
+               Când indicatorul <strong class="text-slate-900">SPLIT</strong>{' '}
+               este aprins, cântă una sau mai multe note pentru a compune un
+               acord. Un acord major complet va fi recunoscut chiar dacă este
+               cântată o singură notă.
+             </p>
+             <p>
+               Când indicatorul <strong class="text-slate-900">SPLIT</strong>{' '}
+               este stins, cântă cel puțin trei note pentru a compune un acord.
+             </p>
+           </td>
+         </tr>
+         <tr class="hover:bg-slate-50 transition-colors">
+           <td class="px-6 py-4 font-mono font-bold text-slate-900 bg-slate-50/50">
+             Fingered (3 Notes)
+           </td>
+           <td class="px-6 py-4">
+             Cântă întotdeauna trei sau mai multe note pentru ca un acord să fie
+             recunoscut.
+           </td>
+         </tr>
+         <tr class="hover:bg-slate-50 transition-colors">
+           <td class="px-6 py-4 font-mono font-bold text-slate-900 bg-slate-50/50">
+             Advanced
+           </td>
+           <td class="px-6 py-4 space-y-2">
+             <p>
+               Când indicatorul <strong class="text-slate-900">SPLIT</strong>{' '}
+               este aprins, cântă una sau mai multe note pentru ca un acord să
+               fie recunoscut. Dacă cânți o singură notă, se va cânta
+               „fundamentală+octavă” (root+8ve). Dacă cânți o cvintă, se va
+               cânta un acord „fundamentală+cvintă” (root+5th).
+             </p>
+             <p>
+               Când indicatorul <strong class="text-slate-900">SPLIT</strong>{' '}
+               este stins, cântă cel puțin trei note pentru a compune un acord.
+             </p>
+             <p>
+               Cu acest mod, poți cânta acorduri fără fundamentală (rootless) și
+               acorduri cu bas inversat (slashed), folosite des în jazz, fusion
+               sau pop modern. Nu trebuie să cânți mereu nota fundamentală, care
+               altfel ar dubla nota cântată deja de basist.
+             </p>
+           </td>
+         </tr>
+       </tbody>
+     </table>
+   </div>
+
+În muzică și în notația pentru claviaturi (inclusiv pe claviaturile Korg Pa), un **acord cu bas inversat** (în engleză _slashed chord_ sau _slash chord_) este un acord în care **nota din bas (cea mai joasă notă) este diferită de nota fundamentală a acordului**.
+
+Se numește _slash chord_ pentru că se scrie folosind o linie diagonală (slash `/`): **`[Acord / Nota din bas]`**.
+
+---
+
+### Structură: `C / E`
+
+- **C** (partea stângă): Acordul pe care îl cântă armonia (Do major: Do - Mi - Sol).
+- **`/`** (slash-ul): Separatorul.
+- **E** (partea dreaptă): Nota exactă pe care trebuie să o cânte basul (Mi).
+
+> **Citire:** „C pe E” sau „Do pe Mi”.
+
+---
+
+### De ce și când se folosește?
+
+1. **Liniaritate și mișcare lină în bas (Line Walking)**
+   În loc ca basul să sară brusc de la o fundamentală la alta, basul inversat permite o coborâre sau o urcare treptată, notă cu notă.
+
+- _Exemplu de progresie clasică:_ **`C`** $\rightarrow$ **`C/B`** $\rightarrow$ **`Am`** $\rightarrow$ **`Am/G`**
+  Aici acordul de fundal rămâne lin, dar linia de bas coboară treptat: **Do $\rightarrow$ Si $\rightarrow$ La $\rightarrow$ Sol**.
+
+2. **Tensiune și tranziție (Sustenabilitate / Pedala de bas)**
+   Poți ține aceeași notă în bas în timp ce schimbi acordurile deasupra.
+
+- _Exemplu (Pedală de bas pe Sol):_ **`F/G`** $\rightarrow$ **`G7`** $\rightarrow$ **`C`**
+  Basul rămâne fix pe Sol, creând tensiune înainte de rezolvarea pe Do.
+
+3. **Inversiuni ale acordurilor (Răsturnări)**
+   Un acord de Do major (`C`) are notele **Do - Mi - Sol**.
+
+- Dacă basul cântă **Do** $\rightarrow$ Starea directă (`C`).
+- Dacă basul cântă **Mi** $\rightarrow$ Prima răsturnare (`C/E`).
+- Dacă basul cântă **Sol** $\rightarrow$ A doua răsturnare (`C/G`).
+
+4. **Acorduri extinse/complexe exprimate simplu (Specifice pentru Jazz / Fusion / Pop)**
+   Multe acorduri sofisticate de jazz/fusion pot fi scrise mult mai simplu ca acorduri slash:
+
+- **`F/G`** este de fapt un **`G11`** (sau `G7sus4`), dar e mult mai ușor de citit și cântat la orgă ca o triadă de Fa major cu nota Sol în bas.
+
+---
+
+### Cum funcționează pe orgă (Korg Pa / Modul Advanced)
+
+Când folosești modul **Advanced** de recunoaștere a acordurilor pe claviatură:
+
+- Dacă apeși triada **Fa major** (Fa-La-Do) cu mâna dreaptă și nota **Sol** în bas (sau în stânga), stilul de rețea/aranjor va genera un stil sonor modern în care **mâna dreaptă face armonia de Fa, dar basistul automat va cânta nota Sol**, creând exact sonoritatea de jazz/pop contemporan fără să fie nevoie să programezi manual configurații complexe.
+
+3. Apasă butonul **EXIT** pentru a reveni la pagina anterioară.
