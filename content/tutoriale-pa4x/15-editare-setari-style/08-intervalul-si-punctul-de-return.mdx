@@ -1,0 +1,101 @@
+---
+title: Activarea/dezactivarea intervalului de clape (Key Range) și setarea punctului de întoarcere (Wrap-Around)
+order: 8
+description: Activarea/dezactivarea intervalului de clape (Key Range) și setarea punctului de întoarcere (Wrap-Around)
+category: Editare style
+---
+
+Sunetele de acompaniament, la fel ca instrumentele acustice pe care le imită, sună mai bine în registrul lor natural. Atunci când modelul (pattern-ul) de acompaniament depășește acest interval sau trece de punctul de întoarcere (wrap-around), acesta poate fi transpus astfel încât să revină în cel mai bun registru sonor.
+
+1. Accesează pagina **Style Play > Style Controls > Range/Wrap**.
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/pa4x/15-editare-setari-style/227-1.jpg"
+    alt="Mixer partide acompaniament Korg Pa4X"
+    className="mx-auto"
+  />
+</figure>
+
+Ca o alternativă, poți accesa aceste parametre în pagina **Style Record > Style Track Controls > Range/Wrap**.
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/pa4x/15-editare-setari-style/227-2.jpg"
+    alt="Mixer partide acompaniament Korg Pa4X"
+    className="mx-auto"
+  />
+</figure>
+
+2. Folosește caseta de selectare **Sound Range On/Off** pentru a activa sau dezactiva intervalul de clape (Key Range) pentru fiecare Sunet în parte.
+
+Un interval preferat este setat în pagina **Style Record > Element Track Controls > Range** pentru fiecare pistă a fiecărui Element de Stil. Îl poți activa sau dezactiva pentru întregul Stil.
+
+<div class="overflow-x-auto my-4">
+  <table class="w-full border-collapse text-left text-sm text-gray-700 bg-white shadow-md rounded-lg overflow-hidden">
+    <thead class="bg-gray-100 text-gray-800 uppercase text-xs tracking-wider border-b border-gray-200">
+      <tr>
+        <th class="px-6 py-3 font-semibold">Interval de clape (Kbd Range)</th>
+        <th class="px-6 py-3 font-semibold">Semnificație</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200">
+      <tr class="hover:bg-gray-50 transition-colors">
+        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+          On (Pornit)
+        </td>
+        <td class="px-6 py-4">
+          Intervalul de clape al Sunetului este luat în considerare. Când o
+          pistă depășește limita inferioară sau superioară a intervalului,
+          aceasta este transpusă automat pentru a rămâne în limitele
+          intervalului programat.
+        </td>
+      </tr>
+      <tr class="hover:bg-gray-50 transition-colors">
+        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+          Off (Oprit)
+        </td>
+        <td class="px-6 py-4">
+          Intervalul de clape nu este luat în considerare. Pista redă nota
+          reală, fără transpunere automată.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+3. Folosește butonul rotativ **Wrap Around** (Punct de întoarcere) pentru a seta punctul de întoarcere.
+
+Punctul de întoarcere reprezintă cea mai înaltă clapă pentru pista de acompaniament. Atunci când înălțimea acordului detectat este prea mare, modelul (pattern-ul) Stilului ar putea fi transpus într-un registru prea înalt, sunând în consecință nenatural. Așadar, atunci când modelul atinge punctul de întoarcere, acesta va sări cu o octavă mai jos.
+
+Se recomandă setarea unor puncte de întoarcere diferite pentru fiecare pistă, pentru a evita ca toate pistele să „sara” în aceeași octavă în același timp. Pentru rezultate cât mai realiste, sugerăm să iei în considerare registrul efectiv al instrumentului real.
+
+<div class="overflow-x-auto my-4">
+  <table class="w-full border-collapse text-left text-sm text-gray-700 bg-white shadow-md rounded-lg overflow-hidden">
+    <thead class="bg-gray-100 text-gray-800 uppercase text-xs tracking-wider border-b border-gray-200">
+      <tr>
+        <th class="px-6 py-3 font-semibold">
+          Punct de întoarcere (Wrap Around)
+        </th>
+        <th class="px-6 py-3 font-semibold">Semnificație</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200">
+      <tr class="hover:bg-gray-50 transition-colors">
+        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+          1 … 12
+        </td>
+        <td class="px-6 py-4">
+          Transpunerea maximă (în semitonuri) a pistei, raportată la tonalitatea
+          sau acordul original al modelului (pattern-ului) de Stil.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+**Memorizarea intervalului de clape și a punctului de întoarcere**
+
+- Scrie setările stilului (Write the Style Settings).
+
+{/* am ramas Choosing and mixing the Pads .229 */}

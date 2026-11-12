@@ -1,0 +1,95 @@
+---
+title: Alegerea unui mod de umplere (Fill Mode) pentru fiecare Fill/Break
+order: 7
+description: Alegerea unui mod de umplere (Fill Mode) pentru fiecare Fill/Break
+category: Editare style
+---
+
+Parametrii **Fill Mode** permit selectarea automată a unei variații (_Variation_) la sfârșitul fiecărui _Fill_, după apăsarea unuia dintre butoanele **FILL** sau **BREAK**.
+
+Aceste setări pot fi salvate în **Style Settings** sau într-o înregistrare din **SongBook** (_SongBook Entry_), astfel încât să poți avea o configurație diferită a modului de umplere (_Fill Mode_) pentru fiecare stil sau intrare din SongBook.
+
+1. Accesează pagina **Style Play > Style Controls > Drum/Fill**.
+   <figure className="my-6 text-center">
+     <img
+       src="/images/pa4x/15-editare-setari-style/225-1.jpg"
+       alt="Mixer partide acompaniament Korg Pa4X"
+       className="mx-auto"
+     />
+   </figure>
+2. Folosește meniurile pop-up **Fill Mode > 1…5/Brk** pentru a alege un mod de umplere (_Fill Mode_) corespunzător pentru fiecare _Fill_ sau _Break_ în parte.
+   <div class="overflow-x-auto my-4">
+     <table class="w-full border-collapse text-left text-sm text-gray-700 bg-white shadow-md rounded-lg overflow-hidden">
+       <thead class="bg-gray-100 text-gray-800 uppercase text-xs tracking-wider border-b border-gray-200">
+         <tr>
+           <th class="px-6 py-3 font-semibold">Mod de umplere (Fill Mode)</th>
+           <th class="px-6 py-3 font-semibold">Semnificație</th>
+         </tr>
+       </thead>
+       <tbody class="divide-y divide-gray-200">
+         <tr class="hover:bg-gray-50 transition-colors">
+           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+             Off (Oprit)
+           </td>
+           <td class="px-6 py-4">
+             Aceeași Variație care cânta înainte de selectarea unui Fill va fi
+             selectată din nou.
+           </td>
+         </tr>
+         <tr class="hover:bg-gray-50 transition-colors">
+           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+             V1&amp;V2 … V3&amp;V4
+           </td>
+           <td class="px-6 py-4">
+             Variațiile specificate vor fi selectate alternativ atunci când una
+             dintre ele este aleasă. De exemplu, cu opțiunea V1&amp;V2, dacă
+             Variația 1 este selectată, Variația 1 și Variația 2 vor fi
+             alternate după încheierea Fill-ului.
+           </td>
+         </tr>
+         <tr class="hover:bg-gray-50 transition-colors">
+           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+             Var.Up / Var.Down
+           </td>
+           <td class="px-6 py-4">
+             Următoarea Variație cu număr mai mare / mai mic este selectată, în
+             ciclu. După Variația 4, o comandă de urcare (Up) va selecta
+             Variația 1. După Variația 1, o comandă de coborâre (Down) va
+             selecta Variația 4.
+           </td>
+         </tr>
+         <tr class="hover:bg-gray-50 transition-colors">
+           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+             Var.Inc / Var.Dec
+           </td>
+           <td class="px-6 py-4">
+             Următoarea Variație cu număr mai mare / mai mic este selectată.
+             Când se ajunge la Variația 4, o comandă de creștere (Inc) va
+             selecta din nou Variația 4. Când se ajunge la Variația 1, o comandă
+             de scădere (Dec) va selecta din nou Variația 1.
+           </td>
+         </tr>
+         <tr class="hover:bg-gray-50 transition-colors">
+           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+             To Var.1 … To Var.4
+           </td>
+           <td class="px-6 py-4">
+             Umplere spre Variație (Fill to Variation: -&gt;1, -&gt;2, -&gt;3,
+             -&gt;4) selectează automat una dintre cele patru Variații de Stitlu
+             disponibile la sfârșitul fill-ului.
+           </td>
+         </tr>
+       </tbody>
+     </table>
+   </div>
+
+**Auto Fill și Fill Mode**
+
+Funcțiile **Auto Fill** și **Fill Mode** pot interacționa, realizând acțiuni strâns legate între ele:
+
+- Când funcția **Auto Fill** este activată (indicatorul **AUTO FILL** aprins), poți alege o Variație apăsând unul dintre butoanele **VARIATION**. Acest lucru va selecta automat un Fill, urmat de Variația aleasă.
+  Aceasta este cea mai simplă modalitate de a selecta Variația cea mai potrivită pentru următoarea secțiune a melodiei, lăsând instrumentul să aleagă automat un Fill pentru tine.
+- Când funcția **Fill Mode** este programată într-un Style sau într-o intrare din SongBook, poți alege un Fill sau un Break apăsând unul dintre butoanele **FILL** sau **BREAK**. Fill-ul sau Break-ul ales va fi redat, iar apoi Variația programată va fi selectată automat.
+  Aceasta este o modalitate avansată de a crea secvențe complexe de Fill-uri și Variații.
+
+Reține că, în timp ce **Auto Fill** este o setare globală (Global), **Fill Mode** este legat de un anumit Style sau de o intrare din SongBook.
