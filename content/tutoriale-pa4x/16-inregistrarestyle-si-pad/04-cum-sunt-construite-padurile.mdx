@@ -1,0 +1,202 @@
+---
+title: Cum sunt construite Pad-urile (How Pads are made)
+order: 4
+description: Cum sunt construite Pad-urile (How Pads are made)
+category: Inregistrare style
+---
+
+**Pad-urile (The Pads)**
+Un Pad este, în esență, un Stil format dintr-o singură pistă (track) și un singur Element de Stil.
+Majoritatea regulilor care se aplică înregistrării unui Stil sunt valabile și pentru înregistrarea unui Pad.
+Există două categorii diferite de Pad-uri: **Hit** și **Sequence**.
+
+<div class="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
+  <table class="min-w-full divide-y divide-gray-200 text-left text-sm">
+    <thead class="bg-gray-50 text-xs font-semibold uppercase tracking-wider text-gray-700">
+      <tr>
+        <th scope="col" class="w-1/4 px-6 py-3.5">
+          Tip de Pad (Pad type)
+        </th>
+        <th scope="col" class="w-3/4 px-6 py-3.5">
+          Semnificație (Meaning)
+        </th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200 bg-white text-gray-700">
+      <tr class="hover:bg-gray-50">
+        <td class="whitespace-nowrap px-6 py-4 font-semibold text-gray-900">
+          Hit
+        </td>
+        <td class="px-6 py-4 leading-relaxed">
+          Deși sunt folosite în principal ca evenimente care nu se transpun, ele
+          pot fi, de asemenea, note sau acorduri transpunibile. În esență, ele
+          sunt Secvențe de o singură notă sau de un singur acord (vezi mai jos).
+        </td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="whitespace-nowrap px-6 py-4 font-semibold text-gray-900">
+          Sequence (Secvență)
+        </td>
+        <td class="px-6 py-4 leading-relaxed">
+          Pattern-uri cu o singură pistă, care pot fi transpuse prin cântarea
+          unor acorduri diferite pe clavier — exact ca o pistă de Stil.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+Fiecare Pad este alcătuit din până la șase unități mai mici, numite Variații de Acord (CV).
+
+Fiecare Variație de Acord este formată dintr-o singură pistă (pista Pad-ului).
+
+Exact ca în cazul Stilurilor, atunci când cânți un acord în zona de recunoaștere a acordurilor, este apelată Variația de Acord corespunzătoare.
+Acordurile recunoscute sunt asociate unei Variații de Acord prin intermediul Tabelului Variațiilor de Acord.
+Fiecare Pad conține un Tabel de Variații de Acord.
+
+**Structura Pad-ului**
+Structura unui Pad este aceeași cu a unui Element de Stil cu o singură pistă, așa cum se arată în diagrama de mai jos:
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/pa4x/16-inregistrare-style-pad/244-1.jpg"
+    alt="Mixer partide acompaniament Korg Pa4X"
+    className="mx-auto"
+  />
+</figure>
+
+**Ce trebuie să înregistrezi într-un Pad**
+Înregistrarea unui Pad înseamnă înregistrarea unei singure piste, în interiorul unei serii de Variații de Acord, în interiorul Pad-ului în sine.
+
+Nu trebuie să înregistrezi toate Variațiile de Acord.
+Adesea este necesar să înregistrezi doar o singură Variație de Acord.
+
+**Date MIDI înregistrate**
+Atunci când înregistrezi Stiluri și Pad-uri, evenimentele care nu sunt suportate sunt filtrate.
+Iată evenimentele permise.
+
+<div class="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
+  <table class="min-w-full divide-y divide-gray-200 text-left text-sm">
+    <thead class="bg-gray-50 text-xs font-semibold uppercase tracking-wider text-gray-700">
+      <tr>
+        <th scope="col" class="w-3/4 px-6 py-3.5">
+          Date MIDI înregistrate (Recorded MIDI data)
+        </th>
+        <th scope="col" class="w-1/4 px-6 py-3.5 text-right">
+          CC#
+        </th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200 bg-white text-gray-700">
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-3.5 font-medium text-gray-900">Note On</td>
+        <td class="px-6 py-3.5 text-right font-mono text-gray-500">—</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-3.5 font-medium text-gray-900">RX Noise On</td>
+        <td class="px-6 py-3.5 text-right font-mono text-gray-500">—</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-3.5 font-medium text-gray-900">Pitch Bend</td>
+        <td class="px-6 py-3.5 text-right font-mono text-gray-500">—</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-3.5 font-medium text-gray-900">
+          Channel After Touch
+        </td>
+        <td class="px-6 py-3.5 text-right font-mono text-gray-500">—</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-3.5 font-medium text-gray-900">
+          Modulation (Modulație)
+        </td>
+        <td class="px-6 py-3.5 text-right font-mono text-gray-600">01</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-3.5 font-medium text-gray-900">
+          Breath (Respirație)
+        </td>
+        <td class="px-6 py-3.5 text-right font-mono text-gray-600">02</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-3.5 font-medium text-gray-900">Pan (Panoramare)</td>
+        <td class="px-6 py-3.5 text-right font-mono text-gray-600">10</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-3.5 font-medium text-gray-900">
+          Expression (Expresie)
+        </td>
+        <td class="px-6 py-3.5 text-right font-mono text-gray-600">11</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-3.5 font-medium text-gray-900">CC#12</td>
+        <td class="px-6 py-3.5 text-right font-mono text-gray-600">12</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-3.5 font-medium text-gray-900">CC#13</td>
+        <td class="px-6 py-3.5 text-right font-mono text-gray-600">13</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-3.5 font-medium text-gray-900">
+          Ribbon (Panglică / Controler Ribbon)
+        </td>
+        <td class="px-6 py-3.5 text-right font-mono text-gray-600">16</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-3.5 font-medium text-gray-900">
+          Damper (Hold 1 / Pedală de sustain)
+        </td>
+        <td class="px-6 py-3.5 text-right font-mono text-gray-600">64</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-3.5 font-medium text-gray-900">
+          Filter Resonance (Conținut armonic / Rezonanță filtru)
+        </td>
+        <td class="px-6 py-3.5 text-right font-mono text-gray-600">71</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-3.5 font-medium text-gray-900">
+          Low Pass Filter Cutoff (Luminozitate / Tăiere filtru trecės-jos)
+        </td>
+        <td class="px-6 py-3.5 text-right font-mono text-gray-600">74</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-3.5 font-medium text-gray-900">
+          CC#80 (Sound Controller 1)
+        </td>
+        <td class="px-6 py-3.5 text-right font-mono text-gray-600">80</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-3.5 font-medium text-gray-900">
+          CC#81 (Sound Controller 2)
+        </td>
+        <td class="px-6 py-3.5 text-right font-mono text-gray-600">81</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="px-6 py-3.5 font-medium text-gray-900">
+          CC#82 (General Purpose #7)
+        </td>
+        <td class="px-6 py-3.5 text-right font-mono text-gray-600">82</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+Iată explicația pe înțelesul tuturor pentru fiecare dintre aceste elemente MIDI:
+
+- **Note On (Activare notă):** Momentul exact în care apeși o clapă (când începe sunetul), împreună cu informația despre cât de tare ai lovit-o (velocitatea).
+- **RX Noise On (Zgomote reale RX):** Sunetele naturale, de fundal, ale unui instrument real — cum ar fi alunecarea degetelor pe corzile chitarei, respirația unui suflător sau zgomotul clapelor — care fac interpretarea să sune autentic, nu mecanic.
+- **Pitch Bend (Îndoirea înălțimii):** Efectul produs de joystick-ul sau rotița de _Pitch_, care permite alunecarea lină a notei în sus sau în jos (ca atunci când tragi de o coardă de chitară).
+- **Channel After Touch (Presiune după apăsare):** Capacitatea claviaturii de a simți dacă apeși mai tare pe clapă _după_ ce ai lovit-o deja, declanșând un efect suplimentar (de obicei un vibrato sau deschiderea unui filtru).
+- **Modulation — CC#01 (Modulație):** Controlează intensitatea efectului de vibrato sau tremolo, de regulă prin împingerea joystick-ului în față sau mișcarea rotiței de modulație.
+- **Breath — CC#02 (Respirație):** Simulează intensitatea suflului într-un instrument de suflat (nai, clarinet, trompetă), modificând dinamica și timbrul sunetului.
+- **Pan — CC#10 (Panoramare):** Poziționează sunetul instrumentului în spațiul stereo — mai mult în boxa din stânga, în cea din dreapta sau pe centru.
+- **Expression — CC#11 (Expresie):** Controlează volumul dinamic în timpul cântării (crescendo și diminuendo — mai încet sau mai tare), fără a schimba volumul general al pistei din mixer.
+- **CC#12 și CC#13:** Controlere de uz general (Efecte 1 și 2). În aranjor, acestea sunt folosite de obicei pentru a regla în timp real parametrii efectelor (cum ar fi nivelul de ecou/delay sau viteza unui efect).
+- **Ribbon — CC#16 (Panglică):** Un controler tactil pe care glisezi degetul pentru a modifica lin un sunet (de exemplu, pentru efecte de glissando sau schimbări de timbru).
+- **Damper / Hold 1 — CC#64 (Pedala de sustain):** Efectul pedalei din dreapta a pianului — ține notele prelungite să sune chiar și după ce ai ridicat degetele de pe clape.
+- **Filter Resonance — CC#71 (Rezonanța filtrului):** Accentuează frecvențele din jurul punctului de tăiere al filtrului, oferind sunetului un caracter mai ascuțit, nazal sau „electronic/sintetic”.
+- **Low Pass Filter Cutoff — CC#74 (Luminozitatea sunetului):** Controlează cât de „închis” (înfundat, cald) sau cât de „deschis” (strălucitor, tăios) este timbrul unui instrument.
+- **CC#80 (Sound Controller 1 – Y+):** La Korg, este asociat de regulă cu mișcarea în sus a joystick-ului (axa Y+) sau cu un buton asignabil, activând articulații speciale ale instrumentului.
+- **CC#81 (Sound Controller 2 – Y-):** Asociat cu mișcarea în jos a joystick-ului (axa Y-) sau cu un alt buton de control, folosit frecvent pentru a schimba modul în care este cântat un instrument (ex: de la legato la staccato).
+- **CC#82 (General Purpose #7):** Un canal de control liber pe care producătorii de stiluri îl pot programa să declanșeze diverse variații de sunet sau articulații specifice (DNC – _Defined Nuance Control_).

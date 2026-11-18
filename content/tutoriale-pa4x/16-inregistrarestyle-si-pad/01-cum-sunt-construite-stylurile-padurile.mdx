@@ -1,0 +1,46 @@
+---
+title: Cum sunt construite Stilurile (Styles) și Pad-urile (Pads)?
+order: 1
+description: Cum sunt construite Stilurile (Styles) și Pad-urile (Pads)?
+category: Inregistrare style
+---
+
+KORG oferă un număr imens de Stiluri și Pad-uri create profesional odată cu Pa4X.
+Totuși, ești liber să le personalizezi sau să creezi Stiluri și Pad-uri complet noi, pe cont propriu.
+
+Stilurile și Pad-urile au în comun majoritatea elementelor de structură, precum și operațiunile de înregistrare și editare.
+Iată cum sunt realizate.
+
+**Cum sunt construite Stilurile (Styles)**
+
+- **Elementele Stilului (Style Elements)**
+  Stilurile sunt secvențe muzicale redate automat de aranjorul lui Pa4X atunci când cânți un acord, pentru a-ți oferi un acompaniament în timp real.
+  Un Stil este alcătuit dintr-o serie de Elemente ale Stilului (_Intro_, _Variation_, _Fill_, _Ending_…), fiecare corespunzând unei secțiuni a unei melodii.
+  Elementele Stilului pot fi selectate direct folosind butoanele corespunzătoare de pe panoul de control (sau pot fi selectate automat prin funcția _Auto Fill_).
+- **Variațiile de Acord (Chord Variations)**
+  Fiecare Element al Stilului este format din unități mai mici, numite Variații de Acord.
+  Când cânți în zona de recunoaștere a acordurilor, aranjorul scanează claviatura și detectează ce acord cânți.
+  Apoi, în funcție de Elementul Stilului selectat, alege Variația de Acord potrivită pentru a fi redată peste acordul recunoscut.
+
+Ce Variație de Acord corespunde fiecărui acord scanat este stabilită de **Tabelul Variațiilor de Acord** (Chord Variation Table).
+Fiecare Element de Stil conține un astfel de tabel, a cărui structură generală este următoarea:
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/pa4x/16-inregistrare-style-pad/241-1.jpg"
+    alt="Mixer partide acompaniament Korg Pa4X"
+    className="mx-auto"
+  />
+</figure>
+
+**Tonalitate/Acord (Key/Chord)**
+După ce decide ce Variație de Acord (CV) să redea, aranjorul declanșează secvența potrivită pentru fiecare pistă (track).
+Deoarece fiecare secvență este scrisă într-o anumită tonalitate (de exemplu, Do Major, Sol Major sau Mi minor), aranjorul o transpune în funcție de acordul scanat.
+Notele din secvență sunt transpuse cu atenție, astfel încât să sune corect cu toate acordurile recunoscute.
+
+**Piste și Pattern-uri/Secvențe (Tracks and Patterns/Sequences)**
+Fiecare Variație de Acord este alcătuită din opt piste diferite:
+
+- **DRUM** și **PERC** sunt folosite pentru secvențele de tobe și percuție;
+- **BASS** este pentru bas;
+- **ACC1–5** sunt pentru secvențele de acompaniament instrumental (corzi/strings, chitară, pian sau alte instrumente de acompaniament).
