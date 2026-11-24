@@ -1,0 +1,281 @@
+---
+title: Alegerea unui tabel NTT pentru pista selectată
+order: 14
+description: Alegerea unui tabel NTT pentru pista selectată
+category: Inregistrare style
+---
+
+- Folosește parametrii **NTT Type** și **NTT Table** pentru a alege un tabel NTT (_Note Transposition Table_ – tabel de transpunere a notelor) pentru pista de stil (_Style track_) selectată (sau pentru pista de Pad) din variația de acord curentă (_Chord Variation_).
+
+Un tabel NTT este un set de algoritmi sofisticați care le permite claviaturilor arranger KORG să convertească acordurile recunoscute în pattern-uri muzicale.
+Tabelul NTT determină modul în care arranger-ul va transpune notele pattern-ului atunci când este recunoscut un acord care nu corespunde exact acordului original al unei variații de acord (_Chord Variation_).
+
+De exemplu, dacă ai înregistrat o variație de acord doar pentru acordul **CMaj**, atunci când pe claviatură este recunoscut un acord **CMaj7**, arranger-ul trebuie să transpună anumite note pentru a crea septima lipsă.
+
+Parametrii NTT nu sunt utilizați de pistele de tobe și percuție (_Drum and Percussion tracks_) și, prin urmare, apar estompați/inactivi (_dimmed_) atunci când selectezi aceste piste.
+
+Există două tipuri generale de tabele NTT:
+
+<div className="overflow-x-auto my-6">
+  <table className="min-w-full border-collapse border border-slate-300 text-left text-sm text-slate-800">
+    <thead className="bg-slate-100 text-slate-900 font-semibold">
+      <tr>
+        <th className="border border-slate-300 px-4 py-3 w-1/4">
+          Tip NTT (NTT Type)
+        </th>
+        <th className="border border-slate-300 px-4 py-3 w-3/4">Descriere</th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-slate-300">
+      <tr className="align-top">
+        <td className="border border-slate-300 px-4 py-3 font-medium text-slate-900">
+          Parallel
+        </td>
+        <td className="border border-slate-300 px-4 py-3 space-y-3">
+          <p>
+            Notele sunt transpuse în interiorul intervalului stabilit de
+            parametrul <strong>Wrap Around</strong>. Aceste tabele sunt ideale
+            pentru părțile melodice.
+          </p>
+          <div className="flex items-center gap-8 pt-2 text-xs font-medium text-slate-500 uppercase tracking-wider">
+            <div>
+              <figure className="my-6 text-center">
+                <img
+                  src="/images/pa4x/16-inregistrare-style-pad/260-1.jpg"
+                  alt="Mixer partide acompaniament Korg Pa4X"
+                  className="mx-auto"
+                />
+              </figure>
+              <span>așa cum este scris (as written)</span>
+            </div>
+
+            <div>
+              <figure className="my-6 text-center">
+                <img
+                  src="/images/pa4x/16-inregistrare-style-pad/260-2.jpg"
+                  alt="Mixer partide acompaniament Korg Pa4X"
+                  className="mx-auto"
+                />
+              </figure>
+              <span>așa cum este redat (as played back)</span>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr className="align-top">
+        <td className="border border-slate-300 px-4 py-3 font-medium text-slate-900">
+          Fixed
+        </td>
+        <td className="border border-slate-300 px-4 py-3 space-y-3">
+          <p>
+            Arranger-ul mută cât mai puține note posibil, făcând liniile legato
+            și schimbările de acorduri mult mai naturale. Acestea sunt ideale
+            pentru pistele de acorduri (corzi/strings, pian etc.).
+          </p>
+          <div className="flex items-center gap-8 pt-2 text-xs font-medium text-slate-500 uppercase tracking-wider">
+            <div>
+              <figure className="my-6 text-center">
+                <img
+                  src="/images/pa4x/16-inregistrare-style-pad/260-1.jpg"
+                  alt="Mixer partide acompaniament Korg Pa4X"
+                  className="mx-auto"
+                />
+              </figure>
+              <span>așa cum este scris (as written)</span>
+            </div>
+
+            <div>
+              <figure className="my-6 text-center">
+                <img
+                  src="/images/pa4x/16-inregistrare-style-pad/260-3.jpg"
+                  alt="Mixer partide acompaniament Korg Pa4X"
+                  className="mx-auto"
+                />
+              </figure>
+              <span>așa cum este redat (as played back)</span>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+
+### Acestea sunt combinațiile dintre **NTT Type** (Tipul NTT) și **NTT Table** (Tabelul NTT):
+
+<div className="overflow-x-auto my-6">
+  <table className="min-w-full border-collapse border border-slate-300 text-left text-sm text-slate-800">
+    <thead className="bg-emerald-50 text-slate-900 font-semibold">
+      <tr>
+        <th className="border border-slate-300 px-4 py-3 w-1/4">NTT Type/Table</th>
+        <th className="border border-slate-300 px-4 py-3 w-3/4">Descriere</th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-slate-300">
+      <tr className="align-top">
+        <td className="border border-slate-300 px-4 py-3 font-medium text-slate-900">
+          Parallel/Root
+        </td>
+        <td className="border border-slate-300 px-4 py-3">
+          Nota fundamentală (în CMaj = C) este transpusă către notele lipsă.
+        </td>
+      </tr>
+
+      <tr className="align-top">
+        <td className="border border-slate-300 px-4 py-3 font-medium text-slate-900">
+          Parallel/Fifth
+        </td>
+        <td className="border border-slate-300 px-4 py-3 space-y-4">
+          <p>
+            Cvinta (în CMaj = G) este transpusă către notele lipsă.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+            <div className="flex flex-col items-center text-center space-y-2">
+              <div className="text-xs leading-tight text-slate-700">
+                <div>Înregistrat cu</div>
+                <div>NTT = Root sau 5th</div>
+                <div>(Key/Chord = C)</div>
+              </div>
+              <figure className="my-6 text-center">
+
+  <img
+    src="/images/pa4x/16-inregistrare-style-pad/261-1.jpg"
+    alt="Mixer partide acompaniament Korg Pa4X"
+    className="mx-auto"
+  />
+</figure>
+
+            </div>
+
+            <div className="flex flex-col items-center text-center space-y-2">
+              <div className="text-xs leading-tight text-slate-700">
+                <div>Când cânți un C7</div>
+                <div>cu NTT = Root</div>
+              </div>
+                            <figure className="my-6 text-center">
+
+  <img
+    src="/images/pa4x/16-inregistrare-style-pad/261-2.jpg"
+    alt="Mixer partide acompaniament Korg Pa4X"
+    className="mx-auto"
+  />
+</figure>
+
+            </div>
+
+            <div className="flex flex-col items-center text-center space-y-2">
+              <div className="text-xs leading-tight text-slate-700">
+                <div>Când cânți un C7</div>
+                <div>cu NTT = 5th</div>
+              </div>
+                                          <figure className="my-6 text-center">
+
+  <img
+    src="/images/pa4x/16-inregistrare-style-pad/261-3.jpg"
+    alt="Mixer partide acompaniament Korg Pa4X"
+    className="mx-auto"
+  />
+</figure>
+
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr className="align-top">
+        <td className="border border-slate-300 px-4 py-3 font-medium text-slate-900">
+          Parallel/i-Series
+        </td>
+        <td className="border border-slate-300 px-4 py-3 space-y-4">
+          <p>
+            Toate pattern-urile originale trebuie programate pe acorduri „Maj7” sau „min7”. La încărcarea stilurilor vechi KORG i-Series, această opțiune este selectată automat.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+            <div className="flex flex-col items-center text-center space-y-2">
+              <div className="text-xs leading-tight text-slate-700">
+                <div>Înregistrat cu</div>
+                <div>NTT = i-Series</div>
+                <div>(Key/Chord = CM7)</div>
+              </div>
+                                                        <figure className="my-6 text-center">
+
+  <img
+    src="/images/pa4x/16-inregistrare-style-pad/261-4.jpg"
+    alt="Mixer partide acompaniament Korg Pa4X"
+    className="mx-auto"
+  />
+</figure>
+
+            </div>
+            <div className="flex flex-col items-center text-center space-y-2">
+              <div className="text-xs leading-tight text-slate-700">
+                <div>Când cânți un C</div>
+                <div>cu NTT = i-Series</div>
+              </div>
+                                                                      <figure className="my-6 text-center">
+
+  <img
+    src="/images/pa4x/16-inregistrare-style-pad/261-5.jpg"
+    alt="Mixer partide acompaniament Korg Pa4X"
+    className="mx-auto"
+  />
+</figure>
+
+            </div>
+
+            <div className="flex flex-col items-center text-center space-y-2">
+              <div className="text-xs leading-tight text-slate-700">
+                <div>Când cânți un C7</div>
+                <div>cu NTT = i-Series</div>
+              </div>
+                                                                      <figure className="my-6 text-center">
+
+  <img
+    src="/images/pa4x/16-inregistrare-style-pad/261-6.jpg"
+    alt="Mixer partide acompaniament Korg Pa4X"
+    className="mx-auto"
+  />
+</figure>
+
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr className="align-top">
+        <td className="border border-slate-300 px-4 py-3 font-medium text-slate-900">
+          Parallel/No Transpose
+        </td>
+        <td className="border border-slate-300 px-4 py-3">
+          Structura acordului nu este modificată și este mutată neschimbată în noua tonalitate. Pattern-ul redă exact notele înregistrate și este mutat în noua tonalitate așa cum este. Aceasta este setarea standard pentru <strong>Intro 1</strong> și <strong>Ending 1</strong> în stilurile originale KORG (unde de obicei este înregistrată o progresie de acorduri).
+        </td>
+      </tr>
+
+      <tr className="align-top">
+        <td className="border border-slate-300 px-4 py-3 font-medium text-slate-900">
+          Fixed/Chord
+        </td>
+        <td className="border border-slate-300 px-4 py-3">
+          Acest tabel mută cât mai puține note posibil, făcând liniile legato și schimbările de acorduri mai naturale. Este ideal pentru pistele de acorduri (corzi/strings, pian etc.). Spre deosebire de modul <strong>Parallel</strong>, acordul programat nu este transpus în funcție de parametrul <strong>Wrap Around</strong>, ci rămâne întotdeauna în jurul poziției sale originale, căutând note comune între acorduri.
+        </td>
+      </tr>
+
+      <tr className="align-top">
+        <td className="border border-slate-300 px-4 py-3 font-medium text-slate-900">
+          Fixed/No Transpose
+        </td>
+        <td className="border border-slate-300 px-4 py-3">
+          Notele programate pot fi transpuse doar prin funcția <strong>Master Transpose</strong>. Acestea nu sunt niciodată transpuse la schimbarea acordurilor.
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+
+Pentru a respecta specificațiile KORG, este recomandat să setezi tabelul NTT pe **No Transpose** pentru **Intro 1** și **Ending 1**.
+
+{/* am ramas Recording a Style or Pad in Realtime Record mode .262 */}
