@@ -1,0 +1,184 @@
+---
+title: Înregistrarea unui Style sau Pad în modul Step Record (înregistrare pas cu pas)
+order: 20
+description: Înregistrarea unui Style sau Pad în modul Step Record (înregistrare pas cu pas)
+category: Inregistrare style
+---
+
+Modul **Step Recording** îți permite să creezi un Style sau un Pad nou prin introducerea notelor individuale sau a acordurilor pe fiecare pistă (track), câte un pas pe rând.
+Această metodă este foarte utilă atunci când transcrii o partitură existentă sau când ai nevoie de un grad ridicat de precizie, fiind potrivită în special pentru crearea pistelor de tobe (Drum) și percuție (Percussion).
+
+**Înregistrarea pas cu pas (Step recording)**
+
+**Accesarea modului Step Recording**
+
+- În timp ce te afli în pagina principală **Style/Pad Record > Main**,
+  selectează comanda **Step Record – Overdub** din meniul paginii (colțul din dreapta sus) pentru a accesa înregistrarea pas cu pas pe pista de Style selectată (sau pe pista de Pad).
+  <figure className="my-6 text-center">
+    <img
+      src="/images/pa4x/16-inregistrare-style-pad/266-1.jpg"
+      alt="Mixer partide acompaniament Korg Pa4X"
+      className="mx-auto"
+    />
+  </figure>
+
+**Poziționarea indicatorului de intrare (Position the input pointer)**
+
+- Parametrul **Position** arată poziția curentă. Aici vei insera următorul eveniment.
+- Dacă nu dorești să inserezi o notă sau un acord la poziția curentă, inserează în schimb o pauză (rest), așa cum este arătat mai jos.
+- Pentru a trece la măsura următoare, completând timpii rămași cu pauze, atinge butonul **Next M.**
+
+**Alegerea valorii pasului (Choose a step value)**
+
+- Folosește valorile **Step Time** pentru a alege valoarea pasului.
+
+**Setarea duratei relative a notei (Choose the relative note duration)**
+
+- Folosește parametrul **Duration** pentru a seta durata relativă a notei.
+  Procentajul se raportează întotdeauna la valoarea pasului.
+  <div class="overflow-x-auto rounded-lg border border-slate-200 shadow-sm">
+    <table class="min-w-full divide-y divide-slate-200 text-left text-sm">
+      <thead class="bg-slate-100 text-slate-900 font-semibold">
+        <tr>
+          <th scope="col" class="px-4 py-3">
+            Durată (Duration)
+          </th>
+          <th scope="col" class="px-4 py-3">
+            Semnificație (Meaning)
+          </th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-200 bg-white text-slate-700">
+        <tr class="hover:bg-slate-50">
+          <td class="px-4 py-3 font-medium text-slate-900">50%</td>
+          <td class="px-4 py-3">Staccato</td>
+        </tr>
+        <tr class="hover:bg-slate-50">
+          <td class="px-4 py-3 font-medium text-slate-900">85%</td>
+          <td class="px-4 py-3">
+            Articulație obișnuită (Ordinary articulation)
+          </td>
+        </tr>
+        <tr class="hover:bg-slate-50">
+          <td class="px-4 py-3 font-medium text-slate-900">100%</td>
+          <td class="px-4 py-3">Legato</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+**Alegerea dinamicii / vitezei notei (Choose the note velocity)**
+
+- Folosește parametrul **Velocity** pentru a seta viteza (dinamica) sau intensitatea de interpretare a evenimentului care urmează să fie inserat.
+  <div class="overflow-x-auto rounded-lg border border-slate-200 shadow-sm">
+    <table class="min-w-full divide-y divide-slate-200 text-left text-sm">
+      <thead class="bg-slate-100 text-slate-900 font-semibold">
+        <tr>
+          <th scope="col" class="px-4 py-3">
+            Veloci­tate (Velocity)
+          </th>
+          <th scope="col" class="px-4 py-3">
+            Semnificație (Meaning)
+          </th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-200 bg-white text-slate-700">
+        <tr class="hover:bg-slate-50">
+          <td class="px-4 py-3 font-medium text-slate-900">Kbd</td>
+          <td class="px-4 py-3">
+            Tastatură (Keyboard). Selectează acest parametru rotind complet spre
+            stânga (în sens invers acelor de ceasornic) controalele{' '}
+            <strong>VALUE</strong>. Când această opțiune este selectată,
+            intensitatea cu care apeși clapa este recunoscută și înregistrată.
+          </td>
+        </tr>
+        <tr class="hover:bg-slate-50">
+          <td class="px-4 py-3 font-medium text-slate-900">1 … 127</td>
+          <td class="px-4 py-3">
+            Valoare fixă de velocitate (Velocity value). Evenimentul va fi
+            inserat cu această valoare exactă a velocității, iar intensitatea
+            reală cu care apeși clapa pe tastatură va fi ignorată.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+**Inserarea unei note sau a unei pauze la poziția curentă**
+
+- Pentru a insera o singură notă, cânt-o pe claviatură. Lungimea notei inserate va corespunde lungimii pasului. Poți schimba velocitatea și durata relativă a notei editând parametrii **Duration** și **Velocity**.
+- Pentru a insera o pauză, atinge butonul **Rest**. Lungimea acesteia va corespunde valorii pasului.
+- Pentru a lega nota care urmează să fie inserată de cea anterioară (legato de prelungire), atinge butonul **Tie**. Va fi inserată o notă legată de cea precedentă.
+
+**Inserarea unui acord (Insert a chord)**
+
+- Cântă un acord în locul unei singure note. Numele evenimentului va fi prima notă a acordului apăsat, urmată de indicatorul „…”.
+
+**Inserarea unui acord format din note cu valori diferite de velocitate**
+Poți face ca nota superioară sau inferioară a unui acord, de exemplu, să sune mai tare decât celelalte, pentru ca nota cea mai importantă să iasă în evidență din acord.
+
+1. Editează valoarea **Velocity** a primei note.
+2. Apasă prima notă și ține-o apăsată.
+3. Editează valoarea **Velocity** a celei de-a doua note.
+4. Apasă a doua notă și ține-o apăsată.
+5. Editează valoarea **Velocity** a celei de-a treia note.
+6. Apasă a treia notă, apoi eliberează toate notele.
+
+**Inserarea unei a doua voci (Insert a second voice)**
+Poți insera pasaje în care o notă este ținută apăsată, în timp ce o altă voce se mișcă liber.
+Câteva exemple:
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/pa4x/16-inregistrare-style-pad/269-1.jpg"
+    alt="Mixer partide acompaniament Korg Pa4X"
+    className="mx-auto"
+  />
+</figure>
+
+<figure className="my-6 text-center">
+  <img
+    src="/images/pa4x/16-inregistrare-style-pad/269-2.jpg"
+    alt="Mixer partide acompaniament Korg Pa4X"
+    className="mx-auto"
+  />
+</figure>
+**Revenirea la pasul anterior (Go back)**
+
+- Dacă dorești să te întorci cu un pas, atinge butonul **Back**.
+  Această acțiune va șterge evenimentul inserat anterior și va readuce pasul respectiv în modul de editare.
+
+**Înregistrarea prin suprapunere (Overdub recording)**
+Când se ajunge la sfârșitul pattern-ului, este afișat evenimentul **„End of Loop”**, iar înregistrarea reîncepe de la poziția **„001.01.000”**.
+Orice notă inserată la finalul pattern-ului care depășește lungimea acestuia va fi scurtată automat pentru a se încadra în lungimea totală a pattern-ului.
+
+Din acest punct, poți continua să inserezi evenimente noi în modul overdub (evenimentele inserate anterior nu vor fi șterse).
+Această funcție este foarte utilă atunci când programezi o pistă de tobe (Drum) sau percuție (Percussion), unde poți programa toba mare (bass drum) într-o primă etapă, premierul (snare drum) într-o a doua etapă, iar fusul (hi-hat) și cinelele (cymbals) în etapele următoare.
+
+**Ieșirea din modul Record (Exit from the Record mode)**
+
+1. Când ai terminat înregistrarea, atinge butonul **Done** pentru a ieși din modul **Step Record**.
+2. Va apărea o fereastră de dialog care te va întreba dacă dorești să anulezi acțiunea, să renunți la modificări sau să le salvezi.
+   Atinge **Cancel** pentru a continua editarea, **No** pentru a ieși din **Step Record** fără a salva, sau **Yes** pentru a salva și a ieși din **Step Record**.
+   <figure className="my-6 text-center">
+     <img
+       src="/images/pa4x/16-inregistrare-style-pad/269-3.jpg"
+       alt="Mixer partide acompaniament Korg Pa4X"
+       className="mx-auto"
+     />
+   </figure>
+
+**Ascultarea unui Style sau Pad (Listen to your Style or Pad)**
+
+- Când ai revenit în pagina principală a modului **Style/Pad Record**, poți seta toate pistele pe statutul de redare (play), apoi apasă **START/STOP** pentru a asculta Style-ul sau Pad-ul.
+  Apasă din nou **START/STOP** pentru a opri redarea.
+
+**Salvarea unui Style sau Pad **
+
+- Când ai terminat înregistrarea noului Style sau Pad, alege comanda **Write Style** sau **Write Pad** din meniul paginii pentru a-l salva.
+
+**Ieșirea din modul Style/Pad Record fără salvare**
+
+- Pentru a ieși din modul **Style/Pad Record** fără a salva nicio modificare, alege comanda **Exit from Record** din meniul paginii sau apasă butonul **RECORD**.
+
+{/* am ramas Recording a Guitar track .271 */}
